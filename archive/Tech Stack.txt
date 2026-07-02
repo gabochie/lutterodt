@@ -1,0 +1,243 @@
+Recommended Technology Stack
+The Lutterodt Renaissance — Phase 1 MVP
+
+For this project, I'd recommend a modern, scalable, AI-ready stack that minimizes operational overhead while supporting future growth into a full digital legacy platform.
+
+1. Frontend
+Technology	Purpose	Why
+Next.js 15+	Application Framework	Excellent SEO, performance, server rendering, and App Router support
+React 19	UI Framework	Industry standard with a large ecosystem
+TypeScript	Type Safety	Reduces bugs and improves maintainability
+Tailwind CSS 4	Styling	Fast development and consistent design system
+shadcn/ui	UI Components	Accessible, customizable, production-ready components
+Framer Motion	Animations	Elegant page transitions and interactions
+Lucide React	Icons	Clean, lightweight icon library
+Swiper.js	Carousels	Timelines, galleries, featured stories
+2. Backend
+Technology	Purpose
+Supabase	Backend-as-a-Service
+PostgreSQL	Primary relational database
+Supabase Auth	Authentication
+Supabase Storage	Photos, videos, PDFs
+Supabase Realtime	Future live features
+Edge Functions	Serverless business logic
+
+This provides a robust backend with minimal infrastructure management.
+
+3. CMS
+
+A custom-built admin dashboard is recommended over integrating a traditional CMS.
+
+Advantages include:
+
+Unified authentication
+Tailored workflows for historical archives
+Easier future integration with genealogy and AI features
+Consistent user experience
+
+Key content modules:
+
+Articles
+Timeline
+Gallery
+Media Library
+Events
+Pages
+Settings
+User Management
+4. Authentication
+Supabase Auth
+Email/password
+Google Sign-In (optional)
+Magic Links (optional)
+Role-Based Access Control (RBAC)
+
+Roles:
+
+Visitor
+Contributor
+Editor
+Archivist
+Administrator
+Super Administrator
+5. Database
+
+PostgreSQL (via Supabase)
+
+Core tables:
+
+users
+roles
+people
+family_branches
+articles
+events
+timeline_events
+gallery_items
+media_assets
+pages
+contact_requests
+join_requests
+settings
+audit_logs
+6. File Storage
+
+Supabase Storage with structured folders:
+
+/media
+    /photos
+    /videos
+    /documents
+    /audio
+    /portraits
+    /timeline
+
+Supported formats:
+
+JPG
+PNG
+WebP
+SVG
+MP4
+PDF
+MP3
+7. Search
+Phase 1
+PostgreSQL Full-Text Search
+Future
+Semantic search with vector embeddings
+AI-powered natural language queries
+8. Maps
+
+Use MapLibre GL JS (open source) with OpenStreetMap data for interactive maps.
+
+Future uses:
+
+Historic family homes
+Migration paths
+Branch locations
+Heritage landmarks
+9. Interactive Family Tree
+
+Recommended libraries:
+
+React Flow for custom relationship visualization
+D3.js for advanced genealogy layouts
+10. Timeline
+React Timeline components
+Framer Motion animations
+Custom event cards with filtering and zoom
+11. Image Processing
+Next.js Image Optimization
+WebP conversion
+Lazy loading
+Blur placeholders
+Responsive image sizing
+12. Forms
+React Hook Form
+Zod validation
+
+Used for:
+
+Contact
+Join requests
+Admin forms
+Event submissions
+13. Email
+Resend
+React Email templates
+
+Emails include:
+
+Contact confirmations
+Join acknowledgements
+Admin notifications
+Password resets
+14. Analytics
+Google Analytics 4
+Microsoft Clarity
+
+Track:
+
+Visitor behavior
+Popular stories
+Timeline engagement
+Gallery views
+15. SEO
+Dynamic metadata
+Open Graph
+JSON-LD structured data
+XML sitemap
+Robots.txt
+Canonical URLs
+16. Security
+HTTPS
+Content Security Policy (CSP)
+CSRF protection
+XSS protection
+SQL injection prevention
+Rate limiting
+Secure session management
+Encrypted secrets
+17. Deployment
+Component	Platform
+Frontend	Vercel
+Backend	Supabase
+Storage	Supabase Storage
+Domain	Cloudflare DNS
+CDN	Vercel Edge Network
+SSL	Automatic
+18. Development Tools
+Visual Studio Code
+Git
+GitHub
+GitHub Actions (CI/CD)
+ESLint
+Prettier
+Husky + lint-staged
+19. Future AI Layer (Phase 3+)
+
+Planned capabilities:
+
+AI Historian
+OCR for archival documents
+Speech-to-text for oral histories
+Text-to-speech narration
+Semantic search
+Automated metadata extraction
+Story generation from photos and documents
+
+Potential technologies:
+
+OpenAI APIs
+pgvector (PostgreSQL vector extension)
+Whisper-compatible transcription
+Retrieval-Augmented Generation (RAG)
+20. High-Level Architecture
+                Users
+                  │
+        Next.js + React Frontend
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+   Supabase Auth       PostgreSQL
+        │                   │
+        ├─────────┬─────────┤
+        │         │         │
+   Storage     Edge Functions   Realtime
+        │
+        ├───────────────┐
+        │               │
+   Media Assets     Admin Dashboard
+        │
+   Future AI Services
+   (OCR • Search • Historian • RAG)
+Why this stack?
+
+This combination emphasizes speed, maintainability, and future scalability:
+
+Rapid MVP delivery with minimal DevOps.
+Excellent performance for SEO and public storytelling.
+Low operating costs while the platform grows.
+Strong security and role-based access control.
+A clear upgrade path to advanced AI, genealogy, and collaboration features without requiring a major architectural rewrite.

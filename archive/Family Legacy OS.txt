@@ -1,0 +1,6 @@
+Member authentication + private portal — logged-in family members seeing something visitors don't
+Editable family profiles — each person managing their own record
+Admin/CMS dashboard — the actual "operating system" for archivists to add timeline entries, upload gallery items, manage users and roles
+Interactive family tree (not just read-only viewer) — a real relationship graph
+Internal messaging / mentorship / business directory — the connective tissue that makes it feel like an OS rather than a brochure
+Governance & permissions layer — Admin / Editor / Contributor / Archivist roles actually enforced
