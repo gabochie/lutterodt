@@ -51,7 +51,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {process.env.NEXT_PUBLIC_GA_ID && (
+        {process.env.NEXT_PUBLIC_GA_ID?.startsWith("G-") && (
           <>
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />
             <script
