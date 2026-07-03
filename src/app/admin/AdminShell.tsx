@@ -11,6 +11,7 @@ import {
   Image,
   MessageSquare,
   Map,
+  DollarSign,
   Target,
   Settings,
   LogOut,
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/admin/gallery", label: "Gallery", icon: Image },
   { href: "/admin/contacts", label: "Contacts", icon: MessageSquare },
   { href: "/admin/roadmap", label: "Roadmap", icon: Map },
+  { href: "/admin/budget", label: "Budget", icon: DollarSign },
   { href: "/admin/strategy", label: "Strategy", icon: Target },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
