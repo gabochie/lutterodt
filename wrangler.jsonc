@@ -2,10 +2,9 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": ".open-next/worker.js",
 	"name": "lutterodt",
-	"compatibility_date": "2026-07-03",
+	"compatibility_date": "2025-04-01",
 	"compatibility_flags": [
-		"nodejs_compat",
-		"global_fetch_strictly_public"
+		"nodejs_compat"
 	],
 	"assets": {
 		"directory": ".open-next/assets",
