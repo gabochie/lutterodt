@@ -12,6 +12,7 @@ import {
   MessageSquare,
   Map,
   Target,
+  Settings,
   LogOut,
   Menu,
   X,
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/admin/contacts", label: "Contacts", icon: MessageSquare },
   { href: "/admin/roadmap", label: "Roadmap", icon: Map },
   { href: "/admin/strategy", label: "Strategy", icon: Target },
+  { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminLayout({
@@ -96,13 +98,20 @@ export default function AdminLayout({
           })}
         </nav>
 
-        <div className="p-3 border-t border-line-on-dark">
+        <div className="p-3 border-t border-line-on-dark flex flex-col gap-1">
           <Link
             href="/"
             className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-[13px] text-ivory/50 hover:text-ivory hover:bg-ivory/5 transition-colors"
           >
             <LogOut className="w-4 h-4" />
             <span>Back to Site</span>
+          </Link>
+          <Link
+            href="/api/logout"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-[13px] text-red-400/60 hover:text-red-400 hover:bg-red-400/5 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Logout</span>
           </Link>
         </div>
       </aside>

@@ -11,8 +11,9 @@ export async function POST(request: Request) {
 
   try {
     await pb.collection("users").authWithPassword(email, password);
-  } catch {
-    return NextResponse.redirect(new URL("/login?error=Invalid+credentials", request.url));
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "Login failed";
+    return NextResponse.redirect(new URL("/login?error=" + encodeURIComponent(msg), request.url));
   }
 
   const cookieValue = JSON.stringify({ token: pb.authStore.token, record: pb.authStore.record });

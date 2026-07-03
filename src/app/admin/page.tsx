@@ -6,15 +6,14 @@ import {
   Clock,
   Image,
   MessageSquare,
-  Eye,
-  EyeOff,
+  Loader2,
 } from "lucide-react";
 
-const stats = [
-  { label: "Articles", value: "12", icon: FileText, change: "+3 this month", color: "text-burgundy" },
-  { label: "Timeline Entries", value: "10", icon: Clock, change: "+1 this month", color: "text-gold-dim" },
-  { label: "Gallery Items", value: "24", icon: Image, change: "+6 this month", color: "text-forest" },
-  { label: "Contact Requests", value: "8", icon: MessageSquare, change: "2 unread", color: "text-burgundy" },
+const statConfig = [
+  { label: "Articles", key: "articles", icon: FileText, color: "text-burgundy" },
+  { label: "Timeline Entries", key: "timeline", icon: Clock, color: "text-gold-dim" },
+  { label: "Gallery Items", key: "gallery", icon: Image, color: "text-forest" },
+  { label: "Contact Requests", key: "contacts", icon: MessageSquare, color: "text-burgundy" },
 ];
 
 const recentArticles = [
@@ -29,32 +28,18 @@ const recentContacts = [
   { name: "BBC StoryWorks", subject: "Media Enquiry", date: "2 days ago", status: "New" },
 ];
 
+type Stats = Record<string, number>;
+
 export default function AdminDashboard() {
-  const [comingSoon, setComingSoon] = useState(true);
-  const [toggling, setToggling] = useState(false);
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/settings")
+    fetch("/api/stats")
       .then((r) => r.json())
-      .then((d) => setComingSoon(d.coming_soon))
-      .catch(() => {});
+      .then((d) => { setStats(d); setLoading(false); })
+      .catch(() => setLoading(false));
   }, []);
-
-  async function toggleComingSoon() {
-    setToggling(true);
-    try {
-      const r = await fetch("/api/settings", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ coming_soon: !comingSoon }),
-      });
-      if (r.ok) {
-        const d = await r.json();
-        setComingSoon(d.coming_soon);
-      }
-    } catch {}
-    setToggling(false);
-  }
 
   return (
     <div>
@@ -63,56 +48,27 @@ export default function AdminDashboard() {
         <p className="text-charcoal/50 text-[14px] mt-1">Overview of the Lutterodt Renaissance Archive</p>
       </div>
 
-      {/* Coming Soon Toggle */}
-      <div className="bg-ivory border border-line p-6 mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              {comingSoon ? <EyeOff className="w-4 h-4 text-gold-dim" /> : <Eye className="w-4 h-4 text-forest" />}
-              <h2 className="font-display text-[16px] text-burgundy-ink">
-                Coming Soon Mode
-              </h2>
-            </div>
-            <p className="text-charcoal/50 text-[13px] mt-1">
-              {comingSoon
-                ? "Visitors see the coming soon landing page. The full site is hidden."
-                : "The full site is live. Visitors see all pages."}
-            </p>
-          </div>
-          <button
-            onClick={toggleComingSoon}
-            disabled={toggling}
-            className={`relative w-[52px] h-[28px] rounded-full transition-colors ${
-              comingSoon ? "bg-gold-dim/30" : "bg-forest"
-            }`}
-          >
-            <span
-              className={`absolute top-[3px] w-[22px] h-[22px] rounded-full bg-ivory shadow transition-transform ${
-                comingSoon ? "left-[3px]" : "left-[27px]"
-              }`}
-            />
-          </button>
-        </div>
-      </div>
-
-      {/* Stats grid */}
       <div className="grid grid-cols-4 max-md:grid-cols-2 gap-4 mb-10">
-        {stats.map((stat) => {
+        {statConfig.map((stat) => {
           const Icon = stat.icon;
+          const value = stats ? stats[stat.key] : null;
           return (
             <div key={stat.label} className="bg-ivory border border-line p-6">
               <div className="flex items-center justify-between mb-4">
                 <Icon className={`w-5 h-5 ${stat.color}`} />
                 <span className="font-mono text-[10px] tracking-widest uppercase text-charcoal/40">{stat.label}</span>
               </div>
-              <div className="font-display text-[32px] text-burgundy-ink">{stat.value}</div>
-              <div className="font-mono text-[10px] tracking-wider text-charcoal/40 mt-1">{stat.change}</div>
+              <div className="font-display text-[32px] text-burgundy-ink">
+                {loading ? <Loader2 className="w-6 h-6 animate-spin text-charcoal/20" /> : value ?? "—"}
+              </div>
+              <div className="font-mono text-[10px] tracking-wider text-charcoal/40 mt-1">
+                {loading ? "" : `Total records`}
+              </div>
             </div>
           );
         })}
       </div>
 
-      {/* Two column layout */}
       <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6">
         <div className="bg-ivory border border-line">
           <div className="px-6 py-4 border-b border-line flex items-center justify-between">
@@ -164,7 +120,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Quick actions */}
       <div className="mt-8">
         <h2 className="font-display text-[16px] text-burgundy-ink mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">

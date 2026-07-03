@@ -1,5 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import PocketBase from "pocketbase";
 import { getSetting, setSetting } from "@/lib/pocketbase/settings";
 
 export async function GET() {
@@ -8,23 +7,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const pbUrl = process.env.NEXT_PUBLIC_POCKETBASE_URL || "http://127.0.0.1:8090";
-  const pb = new PocketBase(pbUrl);
-
   const authCookie = request.cookies.get("pb_auth");
-  if (authCookie) {
-    pb.authStore.loadFromCookie(`pb_auth=${authCookie.value}`);
-  }
 
-  try {
-    if (pb.authStore.isValid) {
-      await pb.collection("users").authRefresh();
-    }
-  } catch {
-    pb.authStore.clear();
-  }
-
-  if (!pb.authStore.isValid) {
+  if (!authCookie) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
