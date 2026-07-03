@@ -1,6 +1,7 @@
 "use client";
 
-import { Target, Users, Handshake, Shield, Building2, Lightbulb, ArrowRight, ScrollText, Globe, Network } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Target, Users, Handshake, Shield, Building2, Lightbulb, ArrowRight, ScrollText, Globe, Network, ChevronUp } from "lucide-react";
 
 const phases = [
   { num: "0", title: "The Global Lutterodt Network", icon: Globe, goal: "Create a founding network before writing significant code." },
@@ -73,6 +74,14 @@ const roadmapQuarter = [
 ];
 
 export default function AdminStrategyPage() {
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 800);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <div>
       {/* Header */}
@@ -84,8 +93,35 @@ export default function AdminStrategyPage() {
         <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-burgundy/10 text-burgundy border border-burgundy/20">Phase 0: Pre-Founding</span>
       </div>
 
+      {/* Table of Contents */}
+      <div className="border border-line bg-ivory mb-10">
+        <div className="px-6 py-3 border-b border-line">
+          <span className="font-mono text-[9px] tracking-widest uppercase text-gold-dim">On this page</span>
+        </div>
+        <div className="px-6 py-4 flex flex-wrap gap-x-8 gap-y-2">
+          {[
+            { href: "#thesis", label: "Core Thesis" },
+            { href: "#sequence", label: "The Right Sequence" },
+            { href: "#network", label: "Global Network" },
+            { href: "#fundraising", label: "Fundraising" },
+            { href: "#community", label: "Community First" },
+            { href: "#governance", label: "Governance" },
+            { href: "#roadmap", label: "12-Month Roadmap" },
+            { href: "#vision", label: "Scalable Vision" },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="font-mono text-[10.5px] tracking-wider text-charcoal/50 hover:text-burgundy transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
       {/* Core thesis banner */}
-      <div className="bg-burgundy-ink text-ivory p-8 mb-10 border border-line-on-dark">
+      <div id="thesis" className="bg-burgundy-ink text-ivory p-8 mb-10 border border-line-on-dark">
         <Target className="w-6 h-6 text-gold-dim mb-4" />
         <p className="font-display text-[22px] leading-snug max-w-3xl">
           A project like The Lutterodt Renaissance is not fundamentally a software project — it is an institution-building project. The website is simply one of the tools.
@@ -97,7 +133,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Better Sequence */}
-      <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6 mb-10">
+      <div id="sequence" className="grid grid-cols-2 max-md:grid-cols-1 gap-6 mb-10">
         <div className="border border-line bg-ivory p-6">
           <h3 className="font-mono text-[10px] tracking-widest uppercase text-charcoal/40 mb-4">Typical Approach</h3>
           <div className="flex items-center gap-3 text-charcoal/60 text-[14px]">
@@ -142,7 +178,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Phase 0: The Global Lutterodt Network */}
-      <div className="mb-10 border border-line bg-ivory">
+      <div id="network" className="mb-10 border border-line bg-ivory">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Globe className="w-6 h-6 text-gold-dim" />
           <div>
@@ -236,7 +272,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Fundraising Strategy */}
-      <div className="mb-10 border border-line bg-ivory">
+      <div id="fundraising" className="mb-10 border border-line bg-ivory">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <ScrollText className="w-6 h-6 text-gold-dim" />
           <div>
@@ -268,7 +304,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Build The Community First */}
-      <div className="mb-10 border border-line bg-ivory">
+      <div id="community" className="mb-10 border border-line bg-ivory">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Network className="w-6 h-6 text-gold-dim" />
           <div>
@@ -297,7 +333,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Governance */}
-      <div className="mb-10 border border-line bg-ivory">
+      <div id="governance" className="mb-10 border border-line bg-ivory">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Shield className="w-6 h-6 text-gold-dim" />
           <div>
@@ -317,7 +353,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* 12-Month Roadmap */}
-      <div className="mb-10 border border-line bg-ivory">
+      <div id="roadmap" className="mb-10 border border-line bg-ivory">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Building2 className="w-6 h-6 text-gold-dim" />
           <div>
@@ -348,7 +384,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Scalable Vision */}
-      <div className="border border-gold/30 bg-gold/5 p-8">
+      <div id="vision" className="border border-gold/30 bg-gold/5 p-8">
         <Lightbulb className="w-6 h-6 text-gold-dim mb-4" />
         <h2 className="font-display text-[22px] text-burgundy-ink mb-3">A Scalable Vision</h2>
         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6">
@@ -369,6 +405,16 @@ export default function AdminStrategyPage() {
           That distinction can make the initiative more attractive to funders because they are investing not only in preserving one family&apos;s heritage but also in developing a reusable model for cultural preservation and community building across Africa and the global diaspora.
         </div>
       </div>
+
+      {/* Scroll to top */}
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-8 right-8 w-10 h-10 bg-burgundy text-ivory flex items-center justify-center border border-gold/30 hover:bg-burgundy-deep transition-colors z-50"
+        >
+          <ChevronUp className="w-4 h-4" />
+        </button>
+      )}
     </div>
   );
 }

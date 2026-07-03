@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   FileText,
   Clock,
   Image,
   MessageSquare,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 
 const stats = [
@@ -27,11 +30,69 @@ const recentContacts = [
 ];
 
 export default function AdminDashboard() {
+  const [comingSoon, setComingSoon] = useState(true);
+  const [toggling, setToggling] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((r) => r.json())
+      .then((d) => setComingSoon(d.coming_soon))
+      .catch(() => {});
+  }, []);
+
+  async function toggleComingSoon() {
+    setToggling(true);
+    try {
+      const r = await fetch("/api/settings", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ coming_soon: !comingSoon }),
+      });
+      if (r.ok) {
+        const d = await r.json();
+        setComingSoon(d.coming_soon);
+      }
+    } catch {}
+    setToggling(false);
+  }
+
   return (
     <div>
       <div className="mb-8">
         <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Dashboard</h1>
         <p className="text-charcoal/50 text-[14px] mt-1">Overview of the Lutterodt Renaissance Archive</p>
+      </div>
+
+      {/* Coming Soon Toggle */}
+      <div className="bg-ivory border border-line p-6 mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              {comingSoon ? <EyeOff className="w-4 h-4 text-gold-dim" /> : <Eye className="w-4 h-4 text-forest" />}
+              <h2 className="font-display text-[16px] text-burgundy-ink">
+                Coming Soon Mode
+              </h2>
+            </div>
+            <p className="text-charcoal/50 text-[13px] mt-1">
+              {comingSoon
+                ? "Visitors see the coming soon landing page. The full site is hidden."
+                : "The full site is live. Visitors see all pages."}
+            </p>
+          </div>
+          <button
+            onClick={toggleComingSoon}
+            disabled={toggling}
+            className={`relative w-[52px] h-[28px] rounded-full transition-colors ${
+              comingSoon ? "bg-gold-dim/30" : "bg-forest"
+            }`}
+          >
+            <span
+              className={`absolute top-[3px] w-[22px] h-[22px] rounded-full bg-ivory shadow transition-transform ${
+                comingSoon ? "left-[3px]" : "left-[27px]"
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Stats grid */}
@@ -53,7 +114,6 @@ export default function AdminDashboard() {
 
       {/* Two column layout */}
       <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6">
-        {/* Recent articles */}
         <div className="bg-ivory border border-line">
           <div className="px-6 py-4 border-b border-line flex items-center justify-between">
             <h2 className="font-display text-[16px] text-burgundy-ink">Recent Articles</h2>
@@ -78,7 +138,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent contacts */}
         <div className="bg-ivory border border-line">
           <div className="px-6 py-4 border-b border-line flex items-center justify-between">
             <h2 className="font-display text-[16px] text-burgundy-ink">Contact Requests</h2>
