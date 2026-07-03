@@ -96,7 +96,7 @@ const initialRoadmap = {
             { text: "Deploy Next.js to Cloudflare Workers", status: "completed" },
             { text: "Set environment variables in Cloudflare dashboard", status: "completed" },
             { text: "⚠️ Keep cloudflared tunnel open while testing (closes when terminal closes)", status: "in_progress" },
-            { text: "Host PocketBase permanently on VPS / Railway / Fly.io", status: "pending" },
+            { text: "Host PocketBase on GCP Cloud Run (Docker, scales to zero)", status: "pending" },
             { text: "Configure custom domain (lutterodt.org)", status: "pending" },
             { text: "HTTPS / SSL setup", status: "pending" },
             { text: "R2 cache for OpenNext (see open-next.js.org/cloudflare/caching)", status: "pending" },
