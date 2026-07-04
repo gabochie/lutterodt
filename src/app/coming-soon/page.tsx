@@ -1,3 +1,5 @@
+"use client";
+
 import { Tag } from "@/components/shared/Tag";
 import { StatCell } from "@/components/shared/StatCell";
 
@@ -28,20 +30,6 @@ export default function ComingSoonPage() {
             <a href="mailto:gabochie@gmail.com" className="btn-gold">Get in Touch</a>
             <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-ghost">WhatsApp</a>
           </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 flex-wrap justify-center">
-          <a href="#vision" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Vision</a>
-          <span className="text-ivory/20">·</span>
-          <a href="#stats" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Stats</a>
-          <span className="text-ivory/20">·</span>
-          <a href="#features" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Features</a>
-          <span className="text-ivory/20">·</span>
-          <a href="#progress" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Progress</a>
-          <span className="text-ivory/20">·</span>
-          <a href="#funding" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Funding</a>
-          <span className="text-ivory/20">·</span>
-          <a href="#contact" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Contact</a>
         </div>
       </section>
 
@@ -216,6 +204,21 @@ export default function ComingSoonPage() {
           </p>
         </div>
       </section>
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 bg-burgundy-ink/80 backdrop-blur-md border border-gold-dim/15 rounded-full px-4 py-2 shadow-lg">
+        {(["Vision","Stats","Features","Progress","Funding","Contact"] as const).map((label) => {
+          const id = label.toLowerCase();
+          return (
+            <button
+              key={label}
+              type="button"
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+              className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors px-2.5 py-1 rounded-full hover:bg-gold-dim/10"
+            >
+              {label}
+            </button>
+          );
+        })}
+      </nav>
     </>
   );
 }
