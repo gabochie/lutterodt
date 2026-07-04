@@ -7,7 +7,7 @@ export default function ComingSoonPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center justify-center bg-burgundy-ink overflow-hidden px-6">
+      <section id="top" className="relative min-h-screen flex items-center justify-center bg-burgundy-ink overflow-hidden px-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.10),transparent_60%),radial-gradient(circle_at_80%_20%,rgba(47,74,60,0.20),transparent_50%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-gold-dim/8 rounded-full pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-gold-dim/6 rounded-full pointer-events-none" />
@@ -205,7 +205,7 @@ export default function ComingSoonPage() {
         </div>
       </section>
       <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 bg-burgundy-ink/80 backdrop-blur-md border border-gold-dim/15 rounded-full px-4 py-2 shadow-lg">
-        {(["Vision","Stats","Features","Progress","Funding","Contact"] as const).map((label) => {
+        {(["Top","Vision","Stats","Features","Progress","Funding","Contact"] as const).map((label) => {
           const id = label.toLowerCase();
           return (
             <button
