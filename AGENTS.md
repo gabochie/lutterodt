@@ -11,12 +11,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 Exhaustively identify every notable living Lutterodt globally, document them in a master directory, create personalized branded outreach letters, and build the full archive pipeline.
 
 ## Stats (current)
-- **Total profiles documented:** 72 (64 living + 8 historical)
-- **Total outreach letters on desktop:** 56 HTML files (10 new)
-- **Professional categories:** 8 (Business 18, Engineering & Tech 9, Healthcare 12, Academia 7, Creative 7, Law 7, Service 4, Historical 8)
-- **Countries represented:** Ghana (37), UK (11), USA (9), Canada (3), Estonia (1), Denmark (1), NZ (1), UAE (1)
-- **Continents:** 5 (Africa, Europe, North America, Middle East, Oceania — via New Zealand Dr. Chris Lutterodt)
-- **Confirmed DOBs:** 10 (Johann Lutterodt adds 20 Jun 1989 from Estonian business registry)
+- **Total profiles documented:** 77 (69 living + 8 historical)
+- **Total outreach letters on desktop:** 61 HTML files
+- **Professional categories:** 8 (Business 21, Healthcare 12, Engineering & Tech 10, Academia 8, Historical 8, Law 7, Creative 7, Service 4)
+- **Countries represented:** Ghana (37), UK (12), USA (10), Gold Coast (8), Canada (3), Germany (2), China (1), Denmark (1), UAE (1), Estonia (1), Mexico (1)
+- **Continents:** 6 (Africa, Europe, North America, South America via Mexico, Middle East, Asia via China)
+- **Confirmed DOBs:** 12
 
 ## Completed (in current session)
 - **10 new outreach letters created:** Francis Lutterodt, Philip Mills-Lutterodt, Henry Lutterodt (Nestlé UK), Freda Lutterodt, Helbert Lutterodt, Johann Lutterodt, Davis Lutterodt, Michael Lutterodt (Davies), Edward Lutterodt, Gerrard Samuel Lutterodt
@@ -63,15 +63,26 @@ Exhaustively identify every notable living Lutterodt globally, document them in 
 - **Estonia:** First Baltic state Lutterodt — Johann Lutterodt opens a new diaspora frontier
 
 ## Next Steps
-1. Send letters via appropriate channels (LinkedIn, email, phone)
-2. User adds 4 DNS records in Cloudflare for Vercel deployment
-3. User connects GitHub repo to Vercel
-4. Later: Supabase/Workers migration for full app
+1. **Execute monorepo restructure** — Convert to Turborepo with apps/heritage + apps/database + packages/lutterodt-data
+2. **Build db.lutterodt.org** — 4-phase build roadmap: (1) Landing page with sponsorship info (2) Directory browser + profile pages (3) Payment integration (4) Member dashboard
+3. Send letters via appropriate channels (LinkedIn, email, phone)
+4. User adds 4 DNS records in Cloudflare for Vercel deployment
+5. User connects GitHub repo to Vercel
+
+## Build Roadmap (db.lutterodt.org)
+- **Phase 1:** Landing page with hero, stats, 4-tier sponsorship (Free / Patron $3 / Scholar $7 / Guardian $15), FAQ, trial modal
+- **Phase 2:** Directory browser with 77 profiles, search/filter, individual profile pages
+- **Phase 3:** Stripe/Gumroad payment integration for recurring sponsorship billing
+- **Phase 4:** Member dashboard with auth, subscription management, gated content
 
 ## Key Files
-- `C:\Users\user\Desktop\lutt letters\notable-lutterodts-directory.html` — Master directory (72 entries)
-- `C:\Users\user\Desktop\lutt letters\` — 56 HTML outreach letter files (57 files total including directory)
+- `C:\Users\user\Desktop\lutt letters\research-task-list.html` — Research tracker + Build Roadmap (4 phases with checkable tasks)
+- `C:\Users\user\Desktop\lutt letters\index.html` — Database product landing page (to port into apps/database)
+- `C:\Users\user\Desktop\lutt letters\data\profiles.json` — 77 profile source data
+- `C:\Users\user\Desktop\lutt letters\letters\` — 61 HTML outreach letters
+- `C:\Users\user\Desktop\lutt letters\data\stats.json` — Computed directory statistics
+- `apps/heritage/` — (future) Next.js heritage site for lutterodt.org
+- `apps/database/` — (future) Next.js database app for db.lutterodt.org
+- `packages/lutterodt-data/` — (future) Shared data package
 - `.github/workflows/ci-cd.yml` — CI/CD pipeline
-- `next.config.ts` — Cloudflare import guard
-- `wrangler.jsonc` — Cloudflare Worker config
 <!-- END:anchored-summary -->
