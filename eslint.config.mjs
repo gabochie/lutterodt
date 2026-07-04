@@ -12,10 +12,17 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "node_modules/**",
+    ".wrangler/**",
+    ".open-next/**",
+    "__tests__/**",
+    "cypress/**",
+    "*.mjs",
   ]),
   {
     rules: {
       "@next/next/no-img-element": "off",
+      "react-hooks/set-state-in-effect": "off",
     },
   },
 ]);

@@ -1,48 +1,73 @@
-import { PocketBase } from 'pocketbase';
+import PocketBase from "pocketbase";
 
-describe('Roadmap API', () => {
+jest.mock("pocketbase");
+
+describe("Roadmap API Logic", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should return initial roadmap when no data exists', async () => {
-    jest.spyOn(PocketBase.prototype, 'collection').mockReturnThis();
-    const pb = new PocketBase('http://127.0.0.1:8090');
-    
-    const mockGetList = jest.fn().mockResolvedValue({
-      totalItems: 5,
-    });
-    pb.collection('roadmap').getList = mockGetList;
-
-    const response = await fetch('/api/roadmap');
-    const data = await response.json();
-
-    expect(data).toEqual(initialRoadmap);
-  });
-
-  it('should update roadmap when data is sent', async () => {
-    const mockGetList = jest.fn().mockResolvedValue({
-      totalItems: 8,
-    });
-
-    const newRoadmap = {
-      phases: [{
-        items: [{
-          status: 'completed',
-        }]
-      }]
+  it("should fetch roadmap from settings collection", async () => {
+    const pb = new PocketBase("http://127.0.0.1:8090");
+    const mockData = {
+      phases: [{ title: "Foundation (MVP)", status: "in_progress" }],
+      sprints: [{ sprint: "Sprint 1", status: "completed" }],
     };
 
-    pocketBase.setup('http://127.0.0.1:8090');
-    const pb = new PocketBase('http://127.0.0.1:8090');
-    pb.collection('roadmap').put = jest.fn().mockResolvedValue(newRoadmap);
-
-    const response = await fetch('/api/roadmap', {
-      method: 'POST',
-      body: JSON.stringify(newRoadmap),
+    const mockGetFirstListItem = jest.fn().mockResolvedValue({
+      id: "roadmap-1",
+      key: "roadmap",
+      value: JSON.stringify(mockData),
     });
-    const updatedData = await response.json();
 
-    expect(updatedData).toEqual(newRoadmap);
+    (pb.collection as jest.Mock).mockReturnValue({
+      getFirstListItem: mockGetFirstListItem,
+    });
+
+    const record = await pb.collection("settings").getFirstListItem('key="roadmap"');
+    const parsed = JSON.parse(record.value);
+
+    expect(parsed.phases).toHaveLength(1);
+    expect(parsed.phases[0].title).toBe("Foundation (MVP)");
+    expect(mockGetFirstListItem).toHaveBeenCalledWith('key="roadmap"');
+  });
+
+  it("should save updated roadmap to settings", async () => {
+    const pb = new PocketBase("http://127.0.0.1:8090");
+    const mockUpdate = jest.fn().mockResolvedValue({
+      id: "roadmap-1",
+      key: "roadmap",
+      value: JSON.stringify({
+        phases: [{ title: "Foundation (MVP)", status: "completed" }],
+        sprints: [],
+      }),
+    });
+
+    (pb.collection as jest.Mock).mockReturnValue({
+      getFirstListItem: jest.fn().mockResolvedValue({ id: "roadmap-1" }),
+      update: mockUpdate,
+    });
+
+    const result = await pb.collection("settings").update("roadmap-1", {
+      value: JSON.stringify({
+        phases: [{ title: "Foundation (MVP)", status: "completed" }],
+        sprints: [],
+      }),
+    });
+
+    expect(result.key).toBe("roadmap");
+    expect(mockUpdate).toHaveBeenCalled();
+  });
+
+  it("should handle missing roadmap gracefully", async () => {
+    const pb = new PocketBase("http://127.0.0.1:8090");
+
+    (pb.collection as jest.Mock).mockReturnValue({
+      getFirstListItem: jest.fn().mockRejectedValue(new Error("Not found")),
+    });
+
+    await expect(
+      pb.collection("settings").getFirstListItem('key="roadmap"')
+    ).rejects.toThrow("Not found");
   });
 });

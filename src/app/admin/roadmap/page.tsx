@@ -73,16 +73,16 @@ export default function AdminRoadmapPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  const fetchRoadmap = useCallback(async () => {
+  useEffect(() => {
+    let mounted = true;
     setLoading(true);
-    try {
-      const r = await fetch("/api/roadmap");
-      if (r.ok) setData(await r.json());
-    } catch {}
-    setLoading(false);
+    fetch("/api/roadmap")
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (mounted && d) setData(d); })
+      .catch(() => {})
+      .finally(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
   }, []);
-
-  useEffect(() => { fetchRoadmap(); }, [fetchRoadmap]);
 
   const persist = useCallback(async (next: RoadmapData) => {
     setSaving(true);
@@ -130,7 +130,7 @@ export default function AdminRoadmapPage() {
     return (
       <div className="text-center py-20">
         <p className="text-charcoal/50 text-[14px] mb-4">Could not load roadmap.</p>
-        <button onClick={fetchRoadmap} className="btn btn-outline text-[12px]">Retry</button>
+        <button onClick={() => window.location.reload()} className="btn btn-outline text-[12px]">Retry</button>
       </div>
     );
   }

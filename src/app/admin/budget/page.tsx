@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Loader2, RefreshCw, DollarSign, Plus, Trash2 } from "lucide-react";
+import { Loader2, RefreshCw, Plus, Trash2 } from "lucide-react";
 
 interface BudgetItem {
   item: string;
@@ -35,16 +35,16 @@ export default function AdminBudgetPage() {
   const [saving, setSaving] = useState(false);
   const [editingSection, setEditingSection] = useState<SectionKey | null>(null);
 
-  const fetchBudget = useCallback(async () => {
+  useEffect(() => {
+    let mounted = true;
     setLoading(true);
-    try {
-      const r = await fetch("/api/budget");
-      if (r.ok) setData(await r.json());
-    } catch {}
-    setLoading(false);
+    fetch("/api/budget")
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (mounted && d) setData(d); })
+      .catch(() => {})
+      .finally(() => { if (mounted) setLoading(false); });
+    return () => { mounted = false; };
   }, []);
-
-  useEffect(() => { fetchBudget(); }, [fetchBudget]);
 
   const persist = useCallback(async (next: BudgetData) => {
     setSaving(true);
@@ -104,7 +104,7 @@ export default function AdminBudgetPage() {
     return (
       <div className="text-center py-20">
         <p className="text-charcoal/50 text-[14px] mb-4">Could not load budget data.</p>
-        <button onClick={fetchBudget} className="btn btn-outline text-[12px]">Retry</button>
+        <button onClick={() => window.location.reload()} className="btn btn-outline text-[12px]">Retry</button>
       </div>
     );
   }

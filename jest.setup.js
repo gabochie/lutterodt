@@ -1,39 +1,35 @@
-const { jest } = require('@jest/globals');
-
 jest.mock('pocketbase', () => {
-  class MockPocketBase {
-    constructor() {}
-    autoCancellation() {}
-    admins() { return { authWithPassword } }
-    collection(name) { return { getList } }
-  }
-  
-  const mockpb = new MockPocketBase();
-  
+  const mockGetList = jest.fn();
+  const mockCreate = jest.fn();
+  const mockUpdate = jest.fn();
+  const mockDelete = jest.fn();
+  const mockGetFirstListItem = jest.fn();
+  const mockAuthWithPassword = jest.fn().mockResolvedValue({ token: 'mock-token' });
+
   return {
-    PocketBase: jest.fn(() => mockpb),
+    __esModule: true,
+    default: jest.fn().mockImplementation(() => ({
+      autoCancellation: jest.fn(),
+      authStore: {
+        save: jest.fn(),
+        isValid: false,
+        clear: jest.fn(),
+        loadFromCookie: jest.fn(),
+      },
+      admins: {
+        authWithPassword: mockAuthWithPassword,
+      },
+      collection: jest.fn().mockReturnValue({
+        getList: mockGetList,
+        getFirstListItem: mockGetFirstListItem,
+        create: mockCreate,
+        update: mockUpdate,
+        delete: mockDelete,
+      }),
+    })),
   };
 });
 
-jest.mock('node:fs', () => ({
-  promises: {
-    readFile: jest.fn(),
-    writeFile: jest.fn(),
-  },
+jest.mock('@opennextjs/cloudflare', () => ({
+  initOpenNextCloudflareForDev: jest.fn(),
 }));
-
-jest.mock('node:path', () => ({
-  join: jest.fn(),
-  resolve: jest.fn(),
-}));
-
-jest.mock('node:os', () => ({
-  platform: () => 'linux',
-  arch: () => 'x64',
-}));
-
-jest.mock('@opennextjs/cloudflare', () => {
-  return {
-    initOpenNextCloudflareForDev: jest.fn(),
-  };
-});
