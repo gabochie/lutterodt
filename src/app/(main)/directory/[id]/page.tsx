@@ -79,9 +79,6 @@ export default async function ProfilePage({
 
           <div className="mt-12 flex gap-4 flex-wrap">
             <Link href="/directory" className="btn-outline">Back to Directory</Link>
-            {profile.letter && (
-              <Link href={profile.letter} className="btn-primary">View Outreach Letter</Link>
-            )}
           </div>
 
           <div className="mt-16 p-[32px] bg-ivory-dim border border-line rounded-sm text-center">

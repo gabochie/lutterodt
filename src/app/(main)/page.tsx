@@ -4,7 +4,7 @@ import { FullSite } from "@/components/home/FullSite";
 export default async function Home() {
   const comingSoon = await getSetting("coming_soon");
 
-  if (comingSoon !== "false") {
+  if (comingSoon !== "false" && comingSoon !== null) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-burgundy-ink overflow-hidden px-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.10),transparent_60%),radial-gradient(circle_at_80%_20%,rgba(47,74,60,0.20),transparent_50%)] pointer-events-none" />
