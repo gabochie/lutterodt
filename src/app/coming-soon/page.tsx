@@ -30,13 +30,23 @@ export default function ComingSoonPage() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest uppercase text-ivory/40 animate-pulse">
-          Scroll to learn more
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 flex-wrap justify-center">
+          <a href="#vision" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Vision</a>
+          <span className="text-ivory/20">·</span>
+          <a href="#stats" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Stats</a>
+          <span className="text-ivory/20">·</span>
+          <a href="#features" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Features</a>
+          <span className="text-ivory/20">·</span>
+          <a href="#progress" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Progress</a>
+          <span className="text-ivory/20">·</span>
+          <a href="#funding" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Funding</a>
+          <span className="text-ivory/20">·</span>
+          <a href="#contact" className="font-mono text-[10px] tracking-widest uppercase text-gold-dim/70 hover:text-gold-light transition-colors">Contact</a>
         </div>
       </section>
 
       {/* Vision */}
-      <section className="py-[108px] bg-burgundy-ink text-ivory relative overflow-hidden">
+      <section id="vision" className="py-[108px] bg-burgundy-ink text-ivory relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(198,161,91,0.06),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark>Our Vision</Tag>
@@ -62,7 +72,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* Stats */}
-      <section className="bg-charcoal text-ivory">
+      <section id="stats" className="bg-charcoal text-ivory">
         <div className="container-main">
           <div className="grid grid-cols-4 max-md:grid-cols-2">
             <StatCell number="6" label="Generations Recorded" />
@@ -74,7 +84,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* What We're Building */}
-      <section className="py-[108px]">
+      <section id="features" className="py-[108px]">
         <div className="container-main">
           <Tag>What We&apos;re Building</Tag>
           <h2 className="text-[clamp(28px,3.4vw,42px)] mt-[18px] mb-14">A living archive built for the future</h2>
@@ -105,7 +115,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* Progress */}
-      <section className="bg-burgundy-ink text-ivory py-[108px] relative overflow-hidden">
+      <section id="progress" className="bg-burgundy-ink text-ivory py-[108px] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(198,161,91,0.10),transparent_45%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark>Progress</Tag>
@@ -144,7 +154,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* Funding */}
-      <section className="py-[108px]">
+      <section id="funding" className="py-[108px]">
         <div className="container-main">
           <Tag>Funding & Support</Tag>
           <h2 className="text-[clamp(28px,3.4vw,42px)] mt-[18px] mb-4">
@@ -189,7 +199,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* Stay Connected */}
-      <section className="py-[72px] bg-charcoal text-center relative overflow-hidden">
+      <section id="contact" className="py-[72px] bg-charcoal text-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.08),transparent_60%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark className="justify-center flex">Stay Connected</Tag>
