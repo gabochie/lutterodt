@@ -202,7 +202,7 @@ export default function ComingSoonPage() {
             <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-ghost">WhatsApp</a>
           </div>
           <p className="mt-10 text-ivory/30 font-mono text-[10px] tracking-widest uppercase">
-            Accra · London
+            Ghana · Germany · USA · UK · Netherlands
           </p>
         </div>
       </section>

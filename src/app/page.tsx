@@ -34,7 +34,7 @@ export default async function Home() {
             <span className="w-[1px] h-3 bg-ivory/15" />
             <a href="/coming-soon" className="hover:text-gold-light transition-colors">Funders</a>
             <span className="w-[1px] h-3 bg-ivory/15" />
-            <span>Accra · London</span>
+            <span>Ghana · Germany · USA · UK · Netherlands</span>
           </div>
         </div>
       </div>

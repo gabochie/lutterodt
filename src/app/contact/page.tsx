@@ -79,7 +79,7 @@ export default function ContactPage() {
                 <TabPanel show={activeTab === "join"}>
                   <FieldRow>
                     <Field label="Full Name" />
-                    <Field label="Family Branch" placeholder="e.g. Accra, London, Kumasi" />
+                    <Field label="Family Branch" placeholder="e.g. Ghana, Germany, USA, UK, Netherlands" />
                   </FieldRow>
                   <FieldRow>
                     <Field label="Email Address" type="email" />
