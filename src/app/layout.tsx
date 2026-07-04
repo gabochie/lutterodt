@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/shared/Header";
-import { Footer } from "@/components/shared/Footer";
 
 const fraunces = Fraunces({
   variable: "--font-display",
@@ -61,9 +59,7 @@ export default function RootLayout({
             />
           </>
         )}
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

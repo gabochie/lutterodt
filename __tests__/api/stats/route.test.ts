@@ -1,6 +1,6 @@
-import { GET } from "@/app/api/stats/route";
+import { GET } from "@/app/(main)/api/stats/route";
 
-jest.mock("@/app/api/stats/route", () => ({
+jest.mock("@/app/(main)/api/stats/route", () => ({
   __esModule: true,
   GET: jest.fn(),
 }));
