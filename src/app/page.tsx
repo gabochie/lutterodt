@@ -26,9 +26,13 @@ function ComingSoon() {
           <p className="text-ivory/60 text-[16px] max-w-[44ch] mx-auto leading-relaxed mb-8">
             A permanent digital archive of the Lutterodt family&mdash;six generations of history, heritage, and home.
           </p>
-          <a href="mailto:gabochie@gmail.com" className="btn-gold inline-flex">
-            Get in Touch
-          </a>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <a href="mailto:gabochie@gmail.com" className="btn-gold">Get in Touch</a>
+            <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-ghost">WhatsApp</a>
+          </div>
+            <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-ghost">WhatsApp</a>
+          </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest uppercase text-ivory/40 animate-pulse">
@@ -180,9 +184,10 @@ function ComingSoon() {
                   Whether through a grant, an impact investment or a personal contribution&mdash;every bit of support brings the archive closer to permanence. Reach out to learn more or to discuss partnership opportunities.
                 </p>
               </div>
-              <a href="mailto:gabochie@gmail.com" className="btn-gold shrink-0">
-                Contact Us About Funding
-              </a>
+              <div className="flex gap-3 shrink-0 flex-wrap">
+                <a href="mailto:gabochie@gmail.com" className="btn-gold">Contact Us About Funding</a>
+                <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-ghost">WhatsApp</a>
+              </div>
             </div>
           </div>
         </div>
