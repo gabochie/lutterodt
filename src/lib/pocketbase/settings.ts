@@ -25,7 +25,7 @@ export async function getSetting(key: string): Promise<string | null> {
     const record = await pb.collection("settings").getFirstListItem(`key="${key}"`);
     return record.value || null;
   } catch {
-    return null;
+    return "false";
   }
 }
 
