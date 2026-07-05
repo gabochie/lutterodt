@@ -103,6 +103,21 @@ const initialRoadmap = {
             { text: "Backup strategy for PocketBase data", status: "pending" },
           ],
         },
+        {
+          title: "Family Research",
+          items: [
+            { text: "Women who married out of the Lutterodt name (nth-generation search)", status: "in_progress" },
+            { text: "German Lutteroth branch — LinkedIn, business registries, obituaries", status: "in_progress" },
+            { text: "Historical / Census gaps — Germany 1600s–1800s parish records", status: "in_progress" },
+            { text: "Contemporary Ghana domestic — unlisted professionals across 16 regions", status: "in_progress" },
+            { text: "Scandinavian / Nordic branch — Danish colonial records, Swedish Lutteroths", status: "pending" },
+            { text: "Sports & Entertainment — athletes, musicians, actors", status: "pending" },
+            { text: "Younger generation — students & early-career professionals (LinkedIn)", status: "pending" },
+            { text: "The Netherlands presence — Dutch Lutterodt descendants", status: "pending" },
+            { text: "African diaspora beyond Ghana — Nigeria, Liberia, Sierra Leone, Gambia", status: "pending" },
+            { text: "Obituaries & death notices — GhanaWeb, MyJoyOnline, Modern Ghana archives", status: "pending" },
+          ],
+        },
       ],
       deliverables: [
         "PocketBase backend (database, auth, storage)",
@@ -270,5 +285,6 @@ const initialRoadmap = {
     { sprint: "Sprint 9", focus: "Public pages — About, History, Timeline, Gallery, Stories", status: "pending" },
     { sprint: "Sprint 10", focus: "Public pages — Family Tree, Events, Join, Contact", status: "pending" },
     { sprint: "Sprint 11", focus: "Production deployment — Cloudflare Workers + env vars + tunnel", status: "in_progress" },
+    { sprint: "Sprint 12", focus: "Family research — 10 blind spots (obituaries, German branch, diaspora, etc.)", status: "pending" },
   ],
 };
