@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/history", label: "History" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
+  { href: "/disclaimer", label: "Disclaimer" }, // Added Disclaimer link
 ];
 
 export function Header() {
