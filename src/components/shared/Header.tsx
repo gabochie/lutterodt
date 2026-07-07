@@ -11,9 +11,8 @@ const navLinks = [
   { href: "/sponsor", label: "Sponsor" },
   { href: "/about", label: "About" },
   { href: "/history", label: "History" },
-  { href: "/disclaimer", label: "Disclaimer" },
   { href: "/contact", label: "Contact" },
-  { href: "/disclaimer", label: "Disclaimer" }, // Added Disclaimer link
+  { href: "/disclaimer", label: "Disclaimer" },
 ];
 
 export function Header() {
