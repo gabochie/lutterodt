@@ -76,7 +76,13 @@ body{font-family:'Inter',-apple-system,sans-serif;background:#FAF6EF;color:#211D
 @media(max-width:768px){body{flex-direction:column}.sidebar{position:fixed;top:0;left:-280px;height:100vh;z-index:100;transition:left .3s ease;width:260px}.sidebar.open{left:0}.main-wrap{margin-left:0;width:100%}.topbar{padding:12px 16px}.topbar h1{font-size:18px}.stats-grid{grid-template-columns:1fr 1fr}.menu-toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:none;border:1px solid rgba(33,29,26,0.14);border-radius:2px;cursor:pointer;flex-shrink:0;color:#2A0B14;font-size:18px;margin-right:8px;transition:all .2s;line-height:1}.menu-toggle:hover{border-color:#C6A15B;color:#5C1A2B}.main-content{padding:24px}}@media(max-width:480px){.stats-grid{grid-template-columns:1fr}.main-content{padding:16px}.topbar{padding:10px 12px}.topbar h1{font-size:16px}.btn{padding:8px 14px;font-size:10px}.card{padding:14px}.card-v{font-size:26px}.tbl-wrap td,.tbl-wrap th{padding:8px 10px}}`;
 
 const pages = {
-  login: (error) => `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Login \u2014 Lutterodt Admin</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}</style></head><body class="login-body"><div class="login-box"><svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;display:block;margin:0 auto 16px"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1"/><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#5C1A2B" stroke-width="1.1"/><circle cx="20" cy="20" r="3" fill="#C6A15B"/></svg><h1>Lutterodt</h1><p class="sub">Sign in to manage the platform</p>${error ? `<div class="login-error">${error}</div>` : ''}<form method="POST" action="/api/login"><label for="password">Password</label><input type="password" id="password" name="password" placeholder="Enter admin password" required><button type="submit">Sign In</button></form><div style="margin-top:20px;text-align:center;border-top:1px solid rgba(33,29,26,0.14);padding-top:20px"><a href="/admin/preview" style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#8C744A;text-decoration:none;transition:color .2s">Preview the admin interface \u2192</a></div></div></body></html>`,
+  login: (error) => `...`,
+
+  verifyForm: (error, success) => `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verify \u2014 Lutterodt Family Directory</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}.vrfy-body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#FAF6EF;padding:20px}.vrfy-box{width:100%;max-width:460px;padding:40px}.vrfy-box h1{font-family:'Fraunces','Iowan Old Style',serif;font-size:26px;font-weight:500;text-align:center;color:#2A0B14;letter-spacing:-.01em;margin-bottom:6px}.vrfy-box .sub{text-align:center;color:rgba(33,29,26,0.45);font-size:14px;margin-bottom:28px}.vrfy-box form{display:flex;flex-direction:column;gap:14px}.vrfy-box label{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:rgba(33,29,26,0.5)}.vrfy-box input,.vrfy-box select{padding:12px 14px;border:1px solid rgba(33,29,26,0.14);background:#FAF6EF;color:#211D1A;font-size:15px;font-family:'Inter',-apple-system,sans-serif;border-radius:2px;outline:none;transition:border-color .2s}.vrfy-box input:focus,.vrfy-box select:focus{border-color:#C6A15B}.vrfy-box .btn-submit{padding:12px;background:#5C1A2B;color:#FAF6EF;border:none;border-radius:2px;font-size:13px;font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s}.vrfy-box .btn-submit:hover{background:#3A0F1C}.vrfy-box .footnote{text-align:center;margin-top:20px;border-top:1px solid rgba(33,29,26,0.14);padding-top:20px;font-size:13px;color:rgba(33,29,26,0.45)}.vrfy-box .footnote a{color:#5C1A2B;text-decoration:none;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase}</style></head><body class="vrfy-body"><div class="vrfy-box"><svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;display:block;margin:0 auto 16px"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1"/><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#5C1A2B" stroke-width="1.1"/><circle cx="20" cy="20" r="3" fill="#C6A15B"/></svg><h1>Lutterodt Family Directory</h1><p class="sub">This directory is reserved for those who carry the Lutterodt name. Verify your identity to access the full family archive and connect with Lutterodts worldwide.</p>${error?`<div class="login-error">${error}</div>`:''}${success?`<div style="background:rgba(47,74,60,0.06);color:#2F4A3C;padding:10px 14px;border:1px solid rgba(47,74,60,0.15);font-size:13px;text-align:center;margin-bottom:16px">${success}</div>`:''}<form method="POST" action="/api/verify"><label for="full_name">Full Name</label><input type="text" id="full_name" name="full_name" placeholder="e.g. Kwame Lutterodt" required><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="you@example.com" required><label for="country">Country of Residence</label><input type="text" id="country" name="country" placeholder="e.g. Ghana, UK, USA"><label for="relationship">Your Connection to the Lutterodt Family</label><input type="text" id="relationship" name="relationship" placeholder="e.g. Grandson of George Lutterodt, cousin, etc."><button type="submit" class="btn-submit">Verify &amp; Access Directory</button></form><div class="footnote"><a href="/">Return to lutterodt.org</a></div></div></body></html>`,
+
+  verifySuccess: () => `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Verified \u2014 Lutterodt Family Directory</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}.vrfy-body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#FAF6EF;padding:20px}.vrfy-box{width:100%;max-width:460px;padding:40px;text-align:center}.vrfy-box h1{font-family:'Fraunces','Iowan Old Style',serif;font-size:26px;font-weight:500;color:#2A0B14;letter-spacing:-.01em;margin-bottom:10px}.vrfy-box p{color:rgba(33,29,26,0.55);font-size:15px;line-height:1.6;margin-bottom:24px}.vrfy-box .check{width:48px;height:48px;border-radius:50%;background:#2F4A3C;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#FAF6EF;font-size:24px}.vrfy-box .btn{display:inline-block;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:12px 28px;background:#5C1A2B;color:#FAF6EF;text-decoration:none;border-radius:2px;transition:background .2s;margin:4px}.vrfy-box .btn:hover{background:#3A0F1C}.vrfy-box .btn-sec{background:transparent;border:1px solid rgba(33,29,26,0.14);color:#5C1A2B}.vrfy-box .btn-sec:hover{background:rgba(92,26,43,0.04)}</style></head><body class="vrfy-body"><div class="vrfy-box"><div class="check">&#10003;</div><h1>You&rsquo;re verified</h1><p>Welcome to the Lutterodt Family Directory. Your identity has been confirmed and you now have access to the full directory of Lutterodt profiles worldwide. This access is valid for 30 days.</p><a href="/directory" class="btn">Browse the Directory</a><a href="/" class="btn btn-sec">Return Home</a></div></body></html>`,
+
+  accessDenied: () => `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Access Restricted \u2014 Lutterodt Family Directory</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}.deny-body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#FAF6EF;padding:20px}.deny-box{width:100%;max-width:480px;padding:40px;text-align:center}.deny-box h1{font-family:'Fraunces','Iowan Old Style',serif;font-size:28px;font-weight:500;color:#2A0B14;letter-spacing:-.01em;margin-bottom:10px}.deny-box p{color:rgba(33,29,26,0.55);font-size:15px;line-height:1.6;margin-bottom:20px}.deny-box .divider{width:40px;height:1px;background:rgba(33,29,26,0.12);margin:0 auto 20px}.deny-box .btn{display:inline-block;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:12px 28px;background:#5C1A2B;color:#FAF6EF;text-decoration:none;border-radius:2px;transition:background .2s;margin:4px}.deny-box .btn:hover{background:#3A0F1C}.deny-box .btn-sec{background:transparent;border:1px solid rgba(33,29,26,0.14);color:#5C1A2B}.deny-box .btn-sec:hover{background:rgba(92,26,43,0.04)}</style></head><body class="deny-body"><div class="deny-box"><svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;display:block;margin:0 auto 16px"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1"/><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#5C1A2B" stroke-width="1.1"/><circle cx="20" cy="20" r="3" fill="#C6A15B"/></svg><h1>Family Directory</h1><p class="sub" style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8C744A;margin-bottom:16px">Access Restricted</p><p>The Lutterodt Family Directory is reserved for those who carry the Lutterodt name. This is a private archive of Lutterodt family members across the globe, maintained as part of the Lutterodt Renaissance project.</p><div class="divider"></div><p style="font-size:14px;color:rgba(33,29,26,0.5)">If you are a Lutterodt, verify your identity to gain access. If you have questions about the project, please reach out through our contact page.</p><div style="margin-top:24px"><a href="/verify" class="btn">I Am a Lutterodt</a><a href="/contact" class="btn btn-sec">Contact Us</a></div><div style="margin-top:20px;border-top:1px solid rgba(33,29,26,0.14);padding-top:20px"><a href="/" style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8C744A;text-decoration:none">Return to lutterodt.org</a></div></div></body></html>`,
 
   preview: () => {
     const sections = {
@@ -90,7 +96,7 @@ const pages = {
     return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Preview \u2014 Lutterodt Admin</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}.preview-banner{background:#5C1A2B;color:#FAF6EF;text-align:center;padding:6px 16px;font-family:monospace;font-size:10px;letter-spacing:.1em} .preview-banner a{color:#E4C989;text-decoration:underline}</style></head><body><div class="preview-banner">Preview mode \u2014 demo data shown. <a href="/login">Sign in to access live admin.</a></div><div style="display:flex;flex:1;min-height:0"><div class="sidebar"><a href="/admin/preview" class="sidebar-logo"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1"/><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FAF6EF" stroke-width="1.1"/><circle cx="20" cy="20" r="3" fill="#C6A15B"/></svg>Lutterodt<span>Renaissance</span></a><nav class="sidebar-nav"><a href="#" data-section="dashboard" class="active">Dashboard</a><a href="#" data-section="contacts">Contacts</a><a href="#" data-section="budget">Budget</a><a href="#" data-section="roadmap">Roadmap</a><a href="#" data-section="checklist">Checklist</a><a href="#" data-section="settings">Settings</a></nav><div class="sidebar-spacer"></div><a href="/login" class="sidebar-foot">Sign in \u2192</a></div><div class="main-wrap"><div class="topbar"><button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation">\u2630</button><h1 id="previewTitle">Dashboard</h1><div class="topbar-actions"><span style="font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(33,29,26,0.35)">Preview</span></div></div><div class="main-content" id="previewContent"></div></div></div><script>const sections=${JSON.stringify(sections)};function showSection(key){const s=sections[key];if(!s)return;document.getElementById('previewTitle').textContent=s.title;document.getElementById('previewContent').innerHTML=s.html;document.querySelectorAll('.sidebar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.section===key))}document.querySelectorAll('.sidebar-nav a[data-section]').forEach(a=>a.addEventListener('click',function(e){e.preventDefault();showSection(this.dataset.section)}));showSection('dashboard');document.getElementById('menuToggle')?.addEventListener('click',function(){document.querySelector('.sidebar').classList.toggle('open')});document.addEventListener('click',function(e){const s=document.querySelector('.sidebar');if(s&&!s.contains(e.target)&&!document.getElementById('menuToggle')?.contains(e.target))s.classList.remove('open')});</script></body></html>`;
   },
 
-  adminPage: (token, active, title, subtitle, bodyHtml, extraJs) => `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title} \u2014 Lutterodt Admin</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}</style></head><body><div class="sidebar"><a href="/admin" class="sidebar-logo"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1"/><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FAF6EF" stroke-width="1.1"/><circle cx="20" cy="20" r="3" fill="#C6A15B"/></svg>Lutterodt<span>Renaissance</span></a><nav class="sidebar-nav"><a href="/admin"${active==='dashboard'?' class="active"':''}>Dashboard</a><a href="/admin/contacts"${active==='contacts'?' class="active"':''}>Contacts</a><a href="/admin/budget"${active==='budget'?' class="active"':''}>Budget</a><a href="/admin/roadmap"${active==='roadmap'?' class="active"':''}>Roadmap</a><a href="/admin/checklist"${active==='checklist'?' class="active"':''}>Checklist</a><a href="/admin/settings"${active==='settings'?' class="active"':''}>Settings</a></nav><div class="sidebar-spacer"></div><a href="/api/logout" id="logoutLink" class="sidebar-foot">Logout</a></div><div class="main-wrap"><div class="topbar"><button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation">\u2630</button><h1>${title}</h1>${subtitle?`<div class="topbar-actions"><span style="font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(33,29,26,0.35)">${subtitle}</span></div>`:''}</div><div class="main-content">${bodyHtml}</div></div><script>const t=${JSON.stringify(token)};${extraJs||''}document.getElementById('menuToggle')?.addEventListener('click',function(){document.querySelector('.sidebar').classList.toggle('open')});document.addEventListener('click',function(e){const s=document.querySelector('.sidebar');if(s&&!s.contains(e.target)&&!document.getElementById('menuToggle')?.contains(e.target))s.classList.remove('open')});document.getElementById("logoutLink")?.addEventListener("click",function(e){e.preventDefault();fetch("/api/logout").then(()=>{window.location.href="/login"})});</script></body></html>`
+  adminPage: (token, active, title, subtitle, bodyHtml, extraJs) => `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title} \u2014 Lutterodt Admin</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,650&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>${sharedCss}</style></head><body><div class="sidebar"><a href="/admin" class="sidebar-logo"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1"/><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FAF6EF" stroke-width="1.1"/><circle cx="20" cy="20" r="3" fill="#C6A15B"/></svg>Lutterodt<span>Renaissance</span></a><nav class="sidebar-nav"><a href="/admin"${active==='dashboard'?' class="active"':''}>Dashboard</a><a href="/admin/contacts"${active==='contacts'?' class="active"':''}>Contacts</a><a href="/admin/verified"${active==='verified'?' class="active"':''}>Verified</a><a href="/admin/budget"${active==='budget'?' class="active"':''}>Budget</a><a href="/admin/roadmap"${active==='roadmap'?' class="active"':''}>Roadmap</a><a href="/admin/checklist"${active==='checklist'?' class="active"':''}>Checklist</a><a href="/admin/settings"${active==='settings'?' class="active"':''}>Settings</a></nav><div class="sidebar-spacer"></div><a href="/api/logout" id="logoutLink" class="sidebar-foot">Logout</a></div><div class="main-wrap"><div class="topbar"><button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation">\u2630</button><h1>${title}</h1>${subtitle?`<div class="topbar-actions"><span style="font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(33,29,26,0.35)">${subtitle}</span></div>`:''}</div><div class="main-content">${bodyHtml}</div></div><script>const t=${JSON.stringify(token)};${extraJs||''}document.getElementById('menuToggle')?.addEventListener('click',function(){document.querySelector('.sidebar').classList.toggle('open')});document.addEventListener('click',function(e){const s=document.querySelector('.sidebar');if(s&&!s.contains(e.target)&&!document.getElementById('menuToggle')?.contains(e.target))s.classList.remove('open')});document.getElementById("logoutLink")?.addEventListener("click",function(e){e.preventDefault();fetch("/api/logout").then(()=>{window.location.href="/login"})});</script></body></html>`
 };
 
 /* ===== SESSION HELPERS ===== */
@@ -127,6 +133,29 @@ async function createSession(env) {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.ADMIN_PASSWORD), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payloadB64));
   return payloadB64 + '.' + bytesToB64(new Uint8Array(sig));
+}
+
+/* ===== VERIFICATION TOKENS ===== */
+
+async function createVerificationToken(name, email, env) {
+  const payload = JSON.stringify({ name, email, role: 'lutterodt', ts: Date.now() });
+  const payloadB64 = btoa(payload);
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.ADMIN_PASSWORD + '_vrfy'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payloadB64));
+  return payloadB64 + '.' + bytesToB64(new Uint8Array(sig));
+}
+
+async function verifyVerificationToken(token, env) {
+  if (!token) return null;
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 2) return null;
+    const [payloadB64, sigB64] = parts;
+    const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.ADMIN_PASSWORD + '_vrfy'), { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']);
+    const valid = await crypto.subtle.verify('HMAC', key, b64ToBytes(sigB64), new TextEncoder().encode(payloadB64));
+    if (!valid) return null;
+    return JSON.parse(atob(payloadB64));
+  } catch { return null; }
 }
 
 /* ===== CHECKLIST DEFAULTS ===== */
@@ -194,15 +223,48 @@ async function adminRouter(request, env) {
   // Preview (no auth)
   if (pathname === '/admin/preview') return html(pages.preview());
 
+  // Verify page (public)
+  if (pathname === '/verify' && method === 'GET') return html(pages.verifyForm(null, null));
+
+  // Verify success page (public)
+  if (pathname === '/verify/success' && method === 'GET') return html(pages.verifySuccess());
+
+  // Verify POST (public - issues cookie)
+  if (pathname === '/api/verify' && method === 'POST') {
+    const formData = await request.formData();
+    const fullName = (formData.get('full_name') || '').trim();
+    const email = (formData.get('email') || '').trim();
+    const country = (formData.get('country') || '').trim();
+    const relationship = (formData.get('relationship') || '').trim();
+    if (!fullName || !email) {
+      return html(pages.verifyForm('Full name and email are required.', null), 400);
+    }
+    try {
+      await env.LUTTERODT_D1.prepare(
+        'CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT "", relationship TEXT DEFAULT "", status TEXT DEFAULT "pending", created_at TEXT DEFAULT (datetime("now")), verified_at TEXT, notes TEXT DEFAULT "")'
+      ).run();
+      await env.LUTTERODT_D1.prepare(
+        'INSERT INTO verified_lutterodts (full_name, email, country, relationship) VALUES (?, ?, ?, ?)'
+      ).bind(fullName, email, country, relationship).run();
+      const vToken = await createVerificationToken(fullName, email, env);
+      return new Response('Redirecting...', {
+        status: 302,
+        headers: { Location: '/verify/success', 'Set-Cookie': `lutterodt_verified=${vToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000` }
+      });
+    } catch (err) {
+      return html(pages.verifyForm('An error occurred. Please try again.', null), 500);
+    }
+  }
+
   // Admin pages (auth required)
   if (pathname.startsWith('/admin')) {
     const session = await verifySession(tokenStr, env);
     if (!session) return new Response('Redirecting...', { status: 302, headers: { Location: '/login' } });
 
     if (pathname === '/admin') {
-      const dashHtml = `<div id="statsContainer" class="stats-grid"><div class="card"><h3 class="card-h">Loading</h3></div></div><span class="tag-line" style="margin-bottom:16px">Quick Actions</span><div class="actions-row"><a href="/admin/contacts" class="btn btn-o">Contacts</a><a href="/admin/checklist" class="btn btn-o">Checklist</a><a href="/admin/budget" class="btn btn-o">Budget</a><a href="/admin/roadmap" class="btn btn-o">Roadmap</a><a href="/admin/settings" class="btn btn-o">Settings</a></div>`;
+      const dashHtml = `<div id="statsContainer" class="stats-grid"><div class="card"><h3 class="card-h">Loading</h3></div></div><span class="tag-line" style="margin-bottom:16px">Quick Actions</span><div class="actions-row"><a href="/admin/contacts" class="btn btn-o">Contacts</a><a href="/admin/verified" class="btn btn-o">Verified</a><a href="/admin/checklist" class="btn btn-o">Checklist</a><a href="/admin/budget" class="btn btn-o">Budget</a><a href="/admin/roadmap" class="btn btn-o">Roadmap</a><a href="/admin/settings" class="btn btn-o">Settings</a></div>`;
       return html(pages.adminPage(tokenStr, 'dashboard', 'Dashboard', 'Session active', dashHtml,
-        `fetch("/api/stats",{headers:{Authorization:"Bearer "+t}}).then(r=>r.json()).then(d=>{const s=document.getElementById("statsContainer");if(d.error){s.innerHTML='<p class="error-msg">Error: '+(d.error||"Unknown")+'</p>';return}const tables=['contacts','articles','timeline_events','gallery_items'];s.innerHTML=tables.map(t=>'<div class="card"><h3 class="card-h">'+t.replace(/_/g,' ').replace(/\\b\\w/g,c=>c.toUpperCase())+'</h3><div class="card-v">'+(d[t]||0)+'</div></div>').join('')}).catch(()=>{document.getElementById("statsContainer").innerHTML='<p class="error-msg">Failed to load stats.</p>'})`));
+        `fetch("/api/stats",{headers:{Authorization:"Bearer "+t}}).then(r=>r.json()).then(d=>{const s=document.getElementById("statsContainer");if(d.error){s.innerHTML='<p class="error-msg">Error: '+(d.error||"Unknown")+'</p>';return}const tables=['contacts','articles','timeline_events','gallery_items','verified_lutterodts'];s.innerHTML=tables.map((t,i)=>{const label=i===4?'Verified<br>Lutterodts':t.replace(/_/g,' ').replace(/\\b\\w/g,c=>c.toUpperCase());return '<div class="card"><h3 class="card-h">'+label+'</h3><div class="card-v">'+(d[t]||0)+'</div></div>'}).join('')}).catch(()=>{document.getElementById("statsContainer").innerHTML='<p class="error-msg">Failed to load stats.</p>'})`));
     }
 
     if (pathname === '/admin/contacts') {
@@ -236,6 +298,12 @@ async function adminRouter(request, env) {
       return html(pages.adminPage(tokenStr, 'checklist', 'Pre-Deployment Checklist', '0 / 0', bodyHtml, js));
     }
 
+    if (pathname === '/admin/verified') {
+      const bodyHtml = `<div id="verifiedContainer"><p class="loading">Loading verified Lutterodts...</p></div>`;
+      return html(pages.adminPage(tokenStr, 'verified', 'Verified Lutterodts', 'Manage family directory access', bodyHtml,
+        `fetch("/api/verified",{headers:{Authorization:"Bearer "+t}}).then(r=>r.json()).then(d=>{const c=document.getElementById("verifiedContainer");if(d.error){c.innerHTML='<p class="error-msg">Error: '+(d.error||"Unknown")+'</p>';return}const list=Array.isArray(d)?d:(d.results||[]);if(!list.length){c.innerHTML='<p class="empty-msg">No verified Lutterodt registrations yet.</p>';return}function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}let h='<div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Status</th><th>Date</th></tr></thead><tbody>';list.forEach(function(r){h+='<tr><td>'+esc(r.full_name)+'</td><td><a href="mailto:'+esc(r.email)+'" style="color:#5C1A2B;text-decoration:none">'+esc(r.email)+'</a></td><td>'+(r.country||'-')+'</td><td><span class="badge badge-'+(r.status==="verified"?"done":r.status==="rejected"?"pending":"progress")+'">'+(r.status||"pending")+'</span></td><td style="font-family:monospace;font-size:11px;color:rgba(33,29,26,0.4);white-space:nowrap">'+(r.created_at||'')+'</td></tr>'});h+='</tbody></table></div><p style="margin-top:16px;font-size:13px;color:rgba(33,29,26,0.45)">'+list.length+' registration'+(list.length>1?'s':'')+' total.</p>';c.innerHTML=h}).catch(function(){document.getElementById("verifiedContainer").innerHTML='<p class="error-msg">Failed to load verified Lutterodts.</p>'})`));
+    }
+
     return html(pages.adminPage(tokenStr, 'dashboard', 'Dashboard', 'Session active', '<p class="error-msg">Page not found.</p>'));
   }
 
@@ -252,7 +320,7 @@ async function adminRouter(request, env) {
           return json(cached.stats);
         }
         const db = env.LUTTERODT_D1;
-        const tables = ['contacts', 'articles', 'timeline_events', 'gallery_items'];
+        const tables = ['contacts', 'articles', 'timeline_events', 'gallery_items', 'verified_lutterodts'];
         const results = await Promise.all(
           tables.map(table => db.prepare('SELECT COUNT(*) as count FROM ' + table).first())
         );
@@ -292,11 +360,32 @@ async function adminRouter(request, env) {
         await env.LUTTERODT_KV.put('checklist', JSON.stringify(body));
         return json({ ok: true });
       }
+
+      // GET /api/verified (admin only)
+      if (pathname === '/api/verified' && method === 'GET') {
+        await env.LUTTERODT_D1.prepare(
+          'CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT "", relationship TEXT DEFAULT "", status TEXT DEFAULT "pending", created_at TEXT DEFAULT (datetime("now")), verified_at TEXT, notes TEXT DEFAULT "")'
+        ).run();
+        const { results } = await env.LUTTERODT_D1.prepare(
+          'SELECT id, full_name, email, country, relationship, status, created_at FROM verified_lutterodts ORDER BY created_at DESC'
+        ).all();
+        return json(results || []);
+      }
     } catch (err) {
       return json({ error: err.message }, 500);
     }
 
     return json({ error: 'Not found' }, 404);
+  }
+
+  // Directory access control (Lutterodts only)
+  if (pathname === '/directory' || pathname.startsWith('/directory/')) {
+    const adminSession = tokenStr ? await verifySession(tokenStr, env) : null;
+    if (adminSession) return null;
+    const vToken = cookies['lutterodt_verified'] || '';
+    const vSession = await verifyVerificationToken(vToken, env);
+    if (vSession) return null;
+    return html(pages.accessDenied());
   }
 
   return null;
