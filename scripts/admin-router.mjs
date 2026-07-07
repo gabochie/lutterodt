@@ -245,15 +245,20 @@ async function adminRouter(request, env) {
     if (!session) return json({ error: 'Unauthorized' }, 401);
 
     try {
-      // GET /api/stats
+      // GET /api/stats (parallel D1 queries + KV cache)
       if (pathname === '/api/stats' && method === 'GET') {
+        const cached = await env.LUTTERODT_KV.get('stats_cache', 'json');
+        if (cached && cached.ts > Date.now() - 60000) {
+          return json(cached.stats);
+        }
         const db = env.LUTTERODT_D1;
         const tables = ['contacts', 'articles', 'timeline_events', 'gallery_items'];
+        const results = await Promise.all(
+          tables.map(table => db.prepare('SELECT COUNT(*) as count FROM ' + table).first())
+        );
         const stats = {};
-        for (const table of tables) {
-          const result = await db.prepare('SELECT COUNT(*) as count FROM ' + table).first();
-          stats[table] = result ? result.count : 0;
-        }
+        tables.forEach((t, i) => { stats[t] = results[i] ? results[i].count : 0; });
+        await env.LUTTERODT_KV.put('stats_cache', JSON.stringify({ stats, ts: Date.now() }));
         return json(stats);
       }
 
