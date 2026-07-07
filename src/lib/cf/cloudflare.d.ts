@@ -15,9 +15,9 @@ interface D1Database {
 
 interface D1PreparedStatement {
   bind(...values: unknown[]): D1PreparedStatement;
-  first<T = unknown>(colName?: string): Promise<T>;
-  run(): Promise<D1Result>;
-  all(): Promise<D1Result>;
+  first<T = Record<string, unknown>>(colName?: string): Promise<T>;
+  run<T = D1Result>(): Promise<T>;
+  all<T = Record<string, unknown>>(): Promise<{ results: T[]; success: boolean; meta: Record<string, unknown> }>;
   raw(): Promise<unknown[][]>;
 }
 
@@ -26,4 +26,12 @@ interface D1Result {
   results: Record<string, unknown>[];
   meta: Record<string, unknown>;
   error?: string;
+}
+
+interface CloudflareEnv {
+  LUTTERODT_KV: KVNamespace;
+  LUTTERODT_D1: D1Database;
+  ASSETS: { fetch: (request: Request) => Promise<Response> };
+  IMAGES: unknown;
+  WORKER_SELF_REFERENCE: { fetch: (request: Request) => Promise<Response> };
 }
