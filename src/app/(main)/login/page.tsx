@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PasswordField } from "@/components/PasswordField";
 
 export default async function LoginPage({
   searchParams,
@@ -48,18 +49,7 @@ export default async function LoginPage({
               placeholder="hello@lutterodt.org"
             />
           </div>
-          <div className="field">
-            <label className="font-mono text-[10.5px] tracking-widest uppercase text-gold-light/60 block mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              required
-              className="w-full border-0 border-b border-ivory/20 bg-transparent py-3 px-1 font-body text-[15px] text-ivory placeholder:text-ivory/30 focus:outline-0 focus:border-gold transition-colors"
-              placeholder="••••••••"
-            />
-          </div>
+          <PasswordField />
           <button type="submit" className="w-full btn btn-gold justify-center mt-2">
             Sign In
           </button>

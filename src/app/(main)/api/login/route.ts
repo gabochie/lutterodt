@@ -6,8 +6,13 @@ export async function POST(request: Request) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  if (password !== getAdminPassword()) {
-    return NextResponse.redirect(new URL("/login?error=Invalid+credentials", request.url));
+  const expected = getAdminPassword();
+  const pwSource = process.env.ADMIN_PASSWORD ? "from env" : "from fallback";
+
+  if (password !== expected) {
+    return NextResponse.redirect(
+      new URL(`/login?error=Invalid+credentials&pw=${pwSource}&len=${expected.length}`, request.url)
+    );
   }
 
   const session = await createSession(email || "admin@lutterodt.org");
