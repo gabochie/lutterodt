@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getSetting, setSetting } from "@/lib/pocketbase/settings";
+import { getSetting, setSetting } from "@/lib/cf/kv";
+import { verifySession } from "@/lib/cf/auth";
 
 export async function GET() {
   const value = await getSetting("coming_soon");
@@ -7,9 +8,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const authCookie = request.cookies.get("pb_auth");
-
-  if (!authCookie) {
+  if (!(await verifySession())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

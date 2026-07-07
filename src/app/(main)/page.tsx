@@ -1,4 +1,4 @@
-import { getSetting } from "@/lib/pocketbase/settings";
+import { getSetting } from "@/lib/cf/kv";
 import { FullSite } from "@/components/home/FullSite";
 
 export default async function Home() {

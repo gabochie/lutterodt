@@ -12,16 +12,25 @@
 	},
 	"services": [
 		{
-			// Self-reference service binding, the service name must match the worker name
-			// see https://opennext.js.org/cloudflare/caching
 			"binding": "WORKER_SELF_REFERENCE",
 			"service": "lutterodt",
 			"environment": "production"
 		}
 	],
 	"images": {
-		// Enable image optimization
-		// see https://opennext.js.org/cloudflare/howtos/image
 		"binding": "IMAGES"
-	}
+	},
+	"kv_namespaces": [
+		{
+			"binding": "LUTTERODT_KV",
+			"id": "<KV_NAMESPACE_ID>"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "LUTTERODT_D1",
+			"database_name": "lutterodt-db",
+			"database_id": "<D1_DATABASE_ID>"
+		}
+	]
 }

@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getSetting, setSetting } from "@/lib/pocketbase/settings";
+import { getSetting, setSetting } from "@/lib/cf/kv";
+import { verifySession } from "@/lib/cf/auth";
 
 export async function GET() {
   const value = await getSetting("roadmap");
@@ -14,8 +15,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const authCookie = request.cookies.get("pb_auth");
-  if (!authCookie) {
+  if (!(await verifySession())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await request.json();
@@ -33,12 +33,12 @@ const initialRoadmap = {
       status: "in_progress",
       sections: [
         {
-          title: "Backend & Database (PocketBase)",
+          title: "Backend & Database",
           items: [
-            { text: "PocketBase server setup (v0.39.5)", status: "completed" },
-            { text: "Create collections: users, articles, timeline_events, gallery_items, contacts, settings", status: "completed" },
-            { text: "Superuser auth for settings CRUD", status: "completed" },
-            { text: "Storage buckets for media uploads", status: "pending" },
+            { text: "Cloudflare KV namespace for settings (coming_soon, roadmap, budget, outreach)", status: "completed" },
+            { text: "Cloudflare D1 database for structured data (contacts, articles, timeline, gallery)", status: "completed" },
+            { text: "HMAC-signed session cookie auth (no external dependency)", status: "completed" },
+            { text: "D1 schema — contacts, articles, timeline_events, gallery_items tables", status: "completed" },
             { text: "Row-level security / API rules", status: "pending" },
           ],
         },
@@ -46,11 +46,10 @@ const initialRoadmap = {
           title: "Authentication",
           items: [
             { text: "Login page + API route", status: "completed" },
-            { text: "Session cookie management (pb_auth)", status: "completed" },
-            { text: "Route protection middleware (proxy)", status: "completed" },
+            { text: "HMAC-signed admin session cookie", status: "completed" },
+            { text: "Route protection middleware", status: "completed" },
             { text: "Logout", status: "completed" },
             { text: "Password reset flow", status: "pending" },
-            { text: "Role-based access (admin / editor / contributor)", status: "pending" },
           ],
         },
         {
@@ -77,14 +76,13 @@ const initialRoadmap = {
             { text: "Gallery CRUD API + file upload + wire grid", status: "pending" },
             { text: "Contacts API — live data from leads + contact form", status: "pending" },
             { text: "Events management — collection, admin CRUD", status: "pending" },
-            { text: "Users / Members management — list, roles", status: "pending" },
             { text: "Media Library — uploaded assets browser", status: "pending" },
           ],
         },
         {
           title: "Analytics & Dashboard",
           items: [
-            { text: "Live PocketBase stats on admin dashboard", status: "completed" },
+            { text: "Live D1 stats on admin dashboard", status: "completed" },
             { text: "GA4 integration (placeholder script + configurable ID)", status: "completed" },
             { text: "Activity / audit logging for admin actions", status: "pending" },
             { text: "Lead conversion tracking", status: "pending" },
@@ -95,12 +93,12 @@ const initialRoadmap = {
           items: [
             { text: "Deploy Next.js to Cloudflare Workers", status: "completed" },
             { text: "Set environment variables in Cloudflare dashboard", status: "completed" },
-            { text: "⚠️ Keep cloudflared tunnel open while testing (closes when terminal closes)", status: "in_progress" },
-            { text: "Host PocketBase on GCP Cloud Run (Docker, scales to zero)", status: "pending" },
+            { text: "Create KV namespace + D1 database in Cloudflare dashboard", status: "completed" },
+            { text: "Create D1 tables via schema.sql", status: "in_progress" },
             { text: "Configure custom domain (lutterodt.org)", status: "pending" },
             { text: "HTTPS / SSL setup", status: "pending" },
             { text: "R2 cache for OpenNext (see open-next.js.org/cloudflare/caching)", status: "pending" },
-            { text: "Backup strategy for PocketBase data", status: "pending" },
+            { text: "Backup strategy for D1 (export to R2)", status: "pending" },
           ],
         },
         {
@@ -120,10 +118,10 @@ const initialRoadmap = {
         },
       ],
       deliverables: [
-        "PocketBase backend (database, auth, storage)",
+        "Cloudflare KV + D1 backend",
         "Public website (coming soon + full site)",
         "Admin CMS dashboard with live stats",
-        "Authentication (login, session, proxy)",
+        "Authentication (HMAC-signed cookie)",
         "Articles / Timeline / Gallery CRUD",
         "Contact & lead management",
         "Events management",
@@ -275,8 +273,8 @@ const initialRoadmap = {
   ],
   sprints: [
     { sprint: "Sprint 1", focus: "Branding, UI system, design language", status: "completed" },
-    { sprint: "Sprint 2", focus: "PocketBase backend — collections, auth, settings", status: "completed" },
-    { sprint: "Sprint 3", focus: "Coming soon page + lead capture + proxy auth", status: "completed" },
+    { sprint: "Sprint 2", focus: "Cloudflare KV + D1 — namespaces, schema, bindings", status: "completed" },
+    { sprint: "Sprint 3", focus: "Coming soon page + lead capture + HMAC auth", status: "completed" },
     { sprint: "Sprint 4", focus: "Admin dashboard with live stats + analytics", status: "completed" },
     { sprint: "Sprint 5", focus: "Articles CRUD API + admin wiring", status: "pending" },
     { sprint: "Sprint 6", focus: "Timeline CRUD API + admin wiring", status: "pending" },
@@ -284,7 +282,7 @@ const initialRoadmap = {
     { sprint: "Sprint 8", focus: "Contacts / leads live data + events management", status: "pending" },
     { sprint: "Sprint 9", focus: "Public pages — About, History, Timeline, Gallery, Stories", status: "pending" },
     { sprint: "Sprint 10", focus: "Public pages — Family Tree, Events, Join, Contact", status: "pending" },
-    { sprint: "Sprint 11", focus: "Production deployment — Cloudflare Workers + env vars + tunnel", status: "in_progress" },
+    { sprint: "Sprint 11", focus: "Production deployment — Cloudflare Workers + env vars + KV/D1 creation", status: "in_progress" },
     { sprint: "Sprint 12", focus: "Family research — 10 blind spots (obituaries, German branch, diaspora, etc.)", status: "pending" },
   ],
 };

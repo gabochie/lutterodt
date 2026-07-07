@@ -1,8 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
+import { destroySession } from "@/lib/cf/auth";
 
 export async function GET(request: NextRequest) {
-  const origin = request.nextUrl.origin;
-  const response = NextResponse.redirect(new URL("/login", origin));
-  response.cookies.set("pb_auth", "", { path: "/", maxAge: 0 });
+  const session = await destroySession();
+  const response = NextResponse.redirect(new URL("/login", request.nextUrl.origin));
+  response.cookies.set(session.name, session.value, session.options as any);
   return response;
 }

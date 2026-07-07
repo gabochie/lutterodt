@@ -1,5 +1,5 @@
 export interface Article {
-  id: string;
+  id: number;
   created: string;
   updated: string;
   title: string;
@@ -13,7 +13,7 @@ export interface Article {
 }
 
 export interface TimelineEvent {
-  id: string;
+  id: number;
   created: string;
   updated: string;
   year: string;
@@ -25,7 +25,7 @@ export interface TimelineEvent {
 }
 
 export interface GalleryItem {
-  id: string;
+  id: number;
   created: string;
   updated: string;
   src: string;
@@ -36,7 +36,7 @@ export interface GalleryItem {
 }
 
 export interface Contact {
-  id: string;
+  id: number;
   created: string;
   updated: string;
   name: string;
@@ -48,10 +48,17 @@ export interface Contact {
 }
 
 export interface AdminUser {
-  id: string;
+  id: number;
   created: string;
   updated: string;
   email: string;
   name?: string;
   avatar?: string;
+}
+
+declare global {
+  interface CloudflareEnv {
+    LUTTERODT_KV: KVNamespace;
+    LUTTERODT_D1: D1Database;
+  }
 }

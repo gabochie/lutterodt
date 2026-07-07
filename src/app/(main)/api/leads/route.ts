@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import PocketBase from "pocketbase";
+import { createContact } from "@/lib/cf/d1";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
@@ -9,11 +9,8 @@ export async function POST(request: Request) {
     return NextResponse.redirect(new URL("/?error=Invalid+email", request.url));
   }
 
-  const pbUrl = process.env.NEXT_PUBLIC_POCKETBASE_URL || "http://127.0.0.1:8090";
-  const pb = new PocketBase(pbUrl);
-
   try {
-    await pb.collection("contacts").create({
+    await createContact({
       email,
       name: "",
       subject: "Coming Soon Lead",

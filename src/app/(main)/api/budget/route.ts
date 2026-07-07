@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getSetting, setSetting } from "@/lib/pocketbase/settings";
+import { getSetting, setSetting } from "@/lib/cf/kv";
+import { verifySession } from "@/lib/cf/auth";
 
 export async function GET() {
   const value = await getSetting("budget");
@@ -14,8 +15,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const authCookie = request.cookies.get("pb_auth");
-  if (!authCookie) {
+  if (!(await verifySession())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await request.json();
@@ -29,17 +29,16 @@ const initialBudget = {
     { item: "Domain registration (lutterodt.org, 1 year)", cost: 12, type: "one-time" },
     { item: "Cloudflare free tier", cost: 0, type: "one-time" },
     { item: "Development environment & tooling", cost: 0, type: "one-time" },
-    { item: "PocketBase setup & configuration", cost: 0, type: "one-time" },
+    { item: "Cloudflare KV + D1 setup", cost: 0, type: "one-time" },
     { item: "SSL certificates (Let's Encrypt, auto)", cost: 0, type: "one-time" },
   ],
   monthly: [
-    { item: "VPS server (Hetzner CCX13)", cost: 6.50, type: "monthly" },
+    { item: "Cloudflare Workers (free tier)", cost: 0, type: "monthly" },
+    { item: "D1 database (free tier — 5M rows/month)", cost: 0, type: "monthly" },
+    { item: "KV storage (free tier — 1GB stored)", cost: 0, type: "monthly" },
     { item: "Domain renewal (amortised)", cost: 1, type: "monthly" },
-    { item: "Cloudflare (free tier)", cost: 0, type: "monthly" },
-    { item: "Database backups (Cloudflare R2)", cost: 0.07, type: "monthly" },
   ],
   annual: [
-    { item: "VPS server (12 months)", cost: 78, type: "annual" },
     { item: "Domain renewal", cost: 12, type: "annual" },
     { item: "Developer maintenance & updates (10 hrs/month @ $50/hr)", cost: 6000, type: "annual" },
     { item: "Content creation & digitisation", cost: 2400, type: "annual" },
