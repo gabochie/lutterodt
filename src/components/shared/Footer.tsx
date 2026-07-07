@@ -1,4 +1,13 @@
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+const legalLinks = [
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms of Service" },
+  { href: "/disclaimer", label: "Disclaimer" },
+  { href: "/cookies", label: "Cookie Policy" },
+  { href: "/contact", label: "Contact" },
+];
 
 export function Footer() {
   return (
@@ -69,7 +78,13 @@ export function Footer() {
           <a href="#" className="hover:text-gold-light transition-colors">Facebook</a>
           <a href="#" className="hover:text-gold-light transition-colors">YouTube</a>
         </div>
-        <a href="#" className="hover:text-gold-light transition-colors">Privacy Policy</a>
+        <div className="flex gap-[18px]">
+          {legalLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="hover:text-gold-light transition-colors">
+              {link.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </footer>
   );
