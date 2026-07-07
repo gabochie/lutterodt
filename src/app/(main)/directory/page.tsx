@@ -8,14 +8,18 @@ import { profiles, categoryLabels, profileFilters } from "@/data/profiles";
 import { directoryStats } from "@/data/stats";
 
 const countries = Array.from(new Set(profiles.map((p) => p.country))).sort();
+const historicalProfiles = profiles.filter((p) => p.category === "historical");
+const modernProfiles = profiles.filter((p) => p.category !== "historical");
 
-export default function DirectoryPage() {
+export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [countryFilter, setCountryFilter] = useState("all");
 
+  const visibleProfiles = isVerified ? profiles : historicalProfiles;
+
   const filtered = useMemo(() => {
-    return profiles.filter((p) => {
+    return visibleProfiles.filter((p) => {
       const matchesFilter = activeFilter === "all" || p.category === activeFilter;
       const matchesCountry = countryFilter === "all" || p.country === countryFilter;
       const matchesSearch =
@@ -24,36 +28,59 @@ export default function DirectoryPage() {
         p.achievement.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesFilter && matchesCountry && matchesSearch;
     });
-  }, [activeFilter, searchQuery, countryFilter]);
+  }, [activeFilter, searchQuery, countryFilter, visibleProfiles]);
 
   return (
     <>
       <PageHero
         breadcrumb={{ label: "Home", href: "/" }}
         current="Directory"
-        tag={`${directoryStats.totalProfiles} Documented Profiles`}
+        tag={`${isVerified ? directoryStats.totalProfiles : historicalProfiles.length} ${isVerified ? "Documented" : "Historical"} Profiles`}
         title="The Lutterodt family database"
-        description={`${directoryStats.livingProfiles} living notables across ${directoryStats.countries.length} countries, ${directoryStats.continents} continents, and ${directoryStats.categories.length} professional domains -- researched, verified, and curated.`}
+        description={
+          isVerified
+            ? `${directoryStats.livingProfiles} living notables across ${directoryStats.countries.length} countries, ${directoryStats.continents} continents, and ${directoryStats.categories.length} professional domains -- researched, verified, and curated.`
+            : `Showing ${historicalProfiles.length} colonial-era Lutterodts from the Gold Coast (1790--1973). Verify your identity to access all ${directoryStats.totalProfiles} profiles across ${directoryStats.countries.length} countries.`
+        }
       />
 
-      <section className="bg-burgundy-ink text-ivory py-[48px] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(198,161,91,0.10),transparent_50%)] pointer-events-none" />
-        <div className="container-main relative z-10 text-center">
-          <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Sponsor This Project</p>
-          <h2 className="text-ivory text-[clamp(26px,3.2vw,38px)] font-display font-[560] max-w-[28ch] mx-auto leading-tight">
-            Every Lutterodt in the world deserves to be in this record
-          </h2>
-          <p className="text-ivory/65 text-[15px] max-w-[56ch] mx-auto mt-[14px] mb-[24px] leading-relaxed">
-            We are actively reaching out to every known Lutterodt across 11 countries and 6 continents.
-            Your sponsorship keeps this directory free for all family members and funds ongoing research
-            to find those we haven't yet reached.
-          </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <Link href="/sponsor" className="btn-gold">Become a Sponsor</Link>
-            <Link href="/contact" className="btn-ghost">Nominate a Lutterodt</Link>
+      {!isVerified && (
+        <section className="bg-burgundy-ink text-ivory py-[48px] relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(198,161,91,0.10),transparent_50%)] pointer-events-none" />
+          <div className="container-main relative z-10 text-center">
+            <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Family Directory</p>
+            <h2 className="text-ivory text-[clamp(26px,3.2vw,38px)] font-display font-[560] max-w-[32ch] mx-auto leading-tight">
+              This is a preview of the Lutterodt family archive
+            </h2>
+            <p className="text-ivory/65 text-[15px] max-w-[56ch] mx-auto mt-[14px] mb-[24px] leading-relaxed">
+              You are viewing {modernProfiles.length} historical profiles. There are {directoryStats.totalProfiles - historicalProfiles.length} more Lutterodts documented across {directoryStats.countries.length} countries. Verify your identity to access the full directory.
+            </p>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <Link href="/verify" className="btn-gold">Verify Your Identity</Link>
+              <Link href="/contact" className="btn-ghost">Get in Touch</Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {isVerified && (
+        <section className="bg-burgundy-ink text-ivory py-[48px] relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(198,161,91,0.10),transparent_50%)] pointer-events-none" />
+          <div className="container-main relative z-10 text-center">
+            <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Verified Access</p>
+            <h2 className="text-ivory text-[clamp(26px,3.2vw,38px)] font-display font-[560] max-w-[28ch] mx-auto leading-tight">
+              Every Lutterodt in the world deserves to be in this record
+            </h2>
+            <p className="text-ivory/65 text-[15px] max-w-[56ch] mx-auto mt-[14px] mb-[24px] leading-relaxed">
+              We are actively reaching out to every known Lutterodt across {directoryStats.countries.length} countries and {directoryStats.continents} continents. If you know a Lutterodt we have not yet found, we would like to hear from you.
+            </p>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <Link href="/contact" className="btn-gold">Nominate a Lutterodt</Link>
+              <Link href="/contact" className="btn-ghost">Get in Touch</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="py-[72px]">
         <div className="container-main">
@@ -105,6 +132,19 @@ export default function DirectoryPage() {
             <p className="text-charcoal/50 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
               No profiles match your search.
             </p>
+          )}
+
+          {!isVerified && (
+            <div className="mt-16 p-[40px] bg-ivory-dim border border-line text-center">
+              <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Access the full directory</span>
+              <h3 className="text-[22px] font-display font-[550] text-burgundy-ink mt-[8px] mb-[12px]">
+                {modernProfiles.length} more Lutterodts documented across {directoryStats.countries.length} countries
+              </h3>
+              <p className="text-[14.5px] text-charcoal/65 max-w-[52ch] mx-auto mb-[20px]">
+                Verify your identity as a Lutterodt to access the complete family directory, including modern profiles from Ghana, UK, USA, and beyond.
+              </p>
+              <Link href="/verify" className="btn-primary">Verify Your Identity</Link>
+            </div>
           )}
         </div>
       </section>
