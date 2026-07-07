@@ -9,12 +9,12 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
     fetch("/api/settings")
       .then((r) => r.json())
       .then((data) => {
-        setShowOverlay(data?.coming_soon !== "false" && data?.coming_soon !== null);
+        setShowOverlay(data?.coming_soon === true);
       })
       .catch(() => setShowOverlay(false));
   }, []);
 
-  if (showOverlay === null) return null;
+  if (showOverlay === null) return <>{children}</>;
 
   if (showOverlay) {
     return (
