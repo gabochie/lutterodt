@@ -1,17 +1,18 @@
 import { NextResponse } from "next/server";
-import { getAdminPassword, createSession } from "@/lib/cf/auth";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { createSession } from "@/lib/cf/auth";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const expected = getAdminPassword();
-  const pwSource = process.env.ADMIN_PASSWORD ? "from env" : "from fallback";
+  const { env } = await getCloudflareContext({ async: true });
+  const adminPassword = env.ADMIN_PASSWORD as string | undefined;
 
-  if (password !== expected) {
+  if (password !== (adminPassword || "admin")) {
     return NextResponse.redirect(
-      new URL(`/login?error=Invalid+credentials&pw=${pwSource}&len=${expected.length}`, request.url)
+      new URL("/login?error=Invalid+credentials", request.url)
     );
   }
 

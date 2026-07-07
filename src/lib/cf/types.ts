@@ -60,5 +60,8 @@ declare global {
   interface CloudflareEnv {
     LUTTERODT_KV: KVNamespace;
     LUTTERODT_D1: D1Database;
+    ADMIN_PASSWORD?: string;
+    AUTH_SECRET?: string;
+    NEXTJS_ENV?: string;
   }
 }
