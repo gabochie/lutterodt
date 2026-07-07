@@ -241,11 +241,11 @@ async function adminRouter(request, env) {
     }
     try {
       await env.LUTTERODT_D1.prepare(
-        'CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT "", relationship TEXT DEFAULT "", status TEXT DEFAULT "pending", created_at TEXT DEFAULT (datetime("now")), verified_at TEXT, notes TEXT DEFAULT "")'
+        "CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT '', relationship TEXT DEFAULT '', status TEXT DEFAULT 'pending', created_at TEXT DEFAULT '', verified_at TEXT, notes TEXT DEFAULT '')"
       ).run();
       await env.LUTTERODT_D1.prepare(
-        'INSERT INTO verified_lutterodts (full_name, email, country, relationship) VALUES (?, ?, ?, ?)'
-      ).bind(fullName, email, country, relationship).run();
+        "INSERT INTO verified_lutterodts (full_name, email, country, relationship, created_at) VALUES (?, ?, ?, ?, ?)"
+      ).bind(fullName, email, country, relationship, new Date().toISOString()).run();
       const vToken = await createVerificationToken(fullName, email, env);
       return new Response('Redirecting...', {
         status: 302,
@@ -321,7 +321,7 @@ async function adminRouter(request, env) {
         }
         const db = env.LUTTERODT_D1;
         await db.prepare(
-          'CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT "", relationship TEXT DEFAULT "", status TEXT DEFAULT "pending", created_at TEXT DEFAULT (datetime("now")), verified_at TEXT, notes TEXT DEFAULT "")'
+          "CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT '', relationship TEXT DEFAULT '', status TEXT DEFAULT 'pending', created_at TEXT DEFAULT '', verified_at TEXT, notes TEXT DEFAULT '')"
         ).run();
         const tables = ['contacts', 'articles', 'timeline_events', 'gallery_items', 'verified_lutterodts'];
         const results = await Promise.all(
@@ -367,7 +367,7 @@ async function adminRouter(request, env) {
       // GET /api/verified (admin only)
       if (pathname === '/api/verified' && method === 'GET') {
         await env.LUTTERODT_D1.prepare(
-          'CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT "", relationship TEXT DEFAULT "", status TEXT DEFAULT "pending", created_at TEXT DEFAULT (datetime("now")), verified_at TEXT, notes TEXT DEFAULT "")'
+          "CREATE TABLE IF NOT EXISTS verified_lutterodts (id INTEGER PRIMARY KEY AUTOINCREMENT, full_name TEXT NOT NULL, email TEXT NOT NULL, country TEXT DEFAULT '', relationship TEXT DEFAULT '', status TEXT DEFAULT 'pending', created_at TEXT DEFAULT '', verified_at TEXT, notes TEXT DEFAULT '')"
         ).run();
         const { results } = await env.LUTTERODT_D1.prepare(
           'SELECT id, full_name, email, country, relationship, status, created_at FROM verified_lutterodts ORDER BY created_at DESC'
