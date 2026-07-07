@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+
 export default function OutreachPage() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<Any>(null);
   const [loading, setLoading] = useState(true);
   const [initStatus, setInitStatus] = useState<string>("");
-
-  useEffect(() => {
-    fetchStats();
-  }, []);
 
   async function fetchStats() {
     try {
@@ -19,6 +18,10 @@ export default function OutreachPage() {
     } catch { setInitStatus("Failed to load."); }
     setLoading(false);
   }
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   async function initDB() {
     setInitStatus("Initializing...");
@@ -81,7 +84,7 @@ export default function OutreachPage() {
             <div className="bg-ivory border border-line p-6">
               <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-4">Categories</h3>
               <div className="space-y-2">
-                {(stats.categories || []).map((c: any) => (
+                {(stats.categories || []).map((c: { category: string; c: number }) => (
                   <div key={c.category} className="flex items-center justify-between text-[13px]">
                     <span className="capitalize">{c.category}</span>
                     <span className="font-mono text-[12px] text-charcoal/50">{c.c}</span>
@@ -95,7 +98,7 @@ export default function OutreachPage() {
                 {Object.entries(stats.statusBreakdown || {}).map(([status, count]) => (
                   <div key={status} className="flex items-center justify-between text-[13px]">
                     <span className="capitalize">{status}</span>
-                    <span className="font-mono text-[12px] text-charcoal/50">{count as number}</span>
+                    <span className="font-mono text-[12px] text-charcoal/50">{String(count)}</span>
                   </div>
                 ))}
               </div>

@@ -1,4 +1,5 @@
-import { NextResponse, NextRequest } from "next/server";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { outreachProfiles, blindSpots } from "@/data/outreach-profiles";
 import { ensureOutreachTables, slugify } from "@/lib/outreach/d1";
