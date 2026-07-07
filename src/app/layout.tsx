@@ -29,7 +29,8 @@ export const metadata: Metadata = {
   description:
     "An authoritative digital home for the Lutterodt family — history, timeline, gallery and stories preserved for present and future generations.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.ico",
   },
   openGraph: {
     title: "The Lutterodt Renaissance — A Digital Legacy",
