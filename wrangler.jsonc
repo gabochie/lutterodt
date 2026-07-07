@@ -23,14 +23,14 @@
 	"kv_namespaces": [
 		{
 			"binding": "LUTTERODT_KV",
-			"id": "<KV_NAMESPACE_ID>"
+			"id": "260a65294eda4f0da4b2ca2296de8451"
 		}
 	],
 	"d1_databases": [
 		{
 			"binding": "LUTTERODT_D1",
 			"database_name": "lutterodt-db",
-			"database_id": "<D1_DATABASE_ID>"
+			"database_id": "97d98aca-dd7c-4730-b93d-75f474d2342c"
 		}
 	]
 }
