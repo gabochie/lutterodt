@@ -16,6 +16,7 @@ export default function PrivacyPolicyPage() {
         current="Privacy Policy"
         tag="Privacy"
         title="Privacy Policy"
+        description="How we collect, use, and protect the information of Lutterodt family members and visitors."
       />
 
       <section className="py-[108px]">

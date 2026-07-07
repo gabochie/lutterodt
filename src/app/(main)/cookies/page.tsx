@@ -16,6 +16,7 @@ export default function CookiePolicyPage() {
         current="Cookie Policy"
         tag="Cookies"
         title="Cookie Policy"
+        description="How we use cookies and similar technologies on the Lutterodt Renaissance platform."
       />
 
       <section className="py-[108px]">

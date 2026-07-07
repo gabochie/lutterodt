@@ -46,8 +46,16 @@ export function Footer() {
           <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Contact</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Join Interest</Link></li>
-            <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Volunteer</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Media Enquiries</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-mono text-[11px] tracking-widest uppercase text-gold-light mb-[18px] font-medium">Social</h4>
+          <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
+            <li><a href="#" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Instagram</a></li>
+            <li><a href="#" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Facebook</a></li>
+            <li><a href="#" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">YouTube</a></li>
           </ul>
         </div>
 
@@ -71,14 +79,9 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-main border-t border-line-on-dark py-[22px] flex justify-between items-center text-[12.5px] text-ivory/45 max-sm:flex-col max-sm:gap-[14px] max-sm:items-start">
+      <div className="container-main border-t border-line-on-dark py-[22px] flex flex-wrap justify-between items-center text-[12.5px] text-ivory/45 gap-x-[18px] gap-y-[8px]">
         <span>© 2026 The Lutterodt Renaissance. All rights reserved.</span>
-        <div className="flex gap-[18px]">
-          <a href="#" className="hover:text-gold-light transition-colors">Instagram</a>
-          <a href="#" className="hover:text-gold-light transition-colors">Facebook</a>
-          <a href="#" className="hover:text-gold-light transition-colors">YouTube</a>
-        </div>
-        <div className="flex gap-[18px]">
+        <div className="flex gap-[18px] flex-wrap">
           {legalLinks.map((link) => (
             <Link key={link.href} href={link.href} className="hover:text-gold-light transition-colors">
               {link.label}

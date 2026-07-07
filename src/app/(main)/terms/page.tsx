@@ -16,6 +16,7 @@ export default function TermsPage() {
         current="Terms of Service"
         tag="Terms"
         title="Terms of Service"
+        description="Rules and guidelines governing the use of the Lutterodt Renaissance platform."
       />
 
       <section className="py-[108px]">

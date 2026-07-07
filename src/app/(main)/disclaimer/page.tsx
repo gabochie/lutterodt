@@ -16,6 +16,7 @@ export default function DisclaimerPage() {
         current="Disclaimer"
         tag="Disclaimer"
         title="Historical Disclaimer"
+        description="Important limitations regarding genealogical accuracy and historical claims on this platform."
       />
 
       <section className="py-[108px] py-[4px]">

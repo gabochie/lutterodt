@@ -16,6 +16,7 @@ export default function CopyrightPage() {
         current="Copyright"
         tag="Legal"
         title="Copyright & IP"
+        description="Intellectual property rights and permitted use of content on this platform."
       />
 
       <section className="py-[108px]">
