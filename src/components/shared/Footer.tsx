@@ -28,6 +28,17 @@ export function Footer() {
           <p className="mt-[18px] text-[14px] max-w-[34ch] text-ivory/55">
             A digital legacy for present and future generations of the Lutterodt family.
           </p>
+          <div className="flex gap-4 mt-5">
+            <a href="#" className="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:border-gold-light hover:text-gold-light text-ivory/55 transition-colors" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" className="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:border-gold-light hover:text-gold-light text-ivory/55 transition-colors" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" className="w-9 h-9 rounded-full border border-ivory/20 flex items-center justify-center hover:border-gold-light hover:text-gold-light text-ivory/55 transition-colors" aria-label="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+            </a>
+          </div>
         </div>
 
         <div>
@@ -47,15 +58,6 @@ export function Footer() {
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Contact</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Join Interest</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Media Enquiries</Link></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-mono text-[11px] tracking-widest uppercase text-gold-light mb-[18px] font-medium">Social</h4>
-          <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
-            <li><a href="#" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Instagram</a></li>
-            <li><a href="#" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Facebook</a></li>
-            <li><a href="#" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">YouTube</a></li>
           </ul>
         </div>
 
