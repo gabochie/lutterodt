@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
   const session = await createSession(email || "admin@lutterodt.org");
   const response = NextResponse.redirect(new URL("/admin", request.url));
-  response.cookies.set(session.name, session.value, session.options as any);
+  response.cookies.set(session.name, session.value, session.options as Record<string, unknown>);
 
   return response;
 }

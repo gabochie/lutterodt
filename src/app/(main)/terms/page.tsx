@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
 
 export const metadata: Metadata = {
@@ -42,7 +41,7 @@ export default function TermsPage() {
             <p>You agree not to:</p>
             <ul>
               <li>Upload false, fraudulent, or misleading content</li>
-              <li>Violate others' privacy or share confidential information</li>
+              <li>Violate others&apos; privacy or share confidential information</li>
               <li>Post defamatory, obscene, or harmful content</li>
               <li>Attempt to compromise platform security or access</li>
               <li>Use the platform for commercial solicitation or spam</li>
@@ -57,7 +56,7 @@ export default function TermsPage() {
 
             <h4>5. Disclaimer</h4>
             <p>
-              The platform and its content are provided "as is" without warranties of any kind. We strive for 
+              The platform and its content are provided &quot;as is&quot; without warranties of any kind. We strive for 
               accuracy in genealogical and historical records, but cannot guarantee completeness or error-free 
               content. Historical interpretations or genealogical connections should be independently verified.
             </p>

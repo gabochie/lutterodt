@@ -9,10 +9,6 @@ export interface OutreachProfile {
   hasLetter: boolean;
 }
 
-function clean(s: string): string {
-  return s.replace(/[\u2013\u2014]/g, "--").replace(/\u2019/g, "'").replace(/\u201c|\u201d/g, '"').trim();
-}
-
 export const outreachProfiles: OutreachProfile[] = [
   { id: "clement-lutterodt", name: "Prof. Clement Lutterodt", dob: null, category: "academia", country: "United States", letter: "letters/clement-lutterodt.html", achievement: "Full Professor of Mathematics, Howard University (1980--2015). PhD University of Birmingham (1974). Assoc. Chairman of Mathematics. Research: rational & meromorphic approximations in several complex variables.", hasLetter: true },
   { id: "prof-herman-lutterodt", name: "Prof. Herman Lutterodt", dob: "24 Oct 1980", category: "academia", country: "Ghana", letter: "letters/prof-herman-lutterodt.html", achievement: "Associate Professor, KNUST Food Science & Technology. PhD Food Science, U. of Maryland (2012). Co-PI, Periodic Table of Food Initiative (Rockefeller Foundation). 1000+ citations.", hasLetter: true },

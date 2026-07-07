@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
 
 export const metadata: Metadata = {
@@ -76,7 +75,7 @@ export default function CookiePolicyPage() {
             <h4>7. Changes to Cookie Policy</h4>
             <p>
               We may update this Cookie Policy. Changes will be posted on this page with an updated 
-              "Last Updated" date.
+              &quot;Last Updated&quot; date.
             </p>
 
             <h4>8. Contact Us</h4>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
 
 export const metadata: Metadata = {
@@ -43,15 +42,15 @@ export default function CopyrightPage() {
 
             <h4>3. Restricted Use</h4>
             <p>
-              No part of this platform's copyrighted material may be reproduced, stored in a retrieval system, or 
+              No part of this platform&apos;s copyrighted material may be reproduced, stored in a retrieval system, or 
               transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, 
               without the prior written permission of the Renaissance Committee, except for personal viewing 
-              within the platform's authorized environment.
+              within the platform&apos;s authorized environment.
             </p>
 
             <h4>4. Trademarks</h4>
             <p>
-              "The Lutterodt Renaissance," the associated BrandMark, and other service names used on this platform 
+              &quot;The Lutterodt Renaissance,&quot; the associated BrandMark, and other service names used on this platform 
               are trademarks owned by the Lutterodt Renaissance entity.
             </p>
 

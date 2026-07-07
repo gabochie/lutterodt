@@ -97,9 +97,8 @@ function hash(s: string): number {
 
 function generateModernBody(profile: {
   name: string; achievement: string; category: string; country: string; dob?: string; bio?: string;
-}, firstName: string): string {
+}, _firstName: string): string {
   const seed = hash(profile.name);
-  const categoryLabel = CATEGORY_LABELS[profile.category] || profile.category;
   const countryDesc = COUNTRY_DESC[profile.country] || `in ${profile.country}`;
   const heritage = COUNTRY_HERITAGE[profile.country] || "across the global diaspora";
   const opening = pick(DISCOVERY_OPENINGS, seed).replace(/\$/, "");
@@ -134,7 +133,7 @@ ${diasporaHtml}
 
 function generateHistoricalBody(profile: {
   name: string; achievement: string; category?: string; country?: string;
-}, firstName: string): string {
+}, _firstName: string): string {
   const countryDesc = profile.country ? COUNTRY_DESC[profile.country] || `in ${profile.country}` : "";
   const countryPhrase = countryDesc ? ` ${countryDesc}` : "";
   return `<p>I am writing to honour and document the life and legacy of ${profile.name}, whose story is recorded as part of the Lutterodt family history${countryPhrase}.</p>
