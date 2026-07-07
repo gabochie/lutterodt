@@ -378,15 +378,5 @@ async function adminRouter(request, env) {
     return json({ error: 'Not found' }, 404);
   }
 
-  // Directory access control (Lutterodts only)
-  if (pathname === '/directory' || pathname.startsWith('/directory/')) {
-    const adminSession = tokenStr ? await verifySession(tokenStr, env) : null;
-    if (adminSession) return null;
-    const vToken = cookies['lutterodt_verified'] || '';
-    const vSession = await verifyVerificationToken(vToken, env);
-    if (vSession) return null;
-    return html(pages.accessDenied());
-  }
-
   return null;
 }
