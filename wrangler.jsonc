@@ -26,6 +26,7 @@
 			"id": "260a65294eda4f0da4b2ca2296de8451"
 		}
 	],
+	"workers_dev": true,
 	"d1_databases": [
 		{
 			"binding": "LUTTERODT_D1",
