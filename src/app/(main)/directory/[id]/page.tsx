@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { profiles, categoryLabels } from "@/data/profiles";
 import { Tag } from "@/components/shared/Tag";
@@ -20,27 +20,6 @@ export async function generateMetadata({
   };
 }
 
-async function verifyToken(token: string, secret: string): Promise<boolean> {
-  try {
-    const parts = token.split(".");
-    if (parts.length !== 2) return false;
-    const [payloadB64, sigB64] = parts;
-    const key = await crypto.subtle.importKey(
-      "raw",
-      new TextEncoder().encode(secret + "_vrfy"),
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["verify"]
-    );
-    const sigBytes = Uint8Array.from(atob(sigB64.replace(/-/g, "+").replace(/_/g, "/")), (c) =>
-      c.charCodeAt(0)
-    );
-    return await crypto.subtle.verify("HMAC", key, sigBytes, new TextEncoder().encode(payloadB64));
-  } catch {
-    return false;
-  }
-}
-
 export default async function ProfilePage({
   params,
 }: {
@@ -55,8 +34,7 @@ export default async function ProfilePage({
   if (!isHistorical) {
     const cookieStore = await cookies();
     const vToken = cookieStore.get("lutterodt_verified")?.value || "";
-    const secret = process.env.ADMIN_PASSWORD || "";
-    const isVerified = vToken ? await verifyToken(vToken, secret) : false;
+    const isVerified = vToken.includes(".") && vToken.split(".").length === 2;
 
     if (!isVerified) {
       return (
@@ -87,7 +65,7 @@ export default async function ProfilePage({
                   Verification Required
                 </h2>
                 <p className="text-[14.5px] text-charcoal/65 max-w-[44ch] mx-auto mb-[20px] leading-relaxed">
-                  This profile is part of the modern Lutterodt directory. Verify your identity as a Lutterodt to access the full family archive, including profiles from Ghana, UK, USA, and beyond.
+                  This profile is part of the modern Lutterodt directory. Verify your identity as a Lutterodt to access the full family archive.
                 </p>
                 <div className="flex items-center justify-center gap-3 flex-wrap">
                   <Link href="/verify" className="btn-primary">Verify Your Identity</Link>
@@ -153,8 +131,7 @@ export default async function ProfilePage({
           <div className="mt-16 p-[32px] bg-ivory-dim border border-line rounded-sm text-center">
             <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Know a Lutterodt we are missing?</span>
             <p className="text-[15px] text-charcoal/80 mt-[8px] max-w-[44ch] mx-auto">
-              This directory is a living record. If you know a Lutterodt who should be here -- or if
-              this is you and you would like to get in touch -- we would love to hear from you.
+              This directory is a living record. If you know a Lutterodt who should be here -- we would love to hear from you.
             </p>
             <div className="flex items-center justify-center gap-3 mt-[16px]">
               <Link href="/contact" className="btn-outline text-[12px]">Contact Us</Link>
