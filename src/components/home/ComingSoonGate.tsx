@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 
 export function ComingSoonGate({ children }: { children: React.ReactNode }) {
   const [showOverlay, setShowOverlay] = useState<boolean | null>(null);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -30,7 +32,7 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
       const r = await fetch("/api/leads", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ name, email, whatsapp }),
       });
       if (!r.ok) {
         setError("Could not register. Try again.");
@@ -70,22 +72,36 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
 
           {submitted ? (
             <div className="max-w-sm mx-auto mb-10">
-              <p className="text-gold-light text-[15px]">You are on the list. We will notify you when we launch.</p>
+              <p className="text-gold-light text-[15px]">Thank you! We will keep you posted when we launch.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="max-w-sm mx-auto mb-10">
-              <div className="flex gap-2">
+            <form onSubmit={handleSubmit} className="max-w-sm mx-auto mb-6">
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => { setName(e.target.value); setError(""); }}
+                  placeholder="Your name"
+                  className="w-full px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(""); }}
                   placeholder="Your email address"
-                  className="flex-1 px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                  className="w-full px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                />
+                <input
+                  type="tel"
+                  value={whatsapp}
+                  onChange={(e) => { setWhatsapp(e.target.value); setError(""); }}
+                  placeholder="WhatsApp number (optional)"
+                  className="w-full px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn-gold shrink-0 disabled:opacity-50"
+                  className="w-full btn-gold disabled:opacity-50"
                 >
                   {submitting ? "Sending..." : "Notify Me"}
                 </button>

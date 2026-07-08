@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables, normalizeName, slugify } from "@/lib/outreach/d1";
 import { generateLetterHtml } from "@/lib/outreach/letter";
+import { isAutonomousMode, sendLetter } from "@/lib/outreach/email";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 
 interface Candidate {
@@ -264,10 +265,12 @@ export async function POST(request: NextRequest) {
       search: { total: number; new: number; duplicates: number; errors: number; source: string };
       today_letter: any;
       stats: any;
+      auto_send: any;
     } = {
       search: { total: 0, new: 0, duplicates: 0, errors: 0, source: "" },
       today_letter: null,
       stats: {},
+      auto_send: null,
     };
 
     // === STEP 1: Search for new Lutterodts ===
@@ -377,7 +380,49 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // === STEP 5: Gather stats ===
+    // === STEP 5: Auto-send if autonomous mode is on ===
+    let autoSendResult = null;
+    if (queuedToday && queuedToday.status === "pending") {
+      const profile = await db.prepare(
+        "SELECT contact_email FROM outreach_profiles WHERE id = ?"
+      ).first<{ contact_email: string }>(queuedToday.profile_id);
+
+      if (profile?.contact_email && await isAutonomousMode()) {
+        const result = await sendLetter({
+          to: profile.contact_email,
+          subject: `Discovering Our Heritage — A Letter from The Lutterodt Renaissance`,
+          html: queuedToday.letter_html,
+          profileName: queuedToday.name,
+        });
+
+        if (result.sent) {
+          const now = new Date().toISOString();
+          await db.prepare(
+            "UPDATE outreach_queue SET status = 'sent', sent_at = ?, resend_email_id = ?, updated_at = ? WHERE id = ?"
+          ).bind(now, result.resendId || "", now, queuedToday.id).run();
+          await db.prepare(
+            "UPDATE outreach_profiles SET letter_status = 'sent', updated_at = ? WHERE id = ?"
+          ).bind(now, queuedToday.profile_id).run();
+          await db.prepare(
+            "INSERT INTO outreach_log (profile_id, action, details, created_at) VALUES (?, 'auto-sent', ?, ?)"
+          ).bind(queuedToday.profile_id, `Auto-sent via daily pipeline to ${profile.contact_email}`, now).run();
+          autoSendResult = { sent: true, resendId: result.resendId };
+        } else if (result.dryRun) {
+          await db.prepare(
+            "INSERT INTO outreach_log (profile_id, action, details, created_at) VALUES (?, 'auto-dry-run', ?, ?)"
+          ).bind(queuedToday.profile_id, `Dry run: would send to ${profile.contact_email}`, new Date().toISOString()).run();
+          autoSendResult = { dryRun: true };
+        } else {
+          const now = new Date().toISOString();
+          await db.prepare(
+            "UPDATE outreach_queue SET error = ?, updated_at = ? WHERE id = ?"
+          ).bind(result.error || "Unknown", now, queuedToday.id).run();
+          autoSendResult = { sent: false, error: result.error };
+        }
+      }
+    }
+
+    // === STEP 6: Gather stats ===
     const [pendingCount, sentCount, totalProfiles, noLetterCount] = await Promise.all([
       db.prepare("SELECT COUNT(*) as c FROM outreach_queue WHERE status = 'pending'").first<{ c: number }>(),
       db.prepare("SELECT COUNT(*) as c FROM outreach_queue WHERE status = 'sent'").first<{ c: number }>(),
@@ -399,6 +444,8 @@ export async function POST(request: NextRequest) {
       pendingInQueue: pendingCount?.c || 0,
       totalSent: sentCount?.c || 0,
     };
+
+    summary.auto_send = autoSendResult;
 
     return NextResponse.json({ ok: true, ...summary });
   } catch (err: any) {

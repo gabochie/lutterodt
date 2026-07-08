@@ -8,19 +8,23 @@ async function getDB(): Promise<D1Database> {
 export async function createContact(data: {
   email: string;
   name?: string;
+  whatsapp?: string;
   subject?: string;
   message?: string;
   category?: string;
   status?: string;
 }): Promise<void> {
   const db = await getDB();
+  // Ensure whatsapp column exists (migration)
+  try { await db.prepare("ALTER TABLE contacts ADD COLUMN whatsapp TEXT DEFAULT ''").run(); } catch { /* already exists */ }
   await db
     .prepare(
-      "INSERT INTO contacts (email, name, subject, message, category, status) VALUES (?, ?, ?, ?, ?, ?)"
+      "INSERT INTO contacts (email, name, whatsapp, subject, message, category, status) VALUES (?, ?, ?, ?, ?, ?, ?)"
     )
     .bind(
       data.email,
       data.name || "",
+      data.whatsapp || "",
       data.subject || "",
       data.message || "",
       data.category || "lead",

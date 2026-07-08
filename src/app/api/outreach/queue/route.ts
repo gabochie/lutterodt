@@ -57,7 +57,7 @@ export async function PATCH(request: NextRequest) {
   try {
     const db = await getDB();
     const body = await request.json();
-    const { id, status, error, resend_email_id, sent_at } = body;
+    const { id, status, error, resend_email_id, sent_at, scheduled_date } = body;
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
     const now = new Date().toISOString();
     const updates = ["updated_at = ?"];
@@ -66,6 +66,7 @@ export async function PATCH(request: NextRequest) {
     if (error !== undefined) { updates.push("error = ?"); params.push(error); }
     if (resend_email_id) { updates.push("resend_email_id = ?"); params.push(resend_email_id); }
     if (sent_at) { updates.push("sent_at = ?"); params.push(sent_at); }
+    if (scheduled_date) { updates.push("scheduled_date = ?"); params.push(scheduled_date); }
     params.push(id);
     await db.prepare(`UPDATE outreach_queue SET ${updates.join(", ")} WHERE id = ?`).bind(...params).run();
     return NextResponse.json({ ok: true });

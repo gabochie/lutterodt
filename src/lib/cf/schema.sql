@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS contacts (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email TEXT NOT NULL,
   name TEXT DEFAULT '',
+  whatsapp TEXT DEFAULT '',
   subject TEXT DEFAULT '',
   message TEXT DEFAULT '',
   category TEXT DEFAULT '',

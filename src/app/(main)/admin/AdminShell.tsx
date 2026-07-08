@@ -21,9 +21,12 @@ import {
   Menu,
   X,
   ChevronRight,
+  CalendarDays,
+  Rocket,
 } from "lucide-react";
 
 const navItems = [
+  { href: "/admin/command-center", label: "Command Center", icon: Rocket },
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/articles", label: "Articles", icon: FileText },
   { href: "/admin/timeline", label: "Timeline", icon: Clock },
@@ -31,6 +34,7 @@ const navItems = [
   { href: "/admin/contacts", label: "Contacts", icon: MessageSquare },
   { href: "/admin/outreach", label: "Outreach", icon: Mail },
   { href: "/admin/web-finder", label: "Web Finder", icon: Globe },
+  { href: "/admin/scheduler", label: "Scheduler", icon: CalendarDays },
   { href: "/admin/roadmap", label: "Roadmap", icon: Map },
   { href: "/admin/budget", label: "Budget", icon: DollarSign },
   { href: "/admin/strategy", label: "Strategy", icon: Target },
