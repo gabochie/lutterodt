@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 
 export function ComingSoonGate({ children }: { children: React.ReactNode }) {
   const [showOverlay, setShowOverlay] = useState<boolean | null>(null);
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch("/api/settings")
@@ -13,6 +17,31 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
       })
       .catch(() => setShowOverlay(false));
   }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email");
+      return;
+    }
+    setSubmitting(true);
+    setError("");
+    try {
+      const r = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!r.ok) {
+        setError("Could not register. Try again.");
+      } else {
+        setSubmitted(true);
+      }
+    } catch {
+      setError("Network error. Try again.");
+    }
+    setSubmitting(false);
+  }
 
   if (showOverlay === null) {
     return <div className="min-h-screen bg-burgundy-ink" />;
@@ -38,6 +67,33 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
           <p className="text-ivory/60 text-[16px] max-w-[44ch] mx-auto leading-relaxed mb-8">
             A permanent digital archive of the Lutterodt family&mdash;six generations of history, heritage, and home.
           </p>
+
+          {submitted ? (
+            <div className="max-w-sm mx-auto mb-10">
+              <p className="text-gold-light text-[15px]">You are on the list. We will notify you when we launch.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="max-w-sm mx-auto mb-10">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                  placeholder="Your email address"
+                  className="flex-1 px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-gold shrink-0 disabled:opacity-50"
+                >
+                  {submitting ? "Sending..." : "Notify Me"}
+                </button>
+              </div>
+              {error && <p className="mt-2 text-red-400 text-[12px]">{error}</p>}
+            </form>
+          )}
+
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <a href="mailto:gabochie@gmail.com" className="btn-gold">Get in Touch</a>
             <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-ghost">WhatsApp</a>
