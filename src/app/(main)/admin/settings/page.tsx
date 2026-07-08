@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
 
 export default function AdminSettings() {
   const [comingSoon, setComingSoon] = useState(true);
   const [toggling, setToggling] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("/api/settings")
+    fetch("/api/settings", { credentials: "include" })
       .then((r) => r.json())
       .then((d) => { setComingSoon(d.coming_soon); setLoading(false); })
       .catch(() => setLoading(false));
@@ -17,17 +18,25 @@ export default function AdminSettings() {
 
   async function toggleComingSoon() {
     setToggling(true);
+    setError("");
     try {
       const r = await fetch("/api/settings", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ coming_soon: !comingSoon }),
+        credentials: "include",
       });
-      if (r.ok) {
-        const d = await r.json();
-        setComingSoon(d.coming_soon);
+      if (!r.ok) {
+        const text = await r.text();
+        setError(`Server returned ${r.status}: ${text.slice(0, 100)}`);
+        setToggling(false);
+        return;
       }
-    } catch {}
+      const d = await r.json();
+      setComingSoon(d.coming_soon);
+    } catch (e) {
+      setError(String(e));
+    }
     setToggling(false);
   }
 
@@ -73,6 +82,12 @@ export default function AdminSettings() {
             </button>
           )}
         </div>
+        {error && (
+          <div className="mt-4 flex items-start gap-2 text-red-600 text-[13px]">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
+        )}
         <div className="mt-4 pt-4 border-t border-line">
           <p className="font-mono text-[10.5px] tracking-wider text-charcoal/40">
             When enabled, all visitors are shown a minimal coming soon page with an email signup form.
