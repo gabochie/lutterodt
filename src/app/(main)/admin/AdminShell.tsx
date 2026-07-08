@@ -15,6 +15,7 @@ import {
   DollarSign,
   Target,
   Settings,
+  ListChecks,
   LogOut,
   Menu,
   X,
@@ -31,6 +32,7 @@ const navItems = [
   { href: "/admin/roadmap", label: "Roadmap", icon: Map },
   { href: "/admin/budget", label: "Budget", icon: DollarSign },
   { href: "/admin/strategy", label: "Strategy", icon: Target },
+  { href: "/admin/prelaunch", label: "Prelaunch", icon: ListChecks },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 

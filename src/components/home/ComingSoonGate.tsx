@@ -14,7 +14,9 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
       .catch(() => setShowOverlay(false));
   }, []);
 
-  if (showOverlay === null) return <>{children}</>;
+  if (showOverlay === null) {
+    return <div className="min-h-screen bg-burgundy-ink" />;
+  }
 
   if (showOverlay) {
     return (
