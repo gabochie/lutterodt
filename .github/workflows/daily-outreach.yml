@@ -1,0 +1,19 @@
+name: Daily Outreach Pipeline
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call daily outreach pipeline
+        run: |
+          curl -s -X POST "https://lutterodt.org/api/outreach/daily" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -o /tmp/outreach-result.json
+          echo "Pipeline result:"
+          cat /tmp/outreach-result.json

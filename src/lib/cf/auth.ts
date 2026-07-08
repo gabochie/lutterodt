@@ -1,4 +1,6 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import type { NextRequest } from "next/server";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 const COOKIE_NAME = "admin_token";
 
@@ -58,13 +60,19 @@ export async function destroySession() {
   };
 }
 
-export async function verifySession(): Promise<boolean> {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(COOKIE_NAME);
-    if (!token?.value) return false;
+function parseCookieHeader(cookieHeader: string): string | null {
+  for (const part of cookieHeader.split(";")) {
+    const trimmed = part.trim();
+    if (trimmed.startsWith(`${COOKIE_NAME}=`)) {
+      return trimmed.slice(COOKIE_NAME.length + 1);
+    }
+  }
+  return null;
+}
 
-    const parts = token.value.split(".");
+async function verifyToken(tokenValue: string): Promise<boolean> {
+  try {
+    const parts = tokenValue.split(".");
     if (parts.length !== 2) return false;
 
     const payload = fromB64(parts[0]);
@@ -91,4 +99,38 @@ export async function verifySession(): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+export function getCronSecret(): string {
+  return process.env.CRON_SECRET || "";
+}
+
+export async function verifyRequestAuth(request: NextRequest): Promise<boolean> {
+  // First try session cookie
+  if (await verifySession()) return true;
+  // Fall back to Authorization: Bearer <cron-secret>
+  const auth = request.headers.get("authorization") || "";
+  if (auth.startsWith("Bearer ") && auth.slice(7) === getCronSecret()) return true;
+  return false;
+}
+
+export async function verifySession(): Promise<boolean> {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get(COOKIE_NAME);
+    if (token?.value) return verifyToken(token.value);
+  } catch {
+    // cookies() may fail in some edge contexts — fall through to raw header
+  }
+
+  try {
+    const headersList = await headers();
+    const raw = headersList.get("cookie") || "";
+    const value = parseCookieHeader(raw);
+    if (value) return verifyToken(value);
+  } catch {
+    // headers() may also fail — fall through to false
+  }
+
+  return false;
 }

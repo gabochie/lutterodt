@@ -63,5 +63,8 @@ declare global {
     ADMIN_PASSWORD?: string;
     AUTH_SECRET?: string;
     NEXTJS_ENV?: string;
+    BRAVE_API_KEY?: string;
+    GOOGLE_API_KEY?: string;
+    GOOGLE_CX?: string;
   }
 }
