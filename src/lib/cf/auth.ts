@@ -105,8 +105,15 @@ export function getCronSecret(): string {
   return process.env.CRON_SECRET || "";
 }
 
+export async function verifyRequestCookie(request: NextRequest): Promise<boolean> {
+  const token = request.cookies.get(COOKIE_NAME)?.value;
+  return token ? verifyToken(token) : false;
+}
+
 export async function verifyRequestAuth(request: NextRequest): Promise<boolean> {
-  // First try session cookie
+  // First try session cookie via NextRequest (most reliable)
+  if (await verifyRequestCookie(request)) return true;
+  // Then try cookies() from next/headers
   if (await verifySession()) return true;
   // Fall back to Authorization: Bearer <cron-secret>
   const auth = request.headers.get("authorization") || "";

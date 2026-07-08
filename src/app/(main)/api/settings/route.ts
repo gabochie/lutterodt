@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getSetting, setSetting } from "@/lib/cf/kv";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestCookie } from "@/lib/cf/auth";
 
 export async function GET() {
   const value = await getSetting("coming_soon");
@@ -8,7 +8,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestCookie(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
