@@ -34,16 +34,6 @@ export const BATCH_QUERIES = [
   "Lutteroth",
   "Lutterodt-Quarcoo",
   "Mills-Lutterodt",
-  '"Lutterodt" Ghana',
-  '"Lutterodt" UK',
-  '"Lutterodt" USA',
-  '"Lutterodt" family',
-  '"Lutterodt" professor',
-  '"Lutterodt" doctor',
-  '"Lutterodt" engineer',
-  '"Lutterodt" lawyer',
-  '"Lutterodt" founder',
-  '"Lutterodt" CEO',
   '"Lutteroth" family',
 ];
 
@@ -239,13 +229,23 @@ export async function searchQuery(query: string, env: any): Promise<{ results: C
   return { results: [], source: "none" };
 }
 
+async function runBatches(queries: string[], env: any, batchSize = 5): Promise<PromiseSettledResult<{ results: Candidate[]; source: string }>[]> {
+  const results: PromiseSettledResult<{ results: Candidate[]; source: string }>[] = [];
+  for (let i = 0; i < queries.length; i += batchSize) {
+    const batch = queries.slice(i, i + batchSize);
+    const batchResults = await Promise.allSettled(batch.map(q => searchQuery(q, env)));
+    results.push(...batchResults);
+  }
+  return results;
+}
+
 export async function batchSearch(queries: string[], env: any): Promise<{ allCandidates: Candidate[]; perQuery: { query: string; count: number; source: string }[] }> {
   const allCandidates: Candidate[] = [];
   const perQuery: { query: string; count: number; source: string }[] = [];
   const seenUrls = new Set<string>();
   const seenNames = new Set<string>();
 
-  const results = await Promise.allSettled(queries.map(q => searchQuery(q, env)));
+  const results = await runBatches(queries, env, 5);
 
   for (let i = 0; i < queries.length; i++) {
     const r = results[i];
@@ -355,7 +355,7 @@ export async function enrichAndQueue(
   for (const p of profileIds.slice(0, maxLetters)) {
     const profile = await db.prepare(
       "SELECT id, name, category, country, achievement, dob, contact_email FROM outreach_profiles WHERE id = ?"
-    ).first<{ id: string; name: string; category: string; country: string; achievement: string; dob: string; contact_email: string }>(p.id);
+    ).bind(p.id).first<{ id: string; name: string; category: string; country: string; achievement: string; dob: string; contact_email: string }>();
 
     if (!profile) { skipped++; continue; }
 
@@ -365,8 +365,10 @@ export async function enrichAndQueue(
       if (enrichment.email) {
         await db.prepare("UPDATE outreach_profiles SET contact_email = ?, contact_linkedin = ?, updated_at = ? WHERE id = ?")
           .bind(enrichment.email, enrichment.linkedin, new Date().toISOString(), profile.id).run();
+
         await db.prepare("INSERT INTO outreach_log (profile_id, action, details, created_at) VALUES (?, 'enriched', ?, ?)")
           .bind(profile.id, `Found email: ${enrichment.email} via ${enrichment.source}`, new Date().toISOString()).run();
+
         enriched++;
         profile.contact_email = enrichment.email;
       }

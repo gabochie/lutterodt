@@ -12,7 +12,7 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ id: st
   const { id } = await params;
   try {
     const db = await getDB();
-    const article = await db.prepare("SELECT * FROM articles WHERE id = ?").first(id);
+    const article = await db.prepare("SELECT * FROM articles WHERE id = ?").bind(id).first();
     if (!article) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json({ article });
   } catch (err: any) {

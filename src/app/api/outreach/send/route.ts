@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     const item = await db.prepare(
       "SELECT * FROM outreach_queue WHERE id = ?"
-    ).first<{ id: number; profile_id: string; name: string; letter_html: string; recipient_email: string; status: string }>(queue_id);
+    ).bind(queue_id).first<{ id: number; profile_id: string; name: string; letter_html: string; recipient_email: string; status: string }>();
 
     if (!item) {
       return NextResponse.json({ error: "Queue item not found" }, { status: 404 });
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     if (!to) {
       const profile = await db.prepare(
         "SELECT contact_email FROM outreach_profiles WHERE id = ?"
-      ).first<{ contact_email: string }>(item.profile_id);
+      ).bind(item.profile_id).first<{ contact_email: string }>();
       to = profile?.contact_email || "";
     }
 
