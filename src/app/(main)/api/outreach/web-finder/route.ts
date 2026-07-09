@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
 interface Candidate {
   name: string;
@@ -184,7 +184,7 @@ async function searchGoogle(query: string, apiKey: string, cx: string): Promise<
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

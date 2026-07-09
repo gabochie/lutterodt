@@ -2,7 +2,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables, normalizeName, slugify } from "@/lib/outreach/d1";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -10,7 +10,7 @@ async function getDB() {
 }
 
 export async function GET(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
 // POST /api/outreach/profiles — add a new Lutterodt (with dedup)
 export async function POST(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
 // PATCH /api/outreach/profiles — update profile
 export async function PATCH(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
