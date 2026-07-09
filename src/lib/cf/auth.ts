@@ -111,11 +111,15 @@ export async function verifyRequestCookie(request: NextRequest): Promise<boolean
 }
 
 export async function verifyRequestAuth(request: NextRequest): Promise<boolean> {
-  // First try session cookie via NextRequest (most reliable)
+  // 1. Raw Cookie header from request (works on Workers where NextRequest.cookies may be empty)
+  const rawCookie = request.headers.get("cookie") || "";
+  const parsed = parseCookieHeader(rawCookie);
+  if (parsed && await verifyToken(parsed)) return true;
+  // 2. NextRequest cookies API
   if (await verifyRequestCookie(request)) return true;
-  // Then try cookies() from next/headers
+  // 3. next/headers cookies() (server components, pages)
   if (await verifySession()) return true;
-  // Fall back to Authorization: Bearer <cron-secret>
+  // 4. Authorization: Bearer <cron-secret>
   const auth = request.headers.get("authorization") || "";
   if (auth.startsWith("Bearer ") && auth.slice(7) === getCronSecret()) return true;
   return false;
