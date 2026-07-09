@@ -1,5 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
+import { cookies } from "next/headers";
 import { CommandCenterClient } from "./CommandCenterClient";
 
 export const dynamic = "force-dynamic";
@@ -48,15 +49,22 @@ async function fetchInitialData() {
       },
     };
 
+    let sessionToken = "";
+    try {
+      const cookieStore = await cookies();
+      sessionToken = cookieStore.get("admin_token")?.value || "";
+    } catch {}
+
     return {
       daily: dailyData,
       health: { healthy: healthChecks.every(c => c.status === "ok"), checks: healthChecks },
       autonomous: { enabled: autoMode === "true" },
       logs: logs.results || [],
       audit: null as any,
+      sessionToken,
     };
   } catch (err: any) {
-    return { daily: null, health: null, autonomous: null, logs: [], audit: null, error: err.message };
+    return { daily: null, health: null, autonomous: null, logs: [], audit: null, error: err.message, sessionToken: "" };
   }
 }
 

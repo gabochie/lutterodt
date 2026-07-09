@@ -17,9 +17,15 @@ interface InitialData {
   logs: any[];
   audit: any;
   error?: string;
+  sessionToken?: string;
+}
+
+function authHeaders(token: string): Record<string, string> {
+  return { "Authorization": `Bearer ${token}` };
 }
 
 export function CommandCenterClient({ initial }: { initial: InitialData }) {
+  const token = initial.sessionToken || "";
   const [daily, setDaily] = useState<any>(initial.daily);
   const [health] = useState<{ healthy: boolean; checks: HealthCheck[] } | null>(initial.health);
   const [autonomous, setAutonomous] = useState<{ enabled: boolean } | null>(initial.autonomous);
@@ -37,7 +43,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
     try {
       const res = await fetch("/api/settings/autonomous", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeaders(token) },
         body: JSON.stringify({ enabled: !autonomous?.enabled }),
       });
       if (res.ok) {
@@ -54,7 +60,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
   const runPipeline = async () => {
     setRunningPipeline(true);
     try {
-      const res = await fetch("/api/outreach/daily", { method: "POST" });
+      const res = await fetch("/api/outreach/daily", { method: "POST", headers: authHeaders(token) });
       if (res.ok) {
         setDaily(await res.json());
       } else {
@@ -69,7 +75,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
     setRunningBatch(true);
     setBatchResult(null);
     try {
-      const res = await fetch(`/api/outreach/daily?batch=true&count=${batchSize}`, { method: "POST" });
+      const res = await fetch(`/api/outreach/daily?batch=true&count=${batchSize}`, { method: "POST", headers: authHeaders(token) });
       if (res.ok) {
         const data = await res.json();
         setBatchResult(data);
