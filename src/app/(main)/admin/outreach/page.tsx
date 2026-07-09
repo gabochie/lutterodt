@@ -142,7 +142,7 @@ export default function AdminOutreach() {
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
           <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Outreach</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">Track outreach to all 77 notable Lutterodts worldwide</p>
+          <p className="text-charcoal/50 text-[14px] mt-1">Track outreach to all {records.length} notable Lutterodts worldwide</p>
         </div>
         <div className="flex items-center gap-3">
           {saving && <RefreshCw className="w-4 h-4 text-charcoal/30 animate-spin" />}

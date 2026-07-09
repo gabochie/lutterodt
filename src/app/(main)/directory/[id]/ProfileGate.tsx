@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Tag } from "@/components/shared/Tag";
-import type { Profile } from "@/data/profiles";
+
+interface Profile {
+  id: string; name: string; dob: string | null;
+  category: string; country: string; achievement: string;
+}
 
 export function ProfileGate({
   profile,

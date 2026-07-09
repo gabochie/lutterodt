@@ -1,7 +1,16 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
-import { directoryStats } from "@/data/stats";
+
+interface DirStats {
+  totalProfiles: number;
+  livingProfiles: number;
+  countries: string[];
+  continents: number;
+}
 
 const ways = [
   {
@@ -48,6 +57,20 @@ const faqs = [
 ];
 
 export default function SponsorPage() {
+  const [stats, setStats] = useState<DirStats | null>(null);
+
+  useEffect(() => {
+    fetch("/api/directory")
+      .then((r) => r.json())
+      .then((d) => setStats({ totalProfiles: d.totalProfiles, livingProfiles: d.livingProfiles, countries: d.countries, continents: d.continents }))
+      .catch(() => {});
+  }, []);
+
+  const totalProfiles = stats?.totalProfiles ?? 77;
+  const countryCount = stats?.countries?.length ?? 11;
+  const continents = stats?.continents ?? 6;
+  const livingProfiles = stats?.livingProfiles ?? 69;
+
   return (
     <>
       <PageHero
@@ -55,7 +78,7 @@ export default function SponsorPage() {
         current="Get Involved"
         tag="The Lutterodt Renaissance"
         title="Help us build a complete record of the Lutterodt family"
-        description="We have documented 77 Lutterodts across 11 countries and 6 continents. If you are a Lutterodt or know one, we would like to hear from you."
+        description={`We have documented ${totalProfiles} Lutterodts across ${countryCount} countries and ${continents} continents. If you are a Lutterodt or know one, we would like to hear from you.`}
       />
 
       <section className="py-[72px] bg-ivory-dim">
@@ -66,19 +89,19 @@ export default function SponsorPage() {
           </h2>
           <div className="grid grid-cols-4 max-md:grid-cols-2 gap-[2px] bg-line mt-10 max-w-3xl mx-auto">
             <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{directoryStats.totalProfiles}</div>
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{totalProfiles}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Profiles</div>
             </div>
             <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{directoryStats.countries.length}</div>
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{countryCount}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Countries</div>
             </div>
             <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{directoryStats.continents}</div>
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{continents}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Continents</div>
             </div>
             <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{directoryStats.livingProfiles}</div>
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{livingProfiles}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Living Notables</div>
             </div>
           </div>

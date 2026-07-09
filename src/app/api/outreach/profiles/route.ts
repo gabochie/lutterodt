@@ -146,3 +146,25 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
+// DELETE /api/outreach/profiles — delete a profile
+export async function DELETE(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  try {
+    const db = await getDB();
+    const body = await request.json();
+    const { id } = body;
+    if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+
+    // Also clean up related queue items and logs
+    await db.prepare("DELETE FROM outreach_queue WHERE profile_id = ?").bind(id).run();
+    await db.prepare("DELETE FROM outreach_log WHERE profile_id = ?").bind(id).run();
+    await db.prepare("DELETE FROM outreach_profiles WHERE id = ?").bind(id).run();
+
+    return NextResponse.json({ ok: true, deleted: id });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
