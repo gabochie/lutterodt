@@ -31,6 +31,8 @@ import {
   UserPlus,
   Copy,
   Globe,
+  ClipboardCheck,
+  Bug,
 } from "lucide-react";
 
 type HealthCheck = { name: string; status: "ok" | "missing" | "error"; detail: string };
@@ -40,6 +42,7 @@ export default function CommandCenterPage() {
   const [health, setHealth] = useState<{ healthy: boolean; checks: HealthCheck[] } | null>(null);
   const [autonomous, setAutonomous] = useState<{ enabled: boolean } | null>(null);
   const [logs, setLogs] = useState<any[]>([]);
+  const [audit, setAudit] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [toggling, setToggling] = useState(false);
   const [runningPipeline, setRunningPipeline] = useState(false);
@@ -47,18 +50,21 @@ export default function CommandCenterPage() {
   const [batchResult, setBatchResult] = useState<any>(null);
   const [batchSize, setBatchSize] = useState(25);
   const [showQueryBreakdown, setShowQueryBreakdown] = useState(false);
+  const [showAudit, setShowAudit] = useState(false);
 
   const fetchAll = useCallback(async () => {
-    const [dailyRes, healthRes, autoRes, logsRes] = await Promise.all([
+    const [dailyRes, healthRes, autoRes, logsRes, auditRes] = await Promise.all([
       fetch("/api/outreach/daily").then(r => r.ok ? r.json() : null),
       fetch("/api/outreach/health").then(r => r.ok ? r.json() : null),
       fetch("/api/settings/autonomous").then(r => r.ok ? r.json() : null),
       fetch("/api/outreach/logs?limit=10").then(r => r.ok ? r.json() : null),
+      fetch("/api/audit").then(r => r.ok ? r.json() : null),
     ]);
     setDaily(dailyRes);
     setHealth(healthRes);
     setAutonomous(autoRes);
     setLogs(logsRes?.logs || []);
+    setAudit(auditRes);
     setLoading(false);
   }, []);
 
@@ -370,6 +376,100 @@ export default function CommandCenterPage() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Row 4: Build Audit */}
+      <div className="bg-white rounded-xl border border-line shadow-sm overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-line bg-gradient-to-r from-burgundy-ink/5 to-transparent">
+          <div className="flex items-center gap-3">
+            <ClipboardCheck className="w-5 h-5 text-gold-dim" />
+            <h2 className="text-sm font-semibold text-charcoal/70 uppercase tracking-wider">Build Audit</h2>
+          </div>
+          <div className="flex items-center gap-3">
+            {audit && (
+              <span className={cn(
+                "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium",
+                audit.healthy ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+              )}>
+                <span className={cn("w-1.5 h-1.5 rounded-full", audit.healthy ? "bg-green-500" : "bg-red-500")} />
+                {audit.score}% · {audit.summary.pass}/{audit.summary.total}
+              </span>
+            )}
+            <button
+              onClick={() => setShowAudit(!showAudit)}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-burgundy-ink/5 text-charcoal/60 text-xs rounded-md hover:bg-burgundy-ink/10 transition-colors"
+            >
+              {showAudit ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              {showAudit ? "Hide" : "Details"}
+            </button>
+          </div>
+        </div>
+
+        {showAudit && audit && (
+          <div className="p-6">
+            {/* Summary bar */}
+            <div className="flex items-center gap-4 mb-5">
+              <div className="flex-1 h-2 bg-charcoal/5 rounded-full overflow-hidden">
+                <div
+                  className={cn("h-full rounded-full transition-all", audit.healthy ? "bg-green-500" : "bg-red-400")}
+                  style={{ width: `${audit.score}%` }}
+                />
+              </div>
+              <span className="text-xs font-mono text-charcoal/40 whitespace-nowrap">
+                {audit.summary.pass} pass · {audit.summary.warn} warn · {audit.summary.fail} fail
+              </span>
+            </div>
+
+            {/* Category tabs */}
+            {["build", "routes", "api-routes", "secrets", "database", "kv", "auth"].map((cat) => {
+              const catItems = audit.items.filter((i: any) => i.category === cat);
+              if (catItems.length === 0) return null;
+              const catLabel = cat === "api-routes" ? "API Routes" : cat.charAt(0).toUpperCase() + cat.slice(1);
+              const catFails = catItems.filter((i: any) => i.status === "fail").length;
+              return (
+                <div key={cat} className="mb-4 last:mb-0">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-semibold text-charcoal/60 uppercase tracking-wider">{catLabel}</span>
+                    {catFails > 0 && (
+                      <span className="text-[10px] font-mono text-red-500 bg-red-50 px-1.5 py-0.5 rounded">{catFails} failed</span>
+                    )}
+                  </div>
+                  <div className="space-y-1">
+                    {catItems.map((item: any, i: number) => (
+                      <div key={i} className="flex items-center justify-between py-1.5 px-2 rounded hover:bg-charcoal/[0.02]">
+                        <div className="flex items-center gap-2 min-w-0">
+                          {item.status === "pass" ? <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0" /> :
+                           item.status === "warn" ? <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" /> :
+                           <XCircle className="w-3.5 h-3.5 text-red-500 shrink-0" />}
+                          <span className="text-xs text-charcoal/80 truncate">{item.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0 ml-3">
+                          <span className={cn(
+                            "text-[10px] font-mono",
+                            item.status === "pass" ? "text-green-600" :
+                            item.status === "warn" ? "text-amber-600" : "text-red-600"
+                          )}>{item.detail}</span>
+                          {item.link && (
+                            <a href={item.link} target="_blank" rel="noopener noreferrer"
+                              className="text-charcoal/30 hover:text-gold-dim transition-colors">
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+
+            {audit.timestamp && (
+              <div className="mt-4 pt-3 border-t border-line text-[10px] font-mono text-charcoal/30">
+                Last audited: {new Date(audit.timestamp).toLocaleString()}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Row 3: Logs + Health + Master Switch */}
