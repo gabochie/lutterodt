@@ -69,8 +69,8 @@ export async function POST(request: NextRequest) {
     // Dedup check: normalize name, search for exact or partial matches
     const normalized = normalizeName(name);
     const existing = await db.prepare(
-      "SELECT id, name, category, country, achievement FROM outreach_profiles"
-    ).all<{ id: string; name: string; category: string; country: string; achievement: string }>();
+      "SELECT id, name, category, country, achievement, contact_email, contact_linkedin FROM outreach_profiles"
+    ).all<{ id: string; name: string; category: string; country: string; achievement: string; contact_email: string; contact_linkedin: string }>();
 
     const matches = (existing.results || []).filter((p: any) => {
       const pNorm = normalizeName(p.name);

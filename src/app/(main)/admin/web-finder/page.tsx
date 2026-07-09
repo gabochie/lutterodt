@@ -91,6 +91,7 @@ export default function WebFinderPage() {
       const r = await fetch("/api/outreach/web-finder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ query: searchQuery }),
       });
       const data = await r.json();
@@ -121,6 +122,7 @@ export default function WebFinderPage() {
         const r = await fetch("/api/outreach/profiles", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
             name: candidate.name,
             category: candidate.estimatedCategory,
