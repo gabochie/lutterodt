@@ -2,7 +2,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -10,7 +10,7 @@ async function getDB() {
 }
 
 export async function GET(request: NextRequest) {
-  if (!(await verifySession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
     await ensureOutreachTables(db);
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await verifySession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
     await ensureOutreachTables(db);
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  if (!(await verifySession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
     const body = await request.json();

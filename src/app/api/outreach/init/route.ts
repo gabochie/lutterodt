@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { outreachProfiles, blindSpots } from "@/data/outreach-profiles";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -11,8 +11,8 @@ async function getDB() {
 }
 
 // POST /api/outreach/init — one-time D1 seed
-export async function POST() {
-  if (!(await verifySession())) {
+export async function POST(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
