@@ -158,7 +158,19 @@ export function FullSite() {
             <Tag>Upcoming — Events</Tag>
             <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">Where the family gathers next</h2>
           </div>
-          <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[2px] bg-line">
+          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[2px] bg-line">
+            <div className="bg-ivory p-[34px] pb-[30px] relative overflow-hidden">
+              <div className="absolute top-3 right-3 bg-red-600 text-ivory text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded animate-pulse">Live</div>
+              <Tag>9 – 11 July 2026 · Copenhagen</Tag>
+              <h3 className="text-[21px] mt-[14px] mb-[10px]">Lutterodt/t/h Reunion 2026</h3>
+              <p className="text-charcoal/66 text-[14.5px]">The first known global gathering of Lutterodts and Lutteroths — from Ghana, USA, UK, Germany, Estonia, Mexico and beyond — in Copenhagen.</p>
+              <Link href="/reunion-2026" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-burgundy inline-flex items-center gap-2 group">
+                View Program
+                <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
+                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
+                </svg>
+              </Link>
+            </div>
             <div className="bg-ivory p-[34px] pb-[30px]">
               <Tag>14 – 16 August 2026 · Accra</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">The Renaissance Family Congress</h3>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { PageHero } from "@/components/shared/PageHero";
 
 const tabs = ["general", "join", "volunteer", "research", "media"] as const;
@@ -14,8 +14,51 @@ const tabLabels: Record<Tab, string> = {
   media: "Media",
 };
 
+const tabSubjects: Record<Tab, string> = {
+  general: "General Enquiry",
+  join: "Join Interest",
+  volunteer: "Volunteer Interest",
+  research: "Research Request",
+  media: "Media Enquiry",
+};
+
+type FormStatus = "idle" | "sending" | "success" | "error";
+
 export default function ContactPage() {
   const [activeTab, setActiveTab] = useState<Tab>("general");
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [form, setForm] = useState<Record<string, string>>({});
+
+  const set = (key: string, value: string) => setForm((f) => ({ ...f, [key]: value }));
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setStatus("sending");
+
+    const body: Record<string, string> = { category: activeTab, subject: tabSubjects[activeTab] };
+    if (form["full-name"]) body.name = form["full-name"];
+    if (form["email-address"]) body.email = form["email-address"];
+    if (form["message"]) body.message = form["message"];
+    if (form["anything-youd-like-the-committee-to-know"]) body.message = form["anything-youd-like-the-committee-to-know"];
+    if (form["relevant-experience"]) body.message = form["relevant-experience"];
+    if (form["nature-of-research-request"]) body.message = form["nature-of-research-request"];
+    if (form["enquiry-details--deadline"]) body.message = form["enquiry-details--deadline"];
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error((await res.json()).error);
+      setStatus("success");
+      setForm({});
+      setTimeout(() => setStatus("idle"), 4000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
+  }
 
   return (
     <>
@@ -65,58 +108,69 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              <form onSubmit={(e) => e.preventDefault()}>
+              {status === "success" && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 text-[14px] rounded">
+                  Message received. We will be in touch within 5 business days.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 text-[14px] rounded">
+                  Something went wrong. Please try again or email us directly at hello@lutterodt.org.
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit}>
                 {/* General */}
                 <TabPanel show={activeTab === "general"}>
                   <FieldRow>
-                    <Field label="Full Name" required />
-                    <Field label="Email Address" type="email" required />
+                    <Field label="Full Name" required value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
                   </FieldRow>
-                  <Field label="Message" type="textarea" required className="mb-[22px]" full />
+                  <Field label="Message" type="textarea" required className="mb-[22px]" full value={form["message"] || ""} onChange={(v) => set("message", v)} />
                 </TabPanel>
 
                 {/* Join Interest */}
                 <TabPanel show={activeTab === "join"}>
                   <FieldRow>
-                    <Field label="Full Name" />
-                    <Field label="Family Branch" placeholder="e.g. Ghana, Germany, USA, UK, Netherlands" />
+                    <Field label="Full Name" value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
+                    <Field label="Family Branch" placeholder="e.g. Ghana, Germany, USA, UK, Netherlands" value={form["family-branch"] || ""} onChange={(v) => set("family-branch", v)} />
                   </FieldRow>
                   <FieldRow>
-                    <Field label="Email Address" type="email" />
-                    <Field label="Relationship to Family" type="select" options={["Direct descendant", "Married into family", "Extended relation"]} />
+                    <Field label="Email Address" type="email" value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                    <Field label="Relationship to Family" type="select" options={["Direct descendant", "Married into family", "Extended relation"]} value={form["relationship-to-family"] || ""} onChange={(v) => set("relationship-to-family", v)} />
                   </FieldRow>
-                  <Field label="Anything you'd like the Committee to know" type="textarea" className="mb-[22px]" full />
+                  <Field label="Anything you'd like the Committee to know" type="textarea" className="mb-[22px]" full value={form["anything-youd-like-the-committee-to-know"] || ""} onChange={(v) => set("anything-youd-like-the-committee-to-know", v)} />
                 </TabPanel>
 
                 {/* Volunteer */}
                 <TabPanel show={activeTab === "volunteer"}>
                   <FieldRow>
-                    <Field label="Full Name" />
-                    <Field label="Area of Interest" type="select" options={["Archiving & digitisation", "Oral history interviews", "Event planning", "Web & technology"]} />
+                    <Field label="Full Name" value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
+                    <Field label="Area of Interest" type="select" options={["Archiving & digitisation", "Oral history interviews", "Event planning", "Web & technology"]} value={form["area-of-interest"] || ""} onChange={(v) => set("area-of-interest", v)} />
                   </FieldRow>
-                  <Field label="Relevant experience" type="textarea" className="mb-[22px]" full />
+                  <Field label="Relevant experience" type="textarea" className="mb-[22px]" full value={form["relevant-experience"] || ""} onChange={(v) => set("relevant-experience", v)} />
                 </TabPanel>
 
                 {/* Research */}
                 <TabPanel show={activeTab === "research"}>
                   <FieldRow>
-                    <Field label="Institution / Affiliation" />
-                    <Field label="Email Address" type="email" />
+                    <Field label="Institution / Affiliation" value={form["institution--affiliation"] || ""} onChange={(v) => set("institution--affiliation", v)} />
+                    <Field label="Email Address" type="email" value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
                   </FieldRow>
-                  <Field label="Nature of research request" type="textarea" placeholder="What records or periods are you researching?" className="mb-[22px]" full />
+                  <Field label="Nature of research request" type="textarea" placeholder="What records or periods are you researching?" className="mb-[22px]" full value={form["nature-of-research-request"] || ""} onChange={(v) => set("nature-of-research-request", v)} />
                 </TabPanel>
 
                 {/* Media */}
                 <TabPanel show={activeTab === "media"}>
                   <FieldRow>
-                    <Field label="Outlet" />
-                    <Field label="Email Address" type="email" />
+                    <Field label="Outlet" value={form["outlet"] || ""} onChange={(v) => set("outlet", v)} />
+                    <Field label="Email Address" type="email" value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
                   </FieldRow>
-                  <Field label="Enquiry details & deadline" type="textarea" className="mb-[22px]" full />
+                  <Field label="Enquiry details & deadline" type="textarea" className="mb-[22px]" full value={form["enquiry-details--deadline"] || ""} onChange={(v) => set("enquiry-details--deadline", v)} />
                 </TabPanel>
 
-                <button type="submit" className="btn-primary">
-                  Send Message
+                <button type="submit" disabled={status === "sending"} className="btn-primary">
+                  {status === "sending" ? "Sending..." : "Send Message"}
                 </button>
                 <p className="mt-6 text-[12.5px] text-charcoal/50">
                   By submitting, you agree the Committee may contact you regarding this enquiry. We do not share family contact details externally.
@@ -146,6 +200,8 @@ function Field({
   options,
   full,
   className,
+  value,
+  onChange,
 }: {
   label: string;
   type?: string;
@@ -154,6 +210,8 @@ function Field({
   options?: string[];
   full?: boolean;
   className?: string;
+  value?: string;
+  onChange?: (v: string) => void;
 }) {
   const id = label.toLowerCase().replace(/\s+/g, "-");
   const inputClass =
@@ -172,10 +230,13 @@ function Field({
           id={id}
           placeholder={placeholder}
           required={required}
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
           className={`${inputClass} resize-vertical min-h-[96px] w-full`}
         />
       ) : type === "select" && options ? (
-        <select id={id} className={`${inputClass} w-full`}>
+        <select id={id} value={value} onChange={(e) => onChange?.(e.target.value)} className={`${inputClass} w-full`}>
+          <option value="">Select...</option>
           {options.map((o) => (
             <option key={o}>{o}</option>
           ))}
@@ -186,6 +247,8 @@ function Field({
           type={type}
           placeholder={placeholder}
           required={required}
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
           className={`${inputClass} w-full`}
         />
       )}

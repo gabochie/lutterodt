@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(url.searchParams.get("limit") || "100"), 200);
     const offset = parseInt(url.searchParams.get("offset") || "0");
 
-    let sql = "SELECT id, name, dob, category, country, achievement, has_letter, letter_status, contact_email, contact_linkedin, notes, created_at, updated_at FROM outreach_profiles WHERE 1=1";
+    let sql = "SELECT id, name, dob, category, country, achievement, has_letter, letter_status, contact_email, contact_linkedin, notes, image_url, created_at, updated_at FROM outreach_profiles WHERE 1=1";
     const params: any[] = [];
 
     if (search) {
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     await ensureOutreachTables(db);
 
     const body = await request.json();
-    const { name, dob, category, country, achievement, contact_email = "", contact_linkedin = "", notes = "" } = body;
+    const { name, dob, category, country, achievement, contact_email = "", contact_linkedin = "", notes = "", image_url = "" } = body;
 
     if (!name || typeof name !== "string" || name.trim().length < 2) {
       return NextResponse.json({ error: "Name is required (min 2 chars)" }, { status: 400 });
@@ -96,8 +96,8 @@ export async function POST(request: NextRequest) {
     const now = new Date().toISOString();
 
     await db.prepare(
-      "INSERT INTO outreach_profiles (id, name, dob, category, country, achievement, contact_email, contact_linkedin, notes, letter_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'none', ?, ?)"
-    ).bind(id, name.trim(), dob || "", category || "uncategorized", country || "", achievement || "", contact_email, contact_linkedin, notes, now, now).run();
+      "INSERT INTO outreach_profiles (id, name, dob, category, country, achievement, contact_email, contact_linkedin, notes, image_url, letter_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'none', ?, ?)"
+    ).bind(id, name.trim(), dob || "", category || "uncategorized", country || "", achievement || "", contact_email, contact_linkedin, notes, image_url, now, now).run();
 
     // Log the discovery
     await db.prepare(
@@ -129,7 +129,7 @@ export async function PATCH(request: NextRequest) {
     const updates: string[] = [];
     const params: any[] = [];
     for (const [k, v] of Object.entries(fields)) {
-      if (["name", "dob", "category", "country", "achievement", "letter_status", "letter_html", "contact_email", "contact_linkedin", "notes", "has_letter"].includes(k)) {
+      if (["name", "dob", "category", "country", "achievement", "letter_status", "letter_html", "contact_email", "contact_linkedin", "notes", "has_letter", "image_url"].includes(k)) {
         updates.push(`${k} = ?`);
         params.push(v);
       }

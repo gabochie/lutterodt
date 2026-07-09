@@ -11,78 +11,67 @@ This version has breaking changes — APIs, conventions, and file structure may 
 Exhaustively identify every notable living Lutterodt globally, document them in a master directory, create personalized branded outreach letters, and build the full archive pipeline.
 
 ## Stats (current)
-- **Total profiles documented:** 77 (69 living + 8 historical)
-- **Total outreach letters on desktop:** 61 HTML files
-- **Professional categories:** 8 (Business 21, Healthcare 12, Engineering & Tech 10, Academia 8, Historical 8, Law 7, Creative 7, Service 4)
-- **Countries represented:** Ghana (37), UK (12), USA (10), Gold Coast (8), Canada (3), Germany (2), China (1), Denmark (1), UAE (1), Estonia (1), Mexico (1)
+- **Total profiles documented:** 205 in D1 (from 77; ~60 junk entries removed during cleanup)
+- **Total outreach letters on desktop:** 265 HTML files
+- **Professional categories:** 10 (Historical 51, Business 45, Healthcare 20, Creative 18, Academia 18, Engineering 12, Law 11, Service 9, Sports 6, Uncategorized 10)
+- **Countries represented:** Ghana (57), USA (47), Germany (34), UK (26), Mexico (11), Gold Coast (8), Canada (4), Denmark (3), Sweden (2), Estonia (2), Spain (1), France (1), China (1), UAE (1), Netherlands (1)
 - **Continents:** 6 (Africa, Europe, North America, South America via Mexico, Middle East, Asia via China)
-- **Confirmed DOBs:** 12
+- **Confirmed DOBs:** 15 (7%)
+- **LinkedIn URLs:** 15 (7%)
+- **Emails:** 3 (1%)
+- **Blank achievements:** 0 (100% filled)
+- **Blank countries:** 1 (<1%)
 
-## Completed (in current session)
-- **10 new outreach letters created:** Francis Lutterodt, Philip Mills-Lutterodt, Henry Lutterodt (Nestlé UK), Freda Lutterodt, Helbert Lutterodt, Johann Lutterodt, Davis Lutterodt, Michael Lutterodt (Davies), Edward Lutterodt, Gerrard Samuel Lutterodt
-- **Master directory updated:** 58 → 72 entries with 14 new additions, renumbered table, updated dashboard analytics, new Estonia country, Engineering & Tech surged to 9
-- **Previously existing letters already sent:** Clement Lutterodt, Cyril Lutterodt, Dr. Christopher Lutterodt (all created in earlier batch)
-- **Directory re-categorized:** 9 country chart bars (added Estonia), 8 profession bars rebalanced, all new entries properly sectioned
+## Data Quality Improvements (current session)
+- **Cleaned ~60 junk entries** — removed search snippets, article titles, non-person entries from database
+- **Normalized countries** — merged UK/United Kingdom (→UK), United States (→USA), filled 12 blank countries
+- **Added 15 DOBs** — Georgina Lutterodt (8 Jun 1947), Johann Lutterodt (20 Jun 1989), Isabelle Lutterodt (1975), Ascan Lutteroth (5 Oct 1842), Ascan Lutteroth (Maler), plus 11 pre-existing
+- **Added 15 LinkedIn URLs** — Clement Lutterodt, Cyril Lutterodt, Christof Lutteroth, Francis Lutterodt, Freda Lutterodt, Prof. Herman Lutterodt, Johann Lutterodt, Michael Lutterodt (Davies), Edward Lutterodt, Gerrard Samuel Lutterodt, Henry Lutterodt (Nestle UK), Davis Lutterodt, Helbert Lutterodt, Emmanuel Lutterodt, Rodger Lutterodt
+- **Added 3 emails** — Clement Lutterodt, Christof Lutteroth, Isabelle Lutterodt
+- **Better achievements** — enriched ~30+ profiles with detailed professional bios
+- **Added 9 new profiles** — Mailis Meier-Lutterodt (Estonia), Alexander Lutterodt Philip (Spain), Rodjer Lutterodt (USA), Theresa Lutterodt (UK), Augustina Lutterodt (UK), Gresham Lutterodt (UK), Philip Alex Lutterodt (UK), Bettina Lutterodt (UK), plus earlier batch
+- **Merged 3 duplicates** — Georgina Lutterodt / Her Ladyship Georgina T. Wood, Herman Lutterodt / Prof. Herman Lutterodt, William Lutterodt / William Lutterodt (CEO)
+- **Fixed bad merge** — Re-identified Cyril Lutterodt (Forbes VC, UK) ≠ Cyril George Carstensen Lutterodt (marriage counselor, Ghana/USA) as different people
+- **Family connections documented** — Clement Lutterodt (Howard) + Dr. Sarah Lutterodt (Oxford) = Isabelle Lutterodt (LA curator, b. 1975)
+- **Major discovery:** Ascan Lutteroth (5 Oct 1842–2 Feb 1923) — German landscape painter with Wikipedia page, Düsseldorfer Malerschule
 
-## Major Discoveries (complete; all documented + letters created)
-1. **Clement Lutterodt** — Full Professor of Mathematics, Howard University (1980–2015). PhD Univ. of Birmingham 1974. 31+ publications. Highest academic rank.
-2. **Cyril Lutterodt** — Forbes 30 Under 30 Europe 2023. Co-founder/President, Black Seed VC (£5M fund). Multiple patents. London.
-3. **Dr. Christopher Lutterodt** — Surgical Trainee Chelsea & Westminster. GP ST3 Surrey. Honorary Lecturer Surgery Univ. of Otago. MB BS UCL 2012.
-4. **Francis Lutterodt** — Product Manager, Viasat (satellite/eSIM/IoT). London. 1K+ followers.
-5. **Philip Mills-Lutterodt** — CEO, IMX Green LLC. N. Miami Beach, FL. 30+ yrs construction. IMXGREEN Ghana.
-6. **Henry Lutterodt (Nestlé UK)** — Industrial Services/Sustainability Engineer. Distinct from ECG Henry.
-7. **Freda Lutterodt** — Educator 25+ yrs. CEO Sakra College. Painter/published poet. London.
-8. **Helbert Lutterodt** — Howard Univ. senior (cybersecurity). Harvard Bioethics (upcoming). Manassas, VA.
-9. **Johann Lutterodt** — Data Manager, Harju Elekter. Tallinn, Estonia. First Baltic Lutterodt. DOB 20.06.1989.
-10. **Davis Lutterodt** — Business Analyst, Apollo MCE (data centers). BCIT. Canada.
-11. **Michael Lutterodt** — Senior Partner, Global Head Operating Strategy & Transformation, Davies Consulting. London.
-12. **Edward Lutterodt** — Senior Cybersecurity Analyst. Risk management & compliance.
-13. **Gerrard Samuel Lutterodt** — IT Security Engineer, Bibby Financial Services. CISM, CCAK, ITIL. London.
-14. **Neils Lutterodt (Canada)** — Supply-Chain PM, FSMA Compliance. Dir., Delutt Transport Inc., Brampton ON.
-15. **Perry Lutterodt** — IT Specialist, Prestea Sankofa Gold Ltd (mining). BSc CS Takoradi Technical University. Ghana.
-16. **Erick Lutterodt (Bank of America UK)** — Senior Operations Associate. Univ. of Essex.
-17. **Erick Perchardt Lutterodt Jr.** — Creative Designer/Digital Marketing, Kosmos Innovation Center, Kumasi.
+## Contact Database (newly discovered)
+- **Rodger Lutterodt** — Managing Director, Zesty Knowledge Advertising Ghana Ltd; prev. MMRS Ogilvy
+- **Nicholina Lutterodt** — Head of IT & Copyright Royalties, Bucks Music Group Ltd, London
+- **William Lutterodt** — Senior Operations Manager, LAZ Parking, Edmonton, Canada
+- **Emmanuel Lutterodt** — MBM Stockholm School of Economics, Brand Strategy (Sweden-based, distinct from Ghana marketer)
+- **Herman Lutterodt** — Senior Lecturer, Food Science & Technology, KNUST. PhD U Maryland
+- **Michael Lutterodt** — Senior Partner, Global Head Strategy & Transformation, Davies Consulting, London
+- **Bettina Lutterodt** — Proprietor, Aragon House, Peterborough, UK
 
-## Still in directory (no new letter this batch)
-- William Lutterodt (CEO, RW Facilitate GH)
-- Henry David Lutterodt (Experience Manager)
-- Emmanuel Lutterodt (Marketer)
-- Jemima Lutterodt (Talent Management)
-- Gertrude Lutterodt (Hospitality, Dubai)
-- Henry Lutterodt (Project Engineer, ECG)
-- Ing. George Lutterodt (Civil Engineer, Min. of Roads)
-- Michael Lutterodt-Quarcoo Amaning (MC/Presenter)
+## Remaining Gaps
+- **190 profiles without DOB** — most are genealogical entries or less-public individuals; hard to find
+- **190 without LinkedIn** — some may not have public profiles
+- **202 without email** — emails rarely public
+- **10 uncategorized** — includes James Lutterodt (father of deceased NSMQ star), Conrad Lutterodt, Phillipina Lutterodt, Tobias Lutterodt, Sarah Yssing Lutterodt
+- **No photo/avatar field** — schema lacks image_url column (would need migration)
 
-## Emerging Patterns
-- **Cybersecurity cluster:** Edward, Gerrard Samuel, Helbert (aspiring) — 3 in infosec
-- **Academia cluster:** Clement (Howard), Herman (KNUST), Sarah (Oxford/PhD), Freda (education), Helbert (Harvard) — 5
+## Emerging Patterns (updated)
+- **Cybersecurity cluster:** Edward, Gerrard Samuel, Helbert (aspiring), Nicholas Haldane-Lutterodt — 4 infosec
+- **Academia cluster:** Clement (Howard), Herman (KNUST), Sarah (Oxford/PhD), Christof (Bath), Melissa (Copenhagen), Freda (education), Helbert (Harvard) — 7+ 
 - **Forbes 30 Under 30:** Cyril Lutterodt
-- **Medical cluster:** Dr. Christopher, Dr. Alfred, Dr. Melissa, Martha Gyansa-Lutterodt, Rodger MacScott — 5+ doctors
+- **Medical cluster:** Dr. Christopher, Dr. Alfred, Dr. Melissa, Martha Gyansa-Lutterodt, Rodger MacScott, Nicholina Haldane-Lutterodt — 6+ doctors
 - **Data center niche:** Davis Lutterodt (Apollo MCE)
-- **UK as diaspora hub:** 11 UK-based Lutterodts across finance, tech, education, medicine, construction
-- **Estonia:** First Baltic state Lutterodt — Johann Lutterodt opens a new diaspora frontier
+- **UK as diaspora hub:** 26 UK-based Lutterodts across finance, tech, education, medicine, construction
+- **Estonia:** Johann Lutterodt + Mailis Meier-Lutterodt — 2 in Baltic states
+- **Spanish frontier:** Alexander Lutterodt Philip (Madrid) — first Spain-based Lutterodt
+- **Art cluster:** Ascan Lutteroth (German painter), Isabelle Lutterodt (LA curator), George A.G. Lutterodt (historical photographer), Freda Lutterodt (poet/painter)
 
 ## Next Steps
-1. **Execute monorepo restructure** — Convert to Turborepo with apps/heritage + apps/database + packages/lutterodt-data
-2. **Build db.lutterodt.org** — 4-phase build roadmap: (1) Landing page with sponsorship info (2) Directory browser + profile pages (3) Payment integration (4) Member dashboard
-3. Send letters via appropriate channels (LinkedIn, email, phone)
-4. User adds 4 DNS records in Cloudflare for Vercel deployment
-5. User connects GitHub repo to Vercel
-
-## Build Roadmap (db.lutterodt.org)
-- **Phase 1:** Landing page with hero, stats, 4-tier sponsorship (Free / Patron $3 / Scholar $7 / Guardian $15), FAQ, trial modal
-- **Phase 2:** Directory browser with 77 profiles, search/filter, individual profile pages
-- **Phase 3:** Stripe/Gumroad payment integration for recurring sponsorship billing
-- **Phase 4:** Member dashboard with auth, subscription management, gated content
+1. **Send letters** — 195 queued outreach letters ready (via LinkedIn, email, phone)
+2. **Build db.lutterodt.org** — Phase 2+ with live 205-profile directory
+3. **Add photo field** — Profile photos from LinkedIn/Google would improve quality significantly
+4. **Fill remaining DOBs** — Could try Ancestry, FamilySearch, or genealogical databases
+5. **Add Brave Search API key** — Would enable deeper discovery beyond DuckDuckGo limits
 
 ## Key Files
-- `C:\Users\user\Desktop\lutt letters\research-task-list.html` — Research tracker + Build Roadmap (4 phases with checkable tasks)
-- `C:\Users\user\Desktop\lutt letters\index.html` — Database product landing page (to port into apps/database)
-- `C:\Users\user\Desktop\lutt letters\data\profiles.json` — 77 profile source data
-- `C:\Users\user\Desktop\lutt letters\letters\` — 61 HTML outreach letters
-- `C:\Users\user\Desktop\lutt letters\data\stats.json` — Computed directory statistics
-- `apps/heritage/` — (future) Next.js heritage site for lutterodt.org
-- `apps/database/` — (future) Next.js database app for db.lutterodt.org
-- `packages/lutterodt-data/` — (future) Shared data package
-- `.github/workflows/ci-cd.yml` — CI/CD pipeline
+- `C:\Users\user\Desktop\lutt letters\research-task-list.html` — Research tracker + Build Roadmap
+- `C:\Users\user\Desktop\lutt letters\letters\` — 265 HTML outreach letters
+- `src/app/api/outreach/profiles/route.ts` — D1 CRUD API for outreach profiles
+- `src/lib/outreach/d1.ts` — D1 schema, normalizeName, slugify helpers
 <!-- END:anchored-summary -->

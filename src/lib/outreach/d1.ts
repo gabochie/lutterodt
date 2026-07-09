@@ -11,6 +11,7 @@ export interface DbProfile {
   contact_email: string;
   contact_linkedin: string;
   notes: string;
+  image_url: string;
   created_at: string;
   updated_at: string;
 }
@@ -50,8 +51,10 @@ export interface DbLogEntry {
 
 export async function ensureOutreachTables(db: D1Database): Promise<void> {
   await db.prepare(
-    "CREATE TABLE IF NOT EXISTS outreach_profiles (id TEXT PRIMARY KEY, name TEXT NOT NULL, dob TEXT DEFAULT '', category TEXT DEFAULT 'uncategorized', country TEXT DEFAULT '', achievement TEXT DEFAULT '', has_letter INTEGER DEFAULT 0, letter_status TEXT DEFAULT 'none', letter_html TEXT DEFAULT '', contact_email TEXT DEFAULT '', contact_linkedin TEXT DEFAULT '', notes TEXT DEFAULT '', created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
+    "CREATE TABLE IF NOT EXISTS outreach_profiles (id TEXT PRIMARY KEY, name TEXT NOT NULL, dob TEXT DEFAULT '', category TEXT DEFAULT 'uncategorized', country TEXT DEFAULT '', achievement TEXT DEFAULT '', has_letter INTEGER DEFAULT 0, letter_status TEXT DEFAULT 'none', letter_html TEXT DEFAULT '', contact_email TEXT DEFAULT '', contact_linkedin TEXT DEFAULT '', notes TEXT DEFAULT '', image_url TEXT DEFAULT '', created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
   ).run();
+  // Migration: add image_url column for existing tables
+  try { await db.prepare("ALTER TABLE outreach_profiles ADD COLUMN image_url TEXT DEFAULT ''").run(); } catch { /* already exists */ }
   await db.prepare(
     "CREATE TABLE IF NOT EXISTS outreach_queue (id INTEGER PRIMARY KEY AUTOINCREMENT, profile_id TEXT NOT NULL, name TEXT NOT NULL, status TEXT DEFAULT 'pending', letter_html TEXT DEFAULT '', scheduled_date TEXT DEFAULT '', sent_at TEXT DEFAULT '', recipient_email TEXT DEFAULT '', resend_email_id TEXT DEFAULT '', error TEXT DEFAULT '', created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
   ).run();
