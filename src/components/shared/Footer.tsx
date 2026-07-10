@@ -49,6 +49,7 @@ export function Footer() {
           <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
             <li><Link href="/directory" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Directory</Link></li>
             <li><Link href="/projects" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Projects</Link></li>
+            <li><Link href="/services" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Services</Link></li>
             <li><Link href="/sponsor" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Sponsor</Link></li>
             <li><Link href="/about" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">About</Link></li>
             <li><Link href="/history" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">History</Link></li>
@@ -62,6 +63,7 @@ export function Footer() {
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Contact</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Join Interest</Link></li>
             <li><Link href="/reunion-2026" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Reunion 2026</Link></li>
+            <li><Link href="/services" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Services</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Media Enquiries</Link></li>
             <li><a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">WhatsApp</a></li>
           </ul>

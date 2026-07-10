@@ -108,6 +108,30 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="py-[108px] bg-ivory-dim">
+        <div className="container-main">
+          <div className="grid grid-cols-[0.8fr_1.2fr] max-md:grid-cols-1 gap-12 items-center max-w-4xl mx-auto">
+            <img
+              src="https://gideonabochie.org/assets/images/headshot.jpg"
+              alt="Gideon Borketey Tieku-Bortei — Founder"
+              className="w-full aspect-[3/4] object-cover rounded-lg"
+            />
+            <div>
+              <Tag>Founder</Tag>
+              <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Gideon Borketey Tieku-Bortei</h2>
+              <p className="text-gold-dim text-[14px] font-mono tracking-wider mt-1 mb-5">Gideon Abochie · Gabochie Design · GideonAbochie Studio</p>
+              <p className="text-charcoal/70 text-[15px]">
+                I am an architect and web designer — founder of Gabochie Design, a construction and real estate intelligence platform serving Ghana and the diaspora, and GideonAbochie Studio, a creative teaching ministry. I founded the Lutterodt Institute to honour my mother, building a permanent institution that serves every branch of our family. The creative services I offer through this site — web design and architectural design — directly fund that mission.
+              </p>
+              <div className="flex gap-3 mt-6">
+                <a href="/services" className="btn-gold text-[12px]">View Services</a>
+                <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-primary text-[12px]">Book a Consultation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-burgundy-ink text-center py-[72px] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(198,161,91,0.14),transparent_45%),radial-gradient(circle_at_85%_80%,rgba(47,74,60,0.35),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
