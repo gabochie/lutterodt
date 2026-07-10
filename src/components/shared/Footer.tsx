@@ -48,6 +48,7 @@ export function Footer() {
           <h4 className="font-mono text-[11px] tracking-widest uppercase text-gold-light mb-[18px] font-medium">Explore</h4>
           <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
             <li><Link href="/directory" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Directory</Link></li>
+            <li><Link href="/projects" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Projects</Link></li>
             <li><Link href="/sponsor" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Sponsor</Link></li>
             <li><Link href="/about" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">About</Link></li>
             <li><Link href="/history" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">History</Link></li>
