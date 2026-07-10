@@ -67,6 +67,15 @@ export async function ensureOutreachTables(db: D1Database): Promise<void> {
   await db.prepare(
     "CREATE TABLE IF NOT EXISTS reunion_updates (id INTEGER PRIMARY KEY AUTOINCREMENT, attendee_name TEXT NOT NULL, message TEXT DEFAULT '', photo_url TEXT DEFAULT '', created_at TEXT DEFAULT '')"
   ).run();
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS client_services_catalog (id TEXT PRIMARY KEY, title TEXT NOT NULL, category TEXT NOT NULL, description TEXT DEFAULT '', pricing TEXT DEFAULT '', deliverables TEXT DEFAULT '', active INTEGER DEFAULT 1, sort_order INTEGER DEFAULT 0, created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
+  ).run();
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS clients (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT NOT NULL UNIQUE, phone TEXT DEFAULT '', access_code TEXT NOT NULL, status TEXT DEFAULT 'lead', notes TEXT DEFAULT '', created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
+  ).run();
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS service_leads (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT DEFAULT '', service_interest TEXT DEFAULT '', message TEXT DEFAULT '', status TEXT DEFAULT 'new', created_at TEXT DEFAULT '')"
+  ).run();
 }
 
 export function normalizeName(name: string): string {
