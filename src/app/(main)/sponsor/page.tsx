@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     q: "Who is behind this project?",
-    a: "This is an independent community project led by members of the Lutterodt family. We are not affiliated with any institution or corporation.",
+    a: "The Lutterodt Renaissance and the Lutterodt Institute are a personal initiative founded by one person — a son of a Lutterodt mother, building a permanent institution in her honour. There is no formal committee or elected body; the goal is to grow this into a family-governed institution over time.",
   },
   {
     q: "How are sponsorship funds used?",
@@ -61,8 +61,16 @@ const faqs = [
     a: "We only include information that is already public or that the individual has consented to. We never publish contact details without permission.",
   },
   {
+    q: "Can I sponsor via bank transfer?",
+    a: "Yes. Bank account details (SWIFT code) are provided on request. Contact us via WhatsApp or the contact form and we will send the details within 24 hours. This is the simplest way to contribute without third-party payment processors.",
+  },
+  {
+    q: "What is the Lutterodt Institute?",
+    a: "The Lutterodt Institute is the envisioned permanent institution that will one day house the family archive, the Digital Museum, the Neo-Manor, and cultural programming for the global diaspora. The Renaissance website is the digital arm of that Institute — built now, so the foundation is ready when the full institution is realised.",
+  },
+  {
     q: "How can I support the project?",
-    a: "The best way to support us is to get in touch. Whether you want to contribute materials, nominate a family member, sponsor an initiative, or simply learn more -- we welcome your involvement.",
+    a: "You can sponsor via bank transfer (SWIFT details provided on request through WhatsApp or the contact form), or request a sponsorship packet for bespoke partnership options. Non-financial contributions — materials, nominations, research — are equally valuable.",
   },
 ];
 
@@ -116,9 +124,9 @@ export default function SponsorPage() {
       <PageHero
         breadcrumb={{ label: "Home", href: "/" }}
         current="Sponsor & Get Involved"
-        tag="The Lutterodt Renaissance"
-        title="Preserve a legacy that spans six continents"
-        description={`${totalProfiles} Lutterodts documented across ${countryCount} countries. Help us build the permanent archive, the Digital Museum, and the Neo-Manor.`}
+        tag="The Lutterodt Institute"
+        title="Help build an institution that will outlive us"
+        description={`${totalProfiles} Lutterodts documented across ${countryCount} countries. The Renaissance is the digital arm of the Lutterodt Institute — your sponsorship funds the Digital Museum, the Neo-Manor, and the permanent archive.`}
       />
 
       {/* Sponsorship tiers */}
@@ -127,10 +135,10 @@ export default function SponsorPage() {
           <div className="text-center max-w-2xl mx-auto mb-14">
             <Tag>Sponsorship</Tag>
             <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[14px]">
-              Become a sponsor of the Lutterodt Renaissance
+              Become a sponsor of the Lutterodt Institute
             </h2>
             <p className="mt-4 text-[16px] text-charcoal/68">
-              Your support funds the Digital Museum, the Neo-Manor, and the ongoing work of preserving a family history that spans six generations and six continents.
+              Every contribution goes directly toward building the Lutterodt Institute — a permanent institution housing the Digital Museum, the Neo-Manor, and the family archive. From a personal tribute to a lasting legacy.
             </p>
           </div>
 
@@ -147,6 +155,17 @@ export default function SponsorPage() {
 
           <div className="text-center">
             <Link href="#packet" className="btn-gold inline-block">Request Sponsorship Packet</Link>
+          </div>
+
+          <div className="max-w-lg mx-auto mt-10 p-6 bg-ivory-dim rounded-lg border border-line text-center">
+            <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mb-2">Also available</div>
+            <h3 className="text-[18px] font-display font-[550] text-burgundy-ink">Sponsor via Bank Transfer</h3>
+            <p className="text-[14px] text-charcoal/68 mt-2 mb-4">
+              Prefer to transfer directly? Bank account details (SWIFT) are provided on request. Contact us and we&rsquo;ll send the information within 24 hours.
+            </p>
+            <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="text-gold-dim text-[13px] font-mono tracking-wider uppercase hover:underline">
+              Request bank details via WhatsApp →
+            </a>
           </div>
         </div>
       </section>
