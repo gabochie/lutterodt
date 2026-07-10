@@ -64,6 +64,9 @@ export async function ensureOutreachTables(db: D1Database): Promise<void> {
   await db.prepare(
     "CREATE TABLE IF NOT EXISTS outreach_blind_spots (id TEXT PRIMARY KEY, title TEXT NOT NULL, priority TEXT DEFAULT 'medium', status TEXT DEFAULT 'open', progress INTEGER DEFAULT 0, created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
   ).run();
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS reunion_updates (id INTEGER PRIMARY KEY AUTOINCREMENT, attendee_name TEXT NOT NULL, message TEXT DEFAULT '', photo_url TEXT DEFAULT '', created_at TEXT DEFAULT '')"
+  ).run();
 }
 
 export function normalizeName(name: string): string {

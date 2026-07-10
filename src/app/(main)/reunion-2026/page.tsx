@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Tag } from "@/components/shared/Tag";
+import { ReunionLiveFeed } from "@/components/reunion/ReunionLiveFeed";
 import { PageHero } from "@/components/shared/PageHero";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
@@ -92,6 +93,8 @@ export default function Reunion2026Page() {
           </div>
         </div>
       </section>
+
+      <ReunionLiveFeed />
 
       <section className="py-[108px] bg-ivory-dim">
         <div className="container-main">
