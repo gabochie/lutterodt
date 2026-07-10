@@ -163,7 +163,7 @@ export function FullSite() {
               <div className="absolute top-3 right-3 bg-red-600 text-ivory text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded animate-pulse">Live</div>
               <Tag>9 – 11 July 2026 · Copenhagen</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">Lutterodt/t/h Reunion 2026</h3>
-              <p className="text-charcoal/66 text-[14.5px]">The first known global gathering of Lutterodts and Lutteroths — from Ghana, USA, UK, Germany, Estonia, Mexico and beyond — in Copenhagen.</p>
+              <p className="text-charcoal/66 text-[14.5px]">A landmark gathering of Lutterodts and Lutteroths — from Ghana, USA, UK, Germany, Estonia, Mexico and beyond — in Copenhagen.</p>
               <Link href="/reunion-2026" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-burgundy inline-flex items-center gap-2 group">
                 View Program
                 <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">

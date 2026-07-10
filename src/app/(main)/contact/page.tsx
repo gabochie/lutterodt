@@ -86,8 +86,8 @@ export default function ContactPage() {
 
               <div className="h-[1px] bg-line-on-dark my-8" />
 
-              <p className="text-ivory/55 text-[13px] mb-2">Next family gathering</p>
-              <p className="text-gold-light font-display text-[19px]">Renaissance Congress — 14–16 Aug 2026</p>
+              <p className="text-ivory/55 text-[13px] mb-2">Reunion happening now</p>
+              <p className="text-gold-light font-display text-[19px]">Copenhagen — 9–11 Jul 2026</p>
             </div>
 
             {/* Form */}

@@ -56,7 +56,7 @@ export default function Reunion2026Page() {
         current="Reunion 2026"
         tag="Copenhagen, Denmark"
         title="Lutterodt/t/h Reunion 2026"
-        description="Three days of connection, culture and celebration — the first known global gathering of Lutterodts and Lutteroths, hosted in Copenhagen from 9–11 July 2026."
+        description="Three days of connection, culture and celebration — a landmark gathering of Lutterodts and Lutteroths from across the diaspora, hosted in Copenhagen from 9–11 July 2026."
       />
 
       <section className="py-[108px]">
@@ -65,7 +65,7 @@ export default function Reunion2026Page() {
             <Tag>Live Event</Tag>
             <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">Happening now in Copenhagen</h2>
             <p className="mt-4 text-[16.5px] text-charcoal/68">
-              The Lutterodt/t/h family has gathered from across the globe — Ghana, USA, UK, Germany, Estonia, Mexico and beyond — for the first reunion in Copenhagen. All times are local (CEST, UTC+2).
+              The Lutterodt/t/h family has gathered from across the globe — Ghana, USA, UK, Germany, Estonia, Mexico and beyond — for the Copenhagen reunion. All times are local (CEST, UTC+2).
             </p>
           </div>
 
@@ -127,9 +127,9 @@ export default function Reunion2026Page() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(198,161,91,0.14),transparent_45%),radial-gradient(circle_at_85%_80%,rgba(47,74,60,0.35),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark className="justify-center flex">A historic gathering</Tag>
-          <h2 className="text-ivory text-[clamp(30px,3.4vw,44px)] max-w-[26ch] mx-auto mt-[18px] mb-[20px]">First reunion, many branches, one family</h2>
+          <h2 className="text-ivory text-[clamp(30px,3.4vw,44px)] max-w-[26ch] mx-auto mt-[18px] mb-[20px]">One family, many branches</h2>
           <p className="text-ivory/70 max-w-[56ch] mx-auto mb-[34px]">
-            Lutterodts and Lutteroths from six continents — gathering in Copenhagen for the first time, building connections that will last for generations.
+            Lutterodts and Lutteroths from six continents — gathering in Copenhagen, building connections that will last for generations.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/directory" className="btn-gold">Browse the Directory</Link>
