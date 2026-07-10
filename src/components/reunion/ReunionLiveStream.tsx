@@ -41,7 +41,7 @@ export function ReunionLiveStream() {
   if (!videoId && !isAdmin) return null;
 
   return (
-    <section className="py-[108px] bg-burgundy-ink">
+    <section id="livestream" className="py-[108px] bg-burgundy-ink">
       <div className="container-main">
         <Tag onDark className="justify-center flex">Livestream</Tag>
         <h2 className="text-ivory text-[clamp(28px,3.2vw,40px)] text-center mt-[18px] mb-2">

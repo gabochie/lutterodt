@@ -64,7 +64,7 @@ export function ReunionLiveFeed() {
   };
 
   return (
-    <section className="py-[108px] bg-ivory">
+    <section id="live-feed" className="py-[108px] bg-ivory">
       <div className="container-main">
         <div className="max-w-[640px] mb-12">
           <Tag>Live Updates</Tag>
