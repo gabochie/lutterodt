@@ -61,6 +61,7 @@ export function Footer() {
           <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Contact</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Join Interest</Link></li>
+            <li><Link href="/reunion-2026" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Reunion 2026</Link></li>
             <li><Link href="/contact" className="text-[14px] text-ivory/72 hover:text-gold-light transition-colors">Media Enquiries</Link></li>
           </ul>
         </div>
