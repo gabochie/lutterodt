@@ -6,7 +6,7 @@ import { Card } from "@/components/shared/Card";
 export function FullSite() {
   return (
     <>
-      <section className="relative min-h-[92vh] flex items-end text-ivory bg-[linear-gradient(180deg,rgba(42,11,20,0.35)_0%,rgba(42,11,20,0.55)_55%,rgba(20,6,10,0.92)_100%),url(https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=2000&auto=format&fit=crop)] bg-cover bg-center">
+      <section className="relative min-h-[92vh] flex items-end text-ivory bg-cover bg-center" style={{backgroundImage: 'linear-gradient(180deg,rgba(42,11,20,0.35) 0%,rgba(42,11,20,0.55) 55%,rgba(20,6,10,0.92) 100%),url(https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=2000&auto=format&fit=crop)'}}>
         <div className="container-main w-full pb-[88px]">
           <Tag onDark>Est. Archive — Accra, Ghana</Tag>
           <h1 className="text-ivory text-[clamp(42px,6.4vw,84px)] font-display font-[560] mt-[22px] mb-[26px] max-w-[15ch] leading-tight">
@@ -63,7 +63,7 @@ export function FullSite() {
               linkLabel="Read the Record"
             />
             <Card
-              image="https://images.unsplash.com/photo-1541414779316-956f800a982a?q=80&w=900&auto=format&fit=crop"
+              image="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?q=80&w=900&auto=format&fit=crop"
               alt="Graduation ceremony archival photo"
               tag="Rec. 1968–031 · Education"
               title="First of the Family to Read Law"
@@ -139,7 +139,7 @@ export function FullSite() {
               <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=700&auto=format&fit=crop" alt="Family portrait" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
-              <img src="https://images.unsplash.com/photo-1512635776656-9db3095f2e97?q=80&w=700&auto=format&fit=crop" alt="Historic document" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
+              <img src="https://images.unsplash.com/photo-1461360228754-6e81c478b882?q=80&w=700&auto=format&fit=crop" alt="Historic document" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
               <img src="https://images.unsplash.com/photo-1461783436728-0a9217714694?q=80&w=700&auto=format&fit=crop" alt="Coastal town archival photo" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
