@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Tag } from "@/components/shared/Tag";
 import { ReunionLiveFeed } from "@/components/reunion/ReunionLiveFeed";
+import { ReunionLiveStream } from "@/components/reunion/ReunionLiveStream";
 import { PageHero } from "@/components/shared/PageHero";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
@@ -94,7 +95,46 @@ export default function Reunion2026Page() {
         </div>
       </section>
 
+      <ReunionLiveStream />
       <ReunionLiveFeed />
+
+      <section className="py-[108px] bg-[#faf8f5]">
+        <div className="container-main">
+          <div className="max-w-[640px] mb-14">
+            <Tag>For Attendees</Tag>
+            <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[18px]">How to share live updates</h2>
+            <p className="mt-3 text-[15px] text-charcoal/68">
+              Help document the reunion in real time. Here are three ways to share with family near and far.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg p-7">
+              <div className="text-[28px] mb-4">✍️</div>
+              <h3 className="text-[18px] mb-2">Post a check-in</h3>
+              <p className="text-[14px] text-charcoal/60 mb-4">
+                Find the &ldquo;Who&rsquo;s here&rdquo; feed above. Ask the admin to add your name and a message, or log in to post directly. Updates appear instantly on the page for everyone.
+              </p>
+              <span className="text-gold-dim text-[12px] font-mono tracking-wider">30-second setup</span>
+            </div>
+            <div className="bg-white rounded-lg p-7">
+              <div className="text-[28px] mb-4">📱</div>
+              <h3 className="text-[18px] mb-2">Go live on YouTube</h3>
+              <p className="text-[14px] text-charcoal/60 mb-4">
+                Open the YouTube app on your phone, tap the camera icon, choose &ldquo;Go live,&rdquo; then send the video ID to the site admin. It will appear in the livestream embed above.
+              </p>
+              <span className="text-gold-dim text-[12px] font-mono tracking-wider">Requires a YouTube channel</span>
+            </div>
+            <div className="bg-white rounded-lg p-7">
+              <div className="text-[28px] mb-4">📸</div>
+              <h3 className="text-[18px] mb-2">Share photos</h3>
+              <p className="text-[14px] text-charcoal/60 mb-4">
+                Tag photos with <strong className="text-charcoal">#LutterodtReunion2026</strong> on social media, or send them to the admin to include in the check-in feed with a photo attachment.
+              </p>
+              <span className="text-gold-dim text-[12px] font-mono tracking-wider">Facebook &bull; Instagram &bull; WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="py-[108px] bg-ivory-dim">
         <div className="container-main">
