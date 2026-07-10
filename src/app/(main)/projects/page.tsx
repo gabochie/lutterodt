@@ -122,7 +122,7 @@ export default function ProjectsPage() {
               </div>
               <div className="relative rounded-md overflow-hidden border border-line">
                 <img
-                  src="/images/projects/concept-interior-01.png"
+                  src="/images/projects/concept-interior-01.jpg"
                   alt="Lutterodt Renaissance website concept"
                   className="w-full h-auto object-cover"
                 />
@@ -148,7 +148,7 @@ export default function ProjectsPage() {
               <div className="border border-line rounded-lg overflow-hidden bg-white h-full flex flex-col">
                 <div className="relative">
                   <img
-                    src="/images/projects/concept-museum-01.png"
+                    src="/images/projects/concept-museum-01.jpg"
                     alt="Digital museum concept"
                     className="w-full h-[220px] object-cover"
                   />
@@ -190,7 +190,7 @@ export default function ProjectsPage() {
               <div className="border border-line rounded-lg overflow-hidden bg-white h-full flex flex-col">
                 <div className="relative">
                   <img
-                    src="/images/projects/concept-manor-01.png"
+                    src="/images/projects/concept-manor-01.jpg"
                     alt="Neo-Lutterodt Manor concept"
                     className="w-full h-[220px] object-cover"
                   />
@@ -265,7 +265,7 @@ export default function ProjectsPage() {
               </div>
               <div className="relative rounded-md overflow-hidden border border-ivory/15">
                 <img
-                  src="/images/projects/concept-museum-03.png"
+                  src="/images/projects/concept-museum-03.jpg"
                   alt="Sponsorship concept"
                   className="w-full h-auto object-cover"
                 />
