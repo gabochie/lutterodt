@@ -1,56 +1,30 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
+
+export const metadata: Metadata = {
+  title: "Services — Lutterodt Institute",
+  description: "Web design and architectural design services that fund the Lutterodt Institute. Every project builds a permanent institution for the family.",
+};
 
 const services = [
   {
     title: "Web Design",
     tag: "Digital",
-    desc: "Custom websites, brand presence, and digital strategy. Built for professionals, diaspora builders, and organisations who want a site that works as hard as they do.",
-    deliverables: ["Responsive design", "Content structure", "SEO foundation", "Hosting setup"],
-    startingFrom: "2,500 GHS",
+    desc: "Modern, conversion-optimised websites for North American businesses. From free audit to full redesign — fixed pricing, hand-coded, delivered in 6–9 weeks.",
+    deliverables: ["Custom responsive design", "Mobile-first development", "Conversion rate optimisation", "SEO migration & setup"],
+    startingFrom: "$2,999 USD",
   },
   {
     title: "Architectural Design",
     tag: "Built Environment",
     desc: "Residential plans, 3D visualisation, and construction intelligence. Drawing on years of experience at Gabochie Design serving clients across Ghana and the diaspora.",
     deliverables: ["Floor plans & elevations", "3D renderings", "Material selection", "Cost estimation"],
-    startingFrom: "5,000 GHS",
+    startingFrom: "$5,000 USD",
   },
 ];
 
 export default function ServicesPage() {
-  const [showForm, setShowForm] = useState(false);
-  const [payment, setPayment] = useState({ name: "", email: "", amount: "", description: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const handlePay = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    setErrorMsg("");
-    try {
-      const res = await fetch("/api/flutterwave/initialize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: payment.amount,
-          email: payment.email,
-          name: payment.name,
-          description: payment.description,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Payment initiation failed");
-      window.location.href = data.link;
-    } catch (err: any) {
-      setStatus("error");
-      setErrorMsg(err.message);
-    }
-  };
-
   return (
     <>
       <PageHero
@@ -103,7 +77,7 @@ export default function ServicesPage() {
             {[
               { step: "01", title: "Book a consultation", desc: "Tell me about your project via WhatsApp or the contact form. We'll discuss scope, timeline, and budget." },
               { step: "02", title: "I deliver the work", desc: "Web design or architectural plans — delivered on time, at professional standards. You own the output." },
-              { step: "03", title: "Proceeds fund the Institute", desc: "Every cedi goes toward the Lutterodt Institute — the Digital Museum, the Neo-Manor, and the permanent archive." },
+              { step: "03", title: "Proceeds fund the Institute", desc: "Every dollar goes toward the Lutterodt Institute — the Digital Museum, the Neo-Manor, and the permanent archive." },
             ].map((item) => (
               <div key={item.step} className="text-center">
                 <div className="font-mono text-[28px] text-gold-dim mb-3">{item.step}</div>
@@ -115,21 +89,83 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Portfolio / Past work */}
+      {/* Free audit CTA */}
+      <section className="bg-burgundy-ink py-[64px]">
+        <div className="container-main text-center">
+          <Tag onDark className="justify-center flex">Free Audit</Tag>
+          <h2 className="text-ivory text-[clamp(26px,3vw,36px)] mt-[14px] mb-3 max-w-[24ch] mx-auto">Not sure if you need a redesign? Get a free website audit</h2>
+          <p className="text-ivory/70 text-[15px] mb-6 max-w-[48ch] mx-auto">Enter your URL, get your score in 60 seconds. No obligation, no credit card.</p>
+          <a href="https://gideonabochie.com/#audit" target="_blank" rel="noopener noreferrer" className="btn-gold inline-block">Get My Free Score</a>
+        </div>
+      </section>
+
+      {/* Portfolio / Results */}
       <section className="py-[72px]">
         <div className="container-main">
           <div className="text-center mb-12">
-            <Tag>Portfolio</Tag>
-            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">See previous work</h2>
-            <p className="mt-3 text-[15px] text-charcoal/68">Browse past projects across web design and architectural design.</p>
+            <Tag>Results</Tag>
+            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Real redesigns, real results</h2>
+            <p className="mt-3 text-[15px] text-charcoal/68">Web design projects for North American businesses — measurable outcomes, not just pretty screenshots.</p>
+          </div>
+          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[2px] bg-line max-w-4xl mx-auto mb-10">
+            <div className="bg-ivory-dim p-[28px] text-center">
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">161+</div>
+              <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Sites Analyzed</div>
+            </div>
+            <div className="bg-ivory-dim p-[28px] text-center">
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">30</div>
+              <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">States Covered</div>
+            </div>
+            <div className="bg-ivory-dim p-[28px] text-center">
+              <div className="text-[32px] font-display font-[600] text-burgundy-ink">40–60%</div>
+              <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Avg Engagement Lift</div>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 max-md:grid-cols-1 gap-6 max-w-4xl mx-auto">
+            <div className="bg-ivory-dim rounded-lg p-7 text-left">
+              <div className="text-[32px] mb-2">★★★★★</div>
+              <p className="text-[14px] text-charcoal/70 italic mb-4">&ldquo;Our online bookings increased 47% within 60 days of launch. The design finally matches the quality of care we provide.&rdquo;</p>
+              <div className="text-[14px] font-medium">Dr. Rebecca Torres</div>
+              <div className="text-[12px] text-charcoal/50">Beverly Hills Medical Group</div>
+              <div className="mt-3 text-gold-dim text-[13px] font-mono">+47% Online Bookings</div>
+            </div>
+            <div className="bg-ivory-dim rounded-lg p-7 text-left">
+              <div className="text-[32px] mb-2">★★★★★</div>
+              <p className="text-[14px] text-charcoal/70 italic mb-4">&ldquo;We went from a dated 2010 site to a modern platform that actually generates qualified leads.&rdquo;</p>
+              <div className="text-[14px] font-medium">Marcus Johnson</div>
+              <div className="text-[12px] text-charcoal/50">CEO, Atlas Fabrication</div>
+              <div className="mt-3 text-gold-dim text-[13px] font-mono">3x Lead Generation</div>
+            </div>
+            <div className="bg-ivory-dim rounded-lg p-7 text-left">
+              <div className="text-[32px] mb-2">★★★★★</div>
+              <p className="text-[14px] text-charcoal/70 italic mb-4">&ldquo;Mobile traffic conversions up 52%. The new site is fast, professional, and clients constantly compliment the experience.&rdquo;</p>
+              <div className="text-[14px] font-medium">Sarah Liu</div>
+              <div className="text-[12px] text-charcoal/50">Smith &amp; Associates Law</div>
+              <div className="mt-3 text-gold-dim text-[13px] font-mono">+52% Mobile Conversions</div>
+            </div>
+          </div>
+          <div className="text-center mt-10">
+            <a href="https://gideonabochie.com/#portfolio" target="_blank" rel="noopener noreferrer" className="text-gold-dim text-[13px] font-mono tracking-wider uppercase hover:underline">
+              View full portfolio on gideonabochie.com →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform projects */}
+      <section className="py-[72px] bg-ivory-dim">
+        <div className="container-main">
+          <div className="text-center mb-10">
+            <Tag>Platforms</Tag>
+            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Other projects</h2>
           </div>
           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6 max-w-3xl mx-auto">
-            <a href="https://gabochiedesign.com" target="_blank" rel="noopener noreferrer" className="bg-ivory-dim rounded-lg p-8 text-center hover:bg-ivory transition-colors">
+            <a href="https://gabochiedesign.com" target="_blank" rel="noopener noreferrer" className="bg-white rounded-lg p-8 text-center hover:bg-ivory transition-colors">
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mb-2">Gabochie Design</div>
               <h3 className="text-[18px] mb-2">Construction Intelligence Platform</h3>
               <p className="text-[13px] text-charcoal/60">3+ tools, 500+ users, 98% accuracy — serving Ghana&apos;s construction professionals.</p>
             </a>
-            <a href="https://gideonabochie.org" target="_blank" rel="noopener noreferrer" className="bg-ivory-dim rounded-lg p-8 text-center hover:bg-ivory transition-colors">
+            <a href="https://gideonabochie.org" target="_blank" rel="noopener noreferrer" className="bg-white rounded-lg p-8 text-center hover:bg-ivory transition-colors">
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mb-2">GideonAbochie Studio</div>
               <h3 className="text-[18px] mb-2">School of Creativity, Love & Wisdom</h3>
               <p className="text-[13px] text-charcoal/60">Bible-based teaching platform with courses, books, and a growing TikTok community.</p>
@@ -138,57 +174,15 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Make a Payment */}
+      {/* Payment */}
       <section className="py-[72px] bg-ivory-dim">
-        <div className="container-main max-w-lg">
-          <div className="text-center mb-10">
-            <Tag>Payment</Tag>
-            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Make a payment</h2>
-            <p className="mt-3 text-[15px] text-charcoal/68">
-              Existing client? Pay for your project here. First time? Book a consultation above first.
-            </p>
-          </div>
-
-          {!showForm ? (
-            <div className="text-center">
-              <button onClick={() => setShowForm(true)} className="btn-gold">
-                Pay via Flutterwave
-              </button>
-              <p className="mt-4 text-[13px] text-charcoal/50">
-                All major cards accepted. Secure checkout by Flutterwave.
-              </p>
-              <div className="mt-6 p-4 bg-white rounded-lg border border-line text-left">
-                <p className="text-[13px] text-charcoal/60">
-                  <strong className="text-charcoal">Prefer bank transfer?</strong> SWIFT details available on request —&nbsp;
-                  <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="text-gold-dim hover:underline">contact via WhatsApp</a>.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handlePay} className="space-y-4">
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Full Name *</label>
-                <input required value={payment.name} onChange={e => setPayment(p => ({ ...p, name: e.target.value }))} className="w-full bg-white border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim" placeholder="Your full name" />
-              </div>
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Email Address *</label>
-                <input required type="email" value={payment.email} onChange={e => setPayment(p => ({ ...p, email: e.target.value }))} className="w-full bg-white border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim" placeholder="email@example.com" />
-              </div>
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Amount (GHS) *</label>
-                <input required type="number" min="1" value={payment.amount} onChange={e => setPayment(p => ({ ...p, amount: e.target.value }))} className="w-full bg-white border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim" placeholder="e.g. 2500" />
-              </div>
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Description</label>
-                <textarea value={payment.description} onChange={e => setPayment(p => ({ ...p, description: e.target.value }))} className="w-full bg-white border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim resize-none" rows={2} placeholder="Web design, architectural plans, etc." />
-              </div>
-              {status === "error" && <p className="text-red-600 text-[14px]">{errorMsg}</p>}
-              <button type="submit" disabled={status === "loading"} className="btn-gold w-full disabled:opacity-50">
-                {status === "loading" ? "Redirecting to payment..." : "Pay Now"}
-              </button>
-              <button type="button" onClick={() => setShowForm(false)} className="text-[13px] text-charcoal/50 hover:text-charcoal w-full text-center mt-2">Cancel</button>
-            </form>
-          )}
+        <div className="container-main text-center max-w-lg">
+          <Tag>Payment</Tag>
+          <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">How to pay</h2>
+          <p className="mt-3 text-[15px] text-charcoal/68 mb-6">
+            After booking a consultation, I&rsquo;ll send you the bank transfer details (SWIFT) and an invoice. All payments are by direct bank transfer — no third-party processors.
+          </p>
+          <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-gold inline-block">Request Payment Details</a>
         </div>
       </section>
 
@@ -201,8 +195,8 @@ export default function ServicesPage() {
           </div>
           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[2px] bg-line">
             {[
-              { q: "What does a project cost?", a: "Every project is different. Web design starts from 2,500 GHS, architectural design from 5,000 GHS. Book a free consultation and I'll give you a fixed quote." },
-              { q: "Can I pay in USD or other currency?", a: "Flutterwave supports multiple currencies. Contact me via WhatsApp and I'll send a custom payment link in your preferred currency." },
+              { q: "What does a project cost?", a: "Web design starts from $2,999 USD (Starter), $5,999 (Growth), or $9,999 (Enterprise). Architectural design from $5,000 USD. Get a free website audit first, then book a consultation for a fixed quote." },
+              { q: "How do I pay?", a: "All payments are by direct bank transfer. After booking a consultation, I'll send you the SWIFT details and an invoice. I can bill in USD, GHS, GBP, or EUR depending on your preference." },
               { q: "Where does the money go?", a: "100% of service proceeds fund the Lutterodt Institute — the Digital Museum, the Neo-Manor, and the family archive. A transparent impact report is shared annually." },
               { q: "What if I'm not satisfied?", a: "I work iteratively with your feedback throughout the project. If you're not happy at any stage, we adjust until you are. Your satisfaction is my reputation." },
             ].map((faq) => (
