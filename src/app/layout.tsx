@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   },
   description:
     "An authoritative digital home for the Lutterodt family — history, timeline, gallery and stories preserved for present and future generations.",
+  verification: {
+    google: "iNJ86WjvKu9EZpb5SPnpf-BXov-O2zBOe2wQ1Ux3lK0",
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.ico",
