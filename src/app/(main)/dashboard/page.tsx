@@ -121,7 +121,7 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-4 max-w-3xl">
               {projects.map((p) => (
-                <div key={p.id} className="bg-white rounded-lg p-5 flex items-center justify-between">
+                <div key={p.id} className="bg-white rounded-lg p-5 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
                   <div>
                     <div className="text-[15px] font-medium">{p.service_interest || "General inquiry"}</div>
                     {p.message && <p className="text-[13px] text-charcoal/60 mt-1">{p.message}</p>}

@@ -161,7 +161,7 @@ export default function WebFinderPage() {
       </div>
 
       <div className="bg-ivory border border-line p-6 mb-6">
-        <div className="flex items-end gap-3">
+        <div className="flex items-end gap-3 flex-wrap">
           <div className="flex-1">
             <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Search query</label>
             <input

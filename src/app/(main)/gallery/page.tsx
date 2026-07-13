@@ -38,7 +38,7 @@ export default function GalleryPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 max-md:grid-cols-2 gap-[2px] bg-line">
+          <div className="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-[2px] bg-line">
             {filtered.map((item, i) => (
               <GalleryItem
                 key={i}

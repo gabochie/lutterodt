@@ -19,7 +19,7 @@ export default function DisclaimerPage() {
         description="Important limitations regarding genealogical accuracy and historical claims on this platform."
       />
 
-      <section className="py-[108px] py-[4px]">
+      <section className="py-[108px] max-md:py-[72px]">
         <div className="container-main max-w-[700px]">
           <h2 className="text-[clamp(26px,2.8vw,28px)] mb-6">Research Limitations & Disclaimers</h2>
           

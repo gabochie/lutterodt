@@ -66,22 +66,24 @@ export function Header() {
 
         <button
           className="md:hidden bg-none border-0 p-0"
-          aria-label="Open menu"
+          aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen(!open)}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M3 6h18M3 12h18M3 18h18"
-              stroke="#211D1A"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-          </svg>
+          {open ? (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6l12 12M18 6l-12 12" stroke="#211D1A" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M3 6h18M3 12h18M3 18h18" stroke="#211D1A" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          )}
         </button>
       </nav>
 
+      {open && <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)} />}
       {open && (
-        <div className="md:hidden bg-ivory border-b border-line px-8 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-ivory border-b border-line px-8 py-6 flex flex-col gap-5 relative z-50">
           {navLinks.map((link) => (
             <Link
               key={link.href}

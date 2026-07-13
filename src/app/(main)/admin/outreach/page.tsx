@@ -152,7 +152,7 @@ export default function AdminOutreach() {
         </div>
       </div>
 
-      <div className="grid grid-cols-6 max-md:grid-cols-3 gap-3 mb-8">
+      <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 gap-3 mb-8">
         {(["total", "not_sent", "sent", "replied", "meeting_booked", "declined"] as const).map((key) => (
           <div key={key} className="bg-ivory border border-line p-4 text-center">
             <div className="font-display text-[26px] text-burgundy-ink">

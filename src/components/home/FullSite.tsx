@@ -134,7 +134,7 @@ export function FullSite() {
             <Tag>Preview — Gallery</Tag>
             <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">The archive, in pictures</h2>
           </div>
-          <div className="grid grid-cols-4 max-md:grid-cols-2 gap-[2px] bg-line mb-9">
+          <div className="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-[2px] bg-line mb-9">
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
               <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=700&auto=format&fit=crop" alt="Family portrait" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>

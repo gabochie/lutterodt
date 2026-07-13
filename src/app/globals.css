@@ -122,6 +122,11 @@
   margin: 0 auto;
   padding: 0 32px;
 }
+@media (max-width: 640px) {
+  .container-main {
+    padding: 0 16px;
+  }
+}
 
 .btn {
   display: inline-flex;
