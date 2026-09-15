@@ -1,10 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { verifyRequestAuth } from "@/lib/cf/auth";
+import { verifyClientToken } from "@/lib/cf/auth";
 
 export async function GET(
-  _request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const token = request.cookies.get("client_token")?.value;
+  const isClient = token ? await verifyClientToken(token) : null;
+  if (!(await verifyRequestAuth(request)) && !isClient) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const { id } = await params;
     const { env } = await getCloudflareContext({ async: true });
@@ -21,7 +28,8 @@ export async function GET(
     return new NextResponse(letter.letter_html, {
       headers: { "Content-Type": "text/html; charset=utf-8" },
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

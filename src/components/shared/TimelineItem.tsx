@@ -38,6 +38,9 @@ export function TimelineItem({
                 key={i}
                 src={img.src}
                 alt={img.alt}
+                width={120}
+                height={88}
+                loading="lazy"
                 className="w-[120px] h-[88px] object-cover rounded-[1px]"
               />
             ))}

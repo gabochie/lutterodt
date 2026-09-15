@@ -1,21 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
-
-function verifyClient(request: NextRequest): { id: number; email: string } | null {
-  const token = request.cookies.get("client_token")?.value;
-  if (!token) return null;
-  try {
-    const data = JSON.parse(Buffer.from(token, "base64url").toString());
-    if (data.exp > Date.now()) return { id: data.cid, email: data.email };
-  } catch {
-    /* ignore */
-  }
-  return null;
-}
+import { verifyClientToken } from "@/lib/cf/auth";
 
 export async function GET(request: NextRequest) {
-  const client = verifyClient(request);
+  const token = request.cookies.get("client_token")?.value;
+  const client = token ? await verifyClientToken(token) : null;
   if (!client) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -30,7 +20,8 @@ export async function GET(request: NextRequest) {
     ).bind(client.email).all();
 
     return NextResponse.json(results || []);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

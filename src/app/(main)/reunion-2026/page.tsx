@@ -160,6 +160,9 @@ export default function Reunion2026Page() {
             <img
               src="/images/reunion-2026-program.jpg"
               alt="Lutterodt/t/h Reunion 2026 program flyer"
+              width={1220}
+              height={1563}
+              loading="lazy"
               className="w-full max-w-[600px] rounded border border-line"
             />
           </div>

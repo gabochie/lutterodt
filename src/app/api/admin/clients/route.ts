@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
@@ -13,12 +17,16 @@ export async function GET() {
     ).all();
 
     return NextResponse.json(results || []);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
 export async function PUT(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
@@ -28,7 +36,6 @@ export async function PUT(request: NextRequest) {
     const now = new Date().toISOString();
 
     if (!id || id === 0) {
-      // Create new client
       await db.prepare(
         "INSERT INTO clients (name, email, phone, access_code, status, notes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
       ).bind(name, email, phone || "", access_code || "", status || "active", notes || "", now, now).run();
@@ -39,7 +46,8 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

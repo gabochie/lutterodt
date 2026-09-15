@@ -59,6 +59,9 @@ export default function AboutPage() {
             <img
               src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1000&auto=format&fit=crop"
               alt="Archive of old family photographs"
+              width={1000}
+              height={1250}
+              loading="lazy"
               className="w-full aspect-[4/5] object-cover"
             />
           </div>
@@ -92,6 +95,9 @@ export default function AboutPage() {
             <img
               src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop"
               alt="Family gathering"
+              width={1000}
+              height={1250}
+              loading="lazy"
               className="w-full aspect-[4/5] object-cover"
             />
             <div>
@@ -114,6 +120,9 @@ export default function AboutPage() {
             <img
               src="https://gideonabochie.org/assets/images/headshot.jpg"
               alt="Gideon Borketey Tieku-Bortei — Founder"
+              width={750}
+              height={1000}
+              loading="lazy"
               className="w-full aspect-[3/4] object-cover rounded-lg"
             />
             <div>

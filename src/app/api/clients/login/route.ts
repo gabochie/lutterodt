@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
+import { signClientToken } from "@/lib/cf/auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid credentials or account not active" }, { status: 401 });
     }
 
-    const token = Buffer.from(JSON.stringify({ cid: row.id, email: row.email, exp: Date.now() + 7 * 86400000 })).toString("base64url");
+    const token = await signClientToken({ cid: row.id as number, email: row.email as string, exp: Date.now() + 7 * 86400000 });
     const response = NextResponse.json({ ok: true, name: row.name });
     response.cookies.set("client_token", token, {
       path: "/",
@@ -32,7 +33,8 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -1,25 +1,64 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 import { FilterChip } from "@/components/shared/FilterChip";
-import { profiles, categoryLabels, profileFilters } from "@/data/profiles";
-import { directoryStats } from "@/data/stats";
 
-const countries = Array.from(new Set(profiles.map((p) => p.country))).sort();
-const historicalProfiles = profiles.filter((p) => p.category === "historical");
-const modernProfiles = profiles.filter((p) => p.category !== "historical");
+const profileFilters = [
+  { key: "all", label: "All Profiles" },
+  { key: "academia", label: "Academia" },
+  { key: "business", label: "Business" },
+  { key: "creative", label: "Creative" },
+  { key: "engineering", label: "Engineering & Tech" },
+  { key: "healthcare", label: "Healthcare" },
+  { key: "historical", label: "Historical" },
+  { key: "law", label: "Law" },
+  { key: "service", label: "Service" },
+  { key: "sports", label: "Sports" },
+];
 
-export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
+interface DirProfile {
+  id: string; name: string; dob: string | null;
+  category: string; country: string; achievement: string;
+}
+
+interface DirData {
+  profiles: DirProfile[];
+  totalProfiles: number;
+  livingProfiles: number;
+  countries: string[];
+  categories: string[];
+  continents: number;
+  isVerified: boolean;
+  categoryLabels: Record<string, string>;
+}
+
+export function DirectoryClient() {
+  const [data, setData] = useState<DirData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [countryFilter, setCountryFilter] = useState("all");
 
-  const visibleProfiles = isVerified ? profiles : historicalProfiles;
+  useEffect(() => {
+    fetch("/api/directory")
+      .then((r) => r.json())
+      .then((d) => { setData(d); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const isVerified = data?.isVerified ?? false;
+  const profiles = data?.profiles ?? [];
+  const countries = data?.countries ?? [];
+  const categoryLabels = data?.categoryLabels ?? {};
+  const totalProfiles = data?.totalProfiles ?? 0;
+  const livingProfiles = data?.livingProfiles ?? 0;
+  const historicalCount = profiles.filter((p) => p.category === "historical").length;
+  const modernCount = totalProfiles - historicalCount;
 
   const filtered = useMemo(() => {
-    return visibleProfiles.filter((p) => {
+    return profiles.filter((p) => {
       const matchesFilter = activeFilter === "all" || p.category === activeFilter;
       const matchesCountry = countryFilter === "all" || p.country === countryFilter;
       const matchesSearch =
@@ -28,19 +67,27 @@ export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
         p.achievement.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesFilter && matchesCountry && matchesSearch;
     });
-  }, [activeFilter, searchQuery, countryFilter, visibleProfiles]);
+  }, [activeFilter, searchQuery, countryFilter, profiles]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-pulse text-charcoal/30 font-mono text-[11px] tracking-widest uppercase">Loading directory...</div>
+      </div>
+    );
+  }
 
   return (
     <>
       <PageHero
         breadcrumb={{ label: "Home", href: "/" }}
         current="Directory"
-        tag={`${isVerified ? directoryStats.totalProfiles : historicalProfiles.length} ${isVerified ? "Documented" : "Historical"} Profiles`}
+        tag={`${isVerified ? totalProfiles : historicalCount} ${isVerified ? "Documented" : "Historical"} Profiles`}
         title="The Lutterodt family database"
         description={
           isVerified
-            ? `${directoryStats.livingProfiles} living notables across ${directoryStats.countries.length} countries, ${directoryStats.continents} continents, and ${directoryStats.categories.length} professional domains -- researched, verified, and curated.`
-            : `Showing ${historicalProfiles.length} colonial-era Lutterodts from the Gold Coast (1790--1973). Verify your identity to access all ${directoryStats.totalProfiles} profiles across ${directoryStats.countries.length} countries.`
+            ? `${livingProfiles} living notables across ${countries.length} countries and ${data?.continents ?? 6} continents, researched, verified, and curated.`
+            : `Showing ${historicalCount} colonial-era Lutterodts from the Gold Coast (1790--1973). Verify your identity to access all ${totalProfiles} profiles across ${countries.length} countries.`
         }
       />
 
@@ -53,7 +100,7 @@ export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
               This is a preview of the Lutterodt family archive
             </h2>
             <p className="text-ivory/65 text-[15px] max-w-[56ch] mx-auto mt-[14px] mb-[24px] leading-relaxed">
-              You are viewing {modernProfiles.length} historical profiles. There are {directoryStats.totalProfiles - historicalProfiles.length} more Lutterodts documented across {directoryStats.countries.length} countries. Verify your identity to access the full directory.
+              You are viewing {historicalCount} historical profiles. There are {modernCount} more Lutterodts documented across {countries.length} countries. Verify your identity to access the full directory.
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <Link href="/verify" className="btn-gold">Verify Your Identity</Link>
@@ -72,7 +119,7 @@ export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
               Every Lutterodt in the world deserves to be in this record
             </h2>
             <p className="text-ivory/65 text-[15px] max-w-[56ch] mx-auto mt-[14px] mb-[24px] leading-relaxed">
-              We are actively reaching out to every known Lutterodt across {directoryStats.countries.length} countries and {directoryStats.continents} continents. If you know a Lutterodt we have not yet found, we would like to hear from you.
+              We are actively reaching out to every known Lutterodt across {countries.length} countries and {data?.continents ?? 6} continents. If you know a Lutterodt we have not yet found, we would like to hear from you.
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <Link href="/contact" className="btn-gold">Nominate a Lutterodt</Link>
@@ -124,7 +171,7 @@ export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
 
           <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-[2px] bg-line">
             {filtered.map((profile) => (
-              <ProfileCard key={profile.id} profile={profile} />
+              <ProfileCard key={profile.id} profile={profile} isVerified={isVerified} categoryLabels={categoryLabels} />
             ))}
           </div>
 
@@ -138,7 +185,7 @@ export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
             <div className="mt-16 p-[40px] bg-ivory-dim border border-line text-center">
               <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Access the full directory</span>
               <h3 className="text-[22px] font-display font-[550] text-burgundy-ink mt-[8px] mb-[12px]">
-                {modernProfiles.length} more Lutterodts documented across {directoryStats.countries.length} countries
+                {modernCount} more Lutterodts documented across {countries.length} countries
               </h3>
               <p className="text-[14.5px] text-charcoal/65 max-w-[52ch] mx-auto mb-[20px]">
                 Verify your identity as a Lutterodt to access the complete family directory, including modern profiles from Ghana, UK, USA, and beyond.
@@ -152,9 +199,23 @@ export default function DirectoryPage({ isVerified }: { isVerified: boolean }) {
   );
 }
 
-function ProfileCard({ profile }: { profile: (typeof profiles)[number] }) {
+function ProfileCard({ profile, isVerified, categoryLabels }: { profile: DirProfile; isVerified: boolean; categoryLabels: Record<string, string> }) {
+  const isModern = profile.category !== "historical";
+  const locked = isModern && !isVerified;
+
   return (
-    <div className="bg-ivory p-[26px] pb-[30px] flex flex-col group">
+    <div className={`bg-ivory p-[26px] pb-[30px] flex flex-col group ${locked ? "relative" : ""}`}>
+      {locked && (
+        <div className="absolute inset-0 bg-ivory/80 backdrop-blur-[2px] z-10 flex items-center justify-center">
+          <div className="text-center px-6">
+            <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 mx-auto mb-2 text-burgundy/60">
+              <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+            <p className="font-mono text-[10px] tracking-widest uppercase text-burgundy/60">Verification required</p>
+          </div>
+        </div>
+      )}
       <div className="flex items-center justify-between mb-3">
         <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">
           {categoryLabels[profile.category] || profile.category}
@@ -168,11 +229,11 @@ function ProfileCard({ profile }: { profile: (typeof profiles)[number] }) {
       <h3 className="text-[18px] mb-[6px] leading-snug">{profile.name}</h3>
       <span className="text-charcoal/50 text-[12px] mb-[10px]">{profile.country}</span>
       <p className="text-charcoal/66 text-[13.5px] flex-1 leading-relaxed">
-        {profile.achievement.length > 120
+        {profile.achievement?.length > 120
           ? profile.achievement.slice(0, 120) + "..."
           : profile.achievement}
       </p>
-      {profile.id && (
+      {!locked && profile.id && (
         <Link
           href={`/directory/${profile.id}`}
           className="mt-[16px] font-mono text-[11px] tracking-widest uppercase text-burgundy inline-flex items-center gap-2 group"
@@ -180,6 +241,18 @@ function ProfileCard({ profile }: { profile: (typeof profiles)[number] }) {
           View Profile
           <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
             <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
+          </svg>
+        </Link>
+      )}
+      {locked && (
+        <Link
+          href="/verify"
+          className="mt-[16px] font-mono text-[11px] tracking-widest uppercase text-burgundy/50 inline-flex items-center gap-2"
+        >
+          Verify to view
+          <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3">
+            <rect x="1" y="6" width="10" height="5" rx="1" stroke="currentColor" strokeWidth="1"/>
+            <path d="M3.5 6V4.5a2.5 2.5 0 015 0V6" stroke="currentColor" strokeWidth="1"/>
           </svg>
         </Link>
       )}

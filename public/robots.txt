@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login
 Disallow: /api/
+Disallow: /outreach/
 
 Sitemap: https://lutterodt.org/sitemap.xml

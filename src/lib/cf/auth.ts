@@ -5,11 +5,23 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 const COOKIE_NAME = "admin_token";
 
 function getSecret(): string {
-  return process.env.AUTH_SECRET || "dev-auth-secret-change-in-production";
+  const secret = process.env.AUTH_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error(
+      "AUTH_SECRET must be set and at least 32 characters. Generate one with: openssl rand -base64 48"
+    );
+  }
+  return secret;
 }
 
 export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || "admin";
+  const password = process.env.ADMIN_PASSWORD;
+  if (!password || password.length < 8) {
+    throw new Error(
+      "ADMIN_PASSWORD must be set and at least 8 characters."
+    );
+  }
+  return password;
 }
 
 function toB64(data: string): string {
@@ -123,6 +135,48 @@ export async function verifyRequestAuth(request: NextRequest): Promise<boolean> 
   const auth = request.headers.get("authorization") || "";
   if (auth.startsWith("Bearer ") && auth.slice(7) === getCronSecret()) return true;
   return false;
+}
+
+// --- Client token HMAC signing ---
+
+export async function signClientToken(payload: { cid: number; email: string; exp: number }): Promise<string> {
+  const data = JSON.stringify(payload);
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(getSecret()),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sigBuffer = await crypto.subtle.sign("HMAC", key, encoder.encode(data));
+  const sigB64 = Buffer.from(new Uint8Array(sigBuffer)).toString("base64url");
+  return toB64(data) + "." + sigB64;
+}
+
+export async function verifyClientToken(tokenValue: string): Promise<{ cid: number; email: string } | null> {
+  try {
+    const parts = tokenValue.split(".");
+    if (parts.length !== 2) return null;
+    const payload = fromB64(parts[0]);
+    const sigB64 = parts[1];
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(getSecret()),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["verify"]
+    );
+    const sig = Buffer.from(sigB64, "base64url");
+    const valid = await crypto.subtle.verify("HMAC", key, sig, encoder.encode(payload));
+    if (!valid) return null;
+    const data = JSON.parse(payload);
+    if (data.exp < Date.now()) return null;
+    return { cid: data.cid, email: data.email };
+  } catch {
+    return null;
+  }
 }
 
 export async function verifySession(): Promise<boolean> {

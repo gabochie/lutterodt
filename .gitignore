@@ -43,6 +43,9 @@ next-env.d.ts
 # OpenNext
 .open-next
 
+# Build artifacts (may contain baked-in env vars)
+/dist
+
 # wrangler files
 .wrangler
 .dev.vars*

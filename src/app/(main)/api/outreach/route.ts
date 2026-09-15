@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getSetting, setSetting } from "@/lib/cf/kv";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
 export type OutreachStatus = "not_sent" | "sent" | "replied" | "meeting_booked" | "declined" | "follow_up";
 export type OutreachChannel = "" | "email" | "linkedin" | "phone" | "mail" | "whatsapp" | "other";
@@ -31,7 +31,10 @@ const categoryLabels: Record<string, string> = {
   sports: "Sports",
 };
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
@@ -49,7 +52,7 @@ export async function GET() {
     const hasQueuedLetter = new Set((queuedItems || []).map((q) => q.profile_id));
 
     // Load existing outreach status from KV
-    let statusMap = new Map<string, Partial<OutreachRecord>>();
+    const statusMap = new Map<string, Partial<OutreachRecord>>();
     const stored = await getSetting("outreach");
     if (stored) {
       try {
@@ -83,13 +86,14 @@ export async function GET() {
     });
 
     return NextResponse.json(records);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await request.json();

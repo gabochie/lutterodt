@@ -103,7 +103,7 @@ export function FullSite() {
               tag="Oral History"
               title="Auntie Comfort on the War Years"
               description="A recorded conversation on rationing, resilience and keeping the trading house open through 1943."
-              href="#"
+              href="/history"
               linkLabel="Read the Story"
             />
             <Card
@@ -112,7 +112,7 @@ export function FullSite() {
               tag="Family News"
               title="London Branch Marks 40 Years"
               description="Four decades since the first Lutterodt household was established abroad — a note from the London cousins."
-              href="#"
+              href="/history"
               linkLabel="Read the Story"
             />
             <Card
@@ -121,7 +121,7 @@ export function FullSite() {
               tag="Heritage"
               title="Digitising the 1950s Ledgers"
               description="Inside the effort to scan, transcribe and cross-reference forty years of handwritten business records."
-              href="#"
+              href="/history"
               linkLabel="Read the Story"
             />
           </div>
@@ -136,16 +136,16 @@ export function FullSite() {
           </div>
           <div className="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-[2px] bg-line mb-9">
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
-              <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=700&auto=format&fit=crop" alt="Family portrait" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
+              <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=700&auto=format&fit=crop" alt="Family portrait" width={700} height={700} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
-              <img src="https://images.unsplash.com/photo-1461360228754-6e81c478b882?q=80&w=700&auto=format&fit=crop" alt="Historic document" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
+              <img src="https://images.unsplash.com/photo-1461360228754-6e81c478b882?q=80&w=700&auto=format&fit=crop" alt="Historic document" width={700} height={700} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
-              <img src="https://images.unsplash.com/photo-1461783436728-0a9217714694?q=80&w=700&auto=format&fit=crop" alt="Coastal town archival photo" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
+              <img src="https://images.unsplash.com/photo-1461783436728-0a9217714694?q=80&w=700&auto=format&fit=crop" alt="Coastal town archival photo" width={700} height={700} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>
             <div className="relative aspect-[1/1.1] overflow-hidden bg-charcoal cursor-pointer group">
-              <img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?q=80&w=700&auto=format&fit=crop" alt="Family celebration" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
+              <img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?q=80&w=700&auto=format&fit=crop" alt="Family celebration" width={700} height={700} loading="lazy" className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.06] saturate-[0.92] group-hover:saturate-100" />
             </div>
           </div>
           <Link href="/gallery" className="btn-outline">Browse the Full Gallery</Link>

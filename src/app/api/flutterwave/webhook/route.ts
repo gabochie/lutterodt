@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
+const FLUTTERWAVE_SECRET_HASH = "FLUTTERWAVE_SECRET_HASH";
+
 export async function POST(request: NextRequest) {
   try {
+    const expectedHash = process.env.FLUTTERWAVE_SECRET_HASH;
+    const receivedHash = request.headers.get("verif-hash");
+
+    if (!expectedHash || !receivedHash || expectedHash !== receivedHash) {
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    }
+
     const payload = await request.json();
     const { event, data } = payload;
 

@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { NewsletterForm } from "./NewsletterForm";
 
 const legalLinks = [
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },
   { href: "/disclaimer", label: "Disclaimer" },
   { href: "/cookies", label: "Cookie Policy" },
+  { href: "/copyright", label: "Copyright" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -69,20 +70,7 @@ export function Footer() {
         <div>
           <h4 className="font-mono text-[11px] tracking-widest uppercase text-gold-light mb-[18px] font-medium">Newsletter</h4>
           <p className="text-[13px] mb-4 text-ivory/55">Quarterly notes from the archive, sent to the whole family.</p>
-          <form className="flex border-b border-line-on-dark pb-[10px] mt-[6px]">
-            <input
-              type="email"
-              placeholder="Your email address"
-              required
-              className="bg-transparent border-0 text-ivory text-[14px] flex-1 py-[6px] font-body placeholder:text-ivory/40 focus:outline-0"
-            />
-            <button
-              type="submit"
-              className="bg-none border-0 text-gold-light font-mono text-[11px] tracking-widest uppercase"
-            >
-              Subscribe
-            </button>
-          </form>
+          <NewsletterForm />
         </div>
       </div>
 

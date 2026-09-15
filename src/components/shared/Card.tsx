@@ -18,6 +18,9 @@ export function Card({ image, alt, tag, title, description, href, linkLabel }: C
         <img
           src={image}
           alt={alt}
+          loading="lazy"
+          width={900}
+          height={675}
           className="w-full h-full object-cover transition-transform duration-[600ms] group-hover:scale-[1.045]"
         />
       </div>

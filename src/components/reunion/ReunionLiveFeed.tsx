@@ -94,7 +94,7 @@ export function ReunionLiveFeed() {
                     </div>
                     {u.message && <p className="text-[14px] text-charcoal/70 mt-1">{u.message}</p>}
                     {u.photo_url && (
-                      <img src={u.photo_url} alt="" className="mt-3 rounded max-h-64 w-auto object-cover" />
+                      <img src={u.photo_url} alt="" loading="lazy" className="mt-3 rounded max-h-64 w-auto object-cover" />
                     )}
                   </div>
                 </div>

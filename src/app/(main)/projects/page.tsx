@@ -124,6 +124,9 @@ export default function ProjectsPage() {
                 <img
                   src="/images/projects/concept-interior-01.jpg"
                   alt="Lutterodt Renaissance website concept"
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
                   className="w-full h-auto object-cover"
                 />
                 <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-ivory/60 text-[10px] px-3 py-1.5">
@@ -150,6 +153,9 @@ export default function ProjectsPage() {
                   <img
                     src="/images/projects/concept-museum-01.jpg"
                     alt="Digital museum concept"
+                    width={1024}
+                    height={1536}
+                    loading="lazy"
                     className="w-full h-[220px] object-cover"
                   />
                   <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Seeking Sponsorship</span>
@@ -192,6 +198,9 @@ export default function ProjectsPage() {
                   <img
                     src="/images/projects/concept-manor-01.jpg"
                     alt="Neo-Lutterodt Manor concept"
+                    width={1536}
+                    height={1024}
+                    loading="lazy"
                     className="w-full h-[220px] object-cover"
                   />
                   <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Seeking Sponsorship</span>
@@ -267,6 +276,9 @@ export default function ProjectsPage() {
                 <img
                   src="/images/projects/concept-museum-03.jpg"
                   alt="Sponsorship concept"
+                  width={1149}
+                  height={1369}
+                  loading="lazy"
                   className="w-full h-auto object-cover"
                 />
                 <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-ivory/60 text-[10px] px-3 py-1.5">
