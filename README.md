@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lutterodt Renaissance
+
+A living digital archive and family directory for the Lutterodt family — documenting every notable Lutterodt, preserving the family's history, and building toward a permanent, family-governed Institute.
+
+## Stack
+
+- **Framework:** Next.js 16 (App Router), deployed on Cloudflare Workers via OpenNext
+- **Data:** Cloudflare D1 (SQLite), KV for sessions/cache
+- **Auth:** Signed session cookies + HMAC-signed client tokens + Flutterwave webhook verification
+- **Styling:** Tailwind CSS v4 + CVA + tw-animate-css
+- **Search/AI:** MCP SDK
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Create `.dev.vars` from `.dev.vars.example` and fill in real secrets:
+   - `AUTH_SECRET` — at least 32 characters. Never use the example value in production.
+   - `ADMIN_PASSWORD` — at least 8 characters.
+   - `FLUTTERWAVE_SECRET_HASH` — must match the `verif-hash` header configured in the Flutterwave dashboard.
+   - Plus D1/KV binding IDs for production.
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Local production build (`next build --webpack`) |
+| `npm run preview` | OpenNext build + local Cloudflare preview |
+| `npm run deploy` | OpenNext build + deploy to Cloudflare Workers |
+| `npm run upload` | OpenNext build + generate upload assets |
+| `npm run lint` | ESLint over `src/` |
+| `npm run typecheck` | TypeScript type checking |
+| `npm run cf-typegen` | Regenerate `cloudflare-env.d.ts` from `wrangler.json` |
+
+## Environment Variables
+
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `AUTH_SECRET` | Yes | ≥ 32 chars; signs admin sessions and client tokens |
+| `ADMIN_PASSWORD` | Yes | ≥ 8 chars; admin login |
+| `D1` binding | Yes | Outreach profiles, contacts, gallery, timeline, etc. |
+| `KV` binding | Yes | Sessions |
+| `FLUTTERWAVE_SECRET_HASH` | Yes (payments) | Verifies Flutterwave webhooks |
+| `NEXT_PUBLIC_GA_ID` | No | Google Analytics 4 measurement ID (`G-…`) |
+| `NEXT_PUBLIC_CLARITY_ID` | No | Microsoft Clarity project ID |
+
+Do not commit `.dev.vars`, `.env*`, or build output containing baked-in environment variables.
+
+## Project Structure
+
+- `src/app/(main)/` — public pages (home, gallery, history, directory, services, sponsor, verify, contact, projects, reunion, outreach admin)
+- `src/app/api/` — current API routes (clients, outreach pipeline, flutterwave, sponsors, reunion, admin)
+- `src/app/(main)/api/` — public-site API (leads, gallery, timeline, directory, settings, stats, articles)
+- `src/lib/cf/` — Cloudflare bindings, D1 helpers, auth utilities
+- `src/components/` — shared UI (Card, Tag, ScrollReveal, GalleryItem, Footer, Navbar)
+
+## Security
+
+- `AUTH_SECRET` and `ADMIN_PASSWORD` are validated at startup — the app refuses to boot with missing or default-length values.
+- All `/api/admin/*`, `/api/outreach/*`, and outreach letter endpoints require an authenticated admin session (or a signed client token where appropriate).
+- Flutterwave webhooks verify the `verif-hash` header before processing.
+- Security headers (CSP, HSTS, X-Frame-Options, Permissions-Policy) are set in `next.config.ts`.
+
+## Deployment on Cloudflare
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Custom domain: `lutterodt.org`. The open-site gateway (`ContentGate`) reads `coming_soon` from `/api/settings`; disable it on every environment before public launch.
