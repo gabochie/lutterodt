@@ -1,6 +1,5 @@
 import { cookies, headers } from "next/headers";
 import type { NextRequest } from "next/server";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 const COOKIE_NAME = "admin_token";
 
