@@ -2,7 +2,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
-import { sanitizeLetterHtml } from "@/lib/outreach/letter";
+import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 
 async function getDB() {

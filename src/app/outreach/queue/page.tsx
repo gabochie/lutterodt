@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from "react";
+import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 
 interface QueueItem {
   id: number;
@@ -182,7 +183,7 @@ export default function QueuePage() {
                 </button>
               </div>
             </div>
-            <div className="letter-preview" dangerouslySetInnerHTML={{ __html: preview.html }} />
+            <div className="letter-preview" dangerouslySetInnerHTML={{ __html: sanitizeLetterHtml(preview.html) }} />
           </div>
         </div>
       )}

@@ -105,11 +105,6 @@ test.describe("contact form", () => {
 
   for (const { tab, label, value, isSelect, hasName } of DROPPED_FIELD_CASES) {
     test(`${tab} sends the ${label} field`, async ({ page }) => {
-      test.fail(
-        true,
-        `BUG: ContactClient.tsx:38-45 only forwards category, subject, name, email and message, so "${label}" never reaches /api/leads`
-      );
-
       await page.getByRole("button", { name: tab, exact: true }).click();
       const form = contactForm(page);
       const postPromise = capturePost(page, "/api/leads");
@@ -126,7 +121,9 @@ test.describe("contact form", () => {
       await form.getByRole("button", { name: "Send Message" }).click();
 
       const post = await postPromise;
-      expect(post.json).toMatchObject({ [label.toLowerCase()]: value });
+      expect(post.json?.message, `${label} must reach the API`).toContain(
+        `${label}: ${value}`
+      );
     });
   }
 });

@@ -24,6 +24,27 @@ const tabSubjects: Record<Tab, string> = {
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
+const tabFieldLabels: Record<Tab, Array<[string, string]>> = {
+  general: [["message", ""]],
+  join: [
+    ["family-branch", "Family Branch"],
+    ["relationship-to-family", "Relationship to Family"],
+    ["anything-youd-like-the-committee-to-know", "Note to the Committee"],
+  ],
+  volunteer: [
+    ["area-of-interest", "Area of Interest"],
+    ["relevant-experience", "Relevant Experience"],
+  ],
+  research: [
+    ["institution--affiliation", "Institution / Affiliation"],
+    ["nature-of-research-request", "Nature of Research Request"],
+  ],
+  media: [
+    ["outlet", "Outlet"],
+    ["enquiry-details--deadline", "Enquiry Details & Deadline"],
+  ],
+};
+
 export function ContactClient() {
   const [activeTab, setActiveTab] = useState<Tab>("general");
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -38,11 +59,13 @@ export function ContactClient() {
     const body: Record<string, string> = { category: activeTab, subject: tabSubjects[activeTab] };
     if (form["full-name"]) body.name = form["full-name"];
     if (form["email-address"]) body.email = form["email-address"];
-    if (form["message"]) body.message = form["message"];
-    if (form["anything-youd-like-the-committee-to-know"]) body.message = form["anything-youd-like-the-committee-to-know"];
-    if (form["relevant-experience"]) body.message = form["relevant-experience"];
-    if (form["nature-of-research-request"]) body.message = form["nature-of-research-request"];
-    if (form["enquiry-details--deadline"]) body.message = form["enquiry-details--deadline"];
+
+    const lines: string[] = [];
+    for (const [key, label] of tabFieldLabels[activeTab]) {
+      const value = (form[key] || "").trim();
+      if (value) lines.push(label ? `${label}: ${value}` : value);
+    }
+    if (lines.length) body.message = lines.join("\n\n");
 
     try {
       const res = await fetch("/api/leads", {

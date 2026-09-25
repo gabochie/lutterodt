@@ -193,11 +193,6 @@ test.describe("outreach console", () => {
     page,
     stubApi,
   }) => {
-    test.fail(
-      true,
-      "SECURITY: queue/page.tsx:185 renders letter HTML with dangerouslySetInnerHTML and nothing sanitizes it, so markup stored in a queued letter executes in the admin's session."
-    );
-
     await stubApi("**/api/outreach/queue", 200, QUEUE_PAYLOAD);
     await stubApi("**/api/outreach/profiles*", 200, PROFILES_PAYLOAD);
     await stubApi("**/api/outreach/generate", 200, {
@@ -214,6 +209,8 @@ test.describe("outreach console", () => {
       Boolean((window as unknown as { __letterXss?: boolean }).__letterXss)
     );
     expect(executed, "letter HTML must not execute script").toBe(false);
+    await expect(page.locator(".letter-preview [onerror]")).toHaveCount(0);
+    await expect(page.locator(".letter-preview script")).toHaveCount(0);
   });
 
   test("the review page refuses to approve without a reviewer name", async ({
