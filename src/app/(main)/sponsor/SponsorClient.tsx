@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     q: "Who is behind this project?",
-    a: "The Lutterodt Renaissance and the Lutterodt Institute are a personal initiative founded by one person — a son of a Lutterodt mother, building a permanent institution in her honour. There is no formal committee or elected body; the goal is to grow this into a family-governed institution over time.",
+    a: "The Lutterodt Renaissance and the Lutterodt Institute are stewarded by founder Gideon Borketey Tieku-Bortei on behalf of the global Lutterodt family, with the goal of growing into a family-governed institution over time. There is no formal committee or elected body yet.",
   },
   {
     q: "How are sponsorship funds used?",
@@ -138,7 +138,7 @@ export function SponsorClient() {
               Become a sponsor of the Lutterodt Institute
             </h2>
             <p className="mt-4 text-[16px] text-charcoal/68">
-              Every contribution goes directly toward building the Lutterodt Institute — a permanent institution housing the Digital Museum, the Neo-Manor, and the family archive. From a personal tribute to a lasting legacy.
+              Every contribution goes directly toward building the Lutterodt Institute — a permanent institution housing the Digital Museum, the Neo-Manor, and the family archive. From a shared record to a lasting legacy.
             </p>
           </div>
 

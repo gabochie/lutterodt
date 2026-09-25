@@ -6,7 +6,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "About — The Lutterodt Institute",
-  description: "The Lutterodt Renaissance is the digital arm of the Lutterodt Institute — a personal initiative to preserve family heritage and build a lasting institution in honour of a Lutterodt mother.",
+  description: "The Lutterodt Renaissance is the digital arm of the Lutterodt Institute — preserving family heritage and building a lasting institution for every branch of the Lutterodt family.",
 };
 
 const values = [
@@ -39,8 +39,8 @@ export default function AboutPage() {
         breadcrumb={{ label: "Home", href: "/" }}
         current="About"
         tag="The Lutterodt Institute"
-        title="Building a legacy for my mother — and for every Lutterodt"
-        description="The Renaissance is the digital face of the Lutterodt Institute: a personal initiative to document, connect, and uplift the global Lutterodt family. Every profile, every story, every project — building toward an institution that will outlive us."
+        title="A permanent home for every Lutterodt"
+        description="The Renaissance is the digital face of the Lutterodt Institute: documenting, connecting, and uplifting the global Lutterodt family. Every profile, every story, every project — building toward an institution that will outlive us."
       />
 
       <section className="py-[108px]">
@@ -48,12 +48,12 @@ export default function AboutPage() {
           <div className="grid grid-cols-[1fr_1fr] max-md:grid-cols-1 gap-16 items-center">
             <div>
               <Tag>Origin</Tag>
-              <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[14px]">A son&apos;s tribute, becoming a family&apos;s institution</h2>
+              <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[14px]">One family&apos;s record, built to endure</h2>
               <p className="mt-[18px] text-charcoal/70 text-[16px]">
-                My mother is a Lutterodt. This project began as a way to honour her — by documenting the family she comes from, connecting the branches she belongs to, and building something that carries her name forward for generations. What started as a personal archive grew into the Lutterodt Institute, and this website is its public face.
+                The Lutterodt family spans generations, branches, and continents. This project exists to document that family — connecting its branches, preserving its stories, and building a permanent record that carries the Lutterodt name forward for generations. What began as a family archive is growing into the Lutterodt Institute, and this website is its public face.
               </p>
               <p className="mt-[18px] text-charcoal/70 text-[16px]">
-                The Renaissance is not an official family project with a committee or a charter. It is one person&apos;s initiative, built transparently, with the hope that the family will recognise it, contribute to it, and one day take stewardship of it. Every profile, every story, every project on this site is a step toward that institution.
+                The Renaissance is not yet a formally chartered family institution with a committee or governing board. It is currently stewarded transparently, with the hope that the family will recognise it, contribute to it, and one day take stewardship of it. Every profile, every story, every project on this site is a step toward that institution.
               </p>
             </div>
             <img
@@ -102,9 +102,9 @@ export default function AboutPage() {
             />
             <div>
               <Tag>Stewardship</Tag>
-              <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[14px]">Built by one, meant for all</h2>
+              <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[14px]">Stewarded today, family-governed tomorrow</h2>
               <p className="mt-[18px] text-charcoal/70 text-[16px]">
-                The Lutterodt Institute is currently a solo initiative — founded and run by one person, funded out of pocket, and built with the long-term goal of becoming a family-governed institution. There is no Renaissance Committee, no elected congress, no formal structure. That is the destination, not the starting point.
+                The Lutterodt Institute is currently stewarded by one person — built and funded independently, with the long-term goal of becoming a family-governed institution. There is no Renaissance Committee, no elected congress, no formal structure yet. That is the destination, not the starting point.
               </p>
               <p className="mt-[18px] text-charcoal/70 text-[16px]">
                 The end goal is a properly constituted Institute — with a board, a charter, family representation from every branch, and a clear succession plan that ensures the work continues regardless of who founded it. Every sponsorship, every contribution, every connection made through this site brings that future closer.
@@ -130,7 +130,7 @@ export default function AboutPage() {
               <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Gideon Borketey Tieku-Bortei</h2>
               <p className="text-gold-dim text-[14px] font-mono tracking-wider mt-1 mb-5">Gideon Abochie · Gabochie Design · GideonAbochie Studio</p>
               <p className="text-charcoal/70 text-[15px]">
-                I am an architect and web designer — founder of Gabochie Design, a construction and real estate intelligence platform serving Ghana and the diaspora, and GideonAbochie Studio, a creative teaching ministry. I founded the Lutterodt Institute to honour my mother, building a permanent institution that serves every branch of our family. The creative services I offer through this site — web design and architectural design — directly fund that mission.
+                I am an architect and web designer — founder of Gabochie Design, a construction and real estate intelligence platform serving Ghana and the diaspora, and GideonAbochie Studio, a creative teaching ministry. I steward the Lutterodt Institute to serve every branch of our family, building a permanent institution for the global Lutterodt family. The creative services I offer through this site — web design and architectural design — directly fund that mission.
               </p>
               <div className="flex gap-3 mt-6">
                 <a href="/services" className="btn-gold text-[12px]">View Services</a>
@@ -146,7 +146,7 @@ export default function AboutPage() {
         <div className="container-main relative z-10">
           <Tag onDark className="justify-center flex">The Lutterodt Institute</Tag>
           <h2 className="text-ivory text-[clamp(30px,3.4vw,44px)] max-w-[26ch] mx-auto mt-[18px] mb-[20px]">A Renaissance is not a return to the past — it is the past, put to use building what comes next</h2>
-          <p className="text-ivory/70 max-w-[56ch] mx-auto mb-[34px]">From a personal tribute to a lasting institution. Every profile documented, every connection made, every project funded is a step toward the Lutterodt Institute — a permanent home for the family&apos;s heritage.</p>
+          <p className="text-ivory/70 max-w-[56ch] mx-auto mb-[34px]">From a shared record to a lasting institution. Every profile documented, every connection made, every project funded is a step toward the Lutterodt Institute — a permanent home for the family&apos;s heritage.</p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/sponsor" className="btn-gold">Support the Institute</Link>
             <Link href="/history" className="btn-outline-ivory">Explore the History</Link>
