@@ -112,8 +112,9 @@ async function verifyToken(tokenValue: string): Promise<boolean> {
   }
 }
 
-export function getCronSecret(): string {
-  return process.env.CRON_SECRET || "";
+export function getCronSecret(): string | null {
+  const secret = process.env.CRON_SECRET;
+  return secret && secret.length > 0 ? secret : null;
 }
 
 export async function verifyRequestCookie(request: NextRequest): Promise<boolean> {
@@ -132,7 +133,8 @@ export async function verifyRequestAuth(request: NextRequest): Promise<boolean> 
   if (await verifySession()) return true;
   // 4. Authorization: Bearer <cron-secret>
   const auth = request.headers.get("authorization") || "";
-  if (auth.startsWith("Bearer ") && auth.slice(7) === getCronSecret()) return true;
+  const cronSecret = getCronSecret();
+  if (cronSecret && auth.startsWith("Bearer ") && auth.slice(7) === cronSecret) return true;
   return false;
 }
 

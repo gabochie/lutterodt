@@ -1,16 +1,22 @@
 import { NextResponse } from "next/server";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { createSession } from "@/lib/cf/auth";
+import { createSession, getAdminPassword } from "@/lib/cf/auth";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const { env } = await getCloudflareContext({ async: true });
-  const adminPassword = env.ADMIN_PASSWORD as string | undefined;
+  let adminPassword: string;
+  try {
+    adminPassword = getAdminPassword();
+  } catch {
+    return NextResponse.json(
+      { error: "Admin login is not configured" },
+      { status: 503 }
+    );
+  }
 
-  if (password !== (adminPassword || "admin")) {
+  if (password !== adminPassword) {
     return NextResponse.redirect(
       new URL("/login?error=Invalid+credentials", request.url)
     );
