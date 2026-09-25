@@ -4,6 +4,8 @@ const PROD_HOST = "lutterodt.org";
 
 const MUTATING_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 
+const PASSTHROUGH_MUTATIONS = new Set(["/api/login"]);
+
 const BLOCKED_SEND_PATHS = [
   "/api/outreach/send",
   "/api/outreach/daily",
@@ -45,7 +47,10 @@ export const test = base.extend<SiteFixtures>({
           });
         }
 
-        if (MUTATING_METHODS.has(method)) {
+        if (
+          MUTATING_METHODS.has(method) &&
+          !PASSTHROUGH_MUTATIONS.has(path)
+        ) {
           return route.fulfill({
             status: 200,
             contentType: "application/json",
