@@ -29,7 +29,10 @@ export default defineConfig({
       : [
           {
             name: "chromium",
-            use: { ...devices["Desktop Chrome"] },
+            use: {
+              ...devices["Desktop Chrome"],
+              baseURL: LOCAL_URL,
+            },
           },
         ]),
     {
