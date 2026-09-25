@@ -60,7 +60,11 @@ const faqs = [
   },
   {
     q: "How can I support the project?",
-    a: "The most valuable contributions right now are non-financial — materials, nominations, research, and introductions. If you would like to discuss supporting the work in another way, get in touch and we will take it from there.",
+    a: "The most valuable contributions right now are non-financial — materials, nominations, research, and introductions. That said, we are open to funding opportunities — grants, partnerships, and family contributions — and happy to discuss what that could look like. Get in touch and we will take it from there.",
+  },
+  {
+    q: "Are you open to funding?",
+    a: "Yes. We welcome conversations with family members, foundations, and cultural partners who would like to help sustain and grow the archive. There are no fixed tiers or amounts — every conversation starts from what you would like to make possible.",
   },
 ];
 
@@ -129,6 +133,25 @@ export function SponsorClient() {
                 <p className="text-[14px] text-charcoal/68 leading-relaxed">{p.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Funding */}
+      <section className="py-[72px]">
+        <div className="container-main">
+          <div className="max-w-3xl mx-auto bg-ivory-dim border border-line rounded-lg p-8 md:p-10 text-center">
+            <Tag>Funding</Tag>
+            <h2 className="text-[clamp(24px,2.8vw,34px)] mt-[14px] text-burgundy-ink">
+              Open to funding conversations
+            </h2>
+            <p className="mt-4 text-[15px] text-charcoal/68 max-w-[56ch] mx-auto leading-relaxed">
+              We welcome grants, partnerships, and family contributions that help sustain and grow the archive — from digitisation and preservation to the museum and heritage programming. There are no fixed tiers; every conversation starts from what you would like to make possible.
+            </p>
+            <div className="mt-7 flex items-center justify-center gap-4 flex-wrap">
+              <Link href="/contact" className="btn-gold">Start a Conversation</Link>
+              <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-outline">WhatsApp</a>
+            </div>
           </div>
         </div>
       </section>

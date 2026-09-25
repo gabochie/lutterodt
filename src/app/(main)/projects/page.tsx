@@ -268,7 +268,7 @@ export default function ProjectsPage() {
                 <Tag onDark>Get Involved</Tag>
                 <h3 className="text-ivory text-[clamp(22px,2.6vw,32px)] mt-3 mb-3">Be part of what comes next</h3>
                 <p className="text-ivory/68 text-[15px] leading-relaxed mb-6">
-                  Whether you are a researcher, a creative, an academic institution, or a family member who wants to help build — reach out and join the conversation.
+                  Whether you are a researcher, a creative, an academic institution, or a family member who wants to help build — reach out and join the conversation. We are also open to funding opportunities, from grants and partnerships to family contributions.
                 </p>
                 <Link href="/contact" className="btn-gold">Get in Touch</Link>
               </div>

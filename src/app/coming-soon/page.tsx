@@ -171,7 +171,7 @@ export default function ComingSoonPage() {
                 <Tag onDark>Support the Renaissance</Tag>
                 <h3 className="text-ivory text-[24px] font-display mt-3 mb-2">Help us preserve the record</h3>
                 <p className="text-ivory/60 text-[14px] max-w-[500px]">
-                  Whether through materials, research, or a quiet word of support&mdash;every contribution brings the archive closer to permanence. Reach out to learn more.
+                  Whether through materials, research, or a quiet word of support&mdash;every contribution brings the archive closer to permanence. We are also open to funding opportunities, from grants and partnerships to family contributions. Reach out to learn more.
                 </p>
               </div>
               <div className="flex gap-3 shrink-0 flex-wrap">
