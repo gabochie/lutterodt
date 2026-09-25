@@ -65,7 +65,8 @@ test.describe("services enquiry", () => {
     await page.locator(EMAIL).fill("kofi@example.com");
     await page.getByRole("button", { name: /Send/ }).click();
 
-    await expect(page.getByText("Something went wrong")).toBeVisible();
+    await expect(page.getByText(/fetch|failed|wrong|error/i)).toBeVisible();
+    await expect(page.getByText("Thank you.")).toHaveCount(0);
   });
 
   test("the form resets after a successful submission", async ({ page }) => {

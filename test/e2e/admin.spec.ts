@@ -4,13 +4,20 @@ const EMAIL = 'input[name="email"]';
 const PASSWORD = 'input[name="password"]';
 const ADMIN_PASSWORD = "e2e-local-admin-password";
 
+async function signIn(page: import("@playwright/test").Page, password: string) {
+  await page.goto("/login", { waitUntil: "domcontentloaded" });
+  await page.locator(EMAIL).fill("admin@lutterodt.org");
+  await page.locator(PASSWORD).fill(password);
+  await page.getByRole("button", { name: "Sign In" }).click();
+}
+
 test.describe("admin login", () => {
   test("renders the error banner from the query string", async ({ page }) => {
     await page.goto("/login?error=Invalid+credentials", {
       waitUntil: "domcontentloaded",
     });
 
-    await expect(page.getByText("Invalid+credentials")).toBeVisible();
+    await expect(page.getByText("Invalid credentials")).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Admin Login" })
     ).toBeVisible();
@@ -19,38 +26,29 @@ test.describe("admin login", () => {
   test("a wrong password returns to the login page with an error", async ({
     page,
   }) => {
-    await page.goto("/login", { waitUntil: "domcontentloaded" });
-
-    await page.locator(EMAIL).fill("admin@lutterodt.org");
-    await page.locator(PASSWORD).fill("not-the-password");
-    await page.getByRole("button", { name: "Sign In" }).click();
+    await signIn(page, "not-the-password");
 
     await page.waitForURL(/\/login\?error=/, { timeout: 15_000 });
-    await expect(page.locator(PASSWORD)).toBeVisible();
+    await expect(page.getByText("Invalid credentials")).toBeVisible();
   });
 
   test("the legacy default password is refused", async ({ page }) => {
-    await page.goto("/login", { waitUntil: "domcontentloaded" });
-
-    await page.locator(EMAIL).fill("admin@lutterodt.org");
-    await page.locator(PASSWORD).fill("admin");
-    await page.getByRole("button", { name: "Sign In" }).click();
+    await signIn(page, "admin");
 
     await page.waitForURL(/\/login\?error=/, { timeout: 15_000 });
-    await expect(page.getByText("Invalid+credentials")).toBeVisible();
+    await expect(page.getByText("Invalid credentials")).toBeVisible();
   });
 
   test("the correct password signs in and reaches the admin area", async ({
     page,
   }) => {
-    await page.goto("/login", { waitUntil: "domcontentloaded" });
+    await signIn(page, ADMIN_PASSWORD);
 
-    await page.locator(EMAIL).fill("admin@lutterodt.org");
-    await page.locator(PASSWORD).fill(ADMIN_PASSWORD);
-    await page.getByRole("button", { name: "Sign In" }).click();
+    await page.waitForURL(/\/admin/, { timeout: 20_000 });
+    await expect(page).not.toHaveURL(/\/login/);
 
-    await page.waitForURL(/\/admin/, { timeout: 15_000 });
-    await expect(page).not.toHaveURL(/\/login\?error=/);
+    const cookies = await page.context().cookies();
+    expect(cookies.some((cookie) => cookie.name === "admin_token")).toBe(true);
   });
 
   test("the password field can be revealed and hidden", async ({ page }) => {

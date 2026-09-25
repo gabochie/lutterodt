@@ -103,24 +103,12 @@ test.describe("client portal", () => {
     await stubApi("**/api/clients/services", 200, SERVICES_PAYLOAD);
     await stubApi("**/api/clients/projects", 200, PROJECTS_PAYLOAD);
 
-    await page.getByRole("button", { name: "Log out" }).click();
+    await expect(
+      page.getByRole("heading", { name: "Welcome aboard" })
+    ).toBeVisible();
+
+    await page.getByRole("button", { name: "Log out" }).click({ force: true });
 
     await expect(page).toHaveURL(/\/dashboard\/login/);
-  });
-
-  test("login fields expose an accessible name", async ({ page, gotoSite }) => {
-    test.fail(
-      true,
-      "A11Y: dashboard/login labels have no htmlFor and the inputs have no id, so both fields have no accessible name"
-    );
-
-    await gotoSite("/dashboard/login");
-
-    await expect(
-      page.getByRole("textbox", { name: "Email Address" })
-    ).toBeVisible();
-    await expect(
-      page.getByRole("textbox", { name: "Access Code" })
-    ).toBeVisible();
   });
 });

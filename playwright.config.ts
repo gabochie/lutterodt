@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const LOCAL_PORT = 3210;
-const LOCAL_URL = `http://127.0.0.1:${LOCAL_PORT}`;
+const LOCAL_URL = `http://localhost:${LOCAL_PORT}`;
 const PROD_URL = "https://lutterodt.org";
 
 const smokeOnly = process.argv.some(
