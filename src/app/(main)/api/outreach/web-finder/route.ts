@@ -197,9 +197,13 @@ export async function POST(request: NextRequest) {
 
     const { env } = await getCloudflareContext({ async: true });
 
-    let result = await searchDuckDuckGo(query);
+    let result = { results: [] as any[], source: "none" };
+    const braveKey = (env.BRAVE_API_KEY as string) || "";
+    if (braveKey) {
+      result = await searchBrave(query, braveKey);
+    }
     if (result.results.length === 0) {
-      result = await searchBrave(query, (env.BRAVE_API_KEY as string) || "");
+      result = await searchDuckDuckGo(query);
     }
     if (result.results.length === 0) {
       result = await searchGoogle(query, (env.GOOGLE_API_KEY as string) || "", (env.GOOGLE_CX as string) || "");

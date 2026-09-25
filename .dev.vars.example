@@ -12,3 +12,7 @@ FLUTTERWAVE_SECRET_HASH=replace-with-your-flutterwave-verif-hash
 # Optional analytics
 NEXT_PUBLIC_GA_ID=
 NEXT_PUBLIC_CLARITY_ID=
+
+# Discovery search APIs (Brave preferred when set; DuckDuckGo fallback; Google last)
+# Get a free key (2,000 queries/month): https://brave.com/search/api/
+BRAVE_API_KEY=

@@ -213,18 +213,20 @@ async function searchGoogle(query: string, googleKey: string, googleCx: string):
 }
 
 export async function searchQuery(query: string, env: any): Promise<{ results: Candidate[]; source: string }> {
-  let result = await searchDuckDuckGo(query);
-  if (result.results.length > 0) return result;
+  // Brave first when configured (higher quality); DDG fallback; Google last.
+  // NOTE: Brave free tier is ~2,000 queries/month — batch discovery stays small by design.
   const braveKey = env.BRAVE_API_KEY as string;
   if (braveKey) {
-    result = await searchBrave(query, braveKey);
-    if (result.results.length > 0) return result;
+    const brave = await searchBrave(query, braveKey);
+    if (brave.results.length > 0) return brave;
   }
+  const ddg = await searchDuckDuckGo(query);
+  if (ddg.results.length > 0) return ddg;
   const googleKey = env.GOOGLE_API_KEY as string;
   const googleCx = env.GOOGLE_CX as string;
   if (googleKey && googleCx) {
-    result = await searchGoogle(query, googleKey, googleCx);
-    if (result.results.length > 0) return result;
+    const google = await searchGoogle(query, googleKey, googleCx);
+    if (google.results.length > 0) return google;
   }
   return { results: [], source: "none" };
 }
