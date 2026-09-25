@@ -71,11 +71,11 @@ export function Header() {
         >
           {open ? (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M6 6l12 12M18 6l-12 12" stroke="#211D1A" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M6 6l12 12M18 6l-12 12" stroke="#0B0D12" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
           ) : (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M3 6h18M3 12h18M3 18h18" stroke="#211D1A" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M3 6h18M3 12h18M3 18h18" stroke="#0B0D12" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
           )}
         </button>
@@ -114,13 +114,13 @@ function BrandMark() {
       viewBox="0 0 40 40"
       fill="none"
     >
-      <circle cx="20" cy="20" r="19" stroke="#C6A15B" strokeWidth="1" />
+      <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1" />
       <path
         d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z"
-        stroke="#5C1A2B"
+        stroke="#001D95"
         strokeWidth="1.1"
       />
-      <circle cx="20" cy="20" r="3" fill="#C6A15B" />
+      <circle cx="20" cy="20" r="3" fill="#EEAD16" />
     </svg>
   );
 }

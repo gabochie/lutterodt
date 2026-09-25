@@ -57,9 +57,9 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-gold-dim/6 rounded-full pointer-events-none" />
         <div className="relative z-10 w-full max-w-xl text-center">
           <svg className="w-16 h-16 mx-auto mb-6" viewBox="0 0 40 40" fill="none">
-            <circle cx="20" cy="20" r="19" stroke="#C6A15B" strokeWidth="1" />
-            <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#E4C989" strokeWidth="1.1" />
-            <circle cx="20" cy="20" r="3" fill="#C6A15B" />
+            <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1" />
+            <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FBC829" strokeWidth="1.1" />
+            <circle cx="20" cy="20" r="3" fill="#EEAD16" />
           </svg>
           <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Coming Soon</p>
           <h1 className="text-ivory text-[clamp(36px,5.6vw,64px)] font-display font-[560] leading-tight mb-4">

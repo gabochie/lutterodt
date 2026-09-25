@@ -17,9 +17,9 @@ export function Footer() {
         <div className="footer-brand">
           <Link href="/" className="flex items-center gap-3">
             <svg className="w-[34px] h-[34px] shrink-0" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="19" stroke="#C6A15B" strokeWidth="1" />
-              <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#E4C989" strokeWidth="1.1" />
-              <circle cx="20" cy="20" r="3" fill="#C6A15B" />
+              <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1" />
+              <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FBC829" strokeWidth="1.1" />
+              <circle cx="20" cy="20" r="3" fill="#EEAD16" />
             </svg>
             <span className="flex flex-col leading-tight">
               <span className="font-display font-[650] text-[17px] tracking-wide text-ivory">Lutterodt</span>
@@ -74,21 +74,14 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-main border-t border-line-on-dark py-[22px] flex flex-wrap justify-between items-center text-[12.5px] text-ivory/45 gap-x-[18px] gap-y-[8px]">
+      <div className="container-main border-t border-line-on-dark py-[22px] flex flex-wrap justify-between items-center text-[12.5px] text-ivory/55 gap-x-[18px] gap-y-[8px]">
         <span className="flex items-center gap-3">
           <span>© 2026 The Lutterodt Renaissance. All rights reserved.</span>
-          <span className="text-ivory/25">·</span>
+          <span className="text-ivory/30">·</span>
           <span className="flex items-center gap-2">
-            <img
-              src="/logo/lutterodt-logo-200.webp"
-              srcSet="/logo/lutterodt-logo-200.webp 1x, /logo/lutterodt-logo-400.webp 2x"
-              width={56}
-              height={40}
-              alt="Operated by Lutterodt Operations"
-              loading="lazy"
-              className="rounded-[4px] bg-white shrink-0"
-            />
-            <span>Operated by Lutterodt Operations</span>
+            <span className="font-display text-[13px] tracking-[0.16em] uppercase text-ivory/90">Lutterodt</span>
+            <span className="text-ivory/30">|</span>
+            <span>Lutterodt Operations</span>
           </span>
         </span>
         <div className="flex gap-[18px] flex-wrap">
