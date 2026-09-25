@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
   checks.push({
     name: "ADMIN_PASSWORD",
     status: process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.length > 3 ? "ok" : "missing",
-    detail: process.env.ADMIN_PASSWORD ? "Set" : "Not set (fallback: admin)",
+    detail: process.env.ADMIN_PASSWORD ? "Set" : "Not set",
   });
 
   // 3. CRON_SECRET

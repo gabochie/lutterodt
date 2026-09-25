@@ -53,6 +53,10 @@ export default defineConfig({
         timeout: 300_000,
         env: {
           NEXT_PUBLIC_SITE_URL: LOCAL_URL,
+          ADMIN_PASSWORD: "e2e-local-admin-password",
+          AUTH_SECRET:
+            "e2e-local-auth-secret-value-at-least-32-characters-long",
+          CRON_SECRET: "e2e-local-cron-secret",
         },
       },
 });
