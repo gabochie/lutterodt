@@ -10,6 +10,7 @@ const navItems = [
   { href: "/outreach", label: "Dashboard", icon: "📊" },
   { href: "/outreach/queue", label: "Queue", icon: "📋" },
   { href: "/outreach/discover", label: "Discover", icon: "🔍" },
+  { href: "/outreach/review", label: "Review", icon: "✅" },
   { href: "/outreach/blind-spots", label: "Blind Spots", icon: "🎯" },
 ];
 
