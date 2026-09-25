@@ -75,7 +75,22 @@ export function Footer() {
       </div>
 
       <div className="container-main border-t border-line-on-dark py-[22px] flex flex-wrap justify-between items-center text-[12.5px] text-ivory/45 gap-x-[18px] gap-y-[8px]">
-        <span>© 2026 The Lutterodt Renaissance. All rights reserved.</span>
+        <span className="flex items-center gap-3">
+          <span>© 2026 The Lutterodt Renaissance. All rights reserved.</span>
+          <span className="text-ivory/25">·</span>
+          <span className="flex items-center gap-2">
+            <img
+              src="/logo/lutterodt-logo-200.webp"
+              srcSet="/logo/lutterodt-logo-200.webp 1x, /logo/lutterodt-logo-400.webp 2x"
+              width={56}
+              height={40}
+              alt="Operated by Lutterodt Operations"
+              loading="lazy"
+              className="rounded-[4px] bg-white shrink-0"
+            />
+            <span>Operated by Lutterodt Operations</span>
+          </span>
+        </span>
         <div className="flex gap-[18px] flex-wrap">
           {legalLinks.map((link) => (
             <Link key={link.href} href={link.href} className="hover:text-gold-light transition-colors">

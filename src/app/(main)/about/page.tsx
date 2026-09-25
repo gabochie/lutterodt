@@ -107,7 +107,10 @@ export default function AboutPage() {
                 The Lutterodt Institute is currently stewarded by one person — built and funded independently, with the long-term goal of becoming a family-governed institution. There is no Renaissance Committee, no elected congress, no formal structure yet. That is the destination, not the starting point.
               </p>
               <p className="mt-[18px] text-charcoal/70 text-[16px]">
-                The end goal is a properly constituted Institute — with a board, a charter, family representation from every branch, and a clear succession plan that ensures the work continues regardless of who founded it. Every sponsorship, every contribution, every connection made through this site brings that future closer.
+                The end goal is a properly constituted Institute — with a board, a charter, family representation from every branch, and a clear succession plan that ensures the work continues regardless of who founded it. Every contribution, every connection made through this site brings that future closer.
+              </p>
+              <p className="mt-[22px] font-mono text-[11px] tracking-[0.14em] uppercase text-charcoal/45">
+                An initiative of <span style={{ fontFamily: "Georgia, serif" }}>Lutterodt</span> Operations
               </p>
             </div>
           </div>
