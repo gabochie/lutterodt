@@ -44,13 +44,17 @@ test.describe("theme and crest polarity", () => {
     await toggle(page).click();
     await expect(page.locator("html")).toHaveClass(/\bdark\b/);
 
-    const visible = await page.evaluate((selector) => {
-      const nodes = Array.from(document.querySelectorAll(selector.replace("header ", "")));
+    const visible = await page.evaluate(() => {
+      const nodes = Array.from(
+        document.querySelectorAll(
+          'header img[src="/logo/lutterodt-logo-200.webp"], header img[src="/logo/lutterodt-dark-black-01010A-800.webp"]'
+        )
+      );
       return nodes.filter((node) => {
         const style = window.getComputedStyle(node);
         return style.display !== "none" && style.visibility !== "hidden";
       }).length;
-    }, LIGHT_CREST);
+    });
 
     expect(visible).toBe(1);
   });

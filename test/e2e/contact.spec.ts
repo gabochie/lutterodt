@@ -1,23 +1,37 @@
-import { test, expect, capturePost } from "./fixtures/site";
+import { test, expect, capturePost, type Page } from "./fixtures/site";
 
-const SUCCESS_TEXT = "Message received. We will be in touch within 5 business days.";
+const SUCCESS_TEXT =
+  "Message received. We will be in touch within 5 business days.";
 const ERROR_TEXT =
   "Something went wrong. Please try again or email us directly at hello@lutterodt.org.";
 
+function contactForm(page: Page) {
+  return page
+    .locator("form")
+    .filter({ has: page.getByRole("button", { name: "Send Message" }) });
+}
+
 const DROPPED_FIELD_CASES = [
-  { tab: "Join Interest", label: "Family Branch", value: "Ghana" },
+  { tab: "Join Interest", label: "Family Branch", value: "Ghana", hasName: true },
   {
     tab: "Volunteer",
     label: "Area of Interest",
     value: "Web & technology",
     isSelect: true,
+    hasName: true,
   },
   {
     tab: "Research Request",
     label: "Institution / Affiliation",
     value: "University of Ghana",
+    hasName: false,
   },
-  { tab: "Media", label: "Outlet", value: "Daily Graphic" },
+  {
+    tab: "Media",
+    label: "Outlet",
+    value: "Daily Graphic",
+    hasName: false,
+  },
 ];
 
 test.describe("contact form", () => {
@@ -29,11 +43,12 @@ test.describe("contact form", () => {
     page,
   }) => {
     const postPromise = capturePost(page, "/api/leads");
+    const form = contactForm(page);
 
-    await page.getByLabel("Full Name").fill("Ama Lutterodt");
-    await page.getByLabel("Email Address").fill("ama@example.com");
-    await page.getByLabel("Message").fill("I would like to know more.");
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await form.getByLabel("Full Name").fill("Ama Lutterodt");
+    await form.getByLabel("Email Address").fill("ama@example.com");
+    await form.getByLabel("Message").fill("I would like to know more.");
+    await form.getByRole("button", { name: "Send Message" }).click();
 
     const post = await postPromise;
     expect(post.json).toMatchObject({
@@ -53,9 +68,11 @@ test.describe("contact form", () => {
       if (request.url().includes("/api/leads")) posted = true;
     });
 
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await contactForm(page)
+      .getByRole("button", { name: "Send Message" })
+      .click();
 
-    await expect(page.getByLabel("Full Name")).toBeVisible();
+    await expect(contactForm(page)).toBeVisible();
     expect(posted, "an empty form must not reach the API").toBe(false);
   });
 
@@ -64,27 +81,29 @@ test.describe("contact form", () => {
     stubApi,
   }) => {
     await stubApi("**/api/leads", 500, { error: "rejected" });
+    const form = contactForm(page);
 
-    await page.getByLabel("Full Name").fill("Ama Lutterodt");
-    await page.getByLabel("Email Address").fill("ama@example.com");
-    await page.getByLabel("Message").fill("Testing the failure path.");
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await form.getByLabel("Full Name").fill("Ama Lutterodt");
+    await form.getByLabel("Email Address").fill("ama@example.com");
+    await form.getByLabel("Message").fill("Testing the failure path.");
+    await form.getByRole("button", { name: "Send Message" }).click();
 
     await expect(page.getByText(ERROR_TEXT)).toBeVisible();
   });
 
   test("a network failure surfaces an error banner", async ({ page }) => {
     await page.route("**/api/leads", (route) => route.abort());
+    const form = contactForm(page);
 
-    await page.getByLabel("Full Name").fill("Ama Lutterodt");
-    await page.getByLabel("Email Address").fill("ama@example.com");
-    await page.getByLabel("Message").fill("Testing the network failure path.");
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await form.getByLabel("Full Name").fill("Ama Lutterodt");
+    await form.getByLabel("Email Address").fill("ama@example.com");
+    await form.getByLabel("Message").fill("Testing the network failure path.");
+    await form.getByRole("button", { name: "Send Message" }).click();
 
     await expect(page.getByText(ERROR_TEXT)).toBeVisible();
   });
 
-  for (const { tab, label, value, isSelect } of DROPPED_FIELD_CASES) {
+  for (const { tab, label, value, isSelect, hasName } of DROPPED_FIELD_CASES) {
     test(`${tab} sends the ${label} field`, async ({ page }) => {
       test.fail(
         true,
@@ -92,16 +111,19 @@ test.describe("contact form", () => {
       );
 
       await page.getByRole("button", { name: tab, exact: true }).click();
-
+      const form = contactForm(page);
       const postPromise = capturePost(page, "/api/leads");
-      await page.getByLabel("Full Name").fill("Kofi Lutterodt");
-      const field = page.getByLabel(label);
+
+      if (hasName) {
+        await form.getByLabel("Full Name").fill("Kofi Lutterodt");
+      }
+      const field = form.getByLabel(label);
       if (isSelect) {
         await field.selectOption(value);
       } else {
         await field.fill(value);
       }
-      await page.getByRole("button", { name: "Send Message" }).click();
+      await form.getByRole("button", { name: "Send Message" }).click();
 
       const post = await postPromise;
       expect(post.json).toMatchObject({ [label.toLowerCase()]: value });

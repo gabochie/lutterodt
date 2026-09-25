@@ -117,3 +117,4 @@ export async function capturePost(
 }
 
 export { expect };
+export type { Page };

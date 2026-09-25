@@ -45,17 +45,22 @@ test.describe("coming soon gate", () => {
     await expect(page.locator("input[type=password]")).toBeVisible();
   });
 
-  test("rejects an invalid email on the notify form", async ({
+  test("blocks an invalid email before any request is sent", async ({
     page,
     stubApi,
   }) => {
     await stubApi("**/api/settings", 200, { coming_soon: true });
-    await page.goto("/", { waitUntil: "domcontentloaded" });
+    let posted = false;
+    page.on("request", (request) => {
+      if (request.url().includes("/api/leads")) posted = true;
+    });
 
+    await page.goto("/", { waitUntil: "domcontentloaded" });
     await page.getByPlaceholder("Your email address").fill("not-an-email");
     await page.getByRole("button", { name: "Notify Me" }).click();
 
-    await expect(page.getByText("Please enter a valid email")).toBeVisible();
+    await expect(page.getByPlaceholder("Your email address")).toBeVisible();
+    expect(posted, "an invalid email must not reach the API").toBe(false);
   });
 
   test("accepts a valid email on the notify form", async ({
