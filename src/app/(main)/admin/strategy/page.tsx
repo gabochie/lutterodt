@@ -87,14 +87,14 @@ export default function AdminStrategyPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Strategy</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">The Lutterodt Renaissance — Institutional Strategy</p>
+          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Strategy</h1>
+          <p className="text-fg/50 text-[14px] mt-1">The Lutterodt Renaissance — Institutional Strategy</p>
         </div>
-        <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-burgundy/10 text-burgundy border border-burgundy/20">Phase 0: Pre-Founding</span>
+        <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-burgundy/10 text-accent-text border border-burgundy/20">Phase 0: Pre-Founding</span>
       </div>
 
       {/* Table of Contents */}
-      <div className="border border-line bg-ivory mb-10">
+      <div className="border border-line bg-surface mb-10">
         <div className="px-6 py-3 border-b border-line">
           <span className="font-mono text-[9px] tracking-widest uppercase text-gold-dim">On this page</span>
         </div>
@@ -112,7 +112,7 @@ export default function AdminStrategyPage() {
             <a
               key={item.href}
               href={item.href}
-              className="font-mono text-[10.5px] tracking-wider text-charcoal/50 hover:text-burgundy transition-colors"
+              className="font-mono text-[10.5px] tracking-wider text-fg/50 hover:text-accent-text transition-colors"
             >
               {item.label}
             </a>
@@ -134,9 +134,9 @@ export default function AdminStrategyPage() {
 
       {/* Better Sequence */}
       <div id="sequence" className="grid grid-cols-2 max-md:grid-cols-1 gap-6 mb-10">
-        <div className="border border-line bg-ivory p-6">
-          <h3 className="font-mono text-[10px] tracking-widest uppercase text-charcoal/40 mb-4">Typical Approach</h3>
-          <div className="flex items-center gap-3 text-charcoal/60 text-[14px]">
+        <div className="border border-line bg-surface p-6">
+          <h3 className="font-mono text-[10px] tracking-widest uppercase text-fg/40 mb-4">Typical Approach</h3>
+          <div className="flex items-center gap-3 text-fg/60 text-[14px]">
             <span className="px-3 py-1.5 bg-red-50 text-red-600 font-mono text-[10px] tracking-wider">Risky</span>
             <span>Build website</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -147,8 +147,8 @@ export default function AdminStrategyPage() {
         </div>
         <div className="border border-gold/30 bg-gold/5 p-6">
           <h3 className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mb-4">The Lutterodt Sequence</h3>
-          <div className="flex flex-wrap items-center gap-3 text-charcoal text-[14px]">
-            <span className="px-3 py-1.5 bg-forest/10 text-forest font-mono text-[10px] tracking-wider">Recommended</span>
+          <div className="flex flex-wrap items-center gap-3 text-fg text-[14px]">
+            <span className="px-3 py-1.5 bg-forest/10 text-success-text font-mono text-[10px] tracking-wider">Recommended</span>
             <span>Build coalition</span>
             <ArrowRight className="w-3.5 h-3.5 text-gold-dim" />
             <span>Define governance</span>
@@ -170,39 +170,39 @@ export default function AdminStrategyPage() {
             <div key={i} className="p-5 text-center border-r border-line last:border-r-0 max-md:border-r-0 max-md:border-b max-md:last:border-b-0">
               <Icon className="w-5 h-5 mx-auto text-gold-dim mb-2" />
               <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Phase {p.num}</div>
-              <div className="font-display text-[14px] text-burgundy-ink leading-tight mb-1">{p.title}</div>
-              <p className="text-charcoal/50 text-[11px] leading-snug">{p.goal}</p>
+              <div className="font-display text-[14px] text-heading leading-tight mb-1">{p.title}</div>
+              <p className="text-fg/50 text-[11px] leading-snug">{p.goal}</p>
             </div>
           );
         })}
       </div>
 
       {/* Phase 0: The Global Lutterodt Network */}
-      <div id="network" className="mb-10 border border-line bg-ivory">
+      <div id="network" className="mb-10 border border-line bg-surface">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Globe className="w-6 h-6 text-gold-dim" />
           <div>
             <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Phase 0 — Pre-Founding</span>
-            <h2 className="font-display text-[22px] text-burgundy-ink">The Global Lutterodt Network</h2>
+            <h2 className="font-display text-[22px] text-heading">The Global Lutterodt Network</h2>
           </div>
         </div>
 
         <div className="p-6 space-y-8">
           <div>
-            <p className="text-charcoal/70 text-[14px] leading-relaxed">
+            <p className="text-fg/70 text-[14px] leading-relaxed">
               Identify and connect Lutterodt family members worldwide who can contribute through leadership,
               historical knowledge, archives, technology, legal expertise, finance, communications, fundraising,
-              research, and mentorship. Think of it as creating a <strong className="text-burgundy">Founding Circle</strong>.
+              research, and mentorship. Think of it as creating a <strong className="text-accent-text">Founding Circle</strong>.
             </p>
           </div>
 
           {/* Step 1: Founding Committee */}
           <div>
-            <h3 className="font-display text-[16px] text-burgundy-ink mb-3 flex items-center gap-2">
+            <h3 className="font-display text-[16px] text-heading mb-3 flex items-center gap-2">
               <span className="w-5 h-[1px] bg-gold inline-block" />
               Step 1: Form a Founding Committee
             </h3>
-            <p className="text-charcoal/60 text-[13px] mb-4">
+            <p className="text-fg/60 text-[13px] mb-4">
               Aim for a small, capable group (around 8–15 people) representing different skills and locations.
             </p>
             <div className="overflow-x-auto border border-line">
@@ -216,8 +216,8 @@ export default function AdminStrategyPage() {
                 <tbody className="divide-y divide-line">
                   {foundingRoles.map((r, i) => (
                     <tr key={i} className="hover:bg-ivory-dim/30 transition-colors">
-                      <td className="px-5 py-3 font-display text-[14px] text-burgundy">{r.role}</td>
-                      <td className="px-5 py-3 text-charcoal/60 text-[13.5px]">{r.responsibility}</td>
+                      <td className="px-5 py-3 font-display text-[14px] text-accent-text">{r.role}</td>
+                      <td className="px-5 py-3 text-fg/60 text-[13.5px]">{r.responsibility}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -227,16 +227,16 @@ export default function AdminStrategyPage() {
 
           {/* Step 2: Map the Global Family */}
           <div>
-            <h3 className="font-display text-[16px] text-burgundy-ink mb-3 flex items-center gap-2">
+            <h3 className="font-display text-[16px] text-heading mb-3 flex items-center gap-2">
               <span className="w-5 h-[1px] bg-gold inline-block" />
               Step 2: Map the Global Family
             </h3>
-            <p className="text-charcoal/60 text-[13px] mb-4">
+            <p className="text-fg/60 text-[13px] mb-4">
               Create an initial directory capturing key information about each family member.
             </p>
             <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-3">
               {["Country", "City", "Family branch", "Profession", "Skills", "Areas of interest", "Willingness to volunteer"].map((item, i) => (
-                <div key={i} className="px-4 py-3 border border-line bg-ivory-dim/30 text-charcoal/70 text-[13px]">
+                <div key={i} className="px-4 py-3 border border-line bg-ivory-dim/30 text-fg/70 text-[13px]">
                   {item}
                 </div>
               ))}
@@ -245,11 +245,11 @@ export default function AdminStrategyPage() {
 
           {/* Step 3: Listening Campaign */}
           <div>
-            <h3 className="font-display text-[16px] text-burgundy-ink mb-3 flex items-center gap-2">
+            <h3 className="font-display text-[16px] text-heading mb-3 flex items-center gap-2">
               <span className="w-5 h-[1px] bg-gold inline-block" />
               Step 3: Launch a Listening Campaign
             </h3>
-            <p className="text-charcoal/60 text-[13px] mb-4">
+            <p className="text-fg/60 text-[13px] mb-4">
               Instead of announcing a finished vision, ask questions that invite participation.
             </p>
             <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3">
@@ -259,12 +259,12 @@ export default function AdminStrategyPage() {
                 "What would make this platform valuable to you?",
                 "How would you like future generations to benefit?",
               ].map((q, i) => (
-                <div key={i} className="px-5 py-4 border border-line bg-gold/5 text-charcoal/80 text-[13.5px] italic">
+                <div key={i} className="px-5 py-4 border border-line bg-gold/5 text-fg/80 text-[13.5px] italic">
                   &ldquo;{q}&rdquo;
                 </div>
               ))}
             </div>
-            <p className="text-charcoal/50 text-[12px] mt-3 font-mono tracking-wider">
+            <p className="text-fg/50 text-[12px] mt-3 font-mono tracking-wider">
             People are more likely to support what they have helped shape.
             </p>
           </div>
@@ -272,12 +272,12 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Fundraising Strategy */}
-      <div id="fundraising" className="mb-10 border border-line bg-ivory">
+      <div id="fundraising" className="mb-10 border border-line bg-surface">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <ScrollText className="w-6 h-6 text-gold-dim" />
           <div>
             <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Diversified Revenue</span>
-            <h2 className="font-display text-[22px] text-burgundy-ink">Fundraising Strategy</h2>
+            <h2 className="font-display text-[22px] text-heading">Fundraising Strategy</h2>
           </div>
         </div>
 
@@ -287,32 +287,32 @@ export default function AdminStrategyPage() {
               <div className="flex items-start justify-between mb-2 flex-wrap gap-2">
                 <div>
                   <span className="font-mono text-[9px] tracking-widest uppercase text-gold-dim">{fs.stage}</span>
-                  <h3 className="font-display text-[16px] text-burgundy-ink">{fs.title}</h3>
+                  <h3 className="font-display text-[16px] text-heading">{fs.title}</h3>
                 </div>
                 {fs.tiers.length > 0 && (
                   <div className="flex gap-2 flex-wrap">
                     {fs.tiers.map((tier, ti) => (
-                      <span key={ti} className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 bg-burgundy/5 text-burgundy border border-burgundy/10">{tier}</span>
+                      <span key={ti} className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 bg-burgundy/5 text-accent-text border border-burgundy/10">{tier}</span>
                     ))}
                   </div>
                 )}
               </div>
-              <p className="text-charcoal/60 text-[13.5px]">{fs.description}</p>
+              <p className="text-fg/60 text-[13.5px]">{fs.description}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Build The Community First */}
-      <div id="community" className="mb-10 border border-line bg-ivory">
+      <div id="community" className="mb-10 border border-line bg-surface">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Network className="w-6 h-6 text-gold-dim" />
           <div>
-            <h2 className="font-display text-[22px] text-burgundy-ink">Build the Community First</h2>
+            <h2 className="font-display text-[22px] text-heading">Build the Community First</h2>
           </div>
         </div>
         <div className="p-6">
-          <p className="text-charcoal/70 text-[14px] leading-relaxed mb-5">
+          <p className="text-fg/70 text-[14px] leading-relaxed mb-5">
             Before launching the website, establish communication channels. The website then becomes the permanent home for content generated by an already engaged community.
           </p>
           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3">
@@ -323,7 +323,7 @@ export default function AdminStrategyPage() {
               "Family interviews",
               "Heritage spotlight series",
             ].map((ch, i) => (
-              <div key={i} className="flex items-center gap-3 px-4 py-3 border border-line text-charcoal/70 text-[13.5px]">
+              <div key={i} className="flex items-center gap-3 px-4 py-3 border border-line text-fg/70 text-[13.5px]">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
                 {ch}
               </div>
@@ -333,32 +333,32 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Governance */}
-      <div id="governance" className="mb-10 border border-line bg-ivory">
+      <div id="governance" className="mb-10 border border-line bg-surface">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Shield className="w-6 h-6 text-gold-dim" />
           <div>
-            <h2 className="font-display text-[22px] text-burgundy-ink">Governance Matters</h2>
+            <h2 className="font-display text-[22px] text-heading">Governance Matters</h2>
           </div>
         </div>
         <div className="p-6">
-          <p className="text-charcoal/70 text-[14px] leading-relaxed mb-5">
+          <p className="text-fg/70 text-[14px] leading-relaxed mb-5">
             Institutional trust is built on transparent governance. This is particularly important when managing family records and donations.
           </p>
           <div className="flex flex-wrap gap-2">
             {governanceDocs.map((doc, i) => (
-              <span key={i} className="font-mono text-[10px] tracking-wider uppercase px-3 py-2 bg-forest/5 text-forest border border-forest/10">{doc}</span>
+              <span key={i} className="font-mono text-[10px] tracking-wider uppercase px-3 py-2 bg-forest/5 text-success-text border border-forest/10">{doc}</span>
             ))}
           </div>
         </div>
       </div>
 
       {/* 12-Month Roadmap */}
-      <div id="roadmap" className="mb-10 border border-line bg-ivory">
+      <div id="roadmap" className="mb-10 border border-line bg-surface">
         <div className="px-6 py-5 border-b border-line flex items-center gap-4">
           <Building2 className="w-6 h-6 text-gold-dim" />
           <div>
             <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Implementation</span>
-            <h2 className="font-display text-[22px] text-burgundy-ink">12-Month Roadmap</h2>
+            <h2 className="font-display text-[22px] text-heading">12-Month Roadmap</h2>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -373,9 +373,9 @@ export default function AdminStrategyPage() {
               {roadmapQuarter.map((q, i) => (
                 <tr key={i} className="hover:bg-ivory-dim/30 transition-colors">
                   <td className="px-6 py-4">
-                    <span className="font-display text-[18px] text-burgundy">{q.quarter}</span>
+                    <span className="font-display text-[18px] text-accent-text">{q.quarter}</span>
                   </td>
-                  <td className="px-6 py-4 text-charcoal/70 text-[14px]">{q.focus}</td>
+                  <td className="px-6 py-4 text-fg/70 text-[14px]">{q.focus}</td>
                 </tr>
               ))}
             </tbody>
@@ -386,22 +386,22 @@ export default function AdminStrategyPage() {
       {/* Scalable Vision */}
       <div id="vision" className="border border-gold/30 bg-gold/5 p-8">
         <Lightbulb className="w-6 h-6 text-gold-dim mb-4" />
-        <h2 className="font-display text-[22px] text-burgundy-ink mb-3">A Scalable Vision</h2>
+        <h2 className="font-display text-[22px] text-heading mb-3">A Scalable Vision</h2>
         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6">
-          <div className="border border-line bg-ivory p-5">
-            <span className="font-mono text-[9px] tracking-widest uppercase text-charcoal/40">Current Scope</span>
-            <p className="text-charcoal/70 text-[14px] mt-2">
-              If you build this as <strong className="text-burgundy">The Lutterodt Renaissance Platform</strong>, it serves one family.
+          <div className="border border-line bg-surface p-5">
+            <span className="font-mono text-[9px] tracking-widest uppercase text-fg/40">Current Scope</span>
+            <p className="text-fg/70 text-[14px] mt-2">
+              If you build this as <strong className="text-accent-text">The Lutterodt Renaissance Platform</strong>, it serves one family.
             </p>
           </div>
-          <div className="border border-gold/30 bg-ivory p-5">
+          <div className="border border-gold/30 bg-surface p-5">
             <span className="font-mono text-[9px] tracking-widest uppercase text-gold-dim">The Larger Vision</span>
-            <p className="text-charcoal/70 text-[14px] mt-2">
-              If you build the underlying software as a <strong className="text-burgundy">Family Legacy OS</strong>, then The Lutterodt Renaissance becomes the flagship implementation of a platform that can later be adapted for other families, clans, traditional authorities, alumni associations, and diaspora communities.
+            <p className="text-fg/70 text-[14px] mt-2">
+              If you build the underlying software as a <strong className="text-accent-text">Family Legacy OS</strong>, then The Lutterodt Renaissance becomes the flagship implementation of a platform that can later be adapted for other families, clans, traditional authorities, alumni associations, and diaspora communities.
             </p>
           </div>
         </div>
-        <div className="mt-5 px-5 py-4 border border-gold/20 bg-gold/10 text-charcoal/80 text-[13px] leading-relaxed">
+        <div className="mt-5 px-5 py-4 border border-gold/20 bg-gold/10 text-fg/80 text-[13px] leading-relaxed">
           That distinction can make the initiative more attractive to funders because they are investing not only in preserving one family&apos;s heritage but also in developing a reusable model for cultural preservation and community building across Africa and the global diaspora.
         </div>
       </div>

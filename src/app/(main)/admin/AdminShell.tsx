@@ -95,7 +95,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   "flex items-center gap-3 px-3 py-2.5 rounded-sm text-[13.5px] transition-colors",
                   isActive
                     ? "bg-gold/15 text-gold-light"
-                    : "text-ivory/60 hover:text-ivory hover:bg-ivory/5"
+                    : "text-ivory/60 hover:text-ivory hover:bg-surface/5"
                 )}
               >
                 <item.icon className="w-4 h-4" />
@@ -109,7 +109,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         <div className="p-3 border-t border-line-on-dark flex flex-col gap-1">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-[13px] text-ivory/50 hover:text-ivory hover:bg-ivory/5 transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-sm text-[13px] text-ivory/50 hover:text-ivory hover:bg-surface/5 transition-colors"
           >
             <LogOut className="w-4 h-4" />
             <span>Back to Site</span>
@@ -125,9 +125,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex-1 min-w-0">
-        <header className="sticky top-0 z-30 bg-ivory/92 backdrop-blur-md border-b border-line px-6 py-3 flex items-center gap-4">
+        <header className="sticky top-0 z-30 bg-surface/92 backdrop-blur-md border-b border-line px-6 py-3 flex items-center gap-4">
           <button
-            className="md:hidden text-charcoal/60 hover:text-charcoal"
+            className="md:hidden text-fg/60 hover:text-fg"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="w-5 h-5" />

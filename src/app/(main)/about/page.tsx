@@ -50,10 +50,10 @@ export default function AboutPage() {
             <div>
               <Tag>Origin</Tag>
               <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[14px]">One family&apos;s record, built to endure</h2>
-              <p className="mt-[18px] text-charcoal/70 text-[16px]">
+              <p className="mt-[18px] text-fg/70 text-[16px]">
                 The Lutterodt family spans generations, branches, and continents. This project exists to document that family — connecting its branches, preserving its stories, and building a permanent record that carries the Lutterodt name forward for generations. What began as a family archive is growing into the Lutterodt Institute, and this website is its public face.
               </p>
-              <p className="mt-[18px] text-charcoal/70 text-[16px]">
+              <p className="mt-[18px] text-fg/70 text-[16px]">
                 The Renaissance is not yet a formally chartered family institution with a committee or governing board. It is currently stewarded transparently, with the hope that the family will recognise it, contribute to it, and one day take stewardship of it. Every profile, every story, every project on this site is a step toward that institution.
               </p>
             </div>
@@ -74,7 +74,7 @@ export default function AboutPage() {
           <div className="max-w-[640px] mb-14">
             <Tag>Mission</Tag>
             <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">Four commitments guide the work</h2>
-            <p className="mt-4 text-[16.5px] text-charcoal/68 max-w-[540px]">These are the standards every decision on this platform is measured against.</p>
+            <p className="mt-4 text-[16.5px] text-fg/68 max-w-[540px]">These are the standards every decision on this platform is measured against.</p>
           </div>
           <div className="grid grid-cols-3 max-md:grid-cols-1 gap-10">
             {values.map((v) => (
@@ -82,7 +82,7 @@ export default function AboutPage() {
                 <div>
                   <div className="font-mono text-[12px] text-gold-dim mb-[14px]">{v.num}</div>
                   <h3 className="text-[20px] mb-[10px]">{v.title}</h3>
-                  <p className="text-charcoal/65 text-[14.5px]">{v.description}</p>
+                  <p className="text-fg/65 text-[14.5px]">{v.description}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -104,13 +104,13 @@ export default function AboutPage() {
             <div>
               <Tag>Stewardship</Tag>
               <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[14px]">Stewarded today, family-governed tomorrow</h2>
-              <p className="mt-[18px] text-charcoal/70 text-[16px]">
+              <p className="mt-[18px] text-fg/70 text-[16px]">
                 The Lutterodt Institute is currently stewarded by one person — built and funded independently, with the long-term goal of becoming a family-governed institution. There is no Renaissance Committee, no elected congress, no formal structure yet. That is the destination, not the starting point.
               </p>
-              <p className="mt-[18px] text-charcoal/70 text-[16px]">
+              <p className="mt-[18px] text-fg/70 text-[16px]">
                 The end goal is a properly constituted Institute — with a board, a charter, family representation from every branch, and a clear succession plan that ensures the work continues regardless of who founded it. Every contribution, every connection made through this site brings that future closer.
               </p>
-              <p className="mt-[22px] font-mono text-[11px] tracking-[0.14em] uppercase text-charcoal/45">
+              <p className="mt-[22px] font-mono text-[11px] tracking-[0.14em] uppercase text-fg/45">
                 An initiative of <span style={{ fontFamily: "Georgia, serif" }}>Lutterodt</span> Operations
               </p>
             </div>
@@ -133,7 +133,7 @@ export default function AboutPage() {
               <Tag>Founder</Tag>
               <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Gideon Borketey Tieku-Bortei</h2>
               <p className="text-gold-dim text-[14px] font-mono tracking-wider mt-1 mb-5">Gideon Abochie · Gabochie Design · GideonAbochie Studio</p>
-              <p className="text-charcoal/70 text-[15px]">
+              <p className="text-fg/70 text-[15px]">
                 I am an architect and web designer — founder of Gabochie Design, a construction and real estate intelligence platform serving Ghana and the diaspora, and GideonAbochie Studio, a creative teaching ministry. I steward the Lutterodt Institute to serve every branch of our family, building a permanent institution for the global Lutterodt family. The creative services I offer through this site — web design and architectural design — directly fund that mission.
               </p>
               <div className="flex gap-3 mt-6">

@@ -23,7 +23,7 @@ export default function CopyrightPage() {
         <div className="container-main max-w-[720px]">
           <h2 className="text-[clamp(28px,3.2vw,36px)] mb-6">Intellectual Property Rights</h2>
           
-          <div className="prose prose-lg max-w-none text-charcoal/80 leading-relaxed">
+          <div className="prose prose-lg max-w-none text-fg/80 leading-relaxed">
             <h3>Last Updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
 
             <h4>1. Platform Copyright</h4>

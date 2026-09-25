@@ -90,7 +90,7 @@ export default function ProjectsPage() {
             <Tag>Active</Tag>
           </div>
           <h2 className="text-[clamp(28px,3vw,40px)] mb-4">Live now</h2>
-          <p className="text-charcoal/68 text-[16px] max-w-[58ch] mb-10">
+          <p className="text-fg/68 text-[16px] max-w-[58ch] mb-10">
             The directory and archive are already live and growing. Everything else on this page is a future initiative, shared here so the family can see where the work is heading.
           </p>
 
@@ -98,23 +98,23 @@ export default function ProjectsPage() {
             <div className="grid md:grid-cols-[1fr_1.3fr] gap-8 items-start">
               <div>
                 <h3 className="text-[24px] mb-3">Lutterodt Renaissance</h3>
-                <p className="text-charcoal/72 text-[15px] leading-relaxed mb-5">
+                <p className="text-fg/72 text-[15px] leading-relaxed mb-5">
                   The family legacy OS you are using right now. A searchable directory of 200+ Lutterodt profiles spanning 16 countries and 6 continents, with a historical timeline, photographic gallery, outreach pipeline, and event hub.
                 </p>
                 <ul className="space-y-2 mb-6">
-                  <li className="flex items-start gap-3 text-[14.5px] text-charcoal/70">
+                  <li className="flex items-start gap-3 text-[14.5px] text-fg/70">
                     <span className="text-gold-dim mt-[3px] shrink-0">&#x2022;</span>
                     205 documented profiles, 10 professional categories
                   </li>
-                  <li className="flex items-start gap-3 text-[14.5px] text-charcoal/70">
+                  <li className="flex items-start gap-3 text-[14.5px] text-fg/70">
                     <span className="text-gold-dim mt-[3px] shrink-0">&#x2022;</span>
                     Timeline from 1790 to present, gallery of 50+ images
                   </li>
-                  <li className="flex items-start gap-3 text-[14.5px] text-charcoal/70">
+                  <li className="flex items-start gap-3 text-[14.5px] text-fg/70">
                     <span className="text-gold-dim mt-[3px] shrink-0">&#x2022;</span>
                     Automated outreach system connecting living relatives
                   </li>
-                  <li className="flex items-start gap-3 text-[14.5px] text-charcoal/70">
+                  <li className="flex items-start gap-3 text-[14.5px] text-fg/70">
                     <span className="text-gold-dim mt-[3px] shrink-0">&#x2022;</span>
                     Event hub for reunions, research and media enquiries
                   </li>
@@ -143,13 +143,13 @@ export default function ProjectsPage() {
         <div className="container-main">
           <Tag>Concepts</Tag>
           <h2 className="text-[clamp(28px,3vw,40px)] mt-3 mb-3">Future initiatives</h2>
-          <p className="text-charcoal/68 text-[16px] max-w-[58ch] mb-12">
+          <p className="text-fg/68 text-[16px] max-w-[58ch] mb-12">
             These projects are in concept phase. The images below are AI-generated visualisations and may not reflect final designs.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
             <ScrollReveal>
-              <div className="border border-line rounded-lg overflow-hidden bg-white h-full flex flex-col">
+              <div className="border border-line rounded-lg overflow-hidden bg-card h-full flex flex-col">
                 <div className="relative">
                   <img
                     src="/images/projects/concept-museum-01.jpg"
@@ -167,23 +167,23 @@ export default function ProjectsPage() {
                 <div className="p-6 flex flex-col flex-1">
                   <Tag>Concept</Tag>
                   <h3 className="text-[22px] mt-3 mb-2">Lutterodt Digital Museum</h3>
-                  <p className="text-[14px] text-charcoal/68 leading-relaxed mb-4 flex-1">
+                  <p className="text-[14px] text-fg/68 leading-relaxed mb-4 flex-1">
                     A browser-based 3D museum where visitors walk through a reconstructed 19th-century Lutterodt compound overlooking the Atlantic at Osu. Seven exhibition halls — from Origins Hall and the Photography Gallery to the Living Family Tree and Renaissance Hall — with interactive exhibits and an AI-guided narrator.
                   </p>
                   <ul className="space-y-1.5 mb-5">
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Immersive 3D halls with clickable artifacts and stories
                     </li>
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Restored Lutterodt photography in dedicated gallery
                     </li>
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Dynamic 3D family tree with biographies and oral histories
                     </li>
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Multi-language AI tour guide and interactive quizzes
                     </li>
@@ -194,7 +194,7 @@ export default function ProjectsPage() {
             </ScrollReveal>
 
             <ScrollReveal>
-              <div className="border border-line rounded-lg overflow-hidden bg-white h-full flex flex-col">
+              <div className="border border-line rounded-lg overflow-hidden bg-card h-full flex flex-col">
                 <div className="relative">
                   <img
                     src="/images/projects/concept-manor-01.jpg"
@@ -212,23 +212,23 @@ export default function ProjectsPage() {
                 <div className="p-6 flex flex-col flex-1">
                   <Tag>Concept</Tag>
                   <h3 className="text-[22px] mt-3 mb-2">Neo-Lutterodt Manor</h3>
-                  <p className="text-[14px] text-charcoal/68 leading-relaxed mb-4 flex-1">
+                  <p className="text-[14px] text-fg/68 leading-relaxed mb-4 flex-1">
                     A respectful evolution of the family's architectural heritage — blending authentic Ga-Danish proportions with contemporary Ghanaian craftsmanship, smart-home technology, and a solar-powered footprint. The estate would house a family museum, archive, library, and innovation lab.
                   </p>
                   <ul className="space-y-1.5 mb-5">
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Restored colonial craftsmanship with modern adaptation
                     </li>
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Courtyard gardens, library, archives and Renaissance Hall
                     </li>
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Innovation lab and community programme spaces
                     </li>
-                    <li className="text-[13px] text-charcoal/65 flex items-start gap-2">
+                    <li className="text-[13px] text-fg/65 flex items-start gap-2">
                       <span className="text-gold-dim shrink-0">&#x2022;</span>
                       Solar-powered with sustainable 21st-century infrastructure
                     </li>
@@ -246,7 +246,7 @@ export default function ProjectsPage() {
           <div className="max-w-[640px]">
             <Tag>Vision</Tag>
             <h2 className="text-[clamp(28px,3vw,40px)] mt-3 mb-3">Digital Heritage Network</h2>
-            <p className="text-charcoal/68 text-[16px] leading-relaxed mb-8">
+            <p className="text-fg/68 text-[16px] leading-relaxed mb-8">
               A platform that extends beyond a single family. The same infrastructure built for the Lutterodt Renaissance — digitisation, archiving, storytelling — can serve other influential Ghanaian families, forming a connected virtual Heritage District.
             </p>
           </div>
@@ -258,7 +258,7 @@ export default function ProjectsPage() {
                   <span className="font-display text-[18px] text-gold-dim">{family[0]}</span>
                 </div>
                 <h4 className="text-[16px] font-medium mb-1">{family}</h4>
-                <p className="text-[12.5px] text-charcoal/55">Partner family</p>
+                <p className="text-[12.5px] text-fg/55">Partner family</p>
               </div>
             ))}
           </div>
@@ -289,7 +289,7 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          <p className="mt-6 text-[12px] text-charcoal/45 text-center">
+          <p className="mt-6 text-[12px] text-fg/45 text-center">
             All concept images on this page are AI-generated visualisations. They are intended to communicate direction and ambition, not final design. Emblems, personalities and architectural details depicted may be fictitious or interpreted.
           </p>
         </div>

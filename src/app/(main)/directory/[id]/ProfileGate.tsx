@@ -46,7 +46,7 @@ export function ProfileGate({
         </section>
         <section className="py-[72px]">
           <div className="container-main text-center">
-            <p className="text-charcoal/50 font-mono text-[12px] tracking-widest uppercase">Loading...</p>
+            <p className="text-fg/50 font-mono text-[12px] tracking-widest uppercase">Loading...</p>
           </div>
         </section>
       </>
@@ -78,10 +78,10 @@ export function ProfileGate({
                 <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#001D95" strokeWidth="1.1"/>
                 <circle cx="20" cy="20" r="3" fill="#EEAD16"/>
               </svg>
-              <h2 className="text-[22px] font-display font-[550] text-burgundy-ink mb-[10px]">
+              <h2 className="text-[22px] font-display font-[550] text-heading mb-[10px]">
                 Verification Required
               </h2>
-              <p className="text-[14.5px] text-charcoal/65 max-w-[44ch] mx-auto mb-[20px] leading-relaxed">
+              <p className="text-[14.5px] text-fg/65 max-w-[44ch] mx-auto mb-[20px] leading-relaxed">
                 This profile is part of the modern Lutterodt directory. Verify your identity as a Lutterodt to access the full family archive.
               </p>
               <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -137,7 +137,7 @@ export function ProfileGate({
 
           <div className="border-t border-line pt-8">
             <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-4">Achievement</h3>
-            <p className="text-[16.5px] leading-relaxed text-charcoal/82">{profile.achievement}</p>
+            <p className="text-[16.5px] leading-relaxed text-fg/82">{profile.achievement}</p>
           </div>
 
           <div className="mt-12 flex gap-4 flex-wrap">
@@ -146,7 +146,7 @@ export function ProfileGate({
 
           <div className="mt-16 p-[32px] bg-ivory-dim border border-line rounded-sm text-center">
             <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Know a Lutterodt we are missing?</span>
-            <p className="text-[15px] text-charcoal/80 mt-[8px] max-w-[44ch] mx-auto">
+            <p className="text-[15px] text-fg/80 mt-[8px] max-w-[44ch] mx-auto">
               This directory is a living record. If you know a Lutterodt who should be here — we would love to hear from you.
             </p>
             <div className="flex items-center justify-center gap-3 mt-[16px]">

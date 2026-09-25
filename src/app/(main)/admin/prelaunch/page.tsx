@@ -62,22 +62,22 @@ export default function AdminPrelaunchPage() {
     <div>
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Prelaunch Checklist</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">
+          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Prelaunch Checklist</h1>
+          <p className="text-fg/50 text-[14px] mt-1">
             Status is auto-detected where possible — shows live system state
           </p>
         </div>
         <button
           onClick={fetchData}
           disabled={loading}
-          className="flex items-center gap-2 text-[13px] text-charcoal/40 hover:text-charcoal transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 text-[13px] text-fg/40 hover:text-fg transition-colors disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
           {loading ? "Checking..." : "Re-check all"}
         </button>
       </div>
 
-      <div className="mb-8 bg-white rounded-sm border border-line p-6">
+      <div className="mb-8 bg-card rounded-sm border border-line p-6">
         <div className="flex items-center gap-4">
           <div className="relative flex-1 h-2.5 bg-charcoal/5 rounded-full overflow-hidden">
             <div
@@ -85,13 +85,13 @@ export default function AdminPrelaunchPage() {
               style={{ width: `${pct}%` }}
             />
           </div>
-          <span className="text-[14px] font-medium text-charcoal whitespace-nowrap">
+          <span className="text-[14px] font-medium text-fg whitespace-nowrap">
             {data?.done}/{data?.total} ({pct}%)
           </span>
         </div>
         <div className="flex items-center justify-between mt-3">
           {pct === 100 ? (
-            <div className="flex items-center gap-2 text-forest text-[14px] font-medium">
+            <div className="flex items-center gap-2 text-success-text text-[14px] font-medium">
               <Rocket className="w-4 h-4" />
               All items complete — ready to launch!
             </div>
@@ -99,7 +99,7 @@ export default function AdminPrelaunchPage() {
             <span />
           )}
           {data?.checkedAt && (
-            <div className="flex items-center gap-1.5 text-[12px] text-charcoal/30">
+            <div className="flex items-center gap-1.5 text-[12px] text-fg/30">
               <Clock className="w-3 h-3" />
               Last checked: {new Date(data.checkedAt).toLocaleTimeString()}
             </div>
@@ -111,10 +111,10 @@ export default function AdminPrelaunchPage() {
         {data?.categories.map((cat) => {
           const catDone = cat.items.filter((i) => i.status === "completed").length;
           return (
-            <div key={cat.title} className="bg-white rounded-sm border border-line">
+            <div key={cat.title} className="bg-card rounded-sm border border-line">
               <div className="flex items-center justify-between px-6 py-4 border-b border-line">
-                <h2 className="font-display text-[16px] text-burgundy-ink">{cat.title}</h2>
-                <span className="text-[12px] text-charcoal/40 font-mono">
+                <h2 className="font-display text-[16px] text-heading">{cat.title}</h2>
+                <span className="text-[12px] text-fg/40 font-mono">
                   {catDone}/{cat.items.length}
                 </span>
               </div>
@@ -128,9 +128,9 @@ export default function AdminPrelaunchPage() {
                     >
                       {item.autoDetected ? (
                         item.status === "completed" ? (
-                          <CheckCircle2 className="w-5 h-5 text-forest shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-5 h-5 text-success-text shrink-0 mt-0.5" />
                         ) : (
-                          <Circle className="w-5 h-5 text-charcoal/20 shrink-0 mt-0.5" />
+                          <Circle className="w-5 h-5 text-fg/20 shrink-0 mt-0.5" />
                         )
                       ) : (
                         <button
@@ -139,9 +139,9 @@ export default function AdminPrelaunchPage() {
                           className="shrink-0 mt-0.5 disabled:opacity-50"
                         >
                           {item.status === "completed" ? (
-                            <CheckCircle2 className="w-5 h-5 text-forest hover:text-forest/70 transition-colors" />
+                            <CheckCircle2 className="w-5 h-5 text-success-text hover:text-success-text/70 transition-colors" />
                           ) : (
-                            <Circle className="w-5 h-5 text-charcoal/20 hover:text-charcoal/40 transition-colors" />
+                            <Circle className="w-5 h-5 text-fg/20 hover:text-fg/40 transition-colors" />
                           )}
                         </button>
                       )}
@@ -149,21 +149,21 @@ export default function AdminPrelaunchPage() {
                         <span
                           className={`text-[14px] leading-relaxed ${
                             item.status === "completed"
-                              ? "text-charcoal/40 line-through"
-                              : "text-charcoal"
+                              ? "text-fg/40 line-through"
+                              : "text-fg"
                           }`}
                         >
                           {item.text}
                         </span>
                         {item.detail && (
-                          <span className="ml-2 text-[11px] text-charcoal/30 font-mono">
+                          <span className="ml-2 text-[11px] text-fg/30 font-mono">
                             {item.detail}
                           </span>
                         )}
                       </div>
                       <span
                         className={`shrink-0 text-[10px] font-mono uppercase tracking-wider mt-1 ${
-                          item.autoDetected ? "text-charcoal/20" : "text-gold-dim/40"
+                          item.autoDetected ? "text-fg/20" : "text-gold-dim/40"
                         }`}
                         title={item.autoDetected ? "Auto-detected — live system check" : "Manual — click to toggle"}
                       >

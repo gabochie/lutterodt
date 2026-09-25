@@ -38,9 +38,9 @@ interface RoadmapData {
 
 const statusIcon = (s: ItemStatus) => {
   switch (s) {
-    case "completed": return <CheckCircle2 className="w-4 h-4 text-forest" />;
+    case "completed": return <CheckCircle2 className="w-4 h-4 text-success-text" />;
     case "in_progress": return <PlayCircle className="w-4 h-4 text-gold-dim" />;
-    default: return <Circle className="w-4 h-4 text-charcoal/20" />;
+    default: return <Circle className="w-4 h-4 text-fg/20" />;
   }
 };
 
@@ -54,9 +54,9 @@ const statusLabel = (s: ItemStatus) => {
 
 const statusColor = (s: ItemStatus) => {
   switch (s) {
-    case "completed": return "bg-forest/10 text-forest border-forest/20";
+    case "completed": return "bg-forest/10 text-success-text border-forest/20";
     case "in_progress": return "bg-gold-dim/10 text-gold-dim border-gold-dim/20";
-    default: return "bg-charcoal/5 text-charcoal/40 border-charcoal/10";
+    default: return "bg-charcoal/5 text-fg/40 border-charcoal/10";
   }
 };
 
@@ -121,7 +121,7 @@ export default function AdminRoadmapPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 text-charcoal/30 animate-spin" />
+        <Loader2 className="w-6 h-6 text-fg/30 animate-spin" />
       </div>
     );
   }
@@ -129,7 +129,7 @@ export default function AdminRoadmapPage() {
   if (!data) {
     return (
       <div className="text-center py-20">
-        <p className="text-charcoal/50 text-[14px] mb-4">Could not load roadmap.</p>
+        <p className="text-fg/50 text-[14px] mb-4">Could not load roadmap.</p>
         <button onClick={() => window.location.reload()} className="btn btn-outline text-[12px]">Retry</button>
       </div>
     );
@@ -139,12 +139,12 @@ export default function AdminRoadmapPage() {
     <div>
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Build Roadmap</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">The Lutterodt Renaissance — Product Build Roadmap</p>
+          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Build Roadmap</h1>
+          <p className="text-fg/50 text-[14px] mt-1">The Lutterodt Renaissance — Product Build Roadmap</p>
         </div>
         <div className="flex items-center gap-3">
-          {saving && <RefreshCw className="w-4 h-4 text-charcoal/30 animate-spin" />}
-          <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-forest/10 text-forest border border-forest/20">Phase 1: In Progress</span>
+          {saving && <RefreshCw className="w-4 h-4 text-fg/30 animate-spin" />}
+          <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-forest/10 text-success-text border border-forest/20">Phase 1: In Progress</span>
         </div>
       </div>
 
@@ -152,7 +152,7 @@ export default function AdminRoadmapPage() {
         {data.phases.map((p, i) => {
           const phaseColors = [
             "bg-burgundy text-ivory border-burgundy",
-            "bg-gold text-burgundy-ink border-gold",
+            "bg-gold text-heading border-gold",
             "bg-forest text-ivory border-forest",
             "bg-charcoal text-ivory border-charcoal",
           ];
@@ -161,26 +161,26 @@ export default function AdminRoadmapPage() {
               <div className={`inline-block font-mono text-[9px] tracking-widest uppercase px-3 py-1 mb-2 border ${phaseColors[i]}`}>
                 {statusLabel(p.status)}
               </div>
-              <div className="font-display text-[18px] text-burgundy-ink">{p.title}</div>
+              <div className="font-display text-[18px] text-heading">{p.title}</div>
             </div>
           );
         })}
       </div>
 
       {data.phases.map((phase, pi) => (
-        <div key={pi} className="mb-10 border border-line bg-ivory">
+        <div key={pi} className="mb-10 border border-line bg-surface">
           <div className="px-6 py-5 border-b border-line flex items-center gap-4">
             <span className="font-mono text-[28px] font-[500] text-gold-dim/30">{phase.num}</span>
             <div className="flex-1">
               <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">{phase.subtitle}</span>
-              <h2 className="font-display text-[20px] text-burgundy-ink">{phase.title}</h2>
-              <p className="text-charcoal/50 text-[13px] mt-0.5">{phase.goal}</p>
+              <h2 className="font-display text-[20px] text-heading">{phase.title}</h2>
+              <p className="text-fg/50 text-[13px] mt-0.5">{phase.goal}</p>
             </div>
             <span className={`font-mono text-[9.5px] tracking-widest uppercase px-3 py-1.5 border ${[
-              "bg-burgundy/10 text-burgundy border-burgundy/20",
+              "bg-burgundy/10 text-accent-text border-burgundy/20",
               "bg-gold-dim/10 text-gold-dim border-gold-dim/20",
-              "bg-forest/10 text-forest border-forest/20",
-              "bg-charcoal/10 text-charcoal border-charcoal/20",
+              "bg-forest/10 text-success-text border-forest/20",
+              "bg-charcoal/10 text-fg border-charcoal/20",
             ][pi]}`}>
               {statusLabel(phase.status)}
             </span>
@@ -190,11 +190,11 @@ export default function AdminRoadmapPage() {
             {phase.sections.map((section, si) => (
               <div key={si}>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-display text-[15px] text-burgundy flex items-center gap-2">
+                  <h3 className="font-display text-[15px] text-accent-text flex items-center gap-2">
                     <span className="w-4 h-[1px] bg-gold inline-block" />
                     {section.title}
                   </h3>
-                  <span className="font-mono text-[9.5px] tracking-wider text-charcoal/30">
+                  <span className="font-mono text-[9.5px] tracking-wider text-fg/30">
                     {completionRatio(section.items)}
                   </span>
                 </div>
@@ -206,7 +206,7 @@ export default function AdminRoadmapPage() {
                       onClick={() => toggleItem(pi, si, ii)}
                     >
                       <span className="shrink-0">{statusIcon(item.status)}</span>
-                      <span className={`text-[13.5px] flex-1 ${item.status === "completed" ? "text-charcoal/40 line-through" : "text-charcoal/70"}`}>
+                      <span className={`text-[13.5px] flex-1 ${item.status === "completed" ? "text-fg/40 line-through" : "text-fg/70"}`}>
                         {item.text}
                       </span>
                       <span className={`font-mono text-[8.5px] tracking-widest uppercase px-2 py-0.5 border opacity-0 group-hover:opacity-100 transition-opacity ${statusColor(item.status)}`}>
@@ -224,7 +224,7 @@ export default function AdminRoadmapPage() {
               <h4 className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mb-2">Deliverables</h4>
               <div className="flex flex-wrap gap-2">
                 {phase.deliverables.map((d, i) => (
-                  <span key={i} className="font-mono text-[9.5px] tracking-wider uppercase px-2.5 py-1 bg-forest/5 text-forest border border-forest/10">{d}</span>
+                  <span key={i} className="font-mono text-[9.5px] tracking-wider uppercase px-2.5 py-1 bg-forest/5 text-success-text border border-forest/10">{d}</span>
                 ))}
               </div>
             </div>
@@ -232,10 +232,10 @@ export default function AdminRoadmapPage() {
         </div>
       ))}
 
-      <div className="border border-line bg-ivory">
+      <div className="border border-line bg-surface">
         <div className="px-6 py-4 border-b border-line flex items-center justify-between">
-          <h2 className="font-display text-[16px] text-burgundy-ink">Development Sprints</h2>
-          <span className="font-mono text-[9.5px] tracking-wider text-charcoal/30">
+          <h2 className="font-display text-[16px] text-heading">Development Sprints</h2>
+          <span className="font-mono text-[9.5px] tracking-wider text-fg/30">
             {data.sprints.filter((s) => s.status === "completed").length}/{data.sprints.length}
           </span>
         </div>
@@ -249,7 +249,7 @@ export default function AdminRoadmapPage() {
               <span className="shrink-0">{statusIcon(s.status)}</span>
               <span className="font-mono text-[10px] tracking-widest text-gold-dim w-[80px] shrink-0">{s.sprint}</span>
               <div className="h-[1px] flex-1 bg-line" />
-              <span className={`text-[13.5px] flex-1 ${s.status === "completed" ? "text-charcoal/40 line-through" : "text-charcoal/60"}`}>
+              <span className={`text-[13.5px] flex-1 ${s.status === "completed" ? "text-fg/40 line-through" : "text-fg/60"}`}>
                 {s.focus}
               </span>
               <span className={`font-mono text-[8.5px] tracking-widest uppercase px-2 py-0.5 border opacity-0 group-hover:opacity-100 transition-opacity ${statusColor(s.status)}`}>

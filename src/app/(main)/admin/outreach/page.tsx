@@ -20,7 +20,7 @@ const statusLabels: Record<OutreachStatus, string> = {
 };
 
 const statusColors: Record<OutreachStatus, string> = {
-  not_sent: "bg-charcoal/5 text-charcoal/40 border-charcoal/10",
+  not_sent: "bg-charcoal/5 text-fg/40 border-charcoal/10",
   sent: "bg-blue-50 text-blue-600 border-blue-200",
   replied: "bg-emerald-50 text-emerald-600 border-emerald-200",
   meeting_booked: "bg-purple-50 text-purple-600 border-purple-200",
@@ -132,7 +132,7 @@ export default function AdminOutreach() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 text-charcoal/30 animate-spin" />
+        <Loader2 className="w-6 h-6 text-fg/30 animate-spin" />
       </div>
     );
   }
@@ -141,12 +141,12 @@ export default function AdminOutreach() {
     <div>
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Outreach</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">Track outreach to all {records.length} notable Lutterodts worldwide</p>
+          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Outreach</h1>
+          <p className="text-fg/50 text-[14px] mt-1">Track outreach to all {records.length} notable Lutterodts worldwide</p>
         </div>
         <div className="flex items-center gap-3">
-          {saving && <RefreshCw className="w-4 h-4 text-charcoal/30 animate-spin" />}
-          <button onClick={fetchData} className="font-mono text-[10px] tracking-widest uppercase px-4 py-2 border border-line text-charcoal/50 hover:text-charcoal transition-colors">
+          {saving && <RefreshCw className="w-4 h-4 text-fg/30 animate-spin" />}
+          <button onClick={fetchData} className="font-mono text-[10px] tracking-widest uppercase px-4 py-2 border border-line text-fg/50 hover:text-fg transition-colors">
             Refresh
           </button>
         </div>
@@ -154,11 +154,11 @@ export default function AdminOutreach() {
 
       <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 gap-3 mb-8">
         {(["total", "not_sent", "sent", "replied", "meeting_booked", "declined"] as const).map((key) => (
-          <div key={key} className="bg-ivory border border-line p-4 text-center">
-            <div className="font-display text-[26px] text-burgundy-ink">
+          <div key={key} className="bg-surface border border-line p-4 text-center">
+            <div className="font-display text-[26px] text-heading">
               {key === "total" ? counts.total : counts[key]}
             </div>
-            <div className="font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mt-1">
+            <div className="font-mono text-[9px] tracking-widest uppercase text-fg/40 mt-1">
               {key === "total" ? "Total" : statusLabels[key]}
             </div>
           </div>
@@ -167,17 +167,17 @@ export default function AdminOutreach() {
 
       <div className="flex items-center gap-4 mb-6 flex-wrap">
         <div className="relative flex-1 max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/30" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-fg/30" />
           <input
             type="text"
             placeholder="Search name, country, category..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 text-[13px] border border-line bg-ivory text-charcoal focus:outline-none focus:border-gold-dim transition-colors"
+            className="w-full pl-9 pr-4 py-2.5 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim transition-colors"
           />
         </div>
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-charcoal/30" />
+          <Filter className="w-4 h-4 text-fg/30" />
           {(["all", "not_sent", "sent", "replied", "meeting_booked", "declined", "follow_up"] as const).map((s) => (
             <button
               key={s}
@@ -185,7 +185,7 @@ export default function AdminOutreach() {
               className={`font-mono text-[9px] tracking-widest uppercase px-2.5 py-1.5 border transition-colors ${
                 filterStatus === s
                   ? "bg-burgundy text-ivory border-burgundy"
-                  : "bg-ivory text-charcoal/50 border-line hover:border-charcoal/30"
+                  : "bg-surface text-fg/50 border-line hover:border-charcoal/30"
               }`}
             >
               {s === "all" ? "All" : statusLabels[s]}
@@ -194,19 +194,19 @@ export default function AdminOutreach() {
         </div>
       </div>
 
-      <div className="bg-ivory border border-line overflow-x-auto">
+      <div className="bg-surface border border-line overflow-x-auto">
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-line">
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3 w-8">#</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Name</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Category</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Country</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Status</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Channel</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Date Sent</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Letter</th>
-              <th className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3 w-20">Actions</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3 w-8">#</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Name</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Category</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Country</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Status</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Channel</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Date Sent</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Letter</th>
+              <th className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3 w-20">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
@@ -216,15 +216,15 @@ export default function AdminOutreach() {
                 className="hover:bg-ivory-dim/50 transition-colors cursor-pointer"
                 onClick={() => openEdit(record)}
               >
-                <td className="px-4 py-3 font-mono text-[11px] text-charcoal/30">{i + 1}</td>
+                <td className="px-4 py-3 font-mono text-[11px] text-fg/30">{i + 1}</td>
                 <td className="px-4 py-3">
-                  <span className="text-[13.5px] text-charcoal">{record.name}</span>
+                  <span className="text-[13.5px] text-fg">{record.name}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-[12px] text-charcoal/60">{record.category}</span>
+                  <span className="text-[12px] text-fg/60">{record.category}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-[12px] text-charcoal/60">{record.country}</span>
+                  <span className="text-[12px] text-fg/60">{record.country}</span>
                 </td>
                 <td className="px-4 py-3">
                   <span
@@ -236,10 +236,10 @@ export default function AdminOutreach() {
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="font-mono text-[10px] text-charcoal/50">{channelLabels[record.channel]}</span>
+                  <span className="font-mono text-[10px] text-fg/50">{channelLabels[record.channel]}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="font-mono text-[10px] text-charcoal/50">{record.dateSent || "—"}</span>
+                  <span className="font-mono text-[10px] text-fg/50">{record.dateSent || "—"}</span>
                 </td>
                 <td className="px-4 py-3">
                   {record.letter ? (
@@ -253,13 +253,13 @@ export default function AdminOutreach() {
                       View <ExternalLink className="w-3 h-3" />
                     </a>
                   ) : (
-                    <span className="text-charcoal/20 font-mono text-[10px]">—</span>
+                    <span className="text-fg/20 font-mono text-[10px]">—</span>
                   )}
                 </td>
                 <td className="px-4 py-3">
                   <button
                     onClick={(e) => { e.stopPropagation(); openEdit(record); }}
-                    className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 border border-line text-charcoal/40 hover:text-charcoal hover:border-charcoal/30 transition-colors"
+                    className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 border border-line text-fg/40 hover:text-fg hover:border-charcoal/30 transition-colors"
                   >
                     Edit
                   </button>
@@ -268,7 +268,7 @@ export default function AdminOutreach() {
             ))}
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={9} className="px-4 py-12 text-center text-charcoal/40 text-[14px]">
+                <td colSpan={9} className="px-4 py-12 text-center text-fg/40 text-[14px]">
                   No records match your search or filter.
                 </td>
               </tr>
@@ -279,25 +279,25 @@ export default function AdminOutreach() {
 
       {editId && editRecord && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoal/50 p-6" onClick={() => { setEditId(null); setEditRecord(null); }}>
-          <div className="bg-ivory w-full max-w-lg border border-line" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-surface w-full max-w-lg border border-line" onClick={(e) => e.stopPropagation()}>
             <div className="px-6 py-4 border-b border-line flex items-center justify-between">
-              <h2 className="font-display text-[17px] text-burgundy-ink">{editRecord.name}</h2>
-              <button onClick={() => { setEditId(null); setEditRecord(null); }} className="text-charcoal/40 hover:text-charcoal transition-colors text-[18px]">&times;</button>
+              <h2 className="font-display text-[17px] text-heading">{editRecord.name}</h2>
+              <button onClick={() => { setEditId(null); setEditRecord(null); }} className="text-fg/40 hover:text-fg transition-colors text-[18px]">&times;</button>
             </div>
             <div className="p-6 space-y-5">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Category</label>
-                  <p className="text-[14px] text-charcoal/70">{editRecord.category}</p>
+                  <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Category</label>
+                  <p className="text-[14px] text-fg/70">{editRecord.category}</p>
                 </div>
                 <div>
-                  <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Country</label>
-                  <p className="text-[14px] text-charcoal/70">{editRecord.country}</p>
+                  <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Country</label>
+                  <p className="text-[14px] text-fg/70">{editRecord.country}</p>
                 </div>
               </div>
 
               <div>
-                <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Status</label>
+                <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Status</label>
                 <div className="flex flex-wrap gap-2">
                   {(Object.entries(statusLabels) as [OutreachStatus, string][]).map(([key, label]) => (
                     <button
@@ -306,7 +306,7 @@ export default function AdminOutreach() {
                       className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
                         editRecord.status === key
                           ? "bg-burgundy text-ivory border-burgundy"
-                          : "bg-ivory text-charcoal/50 border-line hover:border-charcoal/30"
+                          : "bg-surface text-fg/50 border-line hover:border-charcoal/30"
                       }`}
                     >
                       {label}
@@ -316,7 +316,7 @@ export default function AdminOutreach() {
               </div>
 
               <div>
-                <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Channel</label>
+                <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Channel</label>
                 <div className="flex flex-wrap gap-2">
                   {(Object.entries(channelLabels) as [OutreachChannel, string][]).map(([key, label]) => (
                     <button
@@ -325,7 +325,7 @@ export default function AdminOutreach() {
                       className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
                         editRecord.channel === key
                           ? "bg-burgundy text-ivory border-burgundy"
-                          : "bg-ivory text-charcoal/50 border-line hover:border-charcoal/30"
+                          : "bg-surface text-fg/50 border-line hover:border-charcoal/30"
                       }`}
                     >
                       {label}
@@ -336,39 +336,39 @@ export default function AdminOutreach() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Date Sent</label>
+                  <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Date Sent</label>
                   <input
                     type="date"
                     value={editRecord.dateSent || ""}
                     onChange={(e) => setEditRecord({ ...editRecord, dateSent: e.target.value || null })}
-                    className="w-full px-3 py-2 text-[13px] border border-line bg-ivory text-charcoal focus:outline-none focus:border-gold-dim transition-colors"
+                    className="w-full px-3 py-2 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Last Contacted</label>
+                  <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Last Contacted</label>
                   <input
                     type="date"
                     value={editRecord.lastContacted || ""}
                     onChange={(e) => setEditRecord({ ...editRecord, lastContacted: e.target.value || null })}
-                    className="w-full px-3 py-2 text-[13px] border border-line bg-ivory text-charcoal focus:outline-none focus:border-gold-dim transition-colors"
+                    className="w-full px-3 py-2 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Notes</label>
+                <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Notes</label>
                 <textarea
                   value={editRecord.notes}
                   onChange={(e) => setEditRecord({ ...editRecord, notes: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 text-[13px] border border-line bg-ivory text-charcoal focus:outline-none focus:border-gold-dim transition-colors resize-none"
+                  className="w-full px-3 py-2 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim transition-colors resize-none"
                   placeholder="Outreach notes, response details, follow-up reminders..."
                 />
               </div>
 
               {editRecord.letter && (
                 <div>
-                  <label className="block font-mono text-[9px] tracking-widest uppercase text-charcoal/40 mb-1.5">Letter</label>
+                  <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Letter</label>
                   <a
                     href={editRecord.letter}
                     target="_blank"
@@ -383,7 +383,7 @@ export default function AdminOutreach() {
             <div className="px-6 py-4 border-t border-line flex items-center justify-end gap-3">
               <button
                 onClick={() => { setEditId(null); setEditRecord(null); }}
-                className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 border border-line text-charcoal/50 hover:text-charcoal transition-colors"
+                className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 border border-line text-fg/50 hover:text-fg transition-colors"
               >
                 Cancel
               </button>

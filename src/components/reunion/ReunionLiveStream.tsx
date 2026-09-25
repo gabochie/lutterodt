@@ -77,7 +77,7 @@ No stream scheduled yet — check back during the reunion.
                 value={editId}
                 onChange={e => setEditId(e.target.value)}
                 placeholder="e.g. dQw4w9WgXcQ"
-                className="flex-1 bg-ivory/10 border border-ivory/20 px-3 py-2 text-[14px] text-ivory outline-none focus:border-gold-light"
+                className="flex-1 bg-surface/10 border border-ivory/20 px-3 py-2 text-[14px] text-ivory outline-none focus:border-gold-light"
               />
             </div>
             <label className="flex items-center gap-3 text-ivory/70 text-[14px] mb-4 cursor-pointer">

@@ -44,11 +44,11 @@ export default function ClientLoginPage() {
         <div className="container-main max-w-md mx-auto">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Email Address</label>
+              <label className="block font-mono text-[11px] tracking-widest uppercase text-fg/50 mb-1.5">Email Address</label>
               <input required type="email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className="w-full bg-ivory-dim border border-line px-4 py-3 text-[15px] outline-none focus:border-gold-dim" placeholder="you@example.com" />
             </div>
             <div>
-              <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Access Code</label>
+              <label className="block font-mono text-[11px] tracking-widest uppercase text-fg/50 mb-1.5">Access Code</label>
               <input required value={form.access_code} onChange={e => setForm(f => ({ ...f, access_code: e.target.value }))} className="w-full bg-ivory-dim border border-line px-4 py-3 text-[15px] outline-none focus:border-gold-dim" placeholder="Your access code" />
             </div>
             {status === "error" && <p className="text-red-600 text-[14px]">{errorMsg}</p>}

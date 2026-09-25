@@ -51,7 +51,7 @@ export function GalleryClient() {
           </div>
 
           {filtered.length === 0 && (
-            <p className="text-charcoal/50 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
+            <p className="text-fg/50 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
               No items match this filter.
             </p>
           )}

@@ -82,21 +82,21 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
                   value={name}
                   onChange={(e) => { setName(e.target.value); setError(""); }}
                   placeholder="Your name"
-                  className="w-full px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                  className="w-full px-4 py-3 bg-card/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
                 />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(""); }}
                   placeholder="Your email address"
-                  className="w-full px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                  className="w-full px-4 py-3 bg-card/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
                 />
                 <input
                   type="tel"
                   value={whatsapp}
                   onChange={(e) => { setWhatsapp(e.target.value); setError(""); }}
                   placeholder="WhatsApp number (optional)"
-                  className="w-full px-4 py-3 bg-white/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
+                  className="w-full px-4 py-3 bg-card/10 border border-gold-dim/30 text-ivory text-[14px] placeholder:text-ivory/30 focus:outline-none focus:border-gold-dim transition-colors"
                 />
                 <button
                   type="submit"
@@ -116,9 +116,9 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
           </div>
           <div className="mt-12 flex items-center justify-center gap-6 text-ivory/30 font-mono text-[10px] tracking-widest uppercase">
             <a href="/login" className="hover:text-gold-light transition-colors">Admin</a>
-            <span className="w-[1px] h-3 bg-ivory/15" />
+            <span className="w-[1px] h-3 bg-surface/15" />
             <a href="/coming-soon" className="hover:text-gold-light transition-colors">Funders</a>
-            <span className="w-[1px] h-3 bg-ivory/15" />
+            <span className="w-[1px] h-3 bg-surface/15" />
             <span>Ghana · Germany · USA · UK · Netherlands</span>
           </div>
         </div>

@@ -139,6 +139,36 @@
   --sidebar-ring: #EEAD16;
 }
 
+.dark {
+  color-scheme: dark;
+  --surface: #01010A;
+  --surface-raised: #020A3D;
+  --fg: #F2F4FF;
+  --heading: #F2F4FF;
+  --hairline: rgba(242, 244, 255, 0.18);
+  --muted-text: #A9B1CC;
+  --accent-text: #8398FF;
+  --success-text: #DFF2E4;
+
+  --background: #01010A;
+  --foreground: #F2F4FF;
+  --card: #020A3D;
+  --card-foreground: #F2F4FF;
+  --popover: #020A3D;
+  --popover-foreground: #F2F4FF;
+  --primary: #8398FF;
+  --primary-foreground: #01010A;
+  --secondary: #EEAD16;
+  --secondary-foreground: #01010A;
+  --muted: #020A3D;
+  --muted-foreground: #A9B1CC;
+  --accent: #020A3D;
+  --accent-foreground: #F2F4FF;
+  --border: rgba(242, 244, 255, 0.18);
+  --input: rgba(242, 244, 255, 0.22);
+  --ring: #FBC829;
+}
+
 @layer base {
   * { @apply border-border outline-ring/50; }
   html { @apply scroll-smooth; }
@@ -147,14 +177,14 @@
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
   body {
-    @apply bg-ivory text-ink font-body antialiased;
+    @apply bg-surface text-fg font-body antialiased;
   }
   ::selection { background: var(--color-blue-700); color: #FFFFFF; }
   :focus-visible {
     @apply outline-[3px] outline-gold-light outline-offset-2;
   }
   h1, h2, h3, h4 {
-    @apply font-display font-medium leading-tight tracking-tight text-burgundy-ink;
+    @apply font-display font-medium leading-tight tracking-tight text-heading;
   }
   img { @apply max-w-full block; }
   a { @apply no-underline text-inherit; }
@@ -201,6 +231,8 @@
 .btn-ghost:hover { border-color: var(--color-gold-light); color: var(--color-gold-light); }
 .btn-outline { border-color: var(--color-blue-700); color: var(--color-blue-700); }
 .btn-outline:hover { background: var(--color-blue-50); }
+.dark .btn-outline { border-color: var(--accent-text); color: var(--accent-text); }
+.dark .btn-outline:hover { background: rgba(131, 152, 255, 0.14); }
 .btn-outline-ivory { border-color: rgba(247,247,244,0.35); color: var(--color-ivory); }
 .btn-outline-ivory:hover { background: var(--color-ivory); color: var(--color-blue-950); }
 .btn-gold { background: var(--color-gold-500); color: var(--color-blue-950); }

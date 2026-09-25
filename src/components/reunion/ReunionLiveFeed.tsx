@@ -64,19 +64,19 @@ export function ReunionLiveFeed() {
   };
 
   return (
-    <section id="live-feed" className="py-[108px] bg-ivory">
+    <section id="live-feed" className="py-[108px] bg-surface">
       <div className="container-main">
         <div className="max-w-[640px] mb-12">
           <Tag>Live Updates</Tag>
           <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[18px]">Who&apos;s here</h2>
-          <p className="mt-3 text-[15px] text-charcoal/68">
+          <p className="mt-3 text-[15px] text-fg/68">
             Real-time check-ins from the reunion in Copenhagen. Updates every 30 seconds.
           </p>
         </div>
 
         <div className="max-w-2xl mx-auto">
           {updates.length === 0 ? (
-            <div className="text-center py-16 text-charcoal/40">
+            <div className="text-center py-16 text-fg/40">
               <div className="text-[48px] mb-4">📍</div>
               <p className="text-[16px]">No check-ins yet. Be the first to post!</p>
             </div>
@@ -89,10 +89,10 @@ export function ReunionLiveFeed() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline gap-3 flex-wrap">
-                      <span className="font-medium text-[15px] text-burgundy-ink">{u.attendee_name}</span>
-                      <span className="font-mono text-[11px] text-charcoal/40 tracking-wider">{timeAgo(u.created_at)}</span>
+                      <span className="font-medium text-[15px] text-heading">{u.attendee_name}</span>
+                      <span className="font-mono text-[11px] text-fg/40 tracking-wider">{timeAgo(u.created_at)}</span>
                     </div>
-                    {u.message && <p className="text-[14px] text-charcoal/70 mt-1">{u.message}</p>}
+                    {u.message && <p className="text-[14px] text-fg/70 mt-1">{u.message}</p>}
                     {u.photo_url && (
                       <img src={u.photo_url} alt="" loading="lazy" className="mt-3 rounded max-h-64 w-auto object-cover" />
                     )}
@@ -104,21 +104,21 @@ export function ReunionLiveFeed() {
 
           {isAdmin && (
             <form onSubmit={handlePost} className="mt-10 p-6 bg-ivory-dim rounded-lg border border-line">
-              <h3 className="text-[16px] font-medium text-burgundy-ink mb-4">Post a check-in</h3>
+              <h3 className="text-[16px] font-medium text-heading mb-4">Post a check-in</h3>
               <div className="space-y-3">
                 <input
                   required
                   value={form.attendee_name}
                   onChange={e => setForm(f => ({ ...f, attendee_name: e.target.value }))}
                   placeholder="Attendee name"
-                  className="w-full bg-white border border-line px-4 py-2.5 text-[14px] outline-none focus:border-gold-dim"
+                  className="w-full bg-card border border-line px-4 py-2.5 text-[14px] outline-none focus:border-gold-dim"
                 />
                 <textarea
                   value={form.message}
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                   placeholder="Message (optional)"
                   rows={2}
-                  className="w-full bg-white border border-line px-4 py-2.5 text-[14px] outline-none focus:border-gold-dim resize-none"
+                  className="w-full bg-card border border-line px-4 py-2.5 text-[14px] outline-none focus:border-gold-dim resize-none"
                 />
                 <button type="submit" disabled={posting} className="bg-burgundy text-ivory text-[12px] tracking-widest uppercase py-2.5 px-6 rounded-sm hover:bg-burgundy-deep transition-colors disabled:opacity-50">
                   {posting ? "Posting..." : "Post Update"}

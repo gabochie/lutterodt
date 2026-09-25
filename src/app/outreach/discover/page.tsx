@@ -70,8 +70,8 @@ export default function DiscoverPage() {
 
   return (
     <div>
-      <h1 className="text-[clamp(22px,2.5vw,30px)] font-display text-burgundy-ink mb-2">Discover a Lutterodt</h1>
-      <p className="text-charcoal/50 text-[14px] mb-8">
+      <h1 className="text-[clamp(22px,2.5vw,30px)] font-display text-heading mb-2">Discover a Lutterodt</h1>
+      <p className="text-fg/50 text-[14px] mb-8">
         Add a newly discovered Lutterodt to the database. The system checks for duplicates automatically.
       </p>
 
@@ -88,9 +88,9 @@ export default function DiscoverPage() {
           )}
           {result.matches && result.matches.length > 0 && (
             <div className="mt-3">
-              <p className="font-mono text-[10px] tracking-widest uppercase text-burgundy mb-2">Potential duplicates:</p>
+              <p className="font-mono text-[10px] tracking-widest uppercase text-accent-text mb-2">Potential duplicates:</p>
               {result.matches.map((m: any) => (
-                <div key={m.id} className="text-[12px] text-charcoal/70 mb-1">
+                <div key={m.id} className="text-[12px] text-fg/70 mb-1">
                   {m.name} &middot; {m.country} &middot; {m.category}
                 </div>
               ))}
@@ -99,61 +99,61 @@ export default function DiscoverPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="max-w-2xl bg-ivory border border-line p-6 space-y-4">
+      <form onSubmit={handleSubmit} className="max-w-2xl bg-surface border border-line p-6 space-y-4">
         <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
           <div>
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Full Name *</label>
+            <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Full Name *</label>
             <input required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-              className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim" placeholder="e.g. Kwame Lutterodt" />
+              className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim" placeholder="e.g. Kwame Lutterodt" />
           </div>
           <div>
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Date of Birth</label>
+            <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Date of Birth</label>
             <input value={form.dob} onChange={e => setForm(f => ({ ...f, dob: e.target.value }))}
-              className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim" placeholder="e.g. 1985 or 15 Mar 1990" />
+              className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim" placeholder="e.g. 1985 or 15 Mar 1990" />
           </div>
         </div>
 
         <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
           <div>
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Category *</label>
+            <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Category *</label>
             <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-              className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim">
+              className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim">
               {categories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
           <div>
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Country</label>
+            <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Country</label>
             <select value={form.country} onChange={e => setForm(f => ({ ...f, country: e.target.value }))}
-              className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim">
+              className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim">
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Achievement / Bio *</label>
+          <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Achievement / Bio *</label>
           <textarea required value={form.achievement} onChange={e => setForm(f => ({ ...f, achievement: e.target.value }))}
-            className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim min-h-[100px]"
+            className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim min-h-[100px]"
             placeholder="Describe what this Lutterodt does, their profession, accomplishments..." />
         </div>
 
         <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
           <div>
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Email (optional)</label>
+            <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Email (optional)</label>
             <input type="email" value={form.contact_email} onChange={e => setForm(f => ({ ...f, contact_email: e.target.value }))}
-              className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim" />
+              className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim" />
           </div>
           <div>
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">LinkedIn (optional)</label>
+            <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">LinkedIn (optional)</label>
             <input value={form.contact_linkedin} onChange={e => setForm(f => ({ ...f, contact_linkedin: e.target.value }))}
-              className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim" />
+              className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim" />
           </div>
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] tracking-widest uppercase text-charcoal/50 mb-1.5">Notes</label>
+          <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Notes</label>
           <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
-            className="w-full px-3 py-2 border border-line bg-ivory text-[14px] focus:outline-none focus:border-gold-dim min-h-[60px]"
+            className="w-full px-3 py-2 border border-line bg-surface text-[14px] focus:outline-none focus:border-gold-dim min-h-[60px]"
             placeholder="Where did you find this person? Any context..." />
         </div>
 
@@ -165,7 +165,7 @@ export default function DiscoverPage() {
 
       <div className="mt-8">
         <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-3">How dedup works</h3>
-        <div className="bg-ivory border border-line p-4 text-[13px] text-charcoal/70 leading-relaxed">
+        <div className="bg-surface border border-line p-4 text-[13px] text-fg/70 leading-relaxed">
           <p>Before adding a new profile, the system:</p>
           <ol className="list-decimal ml-5 mt-2 space-y-1">
             <li>Normalizes the name (lowercase, removes special characters)</li>
@@ -179,9 +179,9 @@ export default function DiscoverPage() {
 
       {preview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6" onClick={() => setPreview(null)}>
-          <div className="bg-white max-w-3xl w-full max-h-[90vh] overflow-auto shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white border-b border-line px-5 py-3 flex items-center justify-between z-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase text-charcoal/40">Preview: {preview.name}</span>
+          <div className="bg-card max-w-3xl w-full max-h-[90vh] overflow-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="sticky top-0 bg-card border-b border-line px-5 py-3 flex items-center justify-between z-10">
+              <span className="font-mono text-[10px] tracking-widest uppercase text-fg/40">Preview: {preview.name}</span>
               <div className="flex gap-2">
                 <button onClick={() => setPreview(null)} className="btn-ghost text-[10px] px-3 py-1.5">Close</button>
                 <button onClick={() => { setPreview(null); }}

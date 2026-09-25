@@ -101,7 +101,7 @@ export function SponsorClient() {
             <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[14px]">
               This work is carried by the family, for the family
             </h2>
-            <p className="mt-4 text-[16px] text-charcoal/68">
+            <p className="mt-4 text-[16px] text-fg/68">
               Right now the most meaningful way to support the Lutterodt Institute is to contribute what only you can — photographs, documents, stories, nominations, and research. Every contribution brings the permanent archive closer.
             </p>
             <div className="mt-8">
@@ -125,12 +125,12 @@ export function SponsorClient() {
               { title: "Neo-Lutterodt Manor", desc: "A physical heritage centre in Accra, Ghana — housing physical archives, exhibition space, and cultural programming for the global diaspora.", status: "Planned" },
               { title: "Digital Heritage Network", desc: "A platform connecting Lutterodts worldwide for mentorship, collaboration, and cultural exchange.", status: "Planned" },
             ].map((p) => (
-              <div key={p.title} className="bg-ivory p-[28px] pb-[30px]">
+              <div key={p.title} className="bg-surface p-[28px] pb-[30px]">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-[17px] font-display font-[550] text-burgundy-ink">{p.title}</h3>
-                  <span className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-burgundy/8 text-burgundy">{p.status}</span>
+                  <h3 className="text-[17px] font-display font-[550] text-heading">{p.title}</h3>
+                  <span className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-burgundy/8 text-accent-text">{p.status}</span>
                 </div>
-                <p className="text-[14px] text-charcoal/68 leading-relaxed">{p.desc}</p>
+                <p className="text-[14px] text-fg/68 leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -142,10 +142,10 @@ export function SponsorClient() {
         <div className="container-main">
           <div className="max-w-3xl mx-auto bg-ivory-dim border border-line rounded-lg p-8 md:p-10 text-center">
             <Tag>Funding</Tag>
-            <h2 className="text-[clamp(24px,2.8vw,34px)] mt-[14px] text-burgundy-ink">
+            <h2 className="text-[clamp(24px,2.8vw,34px)] mt-[14px] text-heading">
               Open to funding conversations
             </h2>
-            <p className="mt-4 text-[15px] text-charcoal/68 max-w-[56ch] mx-auto leading-relaxed">
+            <p className="mt-4 text-[15px] text-fg/68 max-w-[56ch] mx-auto leading-relaxed">
               We welcome grants, partnerships, and family contributions that help sustain and grow the archive — from digitisation and preservation to the museum and heritage programming. There are no fixed tiers; every conversation starts from what you would like to make possible.
             </p>
             <div className="mt-7 flex items-center justify-center gap-4 flex-wrap">
@@ -164,20 +164,20 @@ export function SponsorClient() {
             A family archive being built, one profile at a time.
           </h2>
           <div className="grid grid-cols-4 max-md:grid-cols-2 gap-[2px] bg-line mt-10 max-w-3xl mx-auto">
-            <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{totalProfiles}</div>
+            <div className="bg-surface p-[22px] text-center">
+              <div className="text-[32px] font-display font-[600] text-heading">{totalProfiles}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Profiles</div>
             </div>
-            <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{countryCount}</div>
+            <div className="bg-surface p-[22px] text-center">
+              <div className="text-[32px] font-display font-[600] text-heading">{countryCount}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Countries</div>
             </div>
-            <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{continents}</div>
+            <div className="bg-surface p-[22px] text-center">
+              <div className="text-[32px] font-display font-[600] text-heading">{continents}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Continents</div>
             </div>
-            <div className="bg-ivory p-[22px] text-center">
-              <div className="text-[32px] font-display font-[600] text-burgundy-ink">{livingProfiles}</div>
+            <div className="bg-surface p-[22px] text-center">
+              <div className="text-[32px] font-display font-[600] text-heading">{livingProfiles}</div>
               <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mt-1">Living Notables</div>
             </div>
           </div>
@@ -192,16 +192,16 @@ export function SponsorClient() {
             <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[14px]">
               Other ways to be part of this
             </h2>
-            <p className="mt-4 text-[16px] text-charcoal/68">
+            <p className="mt-4 text-[16px] text-fg/68">
               There are many ways to contribute to the archive — here is where to start.
             </p>
           </div>
 
           <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[2px] bg-line max-w-4xl mx-auto">
             {ways.map((way) => (
-              <div key={way.title} className="bg-ivory p-[32px] pb-[36px] flex flex-col">
-                <h3 className="text-[22px] font-display font-[550] text-burgundy-ink">{way.title}</h3>
-                <p className="mt-3 text-[14.5px] text-charcoal/68 leading-relaxed flex-1">{way.body}</p>
+              <div key={way.title} className="bg-surface p-[32px] pb-[36px] flex flex-col">
+                <h3 className="text-[22px] font-display font-[550] text-heading">{way.title}</h3>
+                <p className="mt-3 text-[14.5px] text-fg/68 leading-relaxed flex-1">{way.body}</p>
                 <Link href={way.href} className="mt-[24px] text-center text-[12px] tracking-widest uppercase py-3 rounded-sm transition-all font-medium bg-burgundy text-ivory hover:bg-burgundy-deep">{way.cta}</Link>
               </div>
             ))}
@@ -218,9 +218,9 @@ export function SponsorClient() {
           </div>
           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-[2px] bg-line">
             {faqs.map((faq) => (
-              <div key={faq.q} className="bg-ivory p-[28px] pb-[30px]">
-                <h3 className="text-[16px] font-display font-[550] text-burgundy-ink mb-[10px]">{faq.q}</h3>
-                <p className="text-[14px] text-charcoal/68 leading-relaxed">{faq.a}</p>
+              <div key={faq.q} className="bg-surface p-[28px] pb-[30px]">
+                <h3 className="text-[16px] font-display font-[550] text-heading mb-[10px]">{faq.q}</h3>
+                <p className="text-[14px] text-fg/68 leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>

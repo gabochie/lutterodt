@@ -51,8 +51,8 @@ export default function EditArticlePage() {
   if (loading) return <div className="flex justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-gold-dim" /></div>;
   if (!article) return (
     <div className="text-center py-20">
-      <h1 className="font-display text-[22px] text-burgundy-ink mb-2">Article Not Found</h1>
-      <p className="text-charcoal/50 text-[14px] mb-6">No article exists with this ID.</p>
+      <h1 className="font-display text-[22px] text-heading mb-2">Article Not Found</h1>
+      <p className="text-fg/50 text-[14px] mb-6">No article exists with this ID.</p>
       <Link href="/admin/articles" className="btn btn-outline">Back to Articles</Link>
     </div>
   );
@@ -61,12 +61,12 @@ export default function EditArticlePage() {
     <div className="max-w-3xl">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
-          <Link href="/admin/articles" className="text-charcoal/40 hover:text-charcoal transition-colors">
+          <Link href="/admin/articles" className="text-fg/40 hover:text-fg transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Edit Article</h1>
-            <p className="text-charcoal/50 text-[14px] mt-1">{article.title}</p>
+            <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Edit Article</h1>
+            <p className="text-fg/50 text-[14px] mt-1">{article.title}</p>
           </div>
         </div>
         <button onClick={remove} className="flex items-center gap-2 font-mono text-[10.5px] tracking-widest uppercase text-red-500 hover:text-red-600 transition-colors">
@@ -77,33 +77,33 @@ export default function EditArticlePage() {
       <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); save(); }}>
         <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-5">
           <div className="field">
-            <label className="font-mono text-[10.5px] tracking-widest uppercase text-charcoal/55 block mb-2">Title</label>
+            <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Title</label>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
-              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-charcoal focus:outline-0 focus:border-burgundy" placeholder="Article title" />
+              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-fg focus:outline-0 focus:border-burgundy" placeholder="Article title" />
           </div>
           <div className="field">
-            <label className="font-mono text-[10.5px] tracking-widest uppercase text-charcoal/55 block mb-2">Category</label>
+            <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Category</label>
             <select value={category} onChange={(e) => setCategory(e.target.value)}
-              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-charcoal focus:outline-0 focus:border-burgundy">
+              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-fg focus:outline-0 focus:border-burgundy">
               <option>Oral History</option><option>Family News</option><option>Heritage</option><option>Interview</option><option>Article</option>
             </select>
           </div>
         </div>
 
         <div className="field">
-          <label className="font-mono text-[10.5px] tracking-widest uppercase text-charcoal/55 block mb-2">
-            Content <span className="text-charcoal/30 normal-case">(Markdown supported)</span>
+          <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">
+            Content <span className="text-fg/30 normal-case">(Markdown supported)</span>
           </label>
           <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={16}
-            className="w-full border border-line bg-transparent py-3 px-4 font-body text-[14px] text-charcoal focus:outline-0 focus:border-burgundy resize-vertical font-mono" placeholder="Write your article here..." />
+            className="w-full border border-line bg-transparent py-3 px-4 font-body text-[14px] text-fg focus:outline-0 focus:border-burgundy resize-vertical font-mono" placeholder="Write your article here..." />
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[10.5px] tracking-widest uppercase text-charcoal/55">Status</span>
+          <span className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55">Status</span>
           <div className="flex gap-2">
             {["draft", "published"].map((s) => (
               <button key={s} type="button" onClick={() => setStatus(s)}
-                className={`font-mono text-[10.5px] tracking-widest uppercase px-4 py-2 border transition-colors ${status === s ? "border-burgundy bg-burgundy text-ivory" : "border-line text-charcoal/50 hover:border-charcoal/30"}`}>{s}</button>
+                className={`font-mono text-[10.5px] tracking-widest uppercase px-4 py-2 border transition-colors ${status === s ? "border-burgundy bg-burgundy text-ivory" : "border-line text-fg/50 hover:border-charcoal/30"}`}>{s}</button>
             ))}
           </div>
         </div>

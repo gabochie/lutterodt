@@ -116,8 +116,8 @@ export function ContactClient() {
                     key={tab}
                     className={`font-mono text-[11.5px] tracking-widest uppercase py-3 mr-8 border-b-2 transition-colors shrink-0 ${
                       activeTab === tab
-                        ? "text-burgundy border-burgundy"
-                        : "text-charcoal/45 border-transparent"
+                        ? "text-accent-text border-burgundy"
+                        : "text-fg/45 border-transparent"
                     }`}
                     onClick={() => setActiveTab(tab)}
                   >
@@ -190,7 +190,7 @@ export function ContactClient() {
                 <button type="submit" disabled={status === "sending"} className="btn-primary">
                   {status === "sending" ? "Sending..." : "Send Message"}
                 </button>
-                <p className="mt-6 text-[12.5px] text-charcoal/50">
+                <p className="mt-6 text-[12.5px] text-fg/50">
                   By submitting, you agree the Committee may contact you regarding this enquiry. We do not share family contact details externally.
                 </p>
               </form>
@@ -233,13 +233,13 @@ function Field({
 }) {
   const id = label.toLowerCase().replace(/\s+/g, "-");
   const inputClass =
-    "border-0 border-b border-line bg-transparent py-[10px] px-[2px] font-body text-[15px] text-charcoal focus:outline-0 focus:border-burgundy";
+    "border-0 border-b border-line bg-transparent py-[10px] px-[2px] font-body text-[15px] text-fg focus:outline-0 focus:border-burgundy";
 
   return (
     <div className={`field ${full ? "col-span-full" : ""} ${className || ""}`}>
       <label
         htmlFor={id}
-        className="font-mono text-[10.5px] tracking-widest uppercase text-charcoal/55 mb-2 block"
+        className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 mb-2 block"
       >
         {label}
       </label>

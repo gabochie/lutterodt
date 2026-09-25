@@ -95,7 +95,7 @@ export default function AdminBudgetPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-6 h-6 text-charcoal/30 animate-spin" />
+        <Loader2 className="w-6 h-6 text-fg/30 animate-spin" />
       </div>
     );
   }
@@ -103,7 +103,7 @@ export default function AdminBudgetPage() {
   if (!data) {
     return (
       <div className="text-center py-20">
-        <p className="text-charcoal/50 text-[14px] mb-4">Could not load budget data.</p>
+        <p className="text-fg/50 text-[14px] mb-4">Could not load budget data.</p>
         <button onClick={() => window.location.reload()} className="btn btn-outline text-[12px]">Retry</button>
       </div>
     );
@@ -118,28 +118,28 @@ export default function AdminBudgetPage() {
     <div>
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Budget & Run Costs</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">Transparent budget breakdown for fundraising</p>
+          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Budget & Run Costs</h1>
+          <p className="text-fg/50 text-[14px] mt-1">Transparent budget breakdown for fundraising</p>
         </div>
         <div className="flex items-center gap-3">
-          {saving && <RefreshCw className="w-4 h-4 text-charcoal/30 animate-spin" />}
-          <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-forest/10 text-forest border border-forest/20">Editable</span>
+          {saving && <RefreshCw className="w-4 h-4 text-fg/30 animate-spin" />}
+          <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-forest/10 text-success-text border border-forest/20">Editable</span>
         </div>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-4 max-md:grid-cols-2 gap-4 mb-10">
-        <div className="bg-ivory border border-line p-5">
+        <div className="bg-surface border border-line p-5">
           <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Build (one-time)</div>
-          <div className="font-display text-[28px] text-burgundy-ink">${totalBuild.toFixed(2)}</div>
+          <div className="font-display text-[28px] text-heading">${totalBuild.toFixed(2)}</div>
         </div>
-        <div className="bg-ivory border border-line p-5">
+        <div className="bg-surface border border-line p-5">
           <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Monthly run</div>
-          <div className="font-display text-[28px] text-burgundy-ink">${totalMonthly.toFixed(2)}</div>
+          <div className="font-display text-[28px] text-heading">${totalMonthly.toFixed(2)}</div>
         </div>
-        <div className="bg-ivory border border-line p-5">
+        <div className="bg-surface border border-line p-5">
           <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Annual maintenance</div>
-          <div className="font-display text-[28px] text-burgundy-ink">${totalAnnual.toFixed(2)}</div>
+          <div className="font-display text-[28px] text-heading">${totalAnnual.toFixed(2)}</div>
         </div>
         <div className="bg-burgundy-ink border border-line-on-dark p-5">
           <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Year 1 Grand Total</div>
@@ -154,20 +154,20 @@ export default function AdminBudgetPage() {
         const isEditing = editingSection === section;
 
         return (
-          <div key={section} className="mb-8 border border-line bg-ivory">
+          <div key={section} className="mb-8 border border-line bg-surface">
             <div className="px-6 py-4 border-b border-line flex items-center justify-between">
               <div>
-                <h2 className="font-display text-[16px] text-burgundy-ink">{sectionLabels[section]}</h2>
-                <p className="text-charcoal/50 text-[12px] mt-0.5">{sectionDescriptions[section]}</p>
+                <h2 className="font-display text-[16px] text-heading">{sectionLabels[section]}</h2>
+                <p className="text-fg/50 text-[12px] mt-0.5">{sectionDescriptions[section]}</p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[14px] text-burgundy font-[500]">${total.toFixed(2)}</span>
+                <span className="font-mono text-[14px] text-accent-text font-[500]">${total.toFixed(2)}</span>
                 <button
                   onClick={() => setEditingSection(isEditing ? null : section)}
                   className={`font-mono text-[9.5px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
                     isEditing
                       ? "bg-burgundy text-ivory border-burgundy"
-                      : "border-line text-charcoal/50 hover:border-charcoal/30"
+                      : "border-line text-fg/50 hover:border-charcoal/30"
                   }`}
                 >
                   {isEditing ? "Done" : "Edit"}
@@ -183,27 +183,27 @@ export default function AdminBudgetPage() {
                       <input
                         value={entry.item}
                         onChange={(e) => updateItem(section, i, e.target.value)}
-                        className="w-full bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-charcoal focus:outline-0 focus:border-burgundy"
+                        className="w-full bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-fg focus:outline-0 focus:border-burgundy"
                       />
                     ) : (
-                      <span className="text-[13.5px] text-charcoal/70">{entry.item}</span>
+                      <span className="text-[13.5px] text-fg/70">{entry.item}</span>
                     )}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="font-mono text-[10px] text-charcoal/30">$</span>
+                    <span className="font-mono text-[10px] text-fg/30">$</span>
                     {isEditing ? (
                       <input
                         type="number"
                         step="0.01"
                         value={entry.cost}
                         onChange={(e) => updateCost(section, i, parseFloat(e.target.value) || 0)}
-                        className="w-24 bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-charcoal text-right font-mono focus:outline-0 focus:border-burgundy"
+                        className="w-24 bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-fg text-right font-mono focus:outline-0 focus:border-burgundy"
                       />
                     ) : (
-                      <span className="font-mono text-[13.5px] text-charcoal w-24 text-right">{entry.cost.toFixed(2)}</span>
+                      <span className="font-mono text-[13.5px] text-fg w-24 text-right">{entry.cost.toFixed(2)}</span>
                     )}
                     {isEditing && (
-                      <button onClick={() => removeItem(section, i)} className="p-1 text-charcoal/30 hover:text-red-600 transition-colors">
+                      <button onClick={() => removeItem(section, i)} className="p-1 text-fg/30 hover:text-red-600 transition-colors">
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
                     )}
@@ -216,7 +216,7 @@ export default function AdminBudgetPage() {
               <div className="px-6 py-3 border-t border-line">
                 <button
                   onClick={() => addItem(section)}
-                  className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-burgundy hover:text-burgundy/70 transition-colors"
+                  className="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase text-accent-text hover:text-accent-text/70 transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   Add Item
@@ -230,11 +230,11 @@ export default function AdminBudgetPage() {
       {/* Grand total bar */}
       <div className="border border-gold/30 bg-gold/5 p-6 flex items-center justify-between">
         <div>
-          <h3 className="font-display text-[18px] text-burgundy-ink">Year 1 Total Investment</h3>
-          <p className="text-charcoal/50 text-[13px] mt-1">Build costs + 12 months of operation & maintenance</p>
+          <h3 className="font-display text-[18px] text-heading">Year 1 Total Investment</h3>
+          <p className="text-fg/50 text-[13px] mt-1">Build costs + 12 months of operation & maintenance</p>
         </div>
         <div className="text-right">
-          <div className="font-display text-[36px] text-burgundy-ink">${grandTotal.toFixed(2)}</div>
+          <div className="font-display text-[36px] text-heading">${grandTotal.toFixed(2)}</div>
           <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">~${(grandTotal / 12).toFixed(2)}/month</div>
         </div>
       </div>

@@ -25,21 +25,21 @@ export default function DisclaimerPage() {
           <h2 className="text-[clamp(26px,2.8vw,28px)] mb-6">Research Limitations & Disclaimers</h2>
           
           <div className="py-[18px] text-justify">
-            <p className="text-charcoal/85 text-[16px]">
+            <p className="text-fg/85 text-[16px]">
               The Lutterodt Renaissance platform does not guarantee the accuracy, completeness, or 
               scientific validation of all genealogical data or historical claims presented. 
               
               <br className="my-4" />
               
               <strong>Important Limitations:</strong>
-              <ul className="list-disc list-inside text-charcoal/80 text-[16px] mb-4">
+              <ul className="list-disc list-inside text-fg/80 text-[16px] mb-4">
                 <li><strong>Acknowledgement of Uncertainty</strong> - Family history involves interpretation where definitive proof may not exist</li>
                 <li><strong>No Scientific Validation</strong> - Claims about identity, heritage, or genetic connections are not scientifically validated unless expressly marked</li>
                 <li><strong>Evolving Records</strong> - Historical records may be incomplete or contested; we document sources transparently</li>
                 <li><strong>No Medical Claims</strong> - This platform makes no medical, genetic, or DNA verification claims</li>
               </ul>
               
-              <p className="text-charcoal/85">
+              <p className="text-fg/85">
                 Researchers are encouraged to consult primary sources and independently verify contested information. 
                 This platform serves as a collaborative archive rather than an authoritative historical authority.
               </p>

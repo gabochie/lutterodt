@@ -35,7 +35,7 @@ export function HistoryClient() {
           <div className="max-w-full mb-10">
             <Tag>Origins</Tag>
             <h2 className="text-[clamp(30px,3.4vw,44px)] max-w-[34ch] mt-[18px]">The coast, the crossing, and the house that followed</h2>
-            <p className="mt-4 text-[16.5px] text-charcoal/68 max-w-[64ch]">
+            <p className="mt-4 text-[16.5px] text-fg/68 max-w-[64ch]">
               The Lutterodt name enters the documented record on the Gold Coast in the mid-19th century. What follows is not a single migration but successive generations of movement, settlement and return — from the coast to the interior, and later, from Accra to the wider world.
             </p>
           </div>
@@ -82,7 +82,7 @@ export function HistoryClient() {
               />
             ))}
             {filtered.length === 0 && (
-              <p className="text-charcoal/50 font-mono text-[12px] tracking-widest uppercase py-8">
+              <p className="text-fg/50 font-mono text-[12px] tracking-widest uppercase py-8">
                 No records match your search.
               </p>
             )}

@@ -88,18 +88,18 @@ export default function QueuePage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-[clamp(22px,2.5vw,30px)] font-display text-burgundy-ink">Letter Queue</h1>
-          <p className="text-charcoal/50 text-[13px] mt-1">
+          <h1 className="text-[clamp(22px,2.5vw,30px)] font-display text-heading">Letter Queue</h1>
+          <p className="text-fg/50 text-[13px] mt-1">
             {queue.filter(q => q.status === "sent").length} sent, {queue.filter(q => q.status === "pending").length} pending
           </p>
         </div>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 border border-burgundy/20 bg-burgundy/5 text-burgundy text-[13px]">{error}</div>
+        <div className="mb-4 p-3 border border-burgundy/20 bg-burgundy/5 text-accent-text text-[13px]">{error}</div>
       )}
 
-      {loading && <p className="text-charcoal/50 text-[13px]">Loading...</p>}
+      {loading && <p className="text-fg/50 text-[13px]">Loading...</p>}
 
       {!loading && (
         <>
@@ -108,12 +108,12 @@ export default function QueuePage() {
               <h2 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-3">
                 Profiles Ready for Letters ({profiles.length})
               </h2>
-              <div className="bg-ivory border border-line divide-y divide-line">
+              <div className="bg-surface border border-line divide-y divide-line">
                 {profiles.map((p) => (
                   <div key={p.id} className="px-4 py-3 flex items-center justify-between">
                     <div>
                       <div className="text-[14px]">{p.name}</div>
-                      <div className="text-[12px] text-charcoal/50">{p.country} &middot; {p.category}</div>
+                      <div className="text-[12px] text-fg/50">{p.country} &middot; {p.category}</div>
                     </div>
                     <button
                       onClick={() => previewLetter(p)}
@@ -130,18 +130,18 @@ export default function QueuePage() {
 
           <h2 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-3">Current Queue</h2>
           {queue.length === 0 ? (
-            <div className="bg-ivory border border-line p-8 text-center text-charcoal/50 text-[13px]">
+            <div className="bg-surface border border-line p-8 text-center text-fg/50 text-[13px]">
               No letters in the queue. Generate letters from profiles above.
             </div>
           ) : (
-            <div className="bg-ivory border border-line">
+            <div className="bg-surface border border-line">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-line">
-                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Name</th>
-                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Status</th>
-                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Scheduled</th>
-                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 px-4 py-3">Created</th>
+                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Name</th>
+                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Status</th>
+                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Scheduled</th>
+                    <th className="text-left font-mono text-[9.5px] tracking-widest uppercase text-fg/40 px-4 py-3">Created</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-line">
@@ -150,13 +150,13 @@ export default function QueuePage() {
                       <td className="px-4 py-3 text-[14px]">{item.name}</td>
                       <td className="px-4 py-3">
                         <span className={`font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 ${
-                          item.status === "sent" ? "bg-forest/10 text-forest" :
-                          item.status === "failed" ? "bg-burgundy/10 text-burgundy" :
+                          item.status === "sent" ? "bg-forest/10 text-success-text" :
+                          item.status === "failed" ? "bg-burgundy/10 text-accent-text" :
                           "bg-gold-dim/10 text-gold-dim"
                         }`}>{item.status}</span>
                       </td>
-                      <td className="px-4 py-3 text-[13px] text-charcoal/50">{item.scheduled_date || "—"}</td>
-                      <td className="px-4 py-3 text-[13px] text-charcoal/50">{item.created_at?.slice(0, 10) || "—"}</td>
+                      <td className="px-4 py-3 text-[13px] text-fg/50">{item.scheduled_date || "—"}</td>
+                      <td className="px-4 py-3 text-[13px] text-fg/50">{item.created_at?.slice(0, 10) || "—"}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -168,9 +168,9 @@ export default function QueuePage() {
 
       {preview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6" onClick={() => setPreview(null)}>
-          <div className="bg-white max-w-3xl w-full max-h-[90vh] overflow-auto shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white border-b border-line px-5 py-3 flex items-center justify-between z-10">
-              <span className="font-mono text-[10px] tracking-widest uppercase text-charcoal/40">Preview: {preview.name}</span>
+          <div className="bg-card max-w-3xl w-full max-h-[90vh] overflow-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="sticky top-0 bg-card border-b border-line px-5 py-3 flex items-center justify-between z-10">
+              <span className="font-mono text-[10px] tracking-widest uppercase text-fg/40">Preview: {preview.name}</span>
               <div className="flex gap-2">
                 <button onClick={() => setPreview(null)} className="btn-ghost text-[10px] px-3 py-1.5">Close</button>
                 <button

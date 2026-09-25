@@ -77,24 +77,24 @@ export default function ComingSoonPage() {
           <Tag>What We&apos;re Building</Tag>
           <h2 className="text-[clamp(28px,3.4vw,42px)] mt-[18px] mb-14">A living archive built for the future</h2>
           <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[2px] bg-line">
-            <div className="bg-ivory p-[34px] pb-[30px]">
+            <div className="bg-surface p-[34px] pb-[30px]">
               <Tag>Feature</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">Digital Archive</h3>
-              <p className="text-charcoal/66 text-[14.5px]">
+              <p className="text-fg/66 text-[14.5px]">
                 A searchable, chronological record of every known milestone&mdash;births, migrations, businesses, homes and reunions&mdash;each with verified sources, images and context.
               </p>
             </div>
-            <div className="bg-ivory p-[34px] pb-[30px]">
+            <div className="bg-surface p-[34px] pb-[30px]">
               <Tag>Feature</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">Community Platform</h3>
-              <p className="text-charcoal/66 text-[14.5px]">
+              <p className="text-fg/66 text-[14.5px]">
                 A space for family members across the diaspora to connect, share stories and photographs, contribute records, and stay informed about gatherings and milestones.
               </p>
             </div>
-            <div className="bg-ivory p-[34px] pb-[30px]">
+            <div className="bg-surface p-[34px] pb-[30px]">
               <Tag>Feature</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">Built to Last</h3>
-              <p className="text-charcoal/66 text-[14.5px]">
+              <p className="text-fg/66 text-[14.5px]">
                 Modern, performant architecture deployed on Cloudflare&apos;s global network&mdash;ensuring fast access from anywhere, permanent storage, and a foundation that can grow with the family.
               </p>
             </div>
@@ -148,21 +148,21 @@ export default function ComingSoonPage() {
           <h2 className="text-[clamp(28px,3.4vw,42px)] mt-[18px] mb-4">
             Keeping the archive online, secure and growing
           </h2>
-          <p className="text-charcoal/66 text-[16px] max-w-[640px] mb-12">
+          <p className="text-fg/66 text-[16px] max-w-[640px] mb-12">
             Sustaining the Lutterodt Renaissance rests on three quiet pillars:
           </p>
           <div className="grid grid-cols-3 max-md:grid-cols-1 gap-6 mb-12">
             <div className="border border-line rounded-sm p-6">
               <p className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Infrastructure</p>
-              <p className="text-charcoal/60 text-[14px] mt-2">Cloud hosting, file storage, email service, domain renewal and automated backups</p>
+              <p className="text-fg/60 text-[14px] mt-2">Cloud hosting, file storage, email service, domain renewal and automated backups</p>
             </div>
             <div className="border border-line rounded-sm p-6">
               <p className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Digitisation</p>
-              <p className="text-charcoal/60 text-[14px] mt-2">Scanning equipment, OCR software and professional catalogue management</p>
+              <p className="text-fg/60 text-[14px] mt-2">Scanning equipment, OCR software and professional catalogue management</p>
             </div>
             <div className="border border-line rounded-sm p-6">
               <p className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Development</p>
-              <p className="text-charcoal/60 text-[14px] mt-2">Feature development, security updates, maintenance support and new capabilities</p>
+              <p className="text-fg/60 text-[14px] mt-2">Feature development, security updates, maintenance support and new capabilities</p>
             </div>
           </div>
           <div className="bg-burgundy-ink text-ivory p-8 rounded-sm">

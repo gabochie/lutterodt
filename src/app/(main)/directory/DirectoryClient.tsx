@@ -72,7 +72,7 @@ export function DirectoryClient() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-pulse text-charcoal/30 font-mono text-[11px] tracking-widest uppercase">Loading directory...</div>
+        <div className="animate-pulse text-fg/30 font-mono text-[11px] tracking-widest uppercase">Loading directory...</div>
       </div>
     );
   }
@@ -146,7 +146,7 @@ export function DirectoryClient() {
               <select
                 value={countryFilter}
                 onChange={(e) => setCountryFilter(e.target.value)}
-                className="font-mono text-[11px] tracking-widest uppercase px-4 py-[9px] border border-line rounded-full text-charcoal/60 bg-transparent focus:outline-0"
+                className="font-mono text-[11px] tracking-widest uppercase px-4 py-[9px] border border-line rounded-full text-fg/60 bg-transparent focus:outline-0"
               >
                 <option value="all">All Countries</option>
                 {countries.map((c) => (
@@ -176,7 +176,7 @@ export function DirectoryClient() {
           </div>
 
           {filtered.length === 0 && (
-            <p className="text-charcoal/50 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
+            <p className="text-fg/50 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
               No profiles match your search.
             </p>
           )}
@@ -184,10 +184,10 @@ export function DirectoryClient() {
           {!isVerified && (
             <div className="mt-16 p-[40px] bg-ivory-dim border border-line text-center">
               <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Access the full directory</span>
-              <h3 className="text-[22px] font-display font-[550] text-burgundy-ink mt-[8px] mb-[12px]">
+              <h3 className="text-[22px] font-display font-[550] text-heading mt-[8px] mb-[12px]">
                 {modernCount} more Lutterodts documented across {countries.length} countries
               </h3>
-              <p className="text-[14.5px] text-charcoal/65 max-w-[52ch] mx-auto mb-[20px]">
+              <p className="text-[14.5px] text-fg/65 max-w-[52ch] mx-auto mb-[20px]">
                 Verify your identity as a Lutterodt to access the complete family directory, including modern profiles from Ghana, UK, USA, and beyond.
               </p>
               <Link href="/verify" className="btn-primary">Verify Your Identity</Link>
@@ -204,15 +204,15 @@ function ProfileCard({ profile, isVerified, categoryLabels }: { profile: DirProf
   const locked = isModern && !isVerified;
 
   return (
-    <div className={`bg-ivory p-[26px] pb-[30px] flex flex-col group ${locked ? "relative" : ""}`}>
+    <div className={`bg-surface p-[26px] pb-[30px] flex flex-col group ${locked ? "relative" : ""}`}>
       {locked && (
-        <div className="absolute inset-0 bg-ivory/80 backdrop-blur-[2px] z-10 flex items-center justify-center">
+        <div className="absolute inset-0 bg-surface/80 backdrop-blur-[2px] z-10 flex items-center justify-center">
           <div className="text-center px-6">
-            <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 mx-auto mb-2 text-burgundy/60">
+            <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 mx-auto mb-2 text-accent-text/60">
               <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/>
               <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="1.5"/>
             </svg>
-            <p className="font-mono text-[10px] tracking-widest uppercase text-burgundy/60">Verification required</p>
+            <p className="font-mono text-[10px] tracking-widest uppercase text-accent-text/60">Verification required</p>
           </div>
         </div>
       )}
@@ -221,14 +221,14 @@ function ProfileCard({ profile, isVerified, categoryLabels }: { profile: DirProf
           {categoryLabels[profile.category] || profile.category}
         </span>
         {profile.dob && (
-          <span className="font-mono text-[9px] tracking-widest text-charcoal/40">
+          <span className="font-mono text-[9px] tracking-widest text-fg/40">
             {profile.dob}
           </span>
         )}
       </div>
       <h3 className="text-[18px] mb-[6px] leading-snug">{profile.name}</h3>
-      <span className="text-charcoal/50 text-[12px] mb-[10px]">{profile.country}</span>
-      <p className="text-charcoal/66 text-[13.5px] flex-1 leading-relaxed">
+      <span className="text-fg/50 text-[12px] mb-[10px]">{profile.country}</span>
+      <p className="text-fg/66 text-[13.5px] flex-1 leading-relaxed">
         {profile.achievement?.length > 120
           ? profile.achievement.slice(0, 120) + "..."
           : profile.achievement}
@@ -236,7 +236,7 @@ function ProfileCard({ profile, isVerified, categoryLabels }: { profile: DirProf
       {!locked && profile.id && (
         <Link
           href={`/directory/${profile.id}`}
-          className="mt-[16px] font-mono text-[11px] tracking-widest uppercase text-burgundy inline-flex items-center gap-2 group"
+          className="mt-[16px] font-mono text-[11px] tracking-widest uppercase text-accent-text inline-flex items-center gap-2 group"
         >
           View Profile
           <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
@@ -247,7 +247,7 @@ function ProfileCard({ profile, isVerified, categoryLabels }: { profile: DirProf
       {locked && (
         <Link
           href="/verify"
-          className="mt-[16px] font-mono text-[11px] tracking-widest uppercase text-burgundy/50 inline-flex items-center gap-2"
+          className="mt-[16px] font-mono text-[11px] tracking-widest uppercase text-accent-text/50 inline-flex items-center gap-2"
         >
           Verify to view
           <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3">

@@ -52,7 +52,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <section className="py-[108px]">
-        <div className="container-main text-center text-charcoal/50">Loading...</div>
+        <div className="container-main text-center text-fg/50">Loading...</div>
       </section>
     );
   }
@@ -76,11 +76,11 @@ export default function DashboardPage() {
           <div className="mb-14">
             <Tag>Service Catalog</Tag>
             <h2 className="text-[clamp(24px,2.8vw,34px)] mt-[14px]">Everything I offer</h2>
-            <p className="mt-3 text-[15px] text-charcoal/68">Full details and pricing for every service. All prices in USD.</p>
+            <p className="mt-3 text-[15px] text-fg/68">Full details and pricing for every service. All prices in USD.</p>
           </div>
 
           {services.length === 0 ? (
-            <p className="text-charcoal/50">No services loaded yet.</p>
+            <p className="text-fg/50">No services loaded yet.</p>
           ) : (
             <div className="space-y-4 max-w-3xl">
               {services.map((s) => (
@@ -88,17 +88,17 @@ export default function DashboardPage() {
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">{s.category}</div>
-                      <h3 className="text-[20px] font-display font-[550] text-burgundy-ink mt-1">{s.title}</h3>
+                      <h3 className="text-[20px] font-display font-[550] text-heading mt-1">{s.title}</h3>
                     </div>
                     {s.pricing && (
-                      <div className="text-[18px] font-display font-[600] text-burgundy whitespace-nowrap ml-4">{s.pricing}</div>
+                      <div className="text-[18px] font-display font-[600] text-accent-text whitespace-nowrap ml-4">{s.pricing}</div>
                     )}
                   </div>
-                  <p className="text-[14px] text-charcoal/68 leading-relaxed">{s.description}</p>
+                  <p className="text-[14px] text-fg/68 leading-relaxed">{s.description}</p>
                   {s.deliverables && (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {JSON.parse(s.deliverables).map((d: string) => (
-                        <span key={d} className="text-[12px] bg-white px-3 py-1 rounded-sm text-charcoal/60">{d}</span>
+                        <span key={d} className="text-[12px] bg-card px-3 py-1 rounded-sm text-fg/60">{d}</span>
                       ))}
                     </div>
                   )}
@@ -117,17 +117,17 @@ export default function DashboardPage() {
           </div>
 
           {projects.length === 0 ? (
-            <p className="text-charcoal/50 max-w-3xl">No projects yet. Reach out through the Services page to get started.</p>
+            <p className="text-fg/50 max-w-3xl">No projects yet. Reach out through the Services page to get started.</p>
           ) : (
             <div className="space-y-4 max-w-3xl">
               {projects.map((p) => (
-                <div key={p.id} className="bg-white rounded-lg p-5 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
+                <div key={p.id} className="bg-card rounded-lg p-5 flex items-center justify-between gap-4 max-sm:flex-col max-sm:items-start">
                   <div>
                     <div className="text-[15px] font-medium">{p.service_interest || "General inquiry"}</div>
-                    {p.message && <p className="text-[13px] text-charcoal/60 mt-1">{p.message}</p>}
-                    <div className="text-[11px] text-charcoal/40 font-mono mt-2">{new Date(p.created_at).toLocaleDateString()}</div>
+                    {p.message && <p className="text-[13px] text-fg/60 mt-1">{p.message}</p>}
+                    <div className="text-[11px] text-fg/40 font-mono mt-2">{new Date(p.created_at).toLocaleDateString()}</div>
                   </div>
-                  <span className="font-mono text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-burgundy/8 text-burgundy">{p.status}</span>
+                  <span className="font-mono text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-burgundy/8 text-accent-text">{p.status}</span>
                 </div>
               ))}
             </div>

@@ -33,7 +33,7 @@ export default function OutreachLayout({ children }: { children: React.ReactNode
   if (checking) {
     return (
       <div className="min-h-screen bg-ivory-dim flex items-center justify-center">
-        <p className="text-charcoal/50 font-mono text-[12px] tracking-widest uppercase">Checking access...</p>
+        <p className="text-fg/50 font-mono text-[12px] tracking-widest uppercase">Checking access...</p>
       </div>
     );
   }

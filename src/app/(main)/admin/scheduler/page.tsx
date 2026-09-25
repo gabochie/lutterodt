@@ -182,8 +182,8 @@ export default function SchedulerPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Scheduler</h1>
-          <p className="text-charcoal/50 text-[14px] mt-1">Plan and manage daily outreach letters</p>
+          <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Scheduler</h1>
+          <p className="text-fg/50 text-[14px] mt-1">Plan and manage daily outreach letters</p>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -196,7 +196,7 @@ export default function SchedulerPage() {
           </button>
           <button
             onClick={fetchData}
-            className="font-mono text-[11px] tracking-widest uppercase px-4 py-3 border border-line text-charcoal/50 hover:text-burgundy hover:border-burgundy transition-colors"
+            className="font-mono text-[11px] tracking-widest uppercase px-4 py-3 border border-line text-fg/50 hover:text-accent-text hover:border-burgundy transition-colors"
           >
             Refresh
           </button>
@@ -205,20 +205,20 @@ export default function SchedulerPage() {
 
       <div className="grid grid-cols-[1fr_320px] max-lg:grid-cols-1 gap-6">
         {/* Calendar */}
-        <div className="bg-ivory border border-line">
+        <div className="bg-surface border border-line">
           <div className="px-6 py-4 border-b border-line flex items-center justify-between">
             <div className="flex items-center gap-3">
               <CalIcon className="w-5 h-5 text-gold-dim" />
-              <h2 className="font-display text-[16px] text-burgundy-ink">
+              <h2 className="font-display text-[16px] text-heading">
                 {MONTHS[month]} {year}
               </h2>
             </div>
             <div className="flex gap-1">
-              <button onClick={() => setMonthOffset(m => m - 1)} className="p-2 text-charcoal/50 hover:text-burgundy transition-colors">
+              <button onClick={() => setMonthOffset(m => m - 1)} className="p-2 text-fg/50 hover:text-accent-text transition-colors">
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <button onClick={() => setMonthOffset(0)} className="px-2 py-1 font-mono text-[10px] text-charcoal/40 hover:text-burgundy">Today</button>
-              <button onClick={() => setMonthOffset(m => m + 1)} className="p-2 text-charcoal/50 hover:text-burgundy transition-colors">
+              <button onClick={() => setMonthOffset(0)} className="px-2 py-1 font-mono text-[10px] text-fg/40 hover:text-accent-text">Today</button>
+              <button onClick={() => setMonthOffset(m => m + 1)} className="p-2 text-fg/50 hover:text-accent-text transition-colors">
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -226,13 +226,13 @@ export default function SchedulerPage() {
 
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-6 h-6 animate-spin text-charcoal/20" />
+              <Loader2 className="w-6 h-6 animate-spin text-fg/20" />
             </div>
           ) : (
             <div className="p-4">
               <div className="grid grid-cols-7 mb-2">
                 {DAYS.map(d => (
-                  <div key={d} className="font-mono text-[9.5px] tracking-widest uppercase text-charcoal/40 text-center py-2">{d}</div>
+                  <div key={d} className="font-mono text-[9.5px] tracking-widest uppercase text-fg/40 text-center py-2">{d}</div>
                 ))}
               </div>
               <div className="grid grid-cols-7">
@@ -261,7 +261,7 @@ export default function SchedulerPage() {
                         d.isPast && !item ? "opacity-30 pointer-events-none" : "hover:bg-line/20"
                       }`}
                     >
-                      <span className={`font-mono text-[12px] ${isToday ? "text-burgundy font-bold" : "text-charcoal/70"}`}>
+                      <span className={`font-mono text-[12px] ${isToday ? "text-accent-text font-bold" : "text-fg/70"}`}>
                         {d.day}
                       </span>
                       {item && (
@@ -270,7 +270,7 @@ export default function SchedulerPage() {
                         }`} />
                       )}
                       {item && (
-                        <span className="font-mono text-[7px] text-charcoal/40 mt-0.5 leading-tight text-center truncate w-full">
+                        <span className="font-mono text-[7px] text-fg/40 mt-0.5 leading-tight text-center truncate w-full">
                           {item.name.split(" ").slice(-1)}
                         </span>
                       )}
@@ -282,15 +282,15 @@ export default function SchedulerPage() {
               <div className="flex items-center gap-5 mt-4 pt-3 border-t border-line/50">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-gold-dim" />
-                  <span className="font-mono text-[9px] text-charcoal/40">Pending</span>
+                  <span className="font-mono text-[9px] text-fg/40">Pending</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-forest" />
-                  <span className="font-mono text-[9px] text-charcoal/40">Sent</span>
+                  <span className="font-mono text-[9px] text-fg/40">Sent</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-line/50 border border-line" />
-                  <span className="font-mono text-[9px] text-charcoal/40">Empty</span>
+                  <span className="font-mono text-[9px] text-fg/40">Empty</span>
                 </div>
               </div>
             </div>
@@ -301,17 +301,17 @@ export default function SchedulerPage() {
         <div className="space-y-4">
           {/* Selected day picker */}
           {showPicker && selectedDate && (
-            <div className="bg-ivory border border-line p-4">
+            <div className="bg-surface border border-line p-4">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-display text-[14px] text-burgundy-ink">
+                <h3 className="font-display text-[14px] text-heading">
                   Schedule: {selectedDate}
                 </h3>
                 <button onClick={() => { setShowPicker(false); setSelectedDate(null); }}>
-                  <X className="w-4 h-4 text-charcoal/40 hover:text-burgundy" />
+                  <X className="w-4 h-4 text-fg/40 hover:text-accent-text" />
                 </button>
               </div>
               {availableProfiles.length === 0 ? (
-                <p className="text-[13px] text-charcoal/50">No profiles available. All have letters queued or sent.</p>
+                <p className="text-[13px] text-fg/50">No profiles available. All have letters queued or sent.</p>
               ) : (
                 <div className="space-y-1 max-h-[300px] overflow-auto">
                   {availableProfiles.map(p => (
@@ -321,8 +321,8 @@ export default function SchedulerPage() {
                       disabled={scheduling}
                       className="w-full text-left px-3 py-2 text-[13px] border border-line hover:border-gold-dim hover:bg-gold-dim/5 transition-colors disabled:opacity-50"
                     >
-                      <span className="text-charcoal">{p.name}</span>
-                      <span className="font-mono text-[9px] text-charcoal/40 ml-2">{p.country} · {p.category}</span>
+                      <span className="text-fg">{p.name}</span>
+                      <span className="font-mono text-[9px] text-fg/40 ml-2">{p.country} · {p.category}</span>
                     </button>
                   ))}
                 </div>
@@ -332,21 +332,21 @@ export default function SchedulerPage() {
 
           {/* Selected queue item details */}
           {selectedItem && (
-            <div className="bg-ivory border border-line p-4">
+            <div className="bg-surface border border-line p-4">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-display text-[14px] text-burgundy-ink">{selectedItem.name}</h3>
+                <h3 className="font-display text-[14px] text-heading">{selectedItem.name}</h3>
                 <button onClick={() => setSelectedItem(null)}>
-                  <X className="w-4 h-4 text-charcoal/40 hover:text-burgundy" />
+                  <X className="w-4 h-4 text-fg/40 hover:text-accent-text" />
                 </button>
               </div>
               <div className="space-y-2 text-[13px]">
-                <div className="flex items-center gap-2 text-charcoal/60">
+                <div className="flex items-center gap-2 text-fg/60">
                   <CalendarIcon className="w-3.5 h-3.5" />
                   <span>Scheduled: {selectedItem.scheduled_date}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {selectedItem.status === "sent" ? (
-                    <><CheckCircle2 className="w-3.5 h-3.5 text-forest" /><span className="text-forest">Sent</span></>
+                    <><CheckCircle2 className="w-3.5 h-3.5 text-success-text" /><span className="text-success-text">Sent</span></>
                   ) : (
                     <><Clock className="w-3.5 h-3.5 text-gold-dim" /><span className="text-gold-dim">Pending</span></>
                   )}
@@ -358,7 +358,7 @@ export default function SchedulerPage() {
                         type="date"
                         defaultValue={selectedItem.scheduled_date}
                         onChange={(e) => rescheduleItem(selectedItem.id, e.target.value)}
-                        className="flex-1 px-2 py-1.5 border border-line text-[12px] font-mono text-charcoal/60"
+                        className="flex-1 px-2 py-1.5 border border-line text-[12px] font-mono text-fg/60"
                       />
                       <button
                         onClick={() => unqueueItem(selectedItem.id)}
@@ -374,33 +374,33 @@ export default function SchedulerPage() {
           )}
 
           {/* Queue summary */}
-          <div className="bg-ivory border border-line p-4">
-            <h3 className="font-display text-[14px] text-burgundy-ink mb-3">Queue Summary</h3>
+          <div className="bg-surface border border-line p-4">
+            <h3 className="font-display text-[14px] text-heading mb-3">Queue Summary</h3>
             <div className="space-y-2 text-[13px]">
               <div className="flex justify-between">
-                <span className="text-charcoal/60">Total profiles</span>
-                <span className="font-mono text-charcoal">{profiles.length}</span>
+                <span className="text-fg/60">Total profiles</span>
+                <span className="font-mono text-fg">{profiles.length}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-charcoal/60">Available to schedule</span>
-                <span className="font-mono text-forest">{availableProfiles.length}</span>
+                <span className="text-fg/60">Available to schedule</span>
+                <span className="font-mono text-success-text">{availableProfiles.length}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-charcoal/60">Pending letters</span>
+                <span className="text-fg/60">Pending letters</span>
                 <span className="font-mono text-gold-dim">{queue.filter(q => q.status === "pending").length}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-charcoal/60">Sent letters</span>
-                <span className="font-mono text-forest">{queue.filter(q => q.status === "sent").length}</span>
+                <span className="text-fg/60">Sent letters</span>
+                <span className="font-mono text-success-text">{queue.filter(q => q.status === "sent").length}</span>
               </div>
             </div>
           </div>
 
           {/* Upcoming queue list */}
-          <div className="bg-ivory border border-line p-4">
-            <h3 className="font-display text-[14px] text-burgundy-ink mb-3">Upcoming</h3>
+          <div className="bg-surface border border-line p-4">
+            <h3 className="font-display text-[14px] text-heading mb-3">Upcoming</h3>
             {queue.filter(q => q.status === "pending").sort((a, b) => a.scheduled_date.localeCompare(b.scheduled_date)).slice(0, 10).length === 0 ? (
-              <p className="text-[13px] text-charcoal/50">No upcoming letters scheduled.</p>
+              <p className="text-[13px] text-fg/50">No upcoming letters scheduled.</p>
             ) : (
               <div className="space-y-1 max-h-[300px] overflow-auto">
                 {queue.filter(q => q.status === "pending").sort((a, b) => a.scheduled_date.localeCompare(b.scheduled_date)).slice(0, 10).map(item => (
@@ -409,7 +409,7 @@ export default function SchedulerPage() {
                     onClick={() => { setSelectedItem(item); setShowPicker(false); setSelectedDate(null); }}
                     className="w-full text-left px-3 py-2 text-[13px] border border-line hover:border-gold-dim transition-colors flex items-center justify-between"
                   >
-                    <span className="text-charcoal">{item.name}</span>
+                    <span className="text-fg">{item.name}</span>
                     <span className="font-mono text-[9.5px] text-gold-dim">{item.scheduled_date}</span>
                   </button>
                 ))}

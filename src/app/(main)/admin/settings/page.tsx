@@ -43,23 +43,23 @@ export default function AdminSettings() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-burgundy-ink">Settings</h1>
-        <p className="text-charcoal/50 text-[14px] mt-1">Manage site-wide configuration</p>
+        <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Settings</h1>
+        <p className="text-fg/50 text-[14px] mt-1">Manage site-wide configuration</p>
       </div>
 
-      <div className="bg-ivory border border-line p-6 max-w-xl">
+      <div className="bg-surface border border-line p-6 max-w-xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {loading ? (
-              <Loader2 className="w-5 h-5 text-charcoal/30 animate-spin" />
+              <Loader2 className="w-5 h-5 text-fg/30 animate-spin" />
             ) : comingSoon ? (
               <EyeOff className="w-5 h-5 text-gold-dim" />
             ) : (
-              <Eye className="w-5 h-5 text-forest" />
+              <Eye className="w-5 h-5 text-success-text" />
             )}
             <div>
-              <h2 className="font-display text-[16px] text-burgundy-ink">Coming Soon Mode</h2>
-              <p className="text-charcoal/50 text-[13px] mt-0.5">
+              <h2 className="font-display text-[16px] text-heading">Coming Soon Mode</h2>
+              <p className="text-fg/50 text-[13px] mt-0.5">
                 {loading ? "Loading..." : comingSoon
                   ? "Visitors see the coming soon landing page with lead capture."
                   : "The full site is live and publicly accessible."}
@@ -75,7 +75,7 @@ export default function AdminSettings() {
               } ${comingSoon ? "bg-gold-dim/30" : "bg-forest"}`}
             >
               <span
-                className={`absolute top-[3px] w-[22px] h-[22px] rounded-full bg-ivory shadow transition-transform ${
+                className={`absolute top-[3px] w-[22px] h-[22px] rounded-full bg-surface shadow transition-transform ${
                   comingSoon ? "left-[3px]" : "left-[27px]"
                 }`}
               />
@@ -89,7 +89,7 @@ export default function AdminSettings() {
           </div>
         )}
         <div className="mt-4 pt-4 border-t border-line">
-          <p className="font-mono text-[10.5px] tracking-wider text-charcoal/40">
+          <p className="font-mono text-[10.5px] tracking-wider text-fg/40">
             When enabled, all visitors are shown a minimal coming soon page with an email signup form.
             Admins can still access the dashboard at /admin.
           </p>
