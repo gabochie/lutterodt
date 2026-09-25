@@ -49,6 +49,30 @@ export interface DbLogEntry {
   created_at: string;
 }
 
+export type ResearchDraftStatus = "draft" | "approved" | "rejected";
+export type ResearchDraftKind = "enrichment" | "new_profile" | "story_lead" | "correction";
+
+export interface ResearchClaim {
+  field: string;
+  value: string;
+  sources: string[];
+  confidence: "low" | "medium" | "high";
+}
+
+export interface DbResearchDraft {
+  id: number;
+  kind: ResearchDraftKind;
+  profile_id: string;
+  name: string;
+  claims_json: string;
+  summary: string;
+  status: ResearchDraftStatus;
+  reviewed_by: string;
+  reviewed_at: string;
+  created_at: string;
+  updated_at: string;
+}
+
 export async function ensureOutreachTables(db: D1Database): Promise<void> {
   await db.prepare(
     "CREATE TABLE IF NOT EXISTS outreach_profiles (id TEXT PRIMARY KEY, name TEXT NOT NULL, dob TEXT DEFAULT '', category TEXT DEFAULT 'uncategorized', country TEXT DEFAULT '', achievement TEXT DEFAULT '', has_letter INTEGER DEFAULT 0, letter_status TEXT DEFAULT 'none', letter_html TEXT DEFAULT '', contact_email TEXT DEFAULT '', contact_linkedin TEXT DEFAULT '', notes TEXT DEFAULT '', image_url TEXT DEFAULT '', created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
@@ -63,6 +87,9 @@ export async function ensureOutreachTables(db: D1Database): Promise<void> {
   ).run();
   await db.prepare(
     "CREATE TABLE IF NOT EXISTS outreach_blind_spots (id TEXT PRIMARY KEY, title TEXT NOT NULL, priority TEXT DEFAULT 'medium', status TEXT DEFAULT 'open', progress INTEGER DEFAULT 0, created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
+  ).run();
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS research_drafts (id INTEGER PRIMARY KEY AUTOINCREMENT, kind TEXT DEFAULT 'enrichment', profile_id TEXT DEFAULT '', name TEXT NOT NULL, claims_json TEXT DEFAULT '[]', summary TEXT DEFAULT '', status TEXT DEFAULT 'draft', reviewed_by TEXT DEFAULT '', reviewed_at TEXT DEFAULT '', created_at TEXT DEFAULT '', updated_at TEXT DEFAULT '')"
   ).run();
   await db.prepare(
     "CREATE TABLE IF NOT EXISTS reunion_updates (id INTEGER PRIMARY KEY AUTOINCREMENT, attendee_name TEXT NOT NULL, message TEXT DEFAULT '', photo_url TEXT DEFAULT '', created_at TEXT DEFAULT '')"
