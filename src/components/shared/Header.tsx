@@ -121,7 +121,7 @@ function Crest() {
         width={200}
         height={141}
         alt="Lutterodt — Lasz Uns Ideale Haben"
-        className="h-9 w-auto shrink-0 md:h-11"
+        className="h-9 w-auto shrink-0 md:h-11 dark:hidden"
       />
       <img
         src="/logo/lutterodt-dark-black-01010A-800.webp"
