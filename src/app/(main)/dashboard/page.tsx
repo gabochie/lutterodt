@@ -21,6 +21,21 @@ interface Project {
   created_at: string;
 }
 
+function parseDeliverables(value: string | null | undefined): string[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) return parsed.map((item) => String(item).trim()).filter(Boolean);
+    if (typeof parsed === "string") return [parsed.trim()].filter(Boolean);
+    return [String(parsed)];
+  } catch {
+    return value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+}
+
 export default function DashboardPage() {
   const router = useRouter();
   const [services, setServices] = useState<Service[]>([]);
@@ -97,7 +112,7 @@ export default function DashboardPage() {
                   <p className="text-[14px] text-fg/68 leading-relaxed">{s.description}</p>
                   {s.deliverables && (
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {JSON.parse(s.deliverables).map((d: string) => (
+                      {parseDeliverables(s.deliverables).map((d) => (
                         <span key={d} className="text-[12px] bg-card px-3 py-1 rounded-sm text-fg/60">{d}</span>
                       ))}
                     </div>

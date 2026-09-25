@@ -4,17 +4,9 @@ test.describe("test isolation guarantees", () => {
   test("lead submissions are intercepted and never reach the application", async ({
     page,
   }) => {
-    let body: string | null = null;
-
-    page.on("response", async (response) => {
-      if (response.url().includes("/api/leads")) {
-        try {
-          body = await response.text();
-        } catch {
-          body = null;
-        }
-      }
-    });
+    const leadResponse = page.waitForResponse((response) =>
+      response.url().includes("/api/leads")
+    );
 
     await page.goto("/contact", { waitUntil: "domcontentloaded" });
     const form = page
@@ -30,9 +22,11 @@ test.describe("test isolation guarantees", () => {
       page.getByText("Message received. We will be in touch within 5 business days.")
     ).toBeVisible();
 
-    expect(body, "the request must be answered by the test harness").toBe(
-      '{"ok":true}'
-    );
+    const response = await leadResponse;
+    expect(
+      await response.text(),
+      "the request must be answered by the test harness, not the app"
+    ).toBe('{"ok":true}');
   });
 
   test("the outreach send path is disabled", async ({ page, gotoSite }) => {

@@ -10,7 +10,7 @@ const SERVICES_PAYLOAD = [
     category: "Archive",
     description: "Digitise and index family records.",
     pricing: "From GH₵ 2,000",
-    deliverables: "Scans, index, catalogue",
+    deliverables: JSON.stringify(["Scans", "index", "catalogue"]),
   },
 ];
 
@@ -99,9 +99,10 @@ test.describe("client portal", () => {
     gotoSite,
     stubApi,
   }) => {
-    await gotoSite("/dashboard");
     await stubApi("**/api/clients/services", 200, SERVICES_PAYLOAD);
     await stubApi("**/api/clients/projects", 200, PROJECTS_PAYLOAD);
+
+    await gotoSite("/dashboard");
 
     await expect(
       page.getByRole("heading", { name: "Welcome aboard" })
@@ -110,5 +111,24 @@ test.describe("client portal", () => {
     await page.getByRole("button", { name: "Log out" }).click({ force: true });
 
     await expect(page).toHaveURL(/\/dashboard\/login/);
+  });
+
+  test("the dashboard survives a plain-text deliverables value", async ({
+    page,
+    gotoSite,
+    stubApi,
+  }) => {
+    await stubApi("**/api/clients/services", 200, [
+      { ...SERVICES_PAYLOAD[0], deliverables: "Scans, index, catalogue" },
+    ]);
+    await stubApi("**/api/clients/projects", 200, PROJECTS_PAYLOAD);
+
+    await gotoSite("/dashboard");
+
+    await expect(
+      page.getByRole("heading", { name: "Welcome aboard" })
+    ).toBeVisible();
+    await expect(page.getByText("Scans")).toBeVisible();
+    await expect(page.getByText("Something went wrong")).toHaveCount(0);
   });
 });
