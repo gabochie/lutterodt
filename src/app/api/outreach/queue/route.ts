@@ -2,6 +2,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
+import { sanitizeLetterHtml } from "@/lib/outreach/letter";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 
 async function getDB() {
@@ -37,10 +38,11 @@ export async function POST(request: NextRequest) {
     if (!profile_id || !name || !letter_html) {
       return NextResponse.json({ error: "profile_id, name, and letter_html required" }, { status: 400 });
     }
+    const safeHtml = sanitizeLetterHtml(String(letter_html));
     const now = new Date().toISOString();
     const { meta } = await db.prepare(
       "INSERT INTO outreach_queue (profile_id, name, status, letter_html, scheduled_date, recipient_email, created_at, updated_at) VALUES (?, ?, 'pending', ?, ?, ?, ?, ?)"
-    ).bind(profile_id, name, letter_html, scheduled_date || "", recipient_email || "", now, now).run();
+    ).bind(profile_id, name, safeHtml, scheduled_date || "", recipient_email || "", now, now).run();
 
     // Update profile status
     await db.prepare("UPDATE outreach_profiles SET letter_status = 'queued', updated_at = ? WHERE id = ?").bind(now, profile_id).run();

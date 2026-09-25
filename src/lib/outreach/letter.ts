@@ -72,13 +72,72 @@ const CLOSINGS = [
   "The archive is built to serve the family — past, present, and future. I would welcome your visit to lutterodt.org, and would be especially grateful for anything you might wish to add to your profile from your own memory or collection.",
 ];
 
+const LETTER_ALLOWED_TAGS = new Set([
+  "html", "head", "meta", "title", "style", "body", "div", "p", "span", "strong",
+  "em", "b", "i", "u", "br", "hr", "h1", "h2", "h3", "h4", "small",
+  "blockquote", "ul", "ol", "li", "a", "img", "table", "thead", "tbody",
+  "tr", "td", "th", "svg", "path", "circle", "rect", "line", "polyline",
+  "polygon", "g",
+]);
+
+const LETTER_ALLOWED_ATTRS = new Set([
+  "class", "style", "alt", "title", "width", "height", "href", "target",
+  "rel", "viewbox", "fill", "stroke", "stroke-width", "d", "cx", "cy", "r",
+  "x", "y", "x1", "y1", "x2", "y2", "rx", "ry", "points", "text-anchor",
+  "font-size", "font-family", "colspan", "rowspan", "charset", "lang", "dir",
+  "opacity", "stroke-linecap", "name", "content",
+]);
+
+const DANGEROUS_BLOCKS =
+  /<\s*(script|iframe|object|embed|form|noscript|template|applet)\b[\s\S]*?(?:<\s*\/\s*\1\s*>|$)/gi;
+
+const SAFE_URL = /^(?:https?:|mailto:|#|\/|\.\/|\.\.\/)/i;
+
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+export function sanitizeLetterHtml(input: string): string {
+  return input
+    .replace(DANGEROUS_BLOCKS, "")
+    .replace(
+      /<\s*(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:[^>"']|"[^"]*"|'[^']*')*)>/g,
+      (_match, slash: string, rawName: string, rawAttrs: string) => {
+        const name = rawName.toLowerCase();
+        if (!LETTER_ALLOWED_TAGS.has(name)) return "";
+
+        const kept: string[] = [];
+        const attrPattern =
+          /([a-zA-Z_:][-a-zA-Z0-9_:.]*)\s*(?:=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+)))?/g;
+        let attr: RegExpExecArray | null;
+        while ((attr = attrPattern.exec(rawAttrs)) !== null) {
+          const attrName = attr[1].toLowerCase();
+          if (!LETTER_ALLOWED_ATTRS.has(attrName)) continue;
+          const value = attr[2] ?? attr[3] ?? attr[4] ?? "";
+          if (attrName === "href" && !SAFE_URL.test(value.trim())) continue;
+          if (attr[2] !== undefined) kept.push(`${attrName}="${attr[2]}"`);
+          else if (attr[3] !== undefined) kept.push(`${attrName}='${attr[3]}'`);
+          else if (value) kept.push(`${attrName}="${value}"`);
+          else kept.push(attrName);
+        }
+
+        return `<${slash}${name}${kept.length ? " " + kept.join(" ") : ""}>`;
+      }
+    );
+}
+
 function salutation(name: string, isHistorical: boolean): string {
   const title = name.startsWith("Prof.") ? "Professor" :
     name.startsWith("Dr.") ? "Dr." :
     name.startsWith("Pharm. Dr.") ? "Dr." : "";
   const last = name.replace(/^(Prof\.|Dr\.|Pharm\. Dr\.)\s+/, "").split(" ").slice(-1)[0];
-  if (title && !isHistorical) return `Dear ${title} ${last},`;
-  return `Dear ${name.split(" ")[0]},`;
+  if (title && !isHistorical) return `Dear ${escapeHtml(title)} ${escapeHtml(last)},`;
+  return `Dear ${escapeHtml(name.split(" ")[0])},`;
 }
 
 function pick<T>(arr: T[], seed: number): T {
@@ -95,10 +154,10 @@ function generateModernBody(profile: {
   name: string; achievement: string; category: string; country: string; dob?: string; bio?: string;
 }): string {
   const seed = hash(profile.name);
-  const countryDesc = COUNTRY_DESC[profile.country] || `in ${profile.country}`;
+  const countryDesc = COUNTRY_DESC[profile.country] || (profile.country ? `in ${escapeHtml(profile.country)}` : "");
   const heritage = COUNTRY_HERITAGE[profile.country] || "across the global diaspora";
   const opening = pick(DISCOVERY_OPENINGS, seed);
-  const achievementLine = pick(ACHIEVEMENT_INTROS, seed + 1).replace("{achievement}", profile.achievement);
+  const achievementLine = pick(ACHIEVEMENT_INTROS, seed + 1).replace("{achievement}", escapeHtml(profile.achievement));
 
   const genLine = (() => {
     if (profile.dob && profile.dob.length >= 4) {
@@ -114,7 +173,7 @@ function generateModernBody(profile: {
     ? `<p>${diasporaPara[0]}</p><p>${diasporaPara[1]}</p>`
     : `<p>To discover a Lutterodt making an impact ${countryDesc} is a reminder that our family's reach extends far beyond any single border. Your work ${heritage} adds a new dimension to the Lutterodt story.</p>`;
 
-  const bioPara = profile.bio ? `<p>${profile.bio}</p>` : "";
+  const bioPara = profile.bio ? `<p>${escapeHtml(profile.bio)}</p>` : "";
 
   return `<p>${opening}</p>
 <p>${achievementLine}</p>
@@ -130,10 +189,10 @@ ${diasporaHtml}
 function generateHistoricalBody(profile: {
   name: string; achievement: string; category?: string; country?: string;
 }): string {
-  const countryDesc = profile.country ? COUNTRY_DESC[profile.country] || `in ${profile.country}` : "";
+  const countryDesc = profile.country ? COUNTRY_DESC[profile.country] || `in ${escapeHtml(profile.country)}` : "";
   const countryPhrase = countryDesc ? ` ${countryDesc}` : "";
-  return `<p>I am writing to honour and document the life and legacy of ${profile.name}, whose story is recorded as part of the Lutterodt family history${countryPhrase}.</p>
-<p>${profile.name} ${profile.achievement}</p>
+  return `<p>I am writing to honour and document the life and legacy of ${escapeHtml(profile.name)}, whose story is recorded as part of the Lutterodt family history${countryPhrase}.</p>
+<p>${escapeHtml(profile.name)} ${escapeHtml(profile.achievement)}</p>
 <p>The <strong>Lutterodt Renaissance</strong> is a permanent digital archive of the Lutterodt family — six generations spanning Ghana, the UK, Germany, the USA, and beyond. It holds photographs, letters, oral histories, and records in a searchable, permanent online archive at <strong>lutterodt.org</strong>.</p>
 <div class="highlight">Every family name carries a story. The Lutterodt name — carried from the Harz mountains of Germany to the shores of Ghana, and now across six continents — deserves to be preserved for generations yet to come.</div>
 <p>This profile is part of the permanent public record. If any descendants have photographs, stories, or documents to contribute, we would welcome them.</p>
@@ -147,5 +206,5 @@ export function generateLetterHtml(profile: {
     ? generateHistoricalBody(profile)
     : generateModernBody(profile);
 
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Letter to ${profile.name} — The Lutterodt Renaissance</title><style>${LETTER_CSS}</style></head><body><div class="page"><div class="brand">${SVG_LOGO}<h1>The Lutterodt Renaissance</h1><p>A Permanent Digital Archive • Six Generations • Four Continents</p></div><p class="date">${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p><p class="salutation">${salutation(profile.name, !!profile.isHistorical)}</p><div class="body">${body}</div><div class="signoff"><p class="name">Gideon Tieku-Bortei</p><p class="role">Founder, The Lutterodt Renaissance Project</p><div class="contact">P.O.Box SK 2125, Sakumono, Tema, Accra, Ghana<br>hello@lutterodt.org<br>+233 243 262 019</div></div><div class="footer">The Lutterodt Renaissance • lutterodt.org</div></div></body></html>`;
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Letter to ${escapeHtml(profile.name)} — The Lutterodt Renaissance</title><style>${LETTER_CSS}</style></head><body><div class="page"><div class="brand">${SVG_LOGO}<h1>The Lutterodt Renaissance</h1><p>A Permanent Digital Archive • Six Generations • Four Continents</p></div><p class="date">${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p><p class="salutation">${salutation(profile.name, !!profile.isHistorical)}</p><div class="body">${body}</div><div class="signoff"><p class="name">Gideon Tieku-Bortei</p><p class="role">Founder, The Lutterodt Renaissance Project</p><div class="contact">P.O.Box SK 2125, Sakumono, Tema, Accra, Ghana<br>hello@lutterodt.org<br>+233 243 262 019</div></div><div class="footer">The Lutterodt Renaissance • lutterodt.org</div></div></body></html>`;
 }
