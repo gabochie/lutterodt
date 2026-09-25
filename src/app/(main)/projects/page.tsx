@@ -29,7 +29,7 @@ const projects = [
     id: "museum",
     title: "Lutterodt Digital Museum",
     tag: "Concept",
-    status: "Seeking Sponsorship",
+    status: "In development",
     summary: "A browser-based 3D museum where visitors walk through a reconstructed 19th-century Lutterodt compound overlooking the Atlantic at Osu. Seven exhibition halls, interactive exhibits, and an AI-guided historical narrator.",
     highlights: [
       "Origins Hall — migration maps, trade routes, historical documents",
@@ -44,7 +44,7 @@ const projects = [
     id: "manor",
     title: "Neo-Lutterodt Manor",
     tag: "Concept",
-    status: "Seeking Sponsorship",
+    status: "Planned",
     summary: "An architectural vision that reimagines the historic Lutterodt family compound as a 21st-century heritage estate — blending authentic Ga-Danish proportions with contemporary Ghanaian craftsmanship and smart-home technology.",
     highlights: [
       "Authentic Ga-Danish colonial architecture with modern adaptation",
@@ -59,7 +59,7 @@ const projects = [
     id: "network",
     title: "Digital Heritage Network",
     tag: "Vision",
-    status: "Seeking Partners",
+    status: "Planned",
     summary: "A platform extending beyond one family — connecting the histories of influential Ghanaian families into a virtual Heritage District where visitors walk between reconstructed historic estates.",
     highlights: [
       "Partner families: Bruce, Bannerman, Richter, Brew, Vanderpuije, Hansen",
@@ -143,7 +143,7 @@ export default function ProjectsPage() {
           <Tag>Concepts</Tag>
           <h2 className="text-[clamp(28px,3vw,40px)] mt-3 mb-3">Future initiatives</h2>
           <p className="text-charcoal/68 text-[16px] max-w-[58ch] mb-12">
-            These projects are in concept phase. Each one is an opportunity for sponsorship, collaboration or specialist partnership. The images below are AI-generated visualisations and may not reflect final designs.
+            These projects are in concept phase. The images below are AI-generated visualisations and may not reflect final designs.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -158,7 +158,7 @@ export default function ProjectsPage() {
                     loading="lazy"
                     className="w-full h-[220px] object-cover"
                   />
-                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Seeking Sponsorship</span>
+                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Concept</span>
                   <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-ivory/60 text-[10px] px-3 py-1.5">
                     AI-generated concept visualisation
                   </p>
@@ -203,7 +203,7 @@ export default function ProjectsPage() {
                     loading="lazy"
                     className="w-full h-[220px] object-cover"
                   />
-                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Seeking Sponsorship</span>
+                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Concept</span>
                   <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-ivory/60 text-[10px] px-3 py-1.5">
                     AI-generated concept visualisation
                   </p>

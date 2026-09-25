@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SponsorClient } from "./SponsorClient";
 
 export const metadata: Metadata = {
-  title: "Sponsor & Get Involved",
+  title: "Support & Get Involved",
   description:
-    "Sponsor the Lutterodt Institute and help build the Digital Museum, the Neo-Manor, and the permanent family archive. Every contribution counts.",
+    "Support the Lutterodt Institute — contribute materials, stories, and research to the Digital Museum, the Neo-Manor, and the permanent family archive.",
   alternates: { canonical: "/sponsor" },
 };
 

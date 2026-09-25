@@ -12,12 +12,6 @@ interface DirStats {
   continents: number;
 }
 
-interface Tier {
-  name: string;
-  amount: string;
-  benefits: string;
-}
-
 const ways = [
   {
     title: "Get in Touch",
@@ -53,16 +47,12 @@ const faqs = [
     a: "The Lutterodt Renaissance and the Lutterodt Institute are stewarded by founder Gideon Borketey Tieku-Bortei on behalf of the global Lutterodt family, with the goal of growing into a family-governed institution over time. There is no formal committee or elected body yet.",
   },
   {
-    q: "How are sponsorship funds used?",
-    a: "Every contribution goes directly toward server infrastructure, digital preservation, 3D museum development, land acquisition for the Neo-Manor, and community programming. A detailed impact report is shared annually with all sponsors.",
+    q: "How is support used?",
+    a: "Every contribution goes directly toward the archive itself — server infrastructure, digital preservation, the 3D museum, and community programming. A detailed impact report is shared annually with all supporters.",
   },
   {
     q: "Is my personal data safe?",
     a: "We only include information that is already public or that the individual has consented to. We never publish contact details without permission.",
-  },
-  {
-    q: "Can I sponsor via bank transfer?",
-    a: "Yes. Bank account details (SWIFT code) are provided on request. Contact us via WhatsApp or the contact form and we will send the details within 24 hours. This is the simplest way to contribute without third-party payment processors.",
   },
   {
     q: "What is the Lutterodt Institute?",
@@ -70,49 +60,19 @@ const faqs = [
   },
   {
     q: "How can I support the project?",
-    a: "You can sponsor via bank transfer (SWIFT details provided on request through WhatsApp or the contact form), or request a sponsorship packet for bespoke partnership options. Non-financial contributions — materials, nominations, research — are equally valuable.",
+    a: "The most valuable contributions right now are non-financial — materials, nominations, research, and introductions. If you would like to discuss supporting the work in another way, get in touch and we will take it from there.",
   },
 ];
 
 export function SponsorClient() {
   const [stats, setStats] = useState<DirStats | null>(null);
-  const [tiers, setTiers] = useState<Tier[]>([]);
-  const [form, setForm] = useState({ name: "", email: "", organization: "", contactPerson: "" });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     fetch("/api/directory")
       .then((r) => r.json())
       .then((d) => setStats({ totalProfiles: d.totalProfiles, livingProfiles: d.livingProfiles, countries: d.countries, continents: d.continents }))
       .catch(() => {});
-    fetch("/api/sponsors")
-      .then((r) => r.json())
-      .then((d) => setTiers(d.tiers || []))
-      .catch(() => {});
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    setErrorMsg("");
-    try {
-      const res = await fetch("/api/sponsors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, queue: true }),
-      });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Request failed");
-      }
-      setStatus("success");
-      setForm({ name: "", email: "", organization: "", contactPerson: "" });
-    } catch (err: unknown) {
-      setStatus("error");
-      setErrorMsg(err instanceof Error ? err.message : "Request failed");
-    }
-  };
 
   const totalProfiles = stats?.totalProfiles ?? 208;
   const countryCount = stats?.countries?.length ?? 16;
@@ -123,66 +83,43 @@ export function SponsorClient() {
     <>
       <PageHero
         breadcrumb={{ label: "Home", href: "/" }}
-        current="Sponsor & Get Involved"
+        current="Support & Get Involved"
         tag="The Lutterodt Institute"
         title="Help build an institution that will outlive us"
-        description={`${totalProfiles} Lutterodts documented across ${countryCount} countries. The Renaissance is the digital arm of the Lutterodt Institute — your sponsorship funds the Digital Museum, the Neo-Manor, and the permanent archive.`}
+        description={`${totalProfiles} Lutterodts documented across ${countryCount} countries. The Renaissance is the digital arm of the Lutterodt Institute — the Digital Museum, the Neo-Manor, and the permanent archive.`}
       />
 
-      {/* Sponsorship tiers */}
+      {/* Support */}
       <section className="py-[72px]">
         <div className="container-main">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <Tag>Sponsorship</Tag>
+          <div className="text-center max-w-2xl mx-auto">
+            <Tag>Support</Tag>
             <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[14px]">
-              Become a sponsor of the Lutterodt Institute
+              This work is carried by the family, for the family
             </h2>
             <p className="mt-4 text-[16px] text-charcoal/68">
-              Every contribution goes directly toward building the Lutterodt Institute — a permanent institution housing the Digital Museum, the Neo-Manor, and the family archive. From a shared record to a lasting legacy.
+              Right now the most meaningful way to support the Lutterodt Institute is to contribute what only you can — photographs, documents, stories, nominations, and research. Every contribution brings the permanent archive closer.
             </p>
-          </div>
-
-          <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-[2px] bg-line max-w-5xl mx-auto mb-12">
-            {tiers.map((tier) => (
-              <div key={tier.name} className="bg-ivory p-[28px] pb-[32px] flex flex-col">
-                <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Tier</div>
-                <h3 className="text-[22px] font-display font-[550] text-burgundy-ink mt-1">{tier.name}</h3>
-                <div className="text-[28px] font-display font-[600] text-burgundy mt-2 mb-3">{tier.amount}</div>
-                <p className="text-[13px] text-charcoal/68 leading-relaxed flex-1">{tier.benefits}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link href="#packet" className="btn-gold inline-block">Request Sponsorship Packet</Link>
-          </div>
-
-          <div className="max-w-lg mx-auto mt-10 p-6 bg-ivory-dim rounded-lg border border-line text-center">
-            <div className="font-mono text-[10px] tracking-widest uppercase text-gold-dim mb-2">Also available</div>
-            <h3 className="text-[18px] font-display font-[550] text-burgundy-ink">Sponsor via Bank Transfer</h3>
-            <p className="text-[14px] text-charcoal/68 mt-2 mb-4">
-              Prefer to transfer directly? Bank account details (SWIFT) are provided on request. Contact us and we&rsquo;ll send the information within 24 hours.
-            </p>
-            <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="text-gold-dim text-[13px] font-mono tracking-wider uppercase hover:underline">
-              Request bank details via WhatsApp →
-            </a>
+            <div className="mt-8">
+              <Link href="/contact" className="btn-gold inline-block">Get in Touch</Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Projects being sponsored */}
+      {/* Initiatives */}
       <section className="py-[72px] bg-ivory-dim">
         <div className="container-main">
           <div className="text-center mb-12">
             <Tag>Initiatives</Tag>
-            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Four initiatives your sponsorship powers</h2>
+            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">What the Institute is building</h2>
           </div>
           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-6 max-w-4xl mx-auto">
             {[
-              { title: "The Digital Archive", desc: "A searchable online record of every notable Lutterodt — biographies, photographs, genealogical links. Live at lutterodt.org with 208 profiles.", status: "Live" },
-              { title: "3D Digital Museum", desc: "An interactive virtual museum exploring Lutterodt history through immersive exhibits, archival documents, and multimedia storytelling.", status: "Seeking Sponsorship" },
-              { title: "Neo-Lutterodt Manor", desc: "A physical heritage centre in Accra, Ghana — housing physical archives, exhibition space, and cultural programming for the global diaspora.", status: "Seeking Sponsorship" },
-              { title: "Digital Heritage Network", desc: "A platform connecting Lutterodts worldwide for mentorship, collaboration, and cultural exchange.", status: "Seeking Partners" },
+              { title: "The Digital Archive", desc: "A searchable online record of every notable Lutterodt — biographies, photographs, genealogical links.", status: "Live" },
+              { title: "3D Digital Museum", desc: "An interactive virtual museum exploring Lutterodt history through immersive exhibits, archival documents, and multimedia storytelling.", status: "In development" },
+              { title: "Neo-Lutterodt Manor", desc: "A physical heritage centre in Accra, Ghana — housing physical archives, exhibition space, and cultural programming for the global diaspora.", status: "Planned" },
+              { title: "Digital Heritage Network", desc: "A platform connecting Lutterodts worldwide for mentorship, collaboration, and cultural exchange.", status: "Planned" },
             ].map((p) => (
               <div key={p.title} className="bg-ivory p-[28px] pb-[30px]">
                 <div className="flex items-center justify-between mb-3">
@@ -193,49 +130,6 @@ export function SponsorClient() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Request Sponsorship Packet form */}
-      <section id="packet" className="py-[72px]">
-        <div className="container-main max-w-xl">
-          <div className="text-center mb-10">
-            <Tag>Request Packet</Tag>
-            <h2 className="text-[clamp(26px,3vw,36px)] mt-[14px]">Request a sponsorship packet</h2>
-            <p className="mt-3 text-[15px] text-charcoal/68">
-              Enter your details and we will send you a personalised sponsorship prospectus with case studies, timelines, and bespoke partnership options.
-            </p>
-          </div>
-
-          {status === "success" ? (
-            <div className="bg-[#e6f7e6] border border-[#4caf50] rounded-sm p-[28px] text-center">
-              <p className="text-[16px] font-medium text-[#2e7d32]">Sponsorship packet requested successfully.</p>
-              <p className="text-[14px] text-[#2e7d32]/70 mt-2">Check your email for the personalised prospectus.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Your Name *</label>
-                <input required value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className="w-full bg-ivory border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim transition-colors" placeholder="Full name" />
-              </div>
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Email Address *</label>
-                <input required type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} className="w-full bg-ivory border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim transition-colors" placeholder="email@example.com" />
-              </div>
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Organisation</label>
-                <input value={form.organization} onChange={e => setForm(p => ({ ...p, organization: e.target.value }))} className="w-full bg-ivory border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim transition-colors" placeholder="Company, foundation, or institution" />
-              </div>
-              <div>
-                <label className="block font-mono text-[11px] tracking-widest uppercase text-charcoal/50 mb-1.5">Contact Person (if different)</label>
-                <input value={form.contactPerson} onChange={e => setForm(p => ({ ...p, contactPerson: e.target.value }))} className="w-full bg-ivory border border-line px-4 py-3 text-[15px] text-charcoal outline-none focus:border-gold-dim transition-colors" placeholder="Name of decision-maker" />
-              </div>
-              {status === "error" && <p className="text-red-600 text-[14px]">{errorMsg}</p>}
-              <button type="submit" disabled={status === "loading"} className="btn-gold w-full text-center disabled:opacity-50">
-                {status === "loading" ? "Sending..." : "Request Sponsorship Packet"}
-              </button>
-            </form>
-          )}
         </div>
       </section>
 
@@ -276,7 +170,7 @@ export function SponsorClient() {
               Other ways to be part of this
             </h2>
             <p className="mt-4 text-[16px] text-charcoal/68">
-              Not ready to sponsor? You can still contribute to the archive in meaningful ways.
+              There are many ways to contribute to the archive — here is where to start.
             </p>
           </div>
 
@@ -318,7 +212,7 @@ export function SponsorClient() {
             Every Lutterodt has a place in this record
           </h2>
           <p className="text-ivory/70 max-w-[48ch] mx-auto mb-[34px]">
-            Whether you are here to sponsor, to learn, to contribute, or to find your place in the family tree — we welcome you.
+            Whether you are here to learn, to contribute, or to find your place in the family tree — we welcome you.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <Link href="/directory" className="btn-gold">Browse the Directory</Link>

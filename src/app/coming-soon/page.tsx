@@ -146,26 +146,23 @@ export default function ComingSoonPage() {
         <div className="container-main">
           <Tag>Funding & Support</Tag>
           <h2 className="text-[clamp(28px,3.4vw,42px)] mt-[18px] mb-4">
-            A production-grade archive costs about $1,000 per year
+            Keeping the archive online, secure and growing
           </h2>
           <p className="text-charcoal/66 text-[16px] max-w-[640px] mb-12">
-            Here is how the annual budget is allocated to keep the Lutterodt Renaissance online, secure and growing:
+            Sustaining the Lutterodt Renaissance rests on three quiet pillars:
           </p>
           <div className="grid grid-cols-3 max-md:grid-cols-1 gap-6 mb-12">
             <div className="border border-line rounded-sm p-6">
               <p className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Infrastructure</p>
-              <p className="text-[28px] font-display text-burgundy-ink">$432</p>
-              <p className="text-charcoal/50 text-[13px] mt-2">Cloud hosting, file storage, email service, domain renewal and automated backups</p>
+              <p className="text-charcoal/60 text-[14px] mt-2">Cloud hosting, file storage, email service, domain renewal and automated backups</p>
             </div>
             <div className="border border-line rounded-sm p-6">
               <p className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Digitisation</p>
-              <p className="text-[28px] font-display text-burgundy-ink">$300</p>
-              <p className="text-charcoal/50 text-[13px] mt-2">Scanning equipment, OCR software and professional catalogue management</p>
+              <p className="text-charcoal/60 text-[14px] mt-2">Scanning equipment, OCR software and professional catalogue management</p>
             </div>
             <div className="border border-line rounded-sm p-6">
               <p className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Development</p>
-              <p className="text-[28px] font-display text-burgundy-ink">$300</p>
-              <p className="text-charcoal/50 text-[13px] mt-2">Feature development, security updates, maintenance support and new capabilities</p>
+              <p className="text-charcoal/60 text-[14px] mt-2">Feature development, security updates, maintenance support and new capabilities</p>
             </div>
           </div>
           <div className="bg-burgundy-ink text-ivory p-8 rounded-sm">
@@ -174,7 +171,7 @@ export default function ComingSoonPage() {
                 <Tag onDark>Support the Renaissance</Tag>
                 <h3 className="text-ivory text-[24px] font-display mt-3 mb-2">Help us preserve the record</h3>
                 <p className="text-ivory/60 text-[14px] max-w-[500px]">
-                  Whether through a grant, an impact investment or a personal contribution&mdash;every bit of support brings the archive closer to permanence. Reach out to learn more or to discuss partnership opportunities.
+                  Whether through materials, research, or a quiet word of support&mdash;every contribution brings the archive closer to permanence. Reach out to learn more.
                 </p>
               </div>
               <div className="flex gap-3 shrink-0 flex-wrap">
