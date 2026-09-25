@@ -90,7 +90,7 @@ export default function ProjectsPage() {
           </div>
           <h2 className="text-[clamp(28px,3vw,40px)] mb-4">Live now</h2>
           <p className="text-charcoal/68 text-[16px] max-w-[58ch] mb-10">
-            The directory and archive are already live and growing. Every other project on this page is a future initiative seeking sponsorship, partners, or specialist collaboration.
+            The directory and archive are already live and growing. Everything else on this page is a future initiative, shared here so the family can see where the work is heading.
           </p>
 
           <div className="border border-line rounded-lg p-8 md:p-10 bg-ivory-dim/40">
@@ -187,7 +187,7 @@ export default function ProjectsPage() {
                       Multi-language AI tour guide and interactive quizzes
                     </li>
                   </ul>
-                  <Link href="/contact" className="btn-outline text-center text-[13px]">Enquire about sponsoring</Link>
+                  <Link href="/contact" className="btn-outline text-center text-[13px]">Enquire about this project</Link>
                 </div>
               </div>
             </ScrollReveal>
@@ -232,7 +232,7 @@ export default function ProjectsPage() {
                       Solar-powered with sustainable 21st-century infrastructure
                     </li>
                   </ul>
-                  <Link href="/contact" className="btn-outline text-center text-[13px]">Enquire about sponsoring</Link>
+                  <Link href="/contact" className="btn-outline text-center text-[13px]">Enquire about this project</Link>
                 </div>
               </div>
             </ScrollReveal>
@@ -266,16 +266,16 @@ export default function ProjectsPage() {
             <div className="grid md:grid-cols-[1.3fr_1fr] gap-8 items-center">
               <div>
                 <Tag onDark>Get Involved</Tag>
-                <h3 className="text-ivory text-[clamp(22px,2.6vw,32px)] mt-3 mb-3">Sponsor a project</h3>
+                <h3 className="text-ivory text-[clamp(22px,2.6vw,32px)] mt-3 mb-3">Be part of what comes next</h3>
                 <p className="text-ivory/68 text-[15px] leading-relaxed mb-6">
-                  Every project on this page is looking for partners. Whether you are a cultural foundation, a technology sponsor, an academic institution, or a family member who wants to help build — reach out and we will share the roadmap, budget and milestones.
+                  Whether you are a researcher, a creative, an academic institution, or a family member who wants to help build — reach out and join the conversation.
                 </p>
-                <Link href="/contact" className="btn-gold">Contact the Committee</Link>
+                <Link href="/contact" className="btn-gold">Get in Touch</Link>
               </div>
               <div className="relative rounded-md overflow-hidden border border-ivory/15">
                 <img
                   src="/images/projects/concept-museum-03.jpg"
-                  alt="Sponsorship concept"
+                  alt="Future initiatives concept"
                   width={1149}
                   height={1369}
                   loading="lazy"
