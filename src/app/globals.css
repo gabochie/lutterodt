@@ -77,7 +77,7 @@
   --color-gold-light: #FBC829;
   --color-gold-dim: #996C16;
   --color-ivory: #F7F7F4;
-  --color-ivory-dim: #EEF1FF;
+  --color-ivory-dim: var(--tint);
   --color-charcoal: #01010A;
   --color-forest: #015F23;
   --color-forest-light: #0A7A30;
@@ -103,6 +103,7 @@
   --muted-text: #5A6170;
   --accent-text: #001D95;
   --success-text: #015F23;
+  --tint: #EEF1FF;
 
   --background: #F7F7F4;
   --foreground: #0B0D12;
@@ -149,6 +150,7 @@
   --muted-text: #A9B1CC;
   --accent-text: #8398FF;
   --success-text: #DFF2E4;
+  --tint: #020A3D;
 
   --background: #01010A;
   --foreground: #F2F4FF;
