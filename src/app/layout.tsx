@@ -44,8 +44,12 @@ export const metadata: Metadata = {
     google: "iNJ86WjvKu9EZpb5SPnpf-BXov-O2zBOe2wQ1Ux3lK0",
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
     shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "The Lutterodt Renaissance — A Digital Legacy",
