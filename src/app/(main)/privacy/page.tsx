@@ -6,6 +6,7 @@ import { PageHero } from "@/components/shared/PageHero";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy policy for The Lutterodt Renaissance - how we collect, use, and protect your information.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPolicyPage() {

@@ -5,6 +5,7 @@ import { PageHero } from "@/components/shared/PageHero";
 export const metadata: Metadata = {
   title: "Cookie Policy",
   description: "Cookie policy for The Lutterodt Renaissance - how we use cookies and similar technologies.",
+  alternates: { canonical: "/cookies" },
 };
 
 export default function CookiePolicyPage() {

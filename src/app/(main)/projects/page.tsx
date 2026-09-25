@@ -7,6 +7,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
 export const metadata: Metadata = {
   title: "Projects",
   description: "The initiatives and vision behind the Lutterodt Renaissance — the digital archive, 3D museum, manor restoration and heritage network.",
+  alternates: { canonical: "/projects" },
 };
 
 const projects = [

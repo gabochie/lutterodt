@@ -6,6 +6,7 @@ import { PageHero } from "@/components/shared/PageHero";
 export const metadata: Metadata = {
   title: "Disclaimer",
   description: "Legal disclaimer regarding the limits of historical accuracy and liability.",
+  alternates: { canonical: "/disclaimer" },
 };
 
 export default function DisclaimerPage() {

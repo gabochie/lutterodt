@@ -9,6 +9,7 @@ import { ScrollReveal } from "@/components/shared/ScrollReveal";
 export const metadata: Metadata = {
   title: "Lutterodt/t/h Reunion 2026",
   description: "The Lutterodt/t/h family reunion in Copenhagen, Denmark — 9–11 July 2026. Program, venue details, and live updates.",
+  alternates: { canonical: "/reunion-2026" },
 };
 
 const schedule = [

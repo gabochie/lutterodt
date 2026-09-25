@@ -5,6 +5,7 @@ import { PageHero } from "@/components/shared/PageHero";
 export const metadata: Metadata = {
   title: "Copyright & Intellectual Property",
   description: "Copyright notice for The Lutterodt Renaissance platform and content.",
+  alternates: { canonical: "/copyright" },
 };
 
 export default function CopyrightPage() {

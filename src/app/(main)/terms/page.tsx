@@ -5,6 +5,7 @@ import { PageHero } from "@/components/shared/PageHero";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms of service for The Lutterodt Renaissance - rules and guidelines for using this platform.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {
