@@ -26,6 +26,11 @@ const securityHeaders = [
   },
 ];
 
+const documentCacheControl = {
+  key: "Cache-Control",
+  value: "public, max-age=0, s-maxage=0, must-revalidate",
+};
+
 const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
@@ -34,7 +39,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/(.*)",
-        headers: securityHeaders,
+        headers: [...securityHeaders, documentCacheControl],
       },
     ];
   },
