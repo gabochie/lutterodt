@@ -51,11 +51,23 @@
   --color-ink: #0B0D12;
   --color-black: #01010A;
   --color-paper: #F7F7F4;
-  --color-line: #E4E6EC;
-  --color-muted: #5A6170;
   --color-text-on-dark: #F2F4FF;
   --color-muted-on-dark: #A9B1CC;
   --color-line-on-dark: rgba(242, 244, 255, 0.18);
+
+  /* ---- Theme-aware semantic layer: values come from :root / .dark ---- */
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-heading: var(--heading);
+  --color-hairline: var(--hairline);
+  --color-line: var(--hairline);
+  --color-muted: var(--muted-text);
+  --color-muted-text: var(--muted-text);
+  --color-card: var(--card);
+  --color-card-fg: var(--fg);
+  --color-accent-text: var(--accent-text);
+  --color-success-text: var(--success-text);
+  --color-surface-raised: var(--surface-raised);
 
   /* ---- Legacy names retained; values resolve to the brand palette ---- */
   --color-burgundy: #001D95;
@@ -82,9 +94,19 @@
 }
 
 :root {
+  color-scheme: light;
+  --surface: #F7F7F4;
+  --surface-raised: #FFFFFF;
+  --fg: #0B0D12;
+  --heading: #020A3D;
+  --hairline: #E4E6EC;
+  --muted-text: #5A6170;
+  --accent-text: #001D95;
+  --success-text: #015F23;
+
   --background: #F7F7F4;
   --foreground: #0B0D12;
-  --card: #F7F7F4;
+  --card: #FFFFFF;
   --card-foreground: #0B0D12;
   --popover: #F7F7F4;
   --popover-foreground: #0B0D12;
