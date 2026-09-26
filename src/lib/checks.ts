@@ -56,7 +56,7 @@ export async function d1Column(table: string, column: string): Promise<CheckResu
     const db = await getDB();
     await db.prepare(`SELECT ${column} FROM ${table} LIMIT 1`).all();
     return { ok: true, detail: `${table}.${column}` };
-  } catch (err) {
+  } catch {
     return { ok: false, detail: `${table}.${column} missing` };
   }
 }
