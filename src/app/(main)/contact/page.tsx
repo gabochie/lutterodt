@@ -4,10 +4,15 @@ import { ContactClient } from "./ContactClient";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with the Lutterodt Renaissance — family registration, volunteer opportunities, research requests and media enquiries.",
+    "Contribute family materials, share oral history, verify a directory profile, or get in touch with the Lutterodt Renaissance.",
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
-  return <ContactClient />;
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ intent?: string }>;
+}) {
+  const { intent } = await searchParams;
+  return <ContactClient initialIntent={intent} />;
 }

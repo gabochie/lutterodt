@@ -67,10 +67,10 @@ export function ReunionLiveFeed() {
     <section id="live-feed" className="py-[108px] bg-surface">
       <div className="container-main">
         <div className="max-w-[640px] mb-12">
-          <Tag>Live Updates</Tag>
-          <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[18px]">Who&apos;s here</h2>
+          <Tag>Attendee Record</Tag>
+          <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[18px]">Who was there</h2>
           <p className="mt-3 text-[15px] text-fg/68">
-            Real-time check-ins from the reunion in Copenhagen. Updates every 30 seconds.
+            Check-ins recorded at the Copenhagen reunion, 9–11 July 2026. The feed remains open, so anyone who attended can still be added.
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export function ReunionLiveFeed() {
           {updates.length === 0 ? (
             <div className="text-center py-16 text-fg/40">
               <div className="text-[48px] mb-4">📍</div>
-              <p className="text-[16px]">No check-ins yet. Be the first to post!</p>
+              <p className="text-[16px]">No check-ins recorded yet. If you attended, please ask the admin to add you.</p>
             </div>
           ) : (
             <div className="space-y-4">

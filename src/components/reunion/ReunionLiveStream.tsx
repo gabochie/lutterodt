@@ -43,9 +43,9 @@ export function ReunionLiveStream() {
   return (
     <section id="livestream" className="py-[108px] bg-burgundy-ink">
       <div className="container-main">
-        <Tag onDark className="justify-center flex">Livestream</Tag>
+        <Tag onDark className="justify-center flex">Reunion Footage</Tag>
         <h2 className="text-ivory text-[clamp(28px,3.2vw,40px)] text-center mt-[18px] mb-2">
-          {videoId ? "Watch live from Copenhagen" : "Livestream"}
+          {videoId ? (isLive ? "Watch live from Copenhagen" : "Reunion recording") : "Reunion Footage"}
         </h2>
         {isLive && videoId && (
           <p className="text-gold-light text-[13px] font-mono text-center tracking-wider mb-6 uppercase flex items-center justify-center gap-2">
@@ -64,7 +64,7 @@ export function ReunionLiveStream() {
           </div>
         ) : (
           <p className="text-ivory/50 text-center text-[15px] mt-4">
-No stream scheduled yet — check back during the reunion.
+            No reunion recording has been added yet. If you have video from Copenhagen, please send it to the site admin.
           </p>
         )}
         {isAdmin && (

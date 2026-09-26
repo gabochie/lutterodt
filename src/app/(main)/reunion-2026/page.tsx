@@ -65,10 +65,10 @@ export default function Reunion2026Page() {
       <section className="py-[108px]">
         <div className="container-main">
           <div className="max-w-[640px] mb-14">
-            <Tag>Live Event</Tag>
-            <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">Happening now in Copenhagen</h2>
+            <Tag>Recap</Tag>
+            <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">What happened in Copenhagen</h2>
             <p className="mt-4 text-[16.5px] text-fg/68">
-              The Lutterodt/t/h family has gathered from across the globe — Ghana, USA, UK, Germany, Estonia, Mexico and beyond — for the Copenhagen reunion. All times are local (CEST, UTC+2).
+              The Lutterodt/t/h family gathered from across the globe — Ghana, USA, UK, Germany, Estonia, Mexico and beyond — for the Copenhagen reunion. The gathering took place 9–11 July 2026; the programme below is preserved as a permanent record. All times are local (CEST, UTC+2).
             </p>
           </div>
 
@@ -103,27 +103,27 @@ export default function Reunion2026Page() {
         <div className="container-main">
           <div className="max-w-[640px] mb-14">
             <Tag>For Attendees</Tag>
-            <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[18px]">How to share live updates</h2>
+            <h2 className="text-[clamp(28px,3.2vw,40px)] mt-[18px]">Keep adding to the record</h2>
             <p className="mt-3 text-[15px] text-fg/68">
-              Help document the reunion in real time. Here are three ways to share with family near and far.
+              The reunion has ended, but the check-in feed and photo record stay open. If you were there, here are three ways to add what only you hold.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-card rounded-lg p-7">
               <div className="text-[28px] mb-4">✍️</div>
-              <h3 className="text-[18px] mb-2">Post a check-in</h3>
+              <h3 className="text-[18px] mb-2">Add your check-in</h3>
               <p className="text-[14px] text-fg/60 mb-4">
-                Find the &ldquo;Who&rsquo;s here&rdquo; feed above. Ask the admin to add your name and a message, or log in to post directly. Updates appear instantly on the page for everyone.
+                The &ldquo;Who&rsquo;s here&rdquo; feed above remains the roll of attendees. Ask the admin to add your name and a message, or log in to post directly. Entries appear on the page for everyone.
               </p>
               <span className="text-gold-dim text-[12px] font-mono tracking-wider">30-second setup</span>
             </div>
             <div className="bg-card rounded-lg p-7">
               <div className="text-[28px] mb-4">📱</div>
-              <h3 className="text-[18px] mb-2">Go live on YouTube</h3>
+              <h3 className="text-[18px] mb-2">Share a video</h3>
               <p className="text-[14px] text-fg/60 mb-4">
-                Open the YouTube app on your phone, tap the camera icon, choose &ldquo;Go live,&rdquo; then send the video ID to the site admin. It will appear in the livestream embed above.
+                Recordings and clips from the three days are welcome. Send the link to the site admin and it will be added to the reunion record alongside the programme.
               </p>
-              <span className="text-gold-dim text-[12px] font-mono tracking-wider">Requires a YouTube channel</span>
+              <span className="text-gold-dim text-[12px] font-mono tracking-wider">YouTube, Vimeo, or direct file</span>
             </div>
             <div className="bg-card rounded-lg p-7">
               <div className="text-[28px] mb-4">📸</div>
@@ -176,11 +176,12 @@ export default function Reunion2026Page() {
           <Tag onDark className="justify-center flex">A historic gathering</Tag>
           <h2 className="text-ivory text-[clamp(30px,3.4vw,44px)] max-w-[26ch] mx-auto mt-[18px] mb-[20px]">One family, many branches</h2>
           <p className="text-ivory/70 max-w-[56ch] mx-auto mb-[34px]">
-            Lutterodts and Lutteroths from six continents — gathering in Copenhagen, building connections that will last for generations.
+            Lutterodts and Lutteroths from six continents — gathered in Copenhagen in July 2026, building connections that will last for generations.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/directory" className="btn-gold">Browse the Directory</Link>
             <Link href="/history" className="btn-outline-ivory">Explore Family History</Link>
+            <Link href="/contact?intent=testimony" className="btn-outline-ivory">Share Your Memories</Link>
           </div>
         </div>
       </section>

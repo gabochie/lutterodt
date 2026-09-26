@@ -17,19 +17,19 @@ const ways = [
     title: "Get in Touch",
     body: "Whether you are a Lutterodt, a researcher, or simply curious about this family -- we would like to hear from you. Reach out and we will connect.",
     cta: "Contact Us",
-    href: "/contact",
+    href: "/contact?intent=general",
   },
   {
-    title: "Nominate a Lutterodt",
-    body: "Know a Lutterodt who should be in the directory? We research every nomination and add profiles based on public records and consent. No one is listed without care.",
-    cta: "Nominate Someone",
-    href: "/contact",
+    title: "Verify or Nominate a Lutterodt",
+    body: "Know a Lutterodt who should be in the directory, or spotted an error on someone who is? Around 190 profiles still lack a confirmed date of birth or a verified career. A two-minute correction permanently fixes the record.",
+    cta: "Verify a Profile",
+    href: "/contact?intent=verify",
   },
   {
     title: "Contribute",
     body: "If you have photographs, documents, or stories about the Lutterodt family, we are interested in preserving them. Every contribution helps us build a more complete picture.",
     cta: "Contribute Materials",
-    href: "/contact",
+    href: "/contact?intent=materials",
   },
 ];
 

@@ -1,12 +1,25 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
 
-const tabs = ["general", "join", "volunteer", "research", "media"] as const;
+const tabs = [
+  "materials",
+  "testimony",
+  "verify",
+  "general",
+  "join",
+  "volunteer",
+  "research",
+  "media",
+] as const;
 type Tab = (typeof tabs)[number];
 
 const tabLabels: Record<Tab, string> = {
+  materials: "Contribute Materials",
+  testimony: "Share Memories",
+  verify: "Verify a Profile",
   general: "General",
   join: "Join Interest",
   volunteer: "Volunteer",
@@ -15,6 +28,9 @@ const tabLabels: Record<Tab, string> = {
 };
 
 const tabSubjects: Record<Tab, string> = {
+  materials: "Archive Material Contribution",
+  testimony: "Oral History Contribution",
+  verify: "Profile Verification",
   general: "General Enquiry",
   join: "Join Interest",
   volunteer: "Volunteer Interest",
@@ -25,6 +41,21 @@ const tabSubjects: Record<Tab, string> = {
 type FormStatus = "idle" | "sending" | "success" | "error";
 
 const tabFieldLabels: Record<Tab, Array<[string, string]>> = {
+  materials: [
+    ["material-types", "What you have"],
+    ["material-origin", "Which branch or town"],
+    ["material-detail", "Details, names and dates you can recall"],
+  ],
+  testimony: [
+    ["testimony-person", "Who this is about"],
+    ["testimony-years", "Years or period covered"],
+    ["testimony-detail", "What you remember"],
+  ],
+  verify: [
+    ["verify-profile", "Profile to check"],
+    ["verify-correction", "What is wrong or missing"],
+    ["verify-source", "How you know"],
+  ],
   general: [["message", ""]],
   join: [
     ["family-branch", "Family Branch"],
@@ -45,15 +76,36 @@ const tabFieldLabels: Record<Tab, Array<[string, string]>> = {
   ],
 };
 
-export function ContactClient() {
-  const [activeTab, setActiveTab] = useState<Tab>("general");
+const consentTabs: Tab[] = ["materials", "testimony"];
+
+const MATERIAL_TYPE_OPTIONS = [
+  "Photographs",
+  "Letters & correspondence",
+  "Certificates & identity documents",
+  "Church & civil registers",
+  "Newspaper cuttings",
+  "Ledgers, receipts & business records",
+  "Audio or video recordings",
+  "Other",
+];
+
+export function ContactClient({ initialIntent }: { initialIntent?: string }) {
+  const [activeTab, setActiveTab] = useState<Tab>(
+    tabs.includes(initialIntent as Tab) ? (initialIntent as Tab) : "materials"
+  );
   const [status, setStatus] = useState<FormStatus>("idle");
   const [form, setForm] = useState<Record<string, string>>({});
+  const [consent, setConsent] = useState(false);
 
   const set = (key: string, value: string) => setForm((f) => ({ ...f, [key]: value }));
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    if (consentTabs.includes(activeTab) && !consent) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+      return;
+    }
     setStatus("sending");
 
     const body: Record<string, string> = { category: activeTab, subject: tabSubjects[activeTab] };
@@ -64,6 +116,9 @@ export function ContactClient() {
     for (const [key, label] of tabFieldLabels[activeTab]) {
       const value = (form[key] || "").trim();
       if (value) lines.push(label ? `${label}: ${value}` : value);
+    }
+    if (consentTabs.includes(activeTab)) {
+      lines.push("Consent and usage rights: accepted (see /contribute/consent)");
     }
     if (lines.length) body.message = lines.join("\n\n");
 
@@ -76,6 +131,7 @@ export function ContactClient() {
       if (!res.ok) throw new Error((await res.json()).error);
       setStatus("success");
       setForm({});
+      setConsent(false);
       setTimeout(() => setStatus("idle"), 4000);
     } catch {
       setStatus("error");
@@ -109,8 +165,9 @@ export function ContactClient() {
 
               <div className="h-[1px] bg-line-on-dark my-8" />
 
-              <p className="text-ivory/55 text-[13px] mb-2">Reunion happening now</p>
-              <p className="text-gold-light font-display text-[19px]">Copenhagen — 9–11 Jul 2026</p>
+              <p className="text-ivory/55 text-[13px] mb-2">Next gathering</p>
+              <p className="text-gold-light font-display text-[19px]">Diaspora Branch Reunion</p>
+              <p className="text-ivory/55 text-[13px] mt-1">2 October 2026 &middot; London</p>
 
               <div className="h-[1px] bg-line-on-dark my-8" />
 
@@ -161,6 +218,61 @@ export function ContactClient() {
               )}
 
               <form onSubmit={handleSubmit}>
+                {/* Contribute Materials */}
+                <TabPanel show={activeTab === "materials"}>
+                  <p className="text-[14px] text-fg/60 mb-[22px]">
+                    Photographs, letters, certificates, registers, cuttings, recordings &mdash; anything
+                    that documents the family. You do not need to send anything yet; tell us what you
+                    hold and we will arrange how it reaches the archive safely.
+                  </p>
+                  <FieldRow>
+                    <Field label="Full Name" value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                  </FieldRow>
+                  <FieldRow>
+                    <Field label="What you have" type="select" options={MATERIAL_TYPE_OPTIONS} value={form["material-types"] || ""} onChange={(v) => set("material-types", v)} />
+                    <Field label="Which branch or town" placeholder="e.g. Harz, Germany / Accra, Ghana" value={form["material-origin"] || ""} onChange={(v) => set("material-origin", v)} />
+                  </FieldRow>
+                  <Field label="Details, names and dates you can recall" type="textarea" className="mb-[22px]" full placeholder="Who is in the photographs, roughly when, and anything written on them." value={form["material-detail"] || ""} onChange={(v) => set("material-detail", v)} />
+                  <ConsentNotice checked={consent} onChange={setConsent} />
+                </TabPanel>
+
+                {/* Share Memories */}
+                <TabPanel show={activeTab === "testimony"}>
+                  <p className="text-[14px] text-fg/60 mb-[22px]">
+                    A few minutes of your memory, in any language. This is the only part of the archive
+                    that cannot be recovered later, so it is worth doing while the memory is fresh.
+                  </p>
+                  <FieldRow>
+                    <Field label="Full Name" value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                  </FieldRow>
+                  <FieldRow>
+                    <Field label="Who this is about" value={form["testimony-person"] || ""} onChange={(v) => set("testimony-person", v)} />
+                    <Field label="Years or period covered" placeholder="e.g. 1962&ndash;1975" value={form["testimony-years"] || ""} onChange={(v) => set("testimony-years", v)} />
+                  </FieldRow>
+                  <Field label="What you remember" type="textarea" className="mb-[22px]" full placeholder="Where they lived, what they did, who the neighbours were, the stories nobody writes down." value={form["testimony-detail"] || ""} onChange={(v) => set("testimony-detail", v)} />
+                  <ConsentNotice checked={consent} onChange={setConsent} />
+                </TabPanel>
+
+                {/* Verify a Profile */}
+                <TabPanel show={activeTab === "verify"}>
+                  <p className="text-[14px] text-fg/60 mb-[22px]">
+                    Roughly 190 of the 205 profiles in the directory still lack a confirmed date of birth
+                    or a verified career. If you recognise someone, a two-minute correction permanently
+                    fixes the record.
+                  </p>
+                  <FieldRow>
+                    <Field label="Full Name" value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                  </FieldRow>
+                  <Field label="Profile to check" placeholder="Name as it appears in the directory, and the branch" className="mb-[22px]" full value={form["verify-profile"] || ""} onChange={(v) => set("verify-profile", v)} />
+                  <FieldRow>
+                    <Field label="What is wrong or missing" type="textarea" value={form["verify-correction"] || ""} onChange={(v) => set("verify-correction", v)} />
+                    <Field label="How you know" type="textarea" placeholder="Your relationship, or where the information came from" value={form["verify-source"] || ""} onChange={(v) => set("verify-source", v)} />
+                  </FieldRow>
+                </TabPanel>
+
                 {/* General */}
                 <TabPanel show={activeTab === "general"}>
                   <FieldRow>
@@ -177,7 +289,7 @@ export function ContactClient() {
                     <Field label="Family Branch" placeholder="e.g. Ghana, Germany, USA, UK, Netherlands" value={form["family-branch"] || ""} onChange={(v) => set("family-branch", v)} />
                   </FieldRow>
                   <FieldRow>
-                    <Field label="Email Address" type="email" value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
                     <Field label="Relationship to Family" type="select" options={["Direct descendant", "Married into family", "Extended relation"]} value={form["relationship-to-family"] || ""} onChange={(v) => set("relationship-to-family", v)} />
                   </FieldRow>
                   <Field label="Anything you'd like the Committee to know" type="textarea" className="mb-[22px]" full value={form["anything-youd-like-the-committee-to-know"] || ""} onChange={(v) => set("anything-youd-like-the-committee-to-know", v)} />
@@ -189,6 +301,9 @@ export function ContactClient() {
                     <Field label="Full Name" value={form["full-name"] || ""} onChange={(v) => set("full-name", v)} />
                     <Field label="Area of Interest" type="select" options={["Archiving & digitisation", "Oral history interviews", "Event planning", "Web & technology"]} value={form["area-of-interest"] || ""} onChange={(v) => set("area-of-interest", v)} />
                   </FieldRow>
+                  <FieldRow>
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                  </FieldRow>
                   <Field label="Relevant experience" type="textarea" className="mb-[22px]" full value={form["relevant-experience"] || ""} onChange={(v) => set("relevant-experience", v)} />
                 </TabPanel>
 
@@ -196,7 +311,7 @@ export function ContactClient() {
                 <TabPanel show={activeTab === "research"}>
                   <FieldRow>
                     <Field label="Institution / Affiliation" value={form["institution--affiliation"] || ""} onChange={(v) => set("institution--affiliation", v)} />
-                    <Field label="Email Address" type="email" value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
                   </FieldRow>
                   <Field label="Nature of research request" type="textarea" placeholder="What records or periods are you researching?" className="mb-[22px]" full value={form["nature-of-research-request"] || ""} onChange={(v) => set("nature-of-research-request", v)} />
                 </TabPanel>
@@ -205,7 +320,7 @@ export function ContactClient() {
                 <TabPanel show={activeTab === "media"}>
                   <FieldRow>
                     <Field label="Outlet" value={form["outlet"] || ""} onChange={(v) => set("outlet", v)} />
-                    <Field label="Email Address" type="email" value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
+                    <Field label="Email Address" type="email" required value={form["email-address"] || ""} onChange={(v) => set("email-address", v)} />
                   </FieldRow>
                   <Field label="Enquiry details & deadline" type="textarea" className="mb-[22px]" full value={form["enquiry-details--deadline"] || ""} onChange={(v) => set("enquiry-details--deadline", v)} />
                 </TabPanel>
@@ -222,6 +337,31 @@ export function ContactClient() {
         </div>
       </section>
     </>
+  );
+}
+
+function ConsentNotice({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <div className="border border-line bg-ivory-dim/40 p-5 mb-[22px]">
+      <label className="flex items-start gap-3 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          className="mt-1 accent-burgundy shrink-0"
+        />
+        <span className="text-[13.5px] text-fg/70 leading-relaxed">
+          I confirm this material or account is mine to share, and I consent to the Lutterodt
+          Renaissance preserving, digitising and publishing it as part of the permanent family archive.
+          I retain copyright in what I contribute. I can ask for it to be removed or corrected at any
+          time. Full terms:{" "}
+          <Link href="/contribute/consent" className="text-accent-text underline">
+            consent and usage rights
+          </Link>
+          .
+        </span>
+      </label>
+    </div>
   );
 }
 

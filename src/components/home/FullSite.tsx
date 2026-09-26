@@ -155,17 +155,27 @@ export function FullSite() {
       <section className="py-[108px]">
         <div className="container-main">
           <div className="max-w-[640px] mb-14">
-            <Tag>Upcoming — Events</Tag>
-            <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">Where the family gathers next</h2>
+            <Tag>Past — Recap</Tag>
+            <h2 className="text-[clamp(30px,3.4vw,44px)] mt-[18px]">Where the family has gathered, and where it gathers next</h2>
           </div>
           <div className="grid grid-cols-3 max-md:grid-cols-1 gap-[2px] bg-line">
             <div className="bg-surface p-[34px] pb-[30px] relative overflow-hidden">
-              <div className="absolute top-3 right-3 bg-red-600 text-ivory text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded animate-pulse">Live</div>
+              <Tag>Next — 2 October 2026 · London</Tag>
+              <h3 className="text-[21px] mt-[14px] mb-[10px]">Diaspora Branch Reunion</h3>
+              <p className="text-fg/66 text-[14.5px]">An afternoon gathering for the UK and European branches, with a screening of newly digitised home videos.</p>
+              <Link href="/contact?intent=general" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-accent-text inline-flex items-center gap-2 group">
+                Register Interest
+                <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
+                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
+                </svg>
+              </Link>
+            </div>
+            <div className="bg-surface p-[34px] pb-[30px]">
               <Tag>9 – 11 July 2026 · Copenhagen</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">Lutterodt/t/h Reunion 2026</h3>
-              <p className="text-fg/66 text-[14.5px]">A landmark gathering of Lutterodts and Lutteroths — from Ghana, USA, UK, Germany, Estonia, Mexico and beyond — in Copenhagen.</p>
+              <p className="text-fg/66 text-[14.5px]">A landmark gathering of Lutterodts and Lutteroths — from Ghana, USA, UK, Germany, Estonia, Mexico and beyond — in Copenhagen. The programme, venues, and check-in record are preserved here.</p>
               <Link href="/reunion-2026" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-accent-text inline-flex items-center gap-2 group">
-                View Program
+                View Recap
                 <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
                   <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
@@ -175,19 +185,8 @@ export function FullSite() {
               <Tag>14 – 16 August 2026 · Accra</Tag>
               <h3 className="text-[21px] mt-[14px] mb-[10px]">The Renaissance Family Congress</h3>
               <p className="text-fg/66 text-[14.5px]">The biennial gathering of all branches, held this year at Harbour Road, with a formal unveiling of the digitised archive.</p>
-              <Link href="/contact" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-accent-text inline-flex items-center gap-2 group">
-                Register Interest
-                <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
-                  <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
-                </svg>
-              </Link>
-            </div>
-            <div className="bg-surface p-[34px] pb-[30px]">
-              <Tag>2 October 2026 · London</Tag>
-              <h3 className="text-[21px] mt-[14px] mb-[10px]">Diaspora Branch Reunion</h3>
-              <p className="text-fg/66 text-[14.5px]">An afternoon gathering for the UK and European branches, with a screening of newly digitised home videos.</p>
-              <Link href="/contact" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-accent-text inline-flex items-center gap-2 group">
-                Register Interest
+              <Link href="/contact?intent=materials" className="mt-[18px] font-mono text-[11.5px] tracking-widest uppercase text-accent-text inline-flex items-center gap-2 group">
+                Contribute Records
                 <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-[3px]">
                   <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
@@ -202,8 +201,8 @@ export function FullSite() {
         <div className="container-main relative z-10">
           <Tag onDark className="justify-center flex">Join the Renaissance</Tag>
           <h2 className="text-ivory text-[clamp(30px,3.4vw,44px)] max-w-[20ch] mx-auto mt-[18px] mb-[22px]">Every family member has a place in this record</h2>
-          <p className="text-ivory/70 max-w-[52ch] mx-auto mb-[34px]">Register your interest to receive family news, contribute photographs and stories, and be notified as member features launch in Phase 2.</p>
-          <Link href="/contact" className="btn-gold">Register Your Interest</Link>
+          <p className="text-ivory/70 max-w-[52ch] mx-auto mb-[34px]">Register your interest to receive family news, contribute photographs and stories, and be notified as new member features are added to the archive.</p>
+          <Link href="/contact?intent=general" className="btn-gold">Register Your Interest</Link>
         </div>
       </section>
     </>
