@@ -4,6 +4,7 @@ const PUBLIC_ROUTES = [
   "/",
   "/about",
   "/contact",
+  "/contribute/consent",
   "/directory",
   "/services",
   "/projects",
