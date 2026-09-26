@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getSetting, setSetting } from "@/lib/cf/kv";
 import { verifySession } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 import {
   ROADMAP_SEED,
   type ItemStatus,
@@ -60,8 +61,8 @@ async function resolveItem(
         autoDetected: true,
         detail: r.detail,
       };
-    } catch (err: any) {
-      return { text: item.text, status: "pending", autoDetected: true, detail: err?.message || "check failed" };
+    } catch (err) {
+      return { text: item.text, status: "pending", autoDetected: true, detail: errMessage(err, "check failed") };
     }
   }
   return {
@@ -83,8 +84,18 @@ async function resolvePhase(phase: RoadmapPhaseDef, overrides: Overrides): Promi
   const done = all.filter((i) => i.status === "completed").length;
   const total = all.length;
 
-  const { sections: _drop, ...rest } = phase;
-  return { ...rest, sections, done, total, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+  return {
+    num: phase.num,
+    title: phase.title,
+    subtitle: phase.subtitle,
+    goal: phase.goal,
+    status: phase.status,
+    deliverables: phase.deliverables,
+    sections,
+    done,
+    total,
+    percent: total > 0 ? Math.round((done / total) * 100) : 0,
+  };
 }
 
 async function resolveSprint(sprint: RoadmapSprintDef): Promise<ResolvedSprint> {
@@ -93,8 +104,8 @@ async function resolveSprint(sprint: RoadmapSprintDef): Promise<ResolvedSprint> 
   try {
     const r = await probe();
     return { ...rest, status: r.ok ? "completed" : "pending", autoDetected: true, detail: r.detail };
-  } catch (err: any) {
-    return { ...rest, status: "pending", autoDetected: true, detail: err?.message || "check failed" };
+  } catch (err) {
+    return { ...rest, status: "pending", autoDetected: true, detail: errMessage(err, "check failed") };
   }
 }
 

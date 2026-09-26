@@ -1,5 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getRecordCount } from "@/lib/cf/d1";
+import { errMessage } from "@/lib/utils";
 
 export type CheckResult = { ok: boolean; detail?: string };
 
@@ -55,7 +56,7 @@ export async function d1Column(table: string, column: string): Promise<CheckResu
     const db = await getDB();
     await db.prepare(`SELECT ${column} FROM ${table} LIMIT 1`).all();
     return { ok: true, detail: `${table}.${column}` };
-  } catch (e: any) {
+  } catch (err) {
     return { ok: false, detail: `${table}.${column} missing` };
   }
 }
@@ -72,8 +73,8 @@ export async function letterCoverage(): Promise<CheckResult> {
     const t = total?.c ?? 0;
     const w = withLetter?.c ?? 0;
     return { ok: t > 0 && w >= t, detail: `${w}/${t} profiles have a letter` };
-  } catch (e: any) {
-    return { ok: false, detail: e.message };
+  } catch (err) {
+    return { ok: false, detail: errMessage(err, "letter coverage unavailable") };
   }
 }
 
@@ -91,8 +92,8 @@ export async function profileCount(): Promise<CheckResult> {
     const t = total?.c ?? 0;
     const d = documented?.c ?? 0;
     return { ok: t > 0 && d >= t, detail: `${t} profiles, ${d} with a biography` };
-  } catch (e: any) {
-    return { ok: false, detail: e.message };
+  } catch (err) {
+    return { ok: false, detail: errMessage(err, "profile count unavailable") };
   }
 }
 
