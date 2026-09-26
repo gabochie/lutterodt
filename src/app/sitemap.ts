@@ -10,6 +10,7 @@ const staticRoutes: { path: string; priority: number; lastModified?: string }[] 
   { path: "/directory", priority: 0.9 },
   { path: "/gallery", priority: 0.7 },
   { path: "/contact", priority: 0.6 },
+  { path: "/contribute/consent", priority: 0.5 },
   { path: "/verify", priority: 0.6 },
   { path: "/sponsor", priority: 0.5 },
   { path: "/services", priority: 0.5 },
