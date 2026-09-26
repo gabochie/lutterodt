@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { BrandLockup } from "./BrandLockup";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
@@ -25,15 +26,7 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white/92 dark:bg-black/92 backdrop-blur-md border-b border-line">
       <nav className="container-main flex items-center justify-between py-[18px]">
         <Link href="/" className="flex items-center gap-3">
-          <Crest />
-          <span className="flex flex-col leading-tight">
-            <span className="font-display font-[650] text-[17px] tracking-wide text-heading">
-              Lutterodt
-            </span>
-            <span className="font-mono text-[9.5px] tracking-widest uppercase text-gold-dim">
-              Renaissance
-            </span>
-          </span>
+          <BrandLockup />
         </Link>
 
         <div
@@ -109,28 +102,5 @@ export function Header() {
         </div>
       )}
     </header>
-  );
-}
-
-function Crest() {
-  return (
-    <>
-      <img
-        src="/logo/lutterodt-logo-200.webp"
-        srcSet="/logo/lutterodt-logo-200.webp 1x, /logo/lutterodt-logo-400.webp 2x"
-        width={200}
-        height={141}
-        alt="Lutterodt — Lasz Uns Ideale Haben"
-        className="h-9 w-auto shrink-0 md:h-11 dark:hidden"
-      />
-      <img
-        src="/logo/lutterodt-dark-black-01010A-800.webp"
-        srcSet="/logo/lutterodt-dark-black-01010A-800.webp 1x, /logo/lutterodt-dark-black-01010A-1200.webp 2x"
-        width={800}
-        height={564}
-        alt="Lutterodt — Lasz Uns Ideale Haben"
-        className="hidden h-9 w-auto shrink-0 md:h-11 dark:block"
-      />
-    </>
   );
 }

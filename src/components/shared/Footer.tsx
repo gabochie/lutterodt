@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLockup } from "./BrandLockup";
 import { NewsletterForm } from "./NewsletterForm";
 
 const legalLinks = [
@@ -16,15 +17,7 @@ export function Footer() {
       <div className="container-main py-[76px] pb-[56px] grid grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-12 max-md:grid-cols-2 max-sm:grid-cols-1">
         <div className="footer-brand">
           <Link href="/" className="flex items-center gap-3">
-            <svg className="w-[34px] h-[34px] shrink-0" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1" />
-              <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FBC829" strokeWidth="1.1" />
-              <circle cx="20" cy="20" r="3" fill="#EEAD16" />
-            </svg>
-            <span className="flex flex-col leading-tight">
-              <span className="font-display font-[650] text-[17px] tracking-wide text-ivory">Lutterodt</span>
-              <span className="font-mono text-[9.5px] tracking-widest uppercase text-gold-dim">Renaissance</span>
-            </span>
+            <BrandLockup variant="dark" nameClassName="text-ivory" />
           </Link>
           <p className="mt-[18px] text-[14px] max-w-[34ch] text-ivory/55">
             A digital legacy for present and future generations of the Lutterodt family.
