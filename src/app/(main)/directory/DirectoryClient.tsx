@@ -104,7 +104,7 @@ export function DirectoryClient() {
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
               <Link href="/verify" className="btn-gold">Verify Your Identity</Link>
-              <Link href="/contact" className="btn-ghost">Get in Touch</Link>
+              <Link href="/contact?intent=general" className="btn-ghost">Get in Touch</Link>
             </div>
           </div>
         </section>

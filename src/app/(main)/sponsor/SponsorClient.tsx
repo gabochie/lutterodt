@@ -105,7 +105,7 @@ export function SponsorClient() {
               Right now the most meaningful way to support the Lutterodt Institute is to contribute what only you can — photographs, documents, stories, nominations, and research. Every contribution brings the permanent archive closer.
             </p>
             <div className="mt-8">
-              <Link href="/contact" className="btn-gold inline-block">Get in Touch</Link>
+              <Link href="/contact?intent=general" className="btn-gold inline-block">Get in Touch</Link>
             </div>
           </div>
         </div>
@@ -239,7 +239,7 @@ export function SponsorClient() {
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <Link href="/directory" className="btn-gold">Browse the Directory</Link>
-            <Link href="/contact" className="btn-ghost">Get in Touch</Link>
+            <Link href="/contact?intent=general" className="btn-ghost">Get in Touch</Link>
           </div>
         </div>
       </section>

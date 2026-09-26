@@ -17,7 +17,7 @@ export function FullSite() {
           </p>
           <div className="flex gap-4 flex-wrap">
             <Link href="/history" className="btn-primary">Explore the History</Link>
-            <Link href="/contact" className="btn-ghost">Join the Renaissance</Link>
+            <Link href="/contact?intent=general" className="btn-ghost">Join the Renaissance</Link>
           </div>
         </div>
         <div className="absolute right-8 bottom-9 hidden md:flex items-center gap-[10px] font-mono text-[10.5px] tracking-widest uppercase text-ivory/55 [writing-mode:vertical-rl] after:content-[''] after:w-[1px] after:h-[46px] after:bg-surface/40 after:ml-[10px]">

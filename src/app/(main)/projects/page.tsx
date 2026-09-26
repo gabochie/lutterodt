@@ -188,7 +188,7 @@ export default function ProjectsPage() {
                       Multi-language AI tour guide and interactive quizzes
                     </li>
                   </ul>
-                  <Link href="/contact" className="btn-outline text-center text-[13px]">Enquire about this project</Link>
+                  <Link href="/contact?intent=general" className="btn-outline text-center text-[13px]">Enquire about this project</Link>
                 </div>
               </div>
             </ScrollReveal>
@@ -233,7 +233,7 @@ export default function ProjectsPage() {
                       Solar-powered with sustainable 21st-century infrastructure
                     </li>
                   </ul>
-                  <Link href="/contact" className="btn-outline text-center text-[13px]">Enquire about this project</Link>
+                  <Link href="/contact?intent=general" className="btn-outline text-center text-[13px]">Enquire about this project</Link>
                 </div>
               </div>
             </ScrollReveal>
@@ -271,7 +271,7 @@ export default function ProjectsPage() {
                 <p className="text-ivory/68 text-[15px] leading-relaxed mb-6">
                   Whether you are a researcher, a creative, an academic institution, or a family member who wants to help build — reach out and join the conversation. We are also open to funding opportunities, from grants and partnerships to family contributions.
                 </p>
-                <Link href="/contact" className="btn-gold">Get in Touch</Link>
+                <Link href="/contact?intent=general" className="btn-gold">Get in Touch</Link>
               </div>
               <div className="relative rounded-md overflow-hidden border border-ivory/15">
                 <img
