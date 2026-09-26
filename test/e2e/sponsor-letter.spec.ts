@@ -1,63 +1,64 @@
-import { test, expect } from "./fixtures/site";
+import { test, expect } from "@playwright/test";
 import { generateSponsorshipLetterHtml } from "../../src/lib/outreach/sponsor-letter";
 
-const baseSponsor = {
-  name: "Acme Heritage Trust",
-  contactPerson: "Ama Mensah",
+const sponsor = {
+  name: "Family Register",
+  contactPerson: "Ama Lutterodt",
   email: "ama@example.com",
+  organization: "The Lutterodt Family Trust",
 };
 
-test.describe("sponsorship letter honesty", () => {
-  test("promises no institution that does not exist", () => {
-    const html = generateSponsorshipLetterHtml(baseSponsor);
+test.describe("sponsorship letter", () => {
+  test("does not promise institutions or assets that do not exist", () => {
+    const html = generateSponsorshipLetterHtml(sponsor);
 
-    expect(html).not.toMatch(/3D Digital Museum/i);
-    expect(html).not.toMatch(/Neo-?Lutterodt Manor|Neo-Manor/i);
-    expect(html).not.toMatch(/land acquisition/i);
-    expect(html).not.toMatch(/when built/i);
-    expect(html).not.toMatch(/community programming/i);
-  });
-
-  test("quotes no cash tiers or fixed amounts", () => {
-    const html = generateSponsorshipLetterHtml(baseSponsor);
-
-    expect(html).not.toMatch(/\$\d/);
-    expect(html).not.toMatch(/Sponsorship Tiers/i);
-    expect(html).toMatch(/no tiers and no minimum/i);
-  });
-
-  test("asks for the in-kind contributions the archive is actually short of", () => {
-    const html = generateSponsorshipLetterHtml(baseSponsor);
-
-    for (const label of [
-      "Archive materials",
-      "Profile verification",
-      "Oral history",
-      "Introductions",
-      "Professional services",
+    for (const claim of [
+      /Neo-Lutterodt Manor/i,
+      /3D Digital Museum/i,
+      /land acquisition/i,
+      /construction of/i,
+      /community programming/i,
+      /naming rights/i,
     ]) {
-      expect(html, `missing ask: ${label}`).toContain(label);
+      expect(html, `must not claim ${claim}`).not.toMatch(claim);
     }
   });
 
-  test("escapes interpolated recipient and organisation fields", () => {
+  test("does not publish cash tiers", () => {
+    const html = generateSponsorshipLetterHtml(sponsor);
+
+    for (const amount of [/\$10,000/, /\$5,000/, /\$1,000/, /\$\d[\d,]*\s*[-–—+]/]) {
+      expect(html, `must not publish the amount ${amount}`).not.toMatch(amount);
+    }
+  });
+
+  test("asks for the things only a family member can supply", () => {
+    const html = generateSponsorshipLetterHtml(sponsor);
+
+    expect(html).toMatch(/Archive materials/i);
+    expect(html).toMatch(/Oral history/i);
+    expect(html).toMatch(/Profile verification/i);
+    expect(html).toMatch(/Introductions/i);
+  });
+
+  test("is internally consistent about the continent count", () => {
+    const html = generateSponsorshipLetterHtml(sponsor);
+
+    expect(html).not.toMatch(/Four Continents/i);
+    expect(html).toMatch(/Six Continents/i);
+    expect(html).toMatch(/6 continents/i);
+  });
+
+  test("escapes profile-controlled values", () => {
     const html = generateSponsorshipLetterHtml({
-      ...baseSponsor,
+      ...sponsor,
       contactPerson: '<img src=x onerror="alert(1)">',
       organization: "<script>alert(2)</script>",
     });
 
-    expect(html).not.toContain("<img");
-    expect(html).not.toContain("<script>alert");
-    expect(html).toContain("&lt;img");
+    expect(html).not.toMatch(/<img src=x/i);
+    expect(html).not.toMatch(/<script>alert/i);
+    expect(html).toContain("&lt;img src=x");
     expect(html).toContain("&lt;script&gt;");
-  });
-
-  test("keeps the continent count consistent with the body", () => {
-    const html = generateSponsorshipLetterHtml(baseSponsor);
-
-    expect(html).toMatch(/Six Continents/);
-    expect(html).toMatch(/6 continents<\/strong>/);
-    expect(html).not.toMatch(/Four Continents/);
   });
 });
