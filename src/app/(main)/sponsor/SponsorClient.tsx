@@ -48,7 +48,7 @@ const faqs = [
   },
   {
     q: "How is support used?",
-    a: "Every contribution goes directly toward the archive itself — server infrastructure, digital preservation, the 3D museum, and community programming. A detailed impact report is shared annually with all supporters.",
+    a: "Every contribution goes directly toward the archive itself — hosting and storage, digitisation equipment, professional review of our privacy and copyright terms, and the day-to-day work of researching and recording profiles. We publish a summary of what the archive has achieved each year.",
   },
   {
     q: "Is my personal data safe?",
@@ -60,11 +60,11 @@ const faqs = [
   },
   {
     q: "How can I support the project?",
-    a: "The most valuable contributions right now are non-financial — materials, nominations, research, and introductions. That said, we are open to funding opportunities — grants, partnerships, and family contributions — and happy to discuss what that could look like. Get in touch and we will take it from there.",
+    a: "The most valuable contributions right now are non-financial — materials, verifications, memories, research, and introductions. That said, we are open to funding opportunities — grants, partnerships, and family contributions — and happy to discuss what that could look like. Get in touch and we will take it from there.",
   },
   {
     q: "Are you open to funding?",
-    a: "Yes. We welcome conversations with family members, foundations, and cultural partners who would like to help sustain and grow the archive. There are no fixed tiers or amounts — every conversation starts from what you would like to make possible.",
+    a: "Yes. We welcome conversations with family members, our own clients and their networks, foundations, and cultural partners who would like to help sustain and grow the archive. There are no fixed tiers or amounts — every conversation starts from what you would like to make possible.",
   },
 ];
 
@@ -149,7 +149,7 @@ export function SponsorClient() {
               We welcome grants, partnerships, and family contributions that help sustain and grow the archive — from digitisation and preservation to the museum and heritage programming. There are no fixed tiers; every conversation starts from what you would like to make possible.
             </p>
             <div className="mt-7 flex items-center justify-center gap-4 flex-wrap">
-              <Link href="/contact" className="btn-gold">Start a Conversation</Link>
+              <Link href="/contact?intent=general" className="btn-gold">Start a Conversation</Link>
               <a href="https://wa.me/233243262019" target="_blank" rel="noopener noreferrer" className="btn-outline">WhatsApp</a>
             </div>
           </div>

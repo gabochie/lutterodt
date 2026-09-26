@@ -1,18 +1,51 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { generateSponsorshipLetterHtml } from "@/lib/outreach/sponsor-letter";
+import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 
-const TIERS = [
-  { name: "Patron", amount: "$10,000+", benefits: "Naming rights on a major exhibit, permanent recognition in the Digital Museum, private tour for 10 guests at the Neo-Manor (when built), annual impact report, featured listing on all project materials." },
-  { name: "Benefactor", amount: "$5,000–$9,999", benefits: "Named attribution on a gallery wing, recognition in the Digital Museum, private tour for 4 guests, annual impact report." },
-  { name: "Supporter", amount: "$1,000–$4,999", benefits: "Recognition in the Digital Museum contributors wall, exclusive digital content access, newsletter updates." },
-  { name: "Friend", amount: "Up to $999", benefits: "Listing in the Friends of the Renaissance roll, newsletter updates, digital thank-you card." },
+const CONTRIBUTION_TYPES = [
+  {
+    name: "Archive materials",
+    need: "Highest priority",
+    detail:
+      "Photographs, letters, certificates, church and civil registers, newspaper cuttings, business ledgers, audio and video. This is the one category that cannot be bought or crowdsourced, and it decays every year it waits.",
+  },
+  {
+    name: "Profile verification",
+    need: "Highest priority",
+    detail:
+      "Around 190 of 205 directory profiles still lack a confirmed date of birth or a verified career. Family members are the only authoritative source for a family archive.",
+  },
+  {
+    name: "Oral history",
+    need: "Urgent",
+    detail:
+      "Recorded testimony in any language. This is the only asset with a hard expiry date, because it lives and dies with the person holding it.",
+  },
+  {
+    name: "Introductions",
+    need: "High leverage",
+    detail:
+      "A named person in your network who would be right for a specific need. Costs you nothing and is worth more than most in-kind gifts.",
+  },
+  {
+    name: "Professional services",
+    need: "On request",
+    detail:
+      "Legal review of privacy and copyright terms, accounting, graphic design, translation and transcription, photography, hosting and storage.",
+  },
+  {
+    name: "Financial",
+    need: "Secondary",
+    detail:
+      "There are no fixed tiers or amounts. Funding conversations start from what you would like to make possible, not from a pre-set band.",
+  },
 ];
 
 export async function GET() {
-  return NextResponse.json({ tiers: TIERS });
+  return NextResponse.json({ contributionTypes: CONTRIBUTION_TYPES });
 }
 
 export async function POST(request: NextRequest) {
@@ -45,7 +78,7 @@ export async function POST(request: NextRequest) {
 
       await db.prepare(
         "INSERT INTO outreach_queue (profile_id, name, status, letter_html, recipient_email, created_at, updated_at) VALUES (?, ?, 'pending', ?, ?, ?, ?)"
-      ).bind(`sponsor-${slug}`, name, html, email, now, now).run();
+      ).bind(`sponsor-${slug}`, name, sanitizeLetterHtml(html), email, now, now).run();
 
       await db.prepare(
         "INSERT INTO outreach_log (profile_id, action, details, created_at) VALUES (?, ?, ?, ?)"
