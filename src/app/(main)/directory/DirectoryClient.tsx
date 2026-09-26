@@ -122,8 +122,8 @@ export function DirectoryClient() {
               We are actively reaching out to every known Lutterodt across {countries.length} countries and {data?.continents ?? 6} continents. If you know a Lutterodt we have not yet found, we would like to hear from you.
             </p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
-              <Link href="/contact" className="btn-gold">Nominate a Lutterodt</Link>
-              <Link href="/contact" className="btn-ghost">Get in Touch</Link>
+              <Link href="/contact?intent=verify" className="btn-gold">Nominate or Correct a Profile</Link>
+              <Link href="/contact?intent=materials" className="btn-ghost">Contribute Materials</Link>
             </div>
           </div>
         </section>

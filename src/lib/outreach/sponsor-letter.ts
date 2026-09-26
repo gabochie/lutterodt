@@ -2,11 +2,45 @@ const CSS = `*{margin:0;padding:0;box-sizing:border-box}body{font-family:Georgia
 
 const SVG_LOGO = `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1" /><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#E4C989" stroke-width="1.1" /><circle cx="20" cy="20" r="3" fill="#C6A15B" /></svg>`;
 
-const TIERS = [
-  { name: "Patron", amount: "$10,000+", benefits: "Naming rights on a major exhibit, permanent recognition in the Digital Museum, private tour for 10 guests at the Neo-Manor (when built), annual impact report, featured listing on all project materials." },
-  { name: "Benefactor", amount: "$5,000–$9,999", benefits: "Named attribution on a gallery wing, recognition in the Digital Museum, private tour for 4 guests, annual impact report." },
-  { name: "Supporter", amount: "$1,000–$4,999", benefits: "Recognition in the Digital Museum contributors wall, exclusive digital content access, newsletter updates." },
-  { name: "Friend", amount: "Up to $999", benefits: "Listing in the Friends of the Renaissance roll, newsletter updates, digital thank-you card." },
+import { escapeHtml } from "./sanitize";
+
+const CONTRIBUTION_TYPES = [
+  {
+    name: "Archive materials",
+    need: "Highest priority",
+    benefits:
+      "Photographs, letters, certificates, church and civil registers, newspaper cuttings, business ledgers, audio and video. The one category that cannot be bought or crowdsourced — and it decays every year it waits.",
+  },
+  {
+    name: "Profile verification",
+    need: "Highest priority",
+    benefits:
+      "Around 190 of 205 directory profiles still lack a confirmed date of birth or a verified career. Family members are the only authoritative source for a family archive.",
+  },
+  {
+    name: "Oral history",
+    need: "Urgent",
+    benefits:
+      "Recorded testimony in any language. The only asset with a hard expiry date, because it lives and dies with the person holding it.",
+  },
+  {
+    name: "Introductions",
+    need: "High leverage",
+    benefits:
+      "A named person in your network who would be right for a specific need. Costs you nothing, and is worth more than most in-kind gifts.",
+  },
+  {
+    name: "Professional services",
+    need: "On request",
+    benefits:
+      "Legal review of privacy and copyright terms, accounting, graphic design, translation and transcription, photography, hosting and storage.",
+  },
+  {
+    name: "Financial",
+    need: "Secondary",
+    benefits:
+      "No fixed tiers and no minimum. Funding conversations start from what you would like to make possible.",
+  },
 ];
 
 export interface SponsorProfile {
@@ -19,50 +53,46 @@ export interface SponsorProfile {
 
 export function generateSponsorshipLetterHtml(sponsor: SponsorProfile): string {
   const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-  const recipient = sponsor.contactPerson || sponsor.name;
+  const recipient = escapeHtml(sponsor.contactPerson || sponsor.name);
   const salutation = `Dear ${recipient},`;
 
   const orgLine = sponsor.organization
-    ? `<p>I am writing to you on behalf of <strong>${sponsor.organization}</strong> regarding a unique opportunity to partner with <strong>The Lutterodt Renaissance</strong> — a permanent digital and physical archive preserving six generations of Lutterodt family history across six continents.</p>`
-    : `<p>I am writing to share a unique opportunity to partner with <strong>The Lutterodt Renaissance</strong> — a permanent digital and physical archive preserving six generations of Lutterodt family history across six continents.</p>`;
+    ? `<p>I am writing to you on behalf of <strong>${escapeHtml(sponsor.organization)}</strong> to ask whether you might help <strong>The Lutterodt Renaissance</strong> — a digital archive preserving Lutterodt family history across six continents.</p>`
+    : `<p>I am writing to ask whether you might help <strong>The Lutterodt Renaissance</strong> — a digital archive preserving Lutterodt family history across six continents.</p>`;
 
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sponsorship Opportunity — The Lutterodt Renaissance</title><style>${CSS}</style></head><body><div class="page"><div class="brand">${SVG_LOGO}<h1>The Lutterodt Renaissance</h1><p>A Permanent Digital Archive • Six Generations • Four Continents</p></div><p class="date">${date}</p><p class="salutation">${salutation}</p><div class="body">
-<p>The Lutterodt name has travelled from the Harz Mountains of Germany to the shores of Ghana, and from there across the Atlantic to the Americas, into northern Europe, and beyond. Today our archive documents <strong>208 Lutterodts</strong> across <strong>16 countries</strong> and <strong>6 continents</strong> — a global family whose story deserves a permanent home.</p>
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sponsorship Opportunity — The Lutterodt Renaissance</title><style>${CSS}</style></head><body><div class="page"><div class="brand">${SVG_LOGO}<h1>The Lutterodt Renaissance</h1><p>A Digital Archive • Six Generations • Six Continents</p></div><p class="date">${date}</p><p class="salutation">${salutation}</p><div class="body">
+<p>The Lutterodt name has travelled from the Harz Mountains of Germany to the shores of Ghana, and from there across the Atlantic to the Americas, into northern Europe, and beyond. The archive is live at <strong>lutterodt.org</strong> and already documents <strong>205 Lutterodts</strong> across <strong>15 countries</strong> on <strong>6 continents</strong>.</p>
 
 ${orgLine}
 
-<h2 style="color:#5a2d2a;font-size:17px;margin:32px 0 16px 0;font-weight:600">Four Initiatives, One Mission</h2>
+<p>Most of what this archive still needs cannot be bought. It has to come from the family. That is why I am writing to you.</p>
 
-<p><strong>1. The Digital Archive (live at lutterodt.org)</strong><br>
-A searchable online record of every notable Lutterodt — biographies, photographs, genealogical links, and oral histories. Already hosting 208 profiles with 265 personalised heritage letters generated.</p>
+<h2 style="color:#5a2d2a;font-size:17px;margin:32px 0 16px 0;font-weight:600">Where the archive actually stands</h2>
 
-<p><strong>2. The 3D Digital Museum (seeking sponsorship)</strong><br>
-An interactive virtual museum where visitors can explore Lutterodt history through immersive exhibits, archival documents, and multimedia storytelling. Built on web standards — no app download required.</p>
+<p><strong>Documented and live</strong><br>
+A searchable directory of notable Lutterodts — biographies, achievements, countries, professional categories, and verified profile records — alongside the outreach pipeline that keeps it growing.</p>
 
-<p><strong>3. The Neo-Lutterodt Manor (seeking sponsorship)</strong><br>
-A physical heritage centre in Accra, Ghana — a meeting place for the global Lutterodt diaspora, housing physical archives, exhibition space, and a cultural programming venue.</p>
+<p><strong>Not yet done</strong><br>
+Roughly 190 profiles have no confirmed date of birth. Around 190 have no public professional profile. Almost every profile still lacks a photograph. None of this is public search work; it is family knowledge that exists only in someone's head or in a shoebox.</p>
 
-<p><strong>4. The Digital Heritage Network (seeking partners)</strong><br>
-A platform connecting Lutterodts worldwide for mentorship, collaboration, and cultural exchange — turning a family name into a lasting global community.</p>
+<div class="highlight">"The most valuable thing in this archive is not the data I can find. It is the data that only a Lutterodt can supply."</div>
 
-<div class="highlight">"Every family name carries a story. The Lutterodt name — carried from the Harz mountains of Germany to the shores of Ghana, and now across six continents — deserves to be preserved for generations yet to come."</div>
-
-<h2 style="color:#5a2d2a;font-size:17px;margin:32px 0 16px 0;font-weight:600">Sponsorship Tiers</h2>
+<h2 style="color:#5a2d2a;font-size:17px;margin:32px 0 16px 0;font-weight:600">How you can help</h2>
 
 <table class="tier-table">
-<tr><th>Tier</th><th>Contribution</th><th>Benefits</th></tr>
-${TIERS.map(t => `<tr><td><strong>${t.name}</strong></td><td class="amount">${t.amount}</td><td>${t.benefits}</td></tr>`).join("")}
+<tr><th>Contribution</th><th>Urgency</th><th>What it looks like</th></tr>
+${CONTRIBUTION_TYPES.map(t => `<tr><td><strong>${t.name}</strong></td><td class="amount">${t.need}</td><td>${t.benefits}</td></tr>`).join("")}
 </table>
 
-<p>Sponsorship contributions directly fund: server infrastructure and digital preservation, exhibit design and development for the 3D Museum, land acquisition and construction of the Neo-Manor, community programming and diaspora events.</p>
+<p>Where money is involved, there are no tiers and no minimum. Hosting and long-term storage, digitisation equipment, legal review of the privacy and copyright terms, transcription, research and recording are the costs that genuinely exist right now — and I am happy to account for them plainly.</p>
 
 <div class="cta-box">
-<h3>Request a Sponsorship Packet</h3>
-<p>We would be delighted to send you a detailed sponsorship prospectus with case studies, timelines, and bespoke partnership options tailored to your organisation's goals.</p>
+<h3>Three ways to start</h3>
+<p>Send any materials you are holding, correct a profile you recognise, or simply tell me who else in the family might know something I do not. A referral is genuinely useful.</p>
 <p class="email">hello@lutterodt.org</p>
 </div>
 
-<p>Thank you for considering this invitation. The Lutterodt Renaissance is a labour of love — one that will outlive us all. With your support, it will stand as a permanent monument to a family whose story is as global as it is Ghanaian.</p>
+<p>Thank you for reading this. I would rather ask you for something honest and small than promise you a building.</p>
 
 <p>I look forward to the possibility of partnering with you.</p>
 
