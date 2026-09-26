@@ -8,7 +8,7 @@ test.describe("test isolation guarantees", () => {
       response.url().includes("/api/leads")
     );
 
-    await page.goto("/contact", { waitUntil: "domcontentloaded" });
+    await page.goto("/contact?intent=general", { waitUntil: "domcontentloaded" });
     const form = page
       .locator("form")
       .filter({ has: page.getByRole("button", { name: "Send Message" }) });
