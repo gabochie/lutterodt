@@ -49,9 +49,6 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "The Lutterodt Renaissance — A Digital Legacy",
-    description:
-      "An authoritative digital home for the Lutterodt family — history, timeline, gallery and stories preserved for present and future generations.",
     url: SITE_URL,
     siteName: "The Lutterodt Renaissance",
     locale: "en_US",
@@ -59,9 +56,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Lutterodt Renaissance — A Digital Legacy",
-    description:
-      "An authoritative digital home for the Lutterodt family — history, timeline, gallery and stories preserved for present and future generations.",
   },
 };
 
