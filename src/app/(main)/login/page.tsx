@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PasswordField } from "@/components/PasswordField";
+import { BrandLockup } from "@/components/shared/BrandLockup";
 
 export const metadata: Metadata = {
   title: "Admin Login",
@@ -21,16 +22,8 @@ export default async function LoginPage({
 
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-10">
-          <Link href="/" className="inline-flex items-center gap-3 mb-6">
-            <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1" />
-              <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FBC829" strokeWidth="1.1" />
-              <circle cx="20" cy="20" r="3" fill="#EEAD16" />
-            </svg>
-            <span className="flex flex-col leading-tight text-left">
-              <span className="font-display font-[650] text-[17px] tracking-wide text-ivory">Lutterodt</span>
-              <span className="font-mono text-[9.5px] tracking-widest uppercase text-gold-dim">Renaissance</span>
-            </span>
+          <Link href="/" className="inline-flex mb-6">
+            <BrandLockup variant="dark" nameClassName="text-ivory" />
           </Link>
           <h1 className="text-ivory text-[24px] font-display">Admin Login</h1>
           <p className="text-ivory/50 text-[13.5px] mt-1">Sign in to the Legacy OS</p>
