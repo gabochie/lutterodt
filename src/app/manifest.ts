@@ -15,6 +15,18 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["education", "reference"],
     icons: [
       {
+        src: "/icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
         src: "/favicon.svg",
         sizes: "any",
         type: "image/svg+xml",
@@ -24,12 +36,6 @@ export default function manifest(): MetadataRoute.Manifest {
         src: "/apple-touch-icon.png",
         sizes: "180x180",
         type: "image/png",
-        purpose: "any",
-      },
-      {
-        src: "/favicon.ico",
-        sizes: "16x16 32x32 48x48 64x64 128x128 256x256",
-        type: "image/x-icon",
       },
     ],
   };
