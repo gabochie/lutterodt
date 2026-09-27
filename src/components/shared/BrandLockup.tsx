@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
 
 /**
  * Single source of truth for the Lutterodt brand lockup.
@@ -15,7 +16,7 @@ const DARK_2X = "/logo/lutterodt-dark-black-01010A-1200.webp";
 const CREST_SIZES = "(min-width: 768px) 63px, 51px";
 
 export function Crest({ variant = "auto", className }: { variant?: "auto" | "dark"; className?: string }) {
-  const alt = "Lutterodt — Lasz Uns Ideale Haben";
+  const alt = "Lutterodt — Let Us Have Ideals";
   const box = cn(
     "relative block h-9 w-[51px] shrink-0 md:h-11 md:w-[63px]",
     className
@@ -78,8 +79,8 @@ export function BrandLockup({
         >
           Lutterodt
         </span>
-        <span className="font-mono text-[9.5px] tracking-widest uppercase text-gold-dim">
-          Renaissance
+        <span className="font-mono text-[9.5px] tracking-widest uppercase whitespace-nowrap text-gold-dim">
+          {siteConfig.tagline}
         </span>
       </span>
     </span>

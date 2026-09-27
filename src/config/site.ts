@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Lutterodt",
-  tagline: "Renaissance",
+  tagline: "Let Us Have Ideals",
   domain: "lutterodt.org",
   email: "hello@lutterodt.org",
   description:

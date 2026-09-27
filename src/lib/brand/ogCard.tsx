@@ -54,13 +54,13 @@ export function buildOgCard() {
             <div
               style={{
                 marginTop: 12,
-                fontSize: 23,
-                letterSpacing: 9,
+                fontSize: 22,
+                letterSpacing: 5,
                 textTransform: "uppercase",
                 color: "#996C16",
               }}
             >
-              Renaissance
+              Let Us Have Ideals
             </div>
           </div>
         </div>
