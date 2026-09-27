@@ -17,7 +17,7 @@ export function Footer() {
       <div className="container-main py-[76px] pb-[56px] grid grid-cols-[1.4fr_1fr_1fr_1.2fr] gap-12 max-md:grid-cols-2 max-sm:grid-cols-1">
         <div className="footer-brand">
           <Link href="/" className="flex items-center gap-3">
-            <BrandLockup variant="dark" nameClassName="text-ivory" />
+            <BrandLockup nameClassName="text-ivory" />
           </Link>
           <p className="mt-[18px] text-[14px] max-w-[34ch] text-ivory/55">
             A digital legacy for present and future generations of the Lutterodt family.

@@ -23,7 +23,7 @@ export default async function LoginPage({
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-10">
           <Link href="/" className="inline-flex mb-6">
-            <BrandLockup variant="dark" nameClassName="text-ivory" />
+            <BrandLockup nameClassName="text-ivory" />
           </Link>
           <h1 className="text-ivory text-[24px] font-display">Admin Login</h1>
           <p className="text-ivory/50 text-[13.5px] mt-1">Sign in to the Legacy OS</p>
