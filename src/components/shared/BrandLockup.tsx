@@ -34,6 +34,8 @@ export function Crest({ variant = "auto", className }: { variant?: "auto" | "dar
     />
   );
 
+  const darkVisibility = variant === "dark" ? "block" : "hidden dark:block";
+
   const dark = (
     <img
       src={DARK_SRC}
@@ -42,7 +44,10 @@ export function Crest({ variant = "auto", className }: { variant?: "auto" | "dar
       width={800}
       height={533}
       alt={alt}
-      className="absolute inset-0 h-full w-full object-contain hidden dark:block"
+      className={cn(
+        "absolute inset-0 h-full w-full object-contain",
+        darkVisibility
+      )}
     />
   );
 
