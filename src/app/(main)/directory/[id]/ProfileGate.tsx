@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Tag } from "@/components/shared/Tag";
+import { Crest } from "@/components/shared/BrandLockup";
 
 interface Profile {
   id: string; name: string; dob: string | null;
@@ -73,11 +74,7 @@ export function ProfileGate({
         <section className="py-[72px]">
           <div className="container-main max-w-2xl text-center">
             <div className="p-[40px] bg-ivory-dim border border-line">
-              <svg viewBox="0 0 40 40" fill="none" style={{width:40,height:40,display:"block",margin:"0 auto 16px"}}>
-                <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1"/>
-                <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#001D95" strokeWidth="1.1"/>
-                <circle cx="20" cy="20" r="3" fill="#EEAD16"/>
-              </svg>
+              <Crest className="mx-auto mb-4 h-10 w-[57px]" />
               <h2 className="text-[22px] font-display font-[550] text-heading mb-[10px]">
                 Verification Required
               </h2>

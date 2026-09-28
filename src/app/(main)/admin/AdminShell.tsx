@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Crest } from "@/components/shared/BrandLockup";
 import {
   LayoutDashboard,
   FileText,
@@ -65,11 +66,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       >
         <div className="p-5 border-b border-line-on-dark flex items-center justify-between">
           <Link href="/admin" className="flex items-center gap-3">
-            <svg className="w-[28px] h-[28px]" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="19" stroke="#EEAD16" strokeWidth="1" />
-              <path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#FBC829" strokeWidth="1.1" />
-              <circle cx="20" cy="20" r="3" fill="#EEAD16" />
-            </svg>
+            <Crest className="h-7 w-[40px]" />
             <div className="flex flex-col leading-tight">
               <span className="font-display font-[650] text-[14px] tracking-wide text-ivory">Lutterodt</span>
               <span className="font-mono text-[8px] tracking-widest uppercase text-gold-dim">Admin OS</span>
