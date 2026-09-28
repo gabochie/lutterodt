@@ -62,7 +62,7 @@ export function Footer() {
 
         <div>
           <h4 className="font-mono text-[11px] tracking-widest uppercase text-gold-light mb-[18px] font-medium">Newsletter</h4>
-          <p className="text-[13px] mb-4 text-ivory/55">Quarterly notes from the archive, sent to the whole family.</p>
+          <p className="text-[13px] mb-4 text-ivory/55">Quarterly notes from the archive, sent to the whole family. A few emails a year.</p>
           <NewsletterForm />
         </div>
       </div>

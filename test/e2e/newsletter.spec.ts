@@ -1,10 +1,12 @@
-import { test, expect, capturePost } from "./fixtures/site";
+import { test, expect } from "./fixtures/site";
 
 const EMAIL_FIELD = "#newsletter-email";
+const CONSENT = "#newsletter-consent input[type='checkbox']";
 const SUBSCRIBE = 'button:has-text("Subscribe")';
+const SUCCESS = /check your inbox|check .*@.* for a confirmation link|almost there/i;
 
-test.describe("footer newsletter", () => {
-  test("renders the quarterly copy and an accessible email field", async ({
+test.describe("footer newsletter double opt-in", () => {
+  test("renders the quarterly copy, a labelled field and a consent checkbox", async ({
     page,
     gotoSite,
   }) => {
@@ -19,43 +21,83 @@ test.describe("footer newsletter", () => {
     await expect(field).toBeVisible();
     await expect(field).toHaveAttribute("type", "email");
     await expect(field).toHaveAttribute("required", "");
+    await expect(page.locator(CONSENT)).toBeVisible();
+    await expect(page.locator("#newsletter-consent")).toContainText(
+      /quarterly archive bulletin/i
+    );
   });
 
-  test("a valid subscription posts to the leads endpoint and confirms", async ({
+  test("subscribe stays disabled until consent is given", async ({
     page,
     gotoSite,
   }) => {
     await gotoSite("/");
 
-    const post = capturePost(page, "/api/leads");
-    await page.locator(EMAIL_FIELD).fill("family@lutterodt.org");
-    await page.locator(SUBSCRIBE).click();
+    await expect(page.locator(SUBSCRIBE)).toBeDisabled();
+    await page.locator(EMAIL_FIELD).fill("needs-consent@lutterodt.org");
+    await expect(page.locator(SUBSCRIBE)).toBeDisabled();
 
-    const captured = await post;
-    expect(captured.json).toMatchObject({
-      email: "family@lutterodt.org",
-      subject: "Newsletter Subscription",
+    await page.locator(CONSENT).check();
+    await expect(page.locator(SUBSCRIBE)).toBeEnabled();
+  });
+
+  test("a consented signup posts consent and asks for confirmation", async ({
+    page,
+    gotoSite,
+  }) => {
+    await gotoSite("/");
+
+    let payload: Record<string, unknown> | null = null;
+    await page.route("**/api/newsletter/subscribe", async (route) => {
+      payload = route.request().postDataJSON();
+      return route.fulfill({
+        status: 202,
+        contentType: "application/json",
+        body: JSON.stringify({
+          ok: true,
+          status: "pending",
+          message: "Almost there — check family@lutterodt.org for a confirmation link.",
+        }),
+      });
     });
 
-    await expect(
-      page.getByText(/subscribed\. welcome to the archive bulletin/i)
-    ).toBeVisible();
+    await page.locator(EMAIL_FIELD).fill("family@lutterodt.org");
+    await page.locator(CONSENT).check();
+    await page.locator(SUBSCRIBE).click();
+
+    await expect(page.getByRole("status")).toContainText(/confirmation link/i);
+    expect(payload).toMatchObject({
+      email: "family@lutterodt.org",
+      consent: true,
+    });
   });
 
-  test("the input clears after a successful subscription", async ({
+  test("never claims a subscription before confirmation", async ({
     page,
     gotoSite,
   }) => {
     await gotoSite("/");
 
-    const field = page.locator(EMAIL_FIELD);
-    await field.fill("clear-me@lutterodt.org");
+    await page.route("**/api/newsletter/subscribe", (route) =>
+      route.fulfill({
+        status: 202,
+        contentType: "application/json",
+        body: JSON.stringify({
+          ok: true,
+          status: "pending",
+          message: "Almost there — check family@lutterodt.org for a confirmation link.",
+        }),
+      })
+    );
+
+    await page.locator(EMAIL_FIELD).fill("family@lutterodt.org");
+    await page.locator(CONSENT).check();
     await page.locator(SUBSCRIBE).click();
 
-    await expect(
-      page.getByText(/subscribed\. welcome to the archive bulletin/i)
-    ).toBeVisible();
-    await expect(field).toHaveValue("");
+    // The old copy said "Subscribed. Welcome to the archive bulletin."
+    // before anything was confirmed, which is the claim this guards against.
+    await expect(page.getByText(/subscribed\. welcome/i)).toHaveCount(0);
+    await expect(page.getByRole("status")).toContainText(SUCCESS);
   });
 
   test("the browser blocks a malformed address before any request", async ({
@@ -65,75 +107,148 @@ test.describe("footer newsletter", () => {
     await gotoSite("/");
 
     let called = false;
-    await page.route("**/api/leads", (route) => {
+    await page.route("**/api/newsletter/subscribe", (route) => {
       called = true;
       return route.fulfill({
-        status: 200,
+        status: 202,
         contentType: "application/json",
-        body: JSON.stringify({ ok: true }),
+        body: JSON.stringify({ ok: true, status: "pending" }),
       });
     });
 
     await page.locator(EMAIL_FIELD).fill("not-an-email");
+    await page.locator(CONSENT).check();
     await page.locator(SUBSCRIBE).click();
 
-    await expect(page).toHaveURL(/\/$/);
     expect(called).toBe(false);
   });
 
-  test("a rejected subscription surfaces an error and keeps the address", async ({
+  test("a server rejection surfaces the reason and keeps the address", async ({
     page,
     gotoSite,
   }) => {
     await gotoSite("/");
 
-    await page.route("**/api/leads", (route) =>
+    await page.route("**/api/newsletter/subscribe", (route) =>
       route.fulfill({
-        status: 500,
+        status: 502,
         contentType: "application/json",
-        body: JSON.stringify({ error: "Could not register" }),
+        body: JSON.stringify({
+          error: "We could not send the confirmation email. Please try again.",
+        }),
       })
     );
 
     const field = page.locator(EMAIL_FIELD);
     await field.fill("fail@lutterodt.org");
+    await page.locator(CONSENT).check();
     await page.locator(SUBSCRIBE).click();
 
-    await expect(page.getByText(/something went wrong/i)).toBeVisible();
+    await expect(page.locator("footer [role='alert']")).toContainText(
+      /could not send the confirmation/i
+    );
     await expect(field).toHaveValue("fail@lutterodt.org");
   });
 
-  test("a network failure surfaces an error rather than a false confirmation", async ({
+  test("a network failure never shows a false confirmation", async ({
     page,
     gotoSite,
   }) => {
     await gotoSite("/");
 
-    await page.route("**/api/leads", (route) => route.abort("failed"));
+    await page.route("**/api/newsletter/subscribe", (route) => route.abort("failed"));
 
     await page.locator(EMAIL_FIELD).fill("offline@lutterodt.org");
+    await page.locator(CONSENT).check();
     await page.locator(SUBSCRIBE).click();
 
-    await expect(page.getByText(/something went wrong/i)).toBeVisible();
-    await expect(
-      page.getByText(/subscribed\. welcome to the archive bulletin/i)
-    ).toHaveCount(0);
+    await expect(page.locator("footer [role='alert']")).toContainText(/network error/i);
+    await expect(page.getByRole("status")).toHaveCount(0);
   });
 
-  test("appears once per page and is absent from the admin shell", async ({
+  test("a successful signup clears the field and the consent box", async ({
     page,
     gotoSite,
   }) => {
     await gotoSite("/");
-    await expect(page.locator(EMAIL_FIELD)).toHaveCount(1);
 
-    // /login is a public page inside the (main) group, so it keeps the footer.
-    await page.goto("/login", { waitUntil: "domcontentloaded" });
-    await expect(page.locator(EMAIL_FIELD)).toHaveCount(1);
+    await page.route("**/api/newsletter/subscribe", (route) =>
+      route.fulfill({
+        status: 202,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: true, status: "pending", message: "Check your inbox." }),
+      })
+    );
 
-    // The admin area renders AdminShell, which has no site footer.
-    await page.goto("/admin", { waitUntil: "domcontentloaded" });
-    await page.waitForURL(/\/login/, { timeout: 15_000 });
-    await expect(page.locator(EMAIL_FIELD)).toHaveCount(1);
+    await page.locator(EMAIL_FIELD).fill("clear-me@lutterodt.org");
+    await page.locator(CONSENT).check();
+    await page.locator(SUBSCRIBE).click();
+
+    await expect(page.getByRole("status")).toBeVisible();
+    await expect(page.locator(EMAIL_FIELD)).toHaveValue("");
+    await expect(page.locator(CONSENT)).not.toBeChecked();
+  });
+});
+
+test.describe("newsletter opt-in endpoints", () => {
+  test("rejects a subscription without consent", async ({ request }) => {
+    const res = await request.post("/api/newsletter/subscribe", {
+      data: { email: "no-consent@lutterodt.org" },
+    });
+    expect(res.status()).toBe(400);
+  });
+
+  test("rejects a malformed address", async ({ request }) => {
+    const res = await request.post("/api/newsletter/subscribe", {
+      data: { email: "nope", consent: true },
+    });
+    expect(res.status()).toBe(400);
+  });
+
+  test("does not confirm from a bare token GET, so scanners cannot opt in", async ({
+    request,
+  }) => {
+    const res = await request.get("/api/newsletter/confirm?token=abcdefghijklmnop");
+    expect(res.status()).toBe(202);
+    const body = (await res.json()) as { applied?: boolean };
+    expect(body.applied).toBe(false);
+  });
+
+  test("rejects an unknown confirmation token", async ({ request }) => {
+    const res = await request.get(
+      "/api/newsletter/confirm?token=doesnotexistatall&apply=1"
+    );
+    expect(res.status()).toBe(400);
+  });
+
+  test("rejects a missing token on both endpoints", async ({ request }) => {
+    expect((await request.get("/api/newsletter/confirm")).status()).toBe(400);
+    expect((await request.get("/api/newsletter/unsubscribe")).status()).toBe(400);
+  });
+
+  test("an unknown unsubscribe token 404s rather than erroring", async ({
+    request,
+  }) => {
+    const res = await request.get(
+      "/api/newsletter/unsubscribe?token=doesnotexistatall"
+    );
+    expect(res.status()).toBe(404);
+  });
+
+  test("the confirm and unsubscribe pages render", async ({ page }) => {
+    for (const path of ["/newsletter/confirm", "/newsletter/unsubscribe"]) {
+      const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+      expect(response?.status(), `status for ${path}`).toBe(200);
+      await expect(page.locator("h1")).toBeVisible();
+    }
+  });
+
+  test("a tokenless confirm page explains the problem instead of failing", async ({
+    page,
+  }) => {
+    await page.goto("/newsletter/confirm", { waitUntil: "domcontentloaded" });
+    await expect(
+      page.getByRole("heading", { name: "This link is incomplete" })
+    ).toBeVisible();
   });
 });
