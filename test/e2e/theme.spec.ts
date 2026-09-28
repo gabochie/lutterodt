@@ -1,26 +1,23 @@
 import { test, expect } from "./fixtures/site";
 
-const LIGHT_CREST = 'header img[src="/logo/lutterodt-logo-200.webp"]';
-const DARK_CREST =
-  'header img[src="/logo/lutterodt-dark-black-01010A-800.webp"]';
+const CREST = 'header img[src="/logo/lutterodt-logo-200.webp"]';
 
 function toggle(page: import("@playwright/test").Page) {
   return page.getByRole("button", { name: /Switch to (dark|light) theme/ }).first();
 }
 
 test.describe("theme and crest polarity", () => {
-  test("defaults to light with exactly one crest visible", async ({
+  test("defaults to light with the crest visible", async ({
     page,
     gotoSite,
   }) => {
     await gotoSite("/");
 
     await expect(page.locator("html")).not.toHaveClass(/\bdark\b/);
-    await expect(page.locator(LIGHT_CREST)).toBeVisible();
-    await expect(page.locator(DARK_CREST)).toBeHidden();
+    await expect(page.locator(CREST)).toBeVisible();
   });
 
-  test("toggling to dark swaps to the dark crest and persists the choice", async ({
+  test("the crest stays visible in dark mode and the choice persists", async ({
     page,
     gotoSite,
   }) => {
@@ -29,14 +26,13 @@ test.describe("theme and crest polarity", () => {
     await toggle(page).click();
 
     await expect(page.locator("html")).toHaveClass(/\bdark\b/);
-    await expect(page.locator(DARK_CREST)).toBeVisible();
-    await expect(page.locator(LIGHT_CREST)).toBeHidden();
+    await expect(page.locator(CREST)).toBeVisible();
 
     const stored = await page.evaluate(() => localStorage.getItem("theme"));
     expect(stored).toBe("dark");
   });
 
-  test("exactly one crest is visible in dark mode", async ({
+  test("the crest is not clipped or hidden in dark mode", async ({
     page,
     gotoSite,
   }) => {
@@ -44,19 +40,25 @@ test.describe("theme and crest polarity", () => {
     await toggle(page).click();
     await expect(page.locator("html")).toHaveClass(/\bdark\b/);
 
-    const visible = await page.evaluate(() => {
-      const nodes = Array.from(
-        document.querySelectorAll(
-          'header img[src="/logo/lutterodt-logo-200.webp"], header img[src="/logo/lutterodt-dark-black-01010A-800.webp"]'
-        )
+    const box = await page.locator(CREST).boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.width).toBeGreaterThan(0);
+    expect(box!.height).toBeGreaterThan(0);
+
+    const hidden = await page.evaluate(() => {
+      const node = document.querySelector<HTMLElement>(
+        'header img[src="/logo/lutterodt-logo-200.webp"]'
       );
-      return nodes.filter((node) => {
-        const style = window.getComputedStyle(node);
-        return style.display !== "none" && style.visibility !== "hidden";
-      }).length;
+      if (!node) return true;
+      const style = window.getComputedStyle(node);
+      return (
+        style.display === "none" ||
+        style.visibility === "hidden" ||
+        Number(style.opacity) === 0
+      );
     });
 
-    expect(visible).toBe(1);
+    expect(hidden).toBe(false);
   });
 
   test("theme survives a full page reload", async ({ page, gotoSite }) => {
@@ -68,7 +70,7 @@ test.describe("theme and crest polarity", () => {
     await page.locator("header").first().waitFor({ state: "visible" });
 
     await expect(page.locator("html")).toHaveClass(/\bdark\b/);
-    await expect(page.locator(DARK_CREST)).toBeVisible();
+    await expect(page.locator(CREST)).toBeVisible();
   });
 
   test("honours the system dark preference on a first visit", async ({
@@ -79,10 +81,10 @@ test.describe("theme and crest polarity", () => {
     await gotoSite("/");
 
     await expect(page.locator("html")).toHaveClass(/\bdark\b/);
-    await expect(page.locator(DARK_CREST)).toBeVisible();
+    await expect(page.locator(CREST)).toBeVisible();
   });
 
-  test("toggling back to light restores the light crest", async ({
+  test("toggling back to light keeps the crest visible", async ({
     page,
     gotoSite,
   }) => {
@@ -93,7 +95,6 @@ test.describe("theme and crest polarity", () => {
 
     await toggle(page).click();
     await expect(page.locator("html")).not.toHaveClass(/\bdark\b/);
-    await expect(page.locator(LIGHT_CREST)).toBeVisible();
-    await expect(page.locator(DARK_CREST)).toBeHidden();
+    await expect(page.locator(CREST)).toBeVisible();
   });
 });

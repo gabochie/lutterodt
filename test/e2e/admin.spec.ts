@@ -56,11 +56,25 @@ test.describe("admin login", () => {
 
     await expect(page.locator(PASSWORD)).toHaveAttribute("type", "password");
 
-    await page.getByRole("button", { name: "Show password" }).click();
-    await expect(page.locator(PASSWORD)).toHaveAttribute("type", "text");
+    // The reveal toggle is a client component, so clicks before React has
+    // hydrated are no-ops. Retry until the type actually flips, which keeps
+    // this spec stable under parallel load.
+    const reveal = page.getByRole("button", { name: "Show password" });
+    await expect(reveal).toBeVisible();
+    await expect
+      .poll(
+        async () => {
+          await reveal.click();
+          return page.locator(PASSWORD).getAttribute("type");
+        },
+        { timeout: 15_000 }
+      )
+      .toBe("text");
 
     await page.getByRole("button", { name: "Hide password" }).click();
-    await expect(page.locator(PASSWORD)).toHaveAttribute("type", "password");
+    await expect(page.locator(PASSWORD)).toHaveAttribute("type", "password", {
+      timeout: 15_000,
+    });
   });
 
   test("login fields expose an accessible name", async ({ page }) => {
