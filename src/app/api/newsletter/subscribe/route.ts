@@ -85,7 +85,12 @@ export async function POST(request: Request) {
           // Confirm token is only surfaced when the mail was NOT actually sent
           // (local/dev without RESEND_API_KEY). In production it never appears:
           // it is the emailed link, not a response value.
-          ...(sent.dryRun ? { confirmToken: result.confirmToken } : {}),
+          ...(sent.dryRun
+            ? {
+                confirmToken: result.confirmToken,
+                unsubscribeToken: result.unsubscribeToken,
+              }
+            : {}),
           message: `Almost there — check ${result.email} for a confirmation link.`,
         },
         { status: 202 }

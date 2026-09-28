@@ -251,4 +251,61 @@ test.describe("newsletter opt-in endpoints", () => {
       page.getByRole("heading", { name: "This link is incomplete" })
     ).toBeVisible();
   });
+
+  test("full lifecycle: subscribe, confirm, unsubscribe against the real store", async ({
+    request,
+  }) => {
+    const email = `flow-${Date.now()}@lutterodt.org`;
+
+    const subscribe = await request.post("/api/newsletter/subscribe", {
+      data: { email, name: "Flow", consent: true },
+    });
+    expect(subscribe.status()).toBe(202);
+    const sub = (await subscribe.json()) as {
+      delivery?: string;
+      confirmToken?: string;
+      unsubscribeToken?: string;
+      message?: string;
+    };
+    // No RESEND_API_KEY locally, so a dry run surfaces the tokens for the loop.
+    expect(sub.delivery).toBe("dry-run");
+    expect(sub.confirmToken).toBeTruthy();
+    expect(sub.unsubscribeToken).toBeTruthy();
+    expect(sub.message).toContain("confirmation link");
+
+    const pending = await (await request.get("/api/newsletter/subscribe")).json() as {
+      pending: number;
+      confirmed: number;
+    };
+    const before = pending.confirmed;
+
+    const confirm = await request.get(
+      `/api/newsletter/confirm?token=${sub.confirmToken}&apply=1`
+    );
+    expect(confirm.status()).toBe(200);
+    expect(((await confirm.json()) as { status?: string }).status).toBe("confirmed");
+
+    const after = await (await request.get("/api/newsletter/subscribe")).json() as {
+      confirmed: number;
+    };
+    expect(after.confirmed).toBe(before + 1);
+
+    const again = await request.get(
+      `/api/newsletter/confirm?token=${sub.confirmToken}&apply=1`
+    );
+    expect(again.status()).toBe(400);
+
+    const unsub = await request.get(
+      `/api/newsletter/unsubscribe?token=${sub.unsubscribeToken}`
+    );
+    expect(unsub.status()).toBe(200);
+    expect(((await unsub.json()) as { status?: string }).status).toBe("unsubscribed");
+
+    const done = await (await request.get("/api/newsletter/subscribe")).json() as {
+      confirmed: number;
+      unsubscribed: number;
+    };
+    expect(done.confirmed).toBe(after.confirmed - 1);
+    expect(done.unsubscribed).toBeGreaterThan(0);
+  });
 });
