@@ -71,6 +71,7 @@ export async function POST(request: Request) {
       });
 
       if (!sent.sent && !sent.dryRun) {
+        console.error("newsletter send failed", { email, error: sent.error });
         return Response.json(
           { error: "We could not send the confirmation email. Please try again." },
           { status: 502 }
