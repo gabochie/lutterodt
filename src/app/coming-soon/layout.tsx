@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PwaRegister } from "@/components/shared/PwaRegister";
 
 export const metadata: Metadata = {
   title: "Coming Soon",
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function ComingSoonLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <PwaRegister />
+      {children}
+    </>
+  );
 }
