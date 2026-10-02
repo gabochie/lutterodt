@@ -23,6 +23,35 @@ async function waitForController(page: import("playwright").Page) {
   });
 }
 
+// Wait until the install-time precache has fully populated a cache AND the
+// offline page's own JS chunk is cached, so an offline fallback can both serve
+// the /offline document and hydrate it (its heading is rendered client-side
+// from the RSC stream; without the cached chunk the DOM never fills in).
+async function waitForPrecache(page: import("playwright").Page) {
+  await page.evaluate(async () => {
+    const deadline = Date.now() + 20_000;
+    const offlineChunk = (entries: readonly string[]) =>
+      entries.some((u) => u.includes("/static/chunks/") && u.includes("(main)/offline/"));
+    while (Date.now() < deadline) {
+      const names = await caches.keys();
+      const states = await Promise.all(
+        names.map(async (name) => {
+          const cache = await caches.open(name);
+          const urls = (await cache.keys()).map((k) => k.url);
+          return {
+            name,
+            hasDoc: urls.some((u) => u.endsWith("/offline")),
+            hasChunk: offlineChunk(urls),
+          };
+        })
+      );
+      if (states.some((s) => s.hasDoc && s.hasChunk)) return;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    throw new Error("precache never completed within timeout");
+  });
+}
+
 test.describe("PWA service worker", () => {
   test("registers on the public app and takes control", async ({
     page,
@@ -48,11 +77,14 @@ test.describe("PWA service worker", () => {
   }) => {
     test.setTimeout(90_000);
     // Warm the shell: visiting the routes online caches documents + chunks.
+    // Wait for "load" so the document's JS/CSS chunk graph is also fetched
+    // through the service worker and hits the SW cache before we go offline.
     await gotoSite("/");
     await waitForController(page);
     for (const route of ["/directory", "/history", "/gallery", "/offline"]) {
-      await page.goto(route, { waitUntil: "domcontentloaded" });
+      await page.goto(route, { waitUntil: "load" });
     }
+    await waitForPrecache(page);
 
     await page.context().setOffline(true);
 
@@ -72,7 +104,10 @@ test.describe("PWA service worker", () => {
     test.setTimeout(90_000);
     await gotoSite("/");
     await waitForController(page);
-    await page.goto("/offline", { waitUntil: "domcontentloaded" });
+    // Wait for "load" so /offline's JS/CSS chunks enter the SW cache too;
+    // at "domcontentloaded" the chunk fetches may still be in flight.
+    await page.goto("/offline", { waitUntil: "load" });
+    await waitForPrecache(page);
 
     await page.context().setOffline(true);
 
