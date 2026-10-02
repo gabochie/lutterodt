@@ -23,7 +23,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/92 dark:bg-black/92 backdrop-blur-md border-b border-line">
+    <header className="sticky top-0 z-50 bg-white/92 dark:bg-black/92 backdrop-blur-md border-b border-line pt-safe">
       <nav className="container-main flex items-center justify-between py-[18px]">
         <Link href="/" className="flex items-center gap-3">
           <BrandLockup />
