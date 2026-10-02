@@ -43,4 +43,25 @@ test.describe("public route availability", () => {
 
     expect(response!.status()).toBe(404);
   });
+
+  test.describe("PWA assets", () => {
+    test("/sw.js is served as javascript", async ({ page }) => {
+      const response = await page.request.get("/sw.js");
+      expect(response.status()).toBe(200);
+      expect(response.headers()["content-type"]).toContain("javascript");
+    });
+
+    test("/manifest.webmanifest is servable and complete", async ({ page }) => {
+      const response = await page.request.get("/manifest.webmanifest");
+      expect(response.status()).toBe(200);
+      const manifest = await response.json();
+      expect(manifest.id).toBe("/");
+      expect(manifest.display).toBe("standalone");
+      expect(
+        manifest.icons.some((icon: { purpose?: string }) =>
+          (icon.purpose ?? "any").includes("maskable")
+        )
+      ).toBe(true);
+    });
+  });
 });
