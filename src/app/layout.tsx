@@ -50,6 +50,11 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Lutterodt",
+  },
   openGraph: {
     url: SITE_URL,
     siteName: "The Lutterodt Renaissance",
