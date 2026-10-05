@@ -6,7 +6,7 @@
     "build": "next build --webpack",
     "dev": "next dev",
     "start": "next start",
-    "lint": "eslint src/",
+    "lint": "eslint src/ worker.js",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
