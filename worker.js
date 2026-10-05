@@ -13,6 +13,14 @@
 // no-op. A service binding call stays inside Cloudflare's network and never
 // touches the edge rules, so the pipeline actually runs.
 //
+// Note: this handler is currently dormant. The account is on the Workers Free
+// plan, whose cap is five cron triggers per account, and all five are held by
+// other Workers on it (email-cron x2, gabochie-api, gtpm, onyame). Until that
+// is resolved by upgrading to Workers Paid or freeing a slot, the daily run is
+// driven by .github/workflows/daily-outreach.yml via the workers.dev address.
+// Keep the handler here so enabling "triggers.crons" in wrangler.jsonc is all
+// that is needed to switch back.
+//
 // The route still requires `Authorization: Bearer <CRON_SECRET>`, so the
 // secret is forwarded from the Worker binding.
 

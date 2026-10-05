@@ -1,0 +1,41 @@
+name: Daily Outreach Pipeline
+
+# Scheduled by GitHub rather than a Cloudflare Cron Trigger: this account is on
+# the Workers Free plan, which caps cron triggers at five per account, and all
+# five are held by other Workers on it. See the note in wrangler.jsonc.
+#
+# This calls the workers.dev address, not https://lutterodt.org. The custom
+# domain sits behind a Cloudflare bot challenge that intercepted GitHub
+# Actions' curl and returned an HTML challenge page, which made every run a
+# silent no-op. The workers.dev address is not covered by those edge rules.
+#
+# `-f` makes curl fail on a non-2xx response so a broken run is visible instead
+# of looking successful, and `--retry` covers a transient Worker cold start.
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call daily outreach pipeline
+        run: |
+          status=$(curl -sS -f --retry 3 --retry-delay 5 \
+            -X POST "https://lutterodt.gideonabochie.workers.dev/api/outreach/daily" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -w '%{http_code}' \
+            -o /tmp/outreach-result.json) || {
+              echo "Pipeline request failed"
+              exit 1
+            }
+          echo "HTTP $status"
+          echo "Pipeline result:"
+          cat /tmp/outreach-result.json
+          if [ "$status" != "200" ]; then
+            echo "Expected 200, got $status"
+            exit 1
+          fi

@@ -2,9 +2,16 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": "./worker.js",
 	"name": "lutterodt",
-	"triggers": {
-		"crons": ["0 8 * * *"]
-	},
+	// No "triggers.crons" on purpose. This account is on Workers Free, capped at
+	// five cron triggers per account, and all five belong to other Workers
+	// (email-cron x2, gabochie-api, gtpm, onyame). Adding one here fails with
+	// API error 10072 and silently leaves the daily pipeline unscheduled.
+	//
+	// Until the account is on Workers Paid, or a slot is freed, the daily run is
+	// driven by .github/workflows/daily-outreach.yml against the workers.dev
+	// address. worker.js still carries the `scheduled` handler, so re-adding
+	// `"triggers": { "crons": ["0 8 * * *"] }` here switches back with no code
+	// change. Delete the workflow at the same time to avoid running twice.
 	"compatibility_date": "2026-07-03",
 	"compatibility_flags": [
 		"nodejs_compat",
