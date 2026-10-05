@@ -7,6 +7,9 @@ const PROD_URL = "https://lutterodt.org";
 const smokeOnly = process.argv.some(
   (arg) => arg === "--project=smoke" || arg.includes("project=smoke")
 );
+const unitOnly = process.argv.some(
+  (arg) => arg === "--project=unit" || arg.includes("project=unit")
+);
 
 export default defineConfig({
   testDir: "./test/e2e",
@@ -24,7 +27,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
   projects: [
-    ...(smokeOnly
+    ...(smokeOnly || unitOnly
       ? []
       : [
           {
@@ -36,6 +39,11 @@ export default defineConfig({
           },
         ]),
     {
+      name: "unit",
+      testDir: "./test/unit",
+      use: {},
+    },
+    {
       name: "smoke",
       testMatch: /smoke\.spec\.ts$/,
       use: {
@@ -44,7 +52,7 @@ export default defineConfig({
       },
     },
   ],
-  webServer: smokeOnly
+  webServer: smokeOnly || unitOnly
     ? undefined
     : {
         command: `npm run build && npx next start --port ${LOCAL_PORT}`,
