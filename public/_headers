@@ -6,3 +6,7 @@
 /sw.js
   Cache-Control: no-cache
   Service-Worker-Allowed: /
+# Served as a static asset so the manifest is fetched from the edge, not the Worker.
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=0, must-revalidate
