@@ -89,174 +89,28 @@ function normalizeCountry(raw: string): string {
   return COUNTRY_MAP[raw] || raw;
 }
 
-// Words that appear in titles about the surname or the family but never in a
-// person's own name. A title containing one of these is describing the family,
-// not a specific person, and must not become a profile.
-const NON_PERSON_WORDS = new Set([
-  "the", "and", "of", "in", "on", "at", "to", "for", "from", "with", "about",
-  "meaning", "name", "surname", "last", "family", "families", "genealogy",
-  "genealogical", "history", "origin", "origins", "ancestry", "ancestors",
-  "descendants", "lineage", "tree", "records", "archive", "archives",
-  "wikipedia", "wikimedia", "commons", "category", "categories", "list",
-  "lists", "index", "portal", "site", "website", "home", "page", "pages",
-  "blog", "news", "forum", "photographers", "photographer", "photography",
-  "photos", "gallery", "counsellor", "counselor", "directory", "profiles",
-  "profile", "lookup", "search", "results", "faq", "help", "contact", "us",
-  "vs", "versus", "is", "are", "was", "were", "top", "best", "new", "all",
-  "wikipediaorg", "wikidata", "everything", "guide", "guides", "tips",
-"people", "known", "famous", "notable", "immigrants", "immigrant",
-  "migration", "migrations", "settlers", "settler", "descendant", "roots",
-  "line", "lines", "house", "houses", "estate",
-  "political", "narrative", "narratives", "honoured", "honored",
-  "artists", "artist", "wikipedia", "entries", "entry", "topic", "topics",
-  "media", "mean", "means", "given", "givenname", "frequency", "variants",
-  "notes", "note", "sources", "source", "references", "citation",
-  "arrested", "arrest", "disclose", "disclosed", "police", "charged",
-  "sentenced", "acquitted", "convicted", "murder", "murdered", "probe",
-  "investigation", "jailed", "fraud", "scam", "obituary", "funeral",
-  "lawsuit", "sued", "divorce", "wedding", "anniversary", "tribute",
-  "how", "why", "who", "what", "when", "where", "which", "does", "did",
-  "is", "are", "was", "were", "has", "have", "had", "can", "will",
-]);
-
-// Lowercase nobiliary and patronymic particles that legitimately appear
-// inside a real name, e.g. "Jan van Lutterodt" or "Mills-Lutterodt".
-const NAME_PARTICLES = new Set([
-  "van", "von", "de", "del", "der", "den", "da", "dos", "das", "do",
-  "la", "le", "mac", "mc", "of", "y", "bin", "ibn", "al", "af", "av",
-  "ter", "ten", "op", "vander", "zur", "zum",
-]);
-
-// A name part is only a name part if it is capitalised. This is what
-// separates a person from a news headline: "Lutterodt arrested" and
-// "Police disclose why Counsellor Lutterodt" both contain lowercase words
-// that the surname regex happily swallows, because it is case-insensitive.
-export function isCapitalisedNamePart(token: string): boolean {
-  const letters = token.replace(/[^\w'-]/g, "");
-  if (!letters) return false;
-  if (NAME_PARTICLES.has(letters.toLowerCase())) return true;
-  // Middle initial, e.g. "Georgina T. Wood".
-  if (/^[A-Z]\.?$/.test(token)) return true;
-  return /^[A-Z]/.test(letters);
-}
-
-// Titles and honorifics that may precede or follow a real person's name. These
-// are stripped before validating rather than treated as a rejection.
-const HONORIFICS = new Set([
-  "dr", "prof", "professor", "mr", "mrs", "ms", "miss", "rev", "reverend",
-  "hon", "sir", "dame", "lord", "lady", "ambassador", "amb", "capt", "captain",
-  "col", "colonel", "gen", "general", "sen", "senator", "rep", "president",
-  "her", "his", "their", "ladyship", "lordship", "majesty", "pastor", "father",
-  "chief", "judge", "justice", "baron", "earl", "duke", "count", "countess",
-  "attorney", "counsel", "counsellor", "counselor",
-  "nurse", "doctor", "engineer", "director", "ceo", "md", "phd", "mba",
-  "nee", "born", "b", "c", "d", "jr", "sr", "ii", "iii", "iv",
-]);
-
-function stripHonorifics(name: string): string {
-  return name
-    .replace(/\([^)]*\)/g, " ")          // drop parentheticals: "(photographer)", "(nee Lutterodt)"
-    .replace(/\b[A-Z]\./g, " ")           // drop standalone initials: "George A. G. Lutterodt"
-    .split(/\s+/)
-    .filter((word) => {
-      const lower = word.toLowerCase().replace(/[^\w-]/g, "");
-      if (!lower) return false;
-      if (HONORIFICS.has(lower)) return false;
-      // Single capital letters are initials, e.g. "Georgina T. Wood".
-      if (/^[A-Z]$/.test(word)) return false;
-      return true;
-    })
-    .join(" ")
-    .trim();
-}
-
-// Rejects titles that describe the family, a surname, or a website rather than
-// a person. Real names with initials, honorifics or parentheticals still pass:
-// those are stripped before the keyword check.
-export function isPersonName(name: string): boolean {
-  const trimmed = name.trim();
-  if (!trimmed) return false;
-
-  // HTML entities and markup never appear in a real name.
-  if (/[&<>{}|#_]/.test(trimmed)) return false;
-  // Bare domains such as "lutterodt.com".
-  if (/\.[a-z]{2,4}$/i.test(trimmed) && !trimmed.includes(" ")) return false;
-
-  const cleaned = stripHonorifics(trimmed);
-  if (!cleaned) return false;
-
-  const words = cleaned.split(/\s+/).filter(Boolean);
-  // A person has a forename and a surname, sometimes with middle names.
-  if (words.length < 2 || words.length > 4) return false;
-
-  // Some sources are entirely lowercase, e.g. "fredricka lutterodt". Only
-  // allow that when there is no uppercase anywhere and the surname is present,
-  // so this stays too narrow to admit a lowercase sentence fragment.
-  if (cleaned === cleaned.toLowerCase() && !words.some(isCapitalisedNamePart)) {
-    return /lutterodt/i.test(cleaned);
-  }
-
-  for (const word of words) {
-    const lower = word.toLowerCase().replace(/[^\w-]/g, "");
-    if (NON_PERSON_WORDS.has(lower)) return false;
-    // A bare number is a list position, not a name part.
-    if (/^\d+$/.test(lower)) return false;
-    // Every remaining part must look like a capitalised name part.
-    if (!isCapitalisedNamePart(word)) return false;
-  }
-
-  return true;
-}
-
-export function extractName(title: string, snippet: string): string {
-  // Longest alternatives first, otherwise "Lutterodt" wins over the hyphenated
-  // "Meier-Lutterodt" / "Haldane-Lutterodt" / "Lutterodt-Quarcoo" forms and the
-  // forename is lost. The generic branch catches any "Surname-Lutterodt".
-  const SURNAME_RE = /[A-Za-z]+-Lutterodt|Lutterodt-Quarcoo|Lutterodt|Lutteroth/i;
-
-  // Title and snippet are matched separately. Joining them with a space lets a
-  // pattern span the boundary and invent names such as "Lutterodt Crime" from
-  // a headline that ends with the surname and a snippet that starts with a word.
-  for (const source of [title, snippet]) {
-    const surnameMatch = source.match(SURNAME_RE);
-    if (!surnameMatch) continue;
-    const surname = surnameMatch[0];
-const namePatterns = [
-      // Forename (plus optional middle names or initials) before the surname,
-      // e.g. "Bettina Lutterodt" or "Frederick G. C. Lutterodt".
-      new RegExp(`[A-Z][a-z]+(?:[-'][A-Z][a-z]+)?(?:\\s+(?:[A-Z][a-z]+|[A-Z]\\.))*\\s+${surname}`, "i"),
-      // Surname first, e.g. "Lutterodt Bettina".
-      new RegExp(`${surname}\\s+[A-Z][a-z]+`, "i"),
-    ];
-    for (const pattern of namePatterns) {
-      const m = source.match(pattern);
-      if (m && isPersonName(m[0].trim())) return m[0].trim();
-    }
-  }
-
-  // Fall back to the words surrounding the surname in the title, but only if
-  // the result still looks like a person. Previously this returned the whole
-  // page title, which turned entries like "Meaning of the surname Lutterodt"
-  // into profiles.
+function extractName(title: string, snippet: string): string {
+  const full = `${title} ${snippet}`;
+  const surnameMatch = full.match(/Lutterodt|Lutteroth|Lutterodt-Quarcoo|Mills-Lutterodt/i);
+  if (!surnameMatch) return "";
   const beforePipe = title.split(/[|—–·•]/)[0].trim();
-  const surnameMatch = beforePipe.match(SURNAME_RE);
-  if (surnameMatch) {
-    const surname = surnameMatch[0];
-const words = beforePipe.split(/\s+/);
-    const escaped = surname.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const idx = words.findIndex((w: string) => w.match(new RegExp(escaped, 'i')));
-    if (idx >= 0) {
-      // Walk back from the surname over capitalised tokens only, so a headline
-      // like "Police disclose why Counsellor Lutterodt" yields just the surname
-      // and is rejected, while "Frederick G. C. Lutterodt" yields the full name.
-      let start = idx;
-      while (start > 0 && idx - start < 3 && isCapitalisedNamePart(words[start - 1])) start--;
-      const candidate = words.slice(start, idx + 1).join(" ");
-      if (isPersonName(candidate)) return candidate;
-    }
+  const surname = surnameMatch[0];
+  const namePatterns = [
+    new RegExp(`([A-Z][a-z]+(?:[-'][A-Z][a-z]+)?\\s+)+${surname}`, 'i'),
+    new RegExp(`${surname}\\s+[A-Z][a-z]+`, 'i'),
+  ];
+  for (const pattern of namePatterns) {
+    const m = full.match(pattern);
+    if (m) return m[0].trim();
   }
-
-  return "";
+  const words = beforePipe.split(/\s+/);
+  const idx = words.findIndex((w: string) => w.match(new RegExp(surname, 'i')));
+  if (idx >= 0) {
+    const start = Math.max(0, idx - 2);
+    const end = Math.min(words.length, idx + 2);
+    return words.slice(start, end).join(" ");
+  }
+  return beforePipe;
 }
 
 function extractEmail(text: string): string | null {
@@ -450,21 +304,15 @@ export async function discoverContactEmail(name: string, country: string, env: a
   return { email: foundEmail, linkedin: foundLinkedin, source };
 }
 
-export async function importCandidates(candidates: Candidate[], db: D1Database): Promise<{ imported: { name: string; id: string }[]; duplicates: number; errors: number; rejected: number }> {
+export async function importCandidates(candidates: Candidate[], db: D1Database): Promise<{ imported: { name: string; id: string }[]; duplicates: number; errors: number }> {
   const existing = await db.prepare("SELECT id, name FROM outreach_profiles").all<{ id: string; name: string }>();
   const existingNormals = new Set((existing.results || []).map((p: any) => normalizeName(p.name)));
 
   const imported: { name: string; id: string }[] = [];
   let duplicates = 0;
   let errors = 0;
-  let rejected = 0;
 
   for (const cand of candidates) {
-    // Defence in depth. extractName already filters titles that describe the
-    // surname rather than a person, but candidates can arrive from other
-    // sources too, so re-check before writing anything.
-    if (!isPersonName(cand.name)) { rejected++; continue; }
-
     const normalized = normalizeName(cand.name);
     if (existingNormals.has(normalized)) { duplicates++; continue; }
     let isDuplicate = false;
@@ -491,7 +339,7 @@ export async function importCandidates(candidates: Candidate[], db: D1Database):
     } catch { errors++; }
   }
 
-  return { imported, duplicates, errors, rejected };
+  return { imported, duplicates, errors };
 }
 
 export async function enrichAndQueue(
