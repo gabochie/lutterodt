@@ -16,7 +16,6 @@ export function ReunionLiveFeed() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [form, setForm] = useState({ attendee_name: "", message: "" });
   const [posting, setPosting] = useState(false);
-  const [now, setNow] = useState<number | null>(null);
 
   const fetchUpdates = useCallback(async () => {
     try {
@@ -24,7 +23,6 @@ export function ReunionLiveFeed() {
       if (res.ok) {
         const data = await res.json();
         setUpdates(data);
-        setNow(Date.now());
       }
     } catch {}
   }, []);
@@ -56,10 +54,8 @@ export function ReunionLiveFeed() {
   };
 
   const timeAgo = (iso: string) => {
-    if (now === null) return "";
-    const diff = now - new Date(iso).getTime();
+    const diff = Date.now() - new Date(iso).getTime();
     const mins = Math.floor(diff / 60000);
-    if (mins < 0) return "just now";
     if (mins < 1) return "just now";
     if (mins < 60) return `${mins}m ago`;
     const hrs = Math.floor(mins / 60);
