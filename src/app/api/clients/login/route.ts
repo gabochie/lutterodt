@@ -2,8 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { signClientToken } from "@/lib/cf/auth";
 import { loginSchema, parseBody } from "@/lib/validate";
+import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
+  // Counted before credential verification so brute force burns budget too.
+  const rate = await checkRateLimit(request, "clients-login", LIMITS.login);
+  if (!rate.allowed) return rateLimitedResponse(rate.retryAfter);
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;

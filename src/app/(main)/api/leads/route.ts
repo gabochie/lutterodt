@@ -1,8 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
 import { createContact } from "@/lib/cf/d1";
 import { leadSchema, parseBody } from "@/lib/validate";
+import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
+  const rate = await checkRateLimit(request, "leads", LIMITS.publicWrite);
+  if (!rate.allowed) {
+    const ct0 = request.headers.get("content-type") || "";
+    if (ct0.includes("application/json")) return rateLimitedResponse(rate.retryAfter);
+    return NextResponse.redirect(new URL("/?error=Too+many+requests", request.url));
+  }
   let email = "", name = "", whatsapp = "", subject = "", message = "", category = "";
 
   const ct = request.headers.get("content-type") || "";

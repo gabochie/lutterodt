@@ -9,6 +9,7 @@ import {
 import { sendEmail } from "@/lib/newsletter/email";
 import { siteConfig } from "@/config/site";
 import { parseBody, subscribeSchema } from "@/lib/validate";
+import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 
 /**
  * Double opt-in subscribe endpoint.
@@ -19,6 +20,9 @@ import { parseBody, subscribeSchema } from "@/lib/validate";
  * endpoint cannot be used to test whether someone is on the list.
  */
 export async function POST(request: Request) {
+  const rate = await checkRateLimit(request, "newsletter-subscribe", LIMITS.publicWrite);
+  if (!rate.allowed) return rateLimitedResponse(rate.retryAfter);
+
   let email = "";
   let name = "";
   let consent = false;
