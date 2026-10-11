@@ -89,6 +89,20 @@ health check keeps that gap visible.
   deploys (`gh run list`). Roll back code first (fast), restore data only
   if rows are actually missing.
 
+## 8. Performance notes
+
+- Images are raw `<img loading="lazy">` with explicit dimensions on purpose:
+  `next/image` optimization has no server on Workers. If bandwidth becomes a
+  concern, serve via the `IMAGES` binding (`/cdn-cgi/image/…`) before
+  reaching for anything else.
+- Documents are intentionally uncached at the edge (`s-maxage=0`) while the
+  archive changes fast. When content stabilizes, enable the R2 incremental
+  cache: create a bucket, uncomment `incrementalCache` in
+  `open-next.config.ts`, and add the R2 binding. Until then, do not cache
+  HTML — stale family data is worse than a slow page.
+- `framer-motion` and the duplicate shadcn `ui/` system were removed
+  (2026-10-11, zero imports). One design language: `shared/`.
+
 ## 7. Incident playbook
 
 | Symptom | First check | Then |

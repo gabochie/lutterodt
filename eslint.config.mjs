@@ -21,6 +21,9 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
+      // Raw <img> is intentional: next/image has no optimizer on Cloudflare
+      // Workers, so all images use explicit width/height + loading="lazy".
+      // Revisit only with the Cloudflare Images binding (IMAGES in wrangler).
       "@next/next/no-img-element": "off",
       "react-hooks/set-state-in-effect": "off",
     },
