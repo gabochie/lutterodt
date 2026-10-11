@@ -44,6 +44,7 @@ export async function sendLetter(params: {
         subject: params.subject,
         html: params.html,
       }),
+      signal: AbortSignal.timeout(15_000),
     });
 
     if (!res.ok) {

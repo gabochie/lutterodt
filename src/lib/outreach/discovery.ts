@@ -146,7 +146,9 @@ function extractLinkedin(text: string): string | null {
 
 async function searchDuckDuckGo(query: string): Promise<{ results: Candidate[]; source: string }> {
   const url = "https://html.duckduckgo.com/html/";
-  const res = await fetch(url, {
+  let res: Response;
+  try {
+    res = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -154,7 +156,12 @@ async function searchDuckDuckGo(query: string): Promise<{ results: Candidate[]; 
       "Accept": "text/html,application/xhtml+xml",
     },
     body: `q=${encodeURIComponent(query)}`,
-  });
+    // Workers bill wall-clock CPU: never let a hung provider stall the run.
+    signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    return { results: [], source: "ddg (error)" };
+  }
   if (!res.ok) return { results: [], source: "ddg (failed)" };
   const html = await res.text();
   if (html.length < 500) return { results: [], source: "ddg (empty)" };
@@ -188,6 +195,7 @@ async function searchBrave(query: string, braveKey: string): Promise<{ results: 
     const url = `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=20`;
     const res = await fetch(url, {
       headers: { "X-Subscription-Token": braveKey, "Accept": "application/json" },
+      signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) return { results: [], source: "brave (failed)" };
     const data = await res.json() as BraveSearchResponse;
@@ -212,7 +220,7 @@ async function searchBrave(query: string, braveKey: string): Promise<{ results: 
 async function searchGoogle(query: string, googleKey: string, googleCx: string): Promise<{ results: Candidate[]; source: string }> {
   try {
     const url = `https://www.googleapis.com/customsearch/v1?key=${googleKey}&cx=${googleCx}&q=${encodeURIComponent(query)}`;
-    const res = await fetch(url);
+    const res = await fetch(url, { signal: AbortSignal.timeout(10_000) });
     if (!res.ok) return { results: [], source: "google (failed)" };
     const data = await res.json() as GoogleSearchResponse;
     const items = data.items || [];

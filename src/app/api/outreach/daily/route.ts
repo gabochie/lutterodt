@@ -59,7 +59,9 @@ export async function POST(request: NextRequest) {
 
   const { searchParams } = new URL(request.url);
   const isBatch = searchParams.get("batch") === "true";
-  const count = Math.min(Math.max(parseInt(searchParams.get("count") || (isBatch ? "20" : "1")), 1), 100);
+  // Capped at 25: each unenriched profile costs up to 4 discovery subrequests
+  // and Workers have a hard subrequest ceiling per invocation.
+  const count = Math.min(Math.max(parseInt(searchParams.get("count") || (isBatch ? "20" : "1")), 1), 25);
 
   try {
     const { env } = await getCloudflareContext({ async: true });
