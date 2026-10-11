@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import Link from "next/link";
 import { PageHero } from "@/components/shared/PageHero";
+import { TurnstileWidget } from "@/components/shared/TurnstileWidget";
 
 const tabs = [
   "materials",
@@ -96,6 +97,8 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [form, setForm] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
 
   const set = (key: string, value: string) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -109,6 +112,7 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
     setStatus("sending");
 
     const body: Record<string, string> = { category: activeTab, subject: tabSubjects[activeTab] };
+    if (captchaToken) body.turnstileToken = captchaToken;
     if (form["full-name"]) body.name = form["full-name"];
     if (form["email-address"]) body.email = form["email-address"];
 
@@ -132,6 +136,8 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
       setStatus("success");
       setForm({});
       setConsent(false);
+      setCaptchaToken(null);
+      setCaptchaReset((n) => n + 1);
       setTimeout(() => setStatus("idle"), 4000);
     } catch {
       setStatus("error");
@@ -328,6 +334,7 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
                 <button type="submit" disabled={status === "sending"} className="btn-primary">
                   {status === "sending" ? "Sending..." : "Send Message"}
                 </button>
+                <TurnstileWidget onToken={setCaptchaToken} resetSignal={captchaReset} />
                 <p className="mt-6 text-[12.5px] text-fg/50">
                   By submitting, you agree the Committee may contact you regarding this enquiry. We do not share family contact details externally.
                 </p>

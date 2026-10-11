@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import { createContact } from "@/lib/cf/d1";
 import { leadSchema, parseBody } from "@/lib/validate";
-import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
+import { LIMITS, checkRateLimit, clientIp, rateLimitedResponse } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 export async function POST(request: NextRequest) {
   const rate = await checkRateLimit(request, "leads", LIMITS.publicWrite);
@@ -11,6 +12,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.redirect(new URL("/?error=Too+many+requests", request.url));
   }
   let email = "", name = "", whatsapp = "", subject = "", message = "", category = "";
+  let captchaToken: string | null = null;
 
   const ct = request.headers.get("content-type") || "";
   if (ct.includes("application/json")) {
@@ -21,6 +23,7 @@ export async function POST(request: NextRequest) {
     subject = body.subject || "";
     message = body.message || "";
     category = body.category || "";
+    captchaToken = typeof body.turnstileToken === "string" ? body.turnstileToken : null;
   } else {
     const formData = await request.formData();
     email = (formData.get("email") as string) || "";
@@ -29,6 +32,15 @@ export async function POST(request: NextRequest) {
     subject = (formData.get("subject") as string) || "";
     message = (formData.get("message") as string) || "";
     category = (formData.get("category") as string) || "";
+    captchaToken = (formData.get("cf-turnstile-response") as string) || null;
+  }
+
+  const captcha = await verifyTurnstile(captchaToken, clientIp(request));
+  if (!captcha.ok) {
+    if (ct.includes("application/json")) {
+      return NextResponse.json({ error: "Captcha verification failed. Please try again." }, { status: 400 });
+    }
+    return NextResponse.redirect(new URL("/?error=Captcha+failed", request.url));
   }
 
   const parsed = parseBody(leadSchema, { email, name, whatsapp, subject, message, category });

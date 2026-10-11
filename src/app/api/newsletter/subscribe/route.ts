@@ -9,7 +9,9 @@ import {
 import { sendEmail } from "@/lib/newsletter/email";
 import { siteConfig } from "@/config/site";
 import { parseBody, subscribeSchema } from "@/lib/validate";
-import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
+import { LIMITS, checkRateLimit, clientIp, rateLimitedResponse } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile";
+import { log } from "@/lib/log";
 
 /**
  * Double opt-in subscribe endpoint.
@@ -26,6 +28,7 @@ export async function POST(request: Request) {
   let email = "";
   let name = "";
   let consent = false;
+  let captchaToken: string | null = null;
 
   const contentType = request.headers.get("content-type") || "";
   try {
@@ -34,14 +37,21 @@ export async function POST(request: Request) {
       email = typeof body.email === "string" ? body.email : "";
       name = typeof body.name === "string" ? body.name.slice(0, 120) : "";
       consent = body.consent === true;
+      captchaToken = typeof body.turnstileToken === "string" ? body.turnstileToken : null;
     } else {
       const form = await request.formData();
       email = String(form.get("email") || "");
       name = String(form.get("name") || "").slice(0, 120);
       consent = form.get("consent") === "true" || form.get("consent") === "on";
+      captchaToken = String(form.get("cf-turnstile-response") || "");
     }
   } catch {
     return Response.json({ error: "Could not read the request" }, { status: 400 });
+  }
+
+  const captcha = await verifyTurnstile(captchaToken, clientIp(request));
+  if (!captcha.ok) {
+    return Response.json({ error: "Captcha verification failed. Please try again." }, { status: 400 });
   }
 
   // Recording consent is required, not decorative: it is the only evidence we
@@ -71,7 +81,7 @@ export async function POST(request: Request) {
       });
 
       if (!sent.sent && !sent.dryRun) {
-        console.error("newsletter send failed", { email, error: sent.error });
+        log.error("newsletter.confirm_send_failed", { email, error: sent.error ?? "unknown" });
         return Response.json(
           { error: "We could not send the confirmation email. Please try again." },
           { status: 502 }

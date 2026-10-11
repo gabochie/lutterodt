@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
+import { turnstileConfigured } from "@/lib/turnstile";
 
 interface HealthCheck {
   name: string;
@@ -97,6 +98,15 @@ export async function GET(request: NextRequest) {
       detail: "Cannot read setting",
     });
   }
+
+  // 8. Turnstile bot protection
+  checks.push({
+    name: "Turnstile",
+    status: turnstileConfigured() ? "ok" : "missing",
+    detail: turnstileConfigured()
+      ? "Captcha enforced on public forms"
+      : "TURNSTILE_SECRET_KEY unset — public forms unprotected",
+  });
 
   const allOk = checks.every(c => c.status === "ok");
 

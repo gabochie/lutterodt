@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
+import { TurnstileWidget } from "@/components/shared/TurnstileWidget";
 
 const serviceAreas = [
   {
@@ -23,6 +24,8 @@ export function ServicesClient() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", service_interest: "", message: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,13 +35,15 @@ export function ServicesClient() {
       const res = await fetch("/api/clients/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, turnstileToken: captchaToken }),
       });
       if (!res.ok) {
         const d = await res.json();
         throw new Error(d.error || "Something went wrong");
       }
       setStatus("success");
+      setCaptchaToken(null);
+      setCaptchaReset((n) => n + 1);
       setForm({ name: "", email: "", phone: "", service_interest: "", message: "" });
     } catch (err: unknown) {
       setStatus("error");
@@ -125,6 +130,7 @@ export function ServicesClient() {
                     <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} className="w-full bg-card border border-line px-4 py-3 text-[15px] outline-none focus:border-gold-dim resize-none" rows={3} placeholder="What are you working on?" />
                   </div>
                   {status === "error" && <p className="text-red-600 text-[14px]">{errorMsg}</p>}
+                  <TurnstileWidget onToken={setCaptchaToken} resetSignal={captchaReset} />
                   <button type="submit" disabled={status === "loading"} className="btn-gold w-full disabled:opacity-50">
                     {status === "loading" ? "Sending..." : "Send — I'll reach out"}
                   </button>

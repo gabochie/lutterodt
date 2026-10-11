@@ -1,16 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { parseBody, registerSchema } from "@/lib/validate";
-import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
+import { LIMITS, checkRateLimit, clientIp, rateLimitedResponse } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 export async function POST(request: NextRequest) {
   const rate = await checkRateLimit(request, "clients-register", LIMITS.publicWrite);
   if (!rate.allowed) return rateLimitedResponse(rate.retryAfter);
   try {
+    const raw = (await request.json()) as { turnstileToken?: string };
+    const captcha = await verifyTurnstile(raw.turnstileToken, clientIp(request));
+    if (!captcha.ok) {
+      return NextResponse.json({ error: "Captcha verification failed. Please try again." }, { status: 400 });
+    }
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
 
-    const parsed = parseBody(registerSchema, await request.json());
+    const parsed = parseBody(registerSchema, raw);
     if (!parsed.ok) {
       return NextResponse.json({ error: parsed.error }, { status: 400 });
     }

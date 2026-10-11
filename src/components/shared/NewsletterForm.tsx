@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 type Status = "idle" | "sending" | "pending" | "error";
 
@@ -14,6 +15,8 @@ type Status = "idle" | "sending" | "pending" | "error";
 export function NewsletterForm() {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
@@ -28,7 +31,7 @@ export function NewsletterForm() {
       const res = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, consent }),
+        body: JSON.stringify({ email, consent, turnstileToken: captchaToken }),
       });
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
@@ -47,6 +50,8 @@ export function NewsletterForm() {
       );
       setEmail("");
       setConsent(false);
+      setCaptchaToken(null);
+      setCaptchaReset((n) => n + 1);
     } catch {
       setStatus("error");
       setMessage("Network error. Please try again.");
@@ -117,6 +122,7 @@ export function NewsletterForm() {
           {message}
         </p>
       )}
+      <TurnstileWidget onToken={setCaptchaToken} resetSignal={captchaReset} />
     </div>
   );
 }
