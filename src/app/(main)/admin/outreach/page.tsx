@@ -8,7 +8,7 @@ import {
   ExternalLink,
   Filter,
 } from "lucide-react";
-import type { OutreachRecord, OutreachStatus, OutreachChannel } from "../../api/outreach/route";
+import type { OutreachRecord, OutreachStatus, OutreachChannel } from "@/lib/outreach/types";
 
 const statusLabels: Record<OutreachStatus, string> = {
   not_sent: "Not Sent",

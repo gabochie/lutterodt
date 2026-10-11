@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
 interface AuditItem {
@@ -55,8 +55,8 @@ const D1_TABLES = [
   { name: "outreach_blind_spots", minRows: 0 },
 ];
 
-export async function GET() {
-  if (!(await verifySession())) {
+export async function GET(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

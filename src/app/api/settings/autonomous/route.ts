@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { verifySession, verifyRequestAuth } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
-export async function GET() {
-  if (!(await verifySession())) {
+export async function GET(request: NextRequest) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

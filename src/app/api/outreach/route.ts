@@ -2,22 +2,13 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getSetting, setSetting } from "@/lib/cf/kv";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import type {
+  OutreachChannel,
+  OutreachRecord,
+  OutreachStatus,
+} from "@/lib/outreach/types";
 
-export type OutreachStatus = "not_sent" | "sent" | "replied" | "meeting_booked" | "declined" | "follow_up";
-export type OutreachChannel = "" | "email" | "linkedin" | "phone" | "mail" | "whatsapp" | "other";
-
-export interface OutreachRecord {
-  profileId: string;
-  name: string;
-  category: string;
-  country: string;
-  letter: string | null;
-  status: OutreachStatus;
-  channel: OutreachChannel;
-  dateSent: string | null;
-  notes: string;
-  lastContacted: string | null;
-}
+export type { OutreachChannel, OutreachRecord, OutreachStatus };
 
 const categoryLabels: Record<string, string> = {
   academia: "Academia",

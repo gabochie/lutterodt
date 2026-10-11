@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getSetting, setSetting } from "@/lib/cf/kv";
-import { verifySession } from "@/lib/cf/auth";
+import { verifyRequestAuth } from "@/lib/cf/auth";
 
 export async function GET() {
   const value = await getSetting("budget");
@@ -15,7 +15,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await verifySession())) {
+  if (!(await verifyRequestAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const body = await request.json();
