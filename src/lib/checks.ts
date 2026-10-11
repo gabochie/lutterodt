@@ -164,7 +164,7 @@ export const CHECK_CATEGORIES: CheckCategoryDef[] = [
         check: async () => ({ ok: await apiProtected("/api/articles") }),
       },
       {
-        text: "HMAC-signed cookie session with 14-day expiry",
+        text: "HMAC-signed cookie session with 7-day expiry",
         check: async () => ({ ok: await apiProtected("/api/stats") }),
       },
       {

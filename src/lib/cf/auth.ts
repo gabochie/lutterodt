@@ -32,7 +32,7 @@ function fromB64(data: string): string {
 }
 
 export async function createSession(email: string) {
-  const exp = Date.now() + 14 * 24 * 60 * 60 * 1000;
+  const exp = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const payload = JSON.stringify({ email, exp });
 
   const encoder = new TextEncoder();
@@ -55,7 +55,7 @@ export async function createSession(email: string) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax" as const,
-      maxAge: 1209600,
+      maxAge: 604800,
     },
   };
 }
@@ -129,6 +129,9 @@ export async function verifyRequestCookie(request: NextRequest): Promise<boolean
 }
 
 export async function verifyRequestAuth(request: NextRequest): Promise<boolean> {
+  // Cookie only. The CRON_SECRET bearer path used to be accepted here too,
+  // which meant one leaked secret authorized every admin endpoint — see
+  // verifyCronAuth for the only place Bearer is still honored.
   // 1. Raw Cookie header from request (works on Workers where NextRequest.cookies may be empty)
   const rawCookie = request.headers.get("cookie") || "";
   const parsed = parseCookieHeader(rawCookie);
@@ -137,11 +140,62 @@ export async function verifyRequestAuth(request: NextRequest): Promise<boolean> 
   if (await verifyRequestCookie(request)) return true;
   // 3. next/headers cookies() (server components, pages)
   if (await verifySession()) return true;
-  // 4. Authorization: Bearer <cron-secret>
+  return false;
+}
+
+/**
+ * Cron + admin dual auth, for the scheduled pipeline endpoints ONLY
+ * (GET/POST /api/outreach/daily). Bearer accepts the cron secret;
+ * interactive admin use goes through the session cookie.
+ */
+export async function verifyCronAuth(request: NextRequest): Promise<boolean> {
+  if (await verifyRequestAuth(request)) return true;
   const auth = request.headers.get("authorization") || "";
   const cronSecret = getCronSecret();
-  if (cronSecret && auth.startsWith("Bearer ") && auth.slice(7) === cronSecret) return true;
-  return false;
+  if (!cronSecret || !auth.startsWith("Bearer ")) return false;
+  const presented = auth.slice(7);
+  if (presented.length !== cronSecret.length) return false;
+  let diff = 0;
+  for (let i = 0; i < presented.length; i++) {
+    diff |= presented.charCodeAt(i) ^ cronSecret.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+// --- Client access-code hashing (Phase 3.3) ---
+
+export function timingSafeEqualString(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+/**
+ * SHA-256(access_code) peppered with AUTH_SECRET and scoped to the account
+ * email (so identical codes on two accounts hash differently). WebCrypto —
+ * works on Workers and Node 18+.
+ */
+export async function hashAccessCode(email: string, code: string): Promise<string> {
+  const data = new TextEncoder().encode(`${getSecret()}:${email.toLowerCase()}:${code}`);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+export async function verifyAccessCode(
+  email: string,
+  presented: string,
+  row: { access_code: string; access_code_hash: string }
+): Promise<boolean> {
+  if (row.access_code_hash) {
+    const hash = await hashAccessCode(email, presented);
+    return timingSafeEqualString(hash, row.access_code_hash);
+  }
+  return timingSafeEqualString(presented, row.access_code || "");
 }
 
 // --- Client token HMAC signing ---

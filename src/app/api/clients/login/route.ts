@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { signClientToken } from "@/lib/cf/auth";
+import {
+  hashAccessCode,
+  signClientToken,
+  verifyAccessCode,
+} from "@/lib/cf/auth";
 import { loginSchema, parseBody } from "@/lib/validate";
 import { LIMITS, checkRateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 
@@ -19,11 +23,25 @@ export async function POST(request: NextRequest) {
     const { email, access_code } = parsed.data;
 
     const row = await db.prepare(
-      "SELECT id, name, email, status FROM clients WHERE email = ? AND access_code = ? AND status = 'active'"
-    ).bind(email, access_code).first();
+      "SELECT id, name, email, status, access_code, access_code_hash FROM clients WHERE email = ? AND status = 'active'"
+    ).bind(email).first<{
+      id: number;
+      name: string;
+      email: string;
+      access_code: string;
+      access_code_hash: string;
+    }>();
 
-    if (!row) {
+    if (!row || !(await verifyAccessCode(email, access_code, row))) {
       return NextResponse.json({ error: "Invalid credentials or account not active" }, { status: 401 });
+    }
+
+    // Transparent upgrade: legacy plaintext codes become hashes on login.
+    if (!row.access_code_hash) {
+      const hash = await hashAccessCode(email, access_code);
+      await db.prepare(
+        "UPDATE clients SET access_code_hash = ?, access_code = '', updated_at = ? WHERE id = ?"
+      ).bind(hash, new Date().toISOString(), row.id).run();
     }
 
     const token = await signClientToken({ cid: row.id as number, email: row.email as string, exp: Date.now() + 7 * 86400000 });

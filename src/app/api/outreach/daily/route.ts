@@ -2,12 +2,12 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { generateLetterHtml } from "@/lib/outreach/letter";
 import { isAutonomousMode, sendLetter } from "@/lib/outreach/email";
-import { verifyRequestAuth } from "@/lib/cf/auth";
+import { verifyCronAuth } from "@/lib/cf/auth";
 import { searchQuery, batchSearch, importCandidates, enrichAndQueue, discoverContactEmail, BATCH_QUERIES } from "@/lib/outreach/discovery";
 import { errMessage } from "@/lib/utils";
 
 export async function GET(request: NextRequest) {
-  if (!(await verifyRequestAuth(request))) {
+  if (!(await verifyCronAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await verifyRequestAuth(request))) {
+  if (!(await verifyCronAuth(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

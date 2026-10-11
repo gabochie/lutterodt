@@ -9,6 +9,7 @@ interface Client {
   email: string;
   phone: string;
   access_code: string;
+  code_set?: number;
   status: string;
   notes: string;
   latest_interest: string;
@@ -36,6 +37,8 @@ export default function AdminClientsPage() {
   const [editData, setEditData] = useState<Partial<Client>>({});
   const [newClient, setNewClient] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", access_code: generateCode() });
+  // A fresh code is shown ONCE after save (codes are hashed at rest).
+  const [revealedCode, setRevealedCode] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -63,11 +66,13 @@ export default function AdminClientsPage() {
 
   const saveEdit = async () => {
     if (!editId) return;
-    await fetch("/api/admin/clients", {
+    const r = await fetch("/api/admin/clients", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: editId, ...editData }),
     });
+    const d = (await r.json().catch(() => ({}))) as { access_code?: string };
+    if (d.access_code) setRevealedCode(d.access_code);
     setEditId(null);
     setEditData({});
     fetchData();
@@ -75,11 +80,13 @@ export default function AdminClientsPage() {
 
   const addClient = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("/api/admin/clients", {
+    const r = await fetch("/api/admin/clients", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: 0, ...form, status: "active" }),
     });
+    const d = (await r.json().catch(() => ({}))) as { access_code?: string };
+    if (d.access_code) setRevealedCode(d.access_code);
     setNewClient(false);
     setForm({ name: "", email: "", phone: "", access_code: generateCode() });
     fetchData();
@@ -120,6 +127,18 @@ export default function AdminClientsPage() {
           </button>
         </div>
       </div>
+
+      {revealedCode && (
+        <div className="mb-6 p-4 border border-gold-dim/40 bg-gold-dim/5 flex items-center justify-between gap-4 flex-wrap">
+          <p className="text-[13px]">
+            New access code — copy it now, it cannot be shown again:{" "}
+            <code className="font-mono text-[13px] bg-ivory-dim px-2 py-0.5 rounded-sm text-accent-text">{revealedCode}</code>
+          </p>
+          <button onClick={() => setRevealedCode(null)} className="font-mono text-[10px] tracking-widest uppercase text-fg/50 hover:text-fg">
+            Dismiss
+          </button>
+        </div>
+      )}
 
       <div className="flex items-center gap-4 mb-6 flex-wrap">
         <div className="relative flex-1 max-w-xs">
@@ -162,7 +181,7 @@ export default function AdminClientsPage() {
                 <td className="px-4 py-3 text-[12px] text-fg/60">{c.email}</td>
                 <td className="px-4 py-3 text-[12px] text-fg/60">{c.phone || "—"}</td>
                 <td className="px-4 py-3">
-                  <code className="font-mono text-[11px] bg-ivory-dim px-2 py-0.5 rounded-sm text-accent-text">{c.access_code}</code>
+                  <code className="font-mono text-[11px] bg-ivory-dim px-2 py-0.5 rounded-sm text-accent-text">{c.code_set ? "••••••••" : "not set"}</code>
                 </td>
                 <td className="px-4 py-3 text-[12px] text-fg/60">{c.latest_interest || "—"}</td>
                 <td className="px-4 py-3">
@@ -172,7 +191,7 @@ export default function AdminClientsPage() {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <button onClick={() => { setEditId(c.id); setEditData({ name: c.name, email: c.email, phone: c.phone, access_code: c.access_code, status: c.status, notes: c.notes }); }} className="font-mono text-[9px] tracking-widest uppercase px-2 py-1 border border-line text-fg/40 hover:text-fg">
+                    <button onClick={() => { setEditId(c.id); setEditData({ name: c.name, email: c.email, phone: c.phone, access_code: "", status: c.status, notes: c.notes }); }} className="font-mono text-[9px] tracking-widest uppercase px-2 py-1 border border-line text-fg/40 hover:text-fg">
                       Edit
                     </button>
                     {c.status !== "active" && (
@@ -216,9 +235,9 @@ export default function AdminClientsPage() {
                 <input value={editData.phone || ""} onChange={e => setEditData({ ...editData, phone: e.target.value })} className="w-full px-3 py-2 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim" />
               </div>
               <div>
-                <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Access Code</label>
+                <label className="block font-mono text-[9px] tracking-widest uppercase text-fg/40 mb-1.5">Access Code (blank = keep current)</label>
                 <div className="flex gap-2">
-                  <input value={editData.access_code || ""} onChange={e => setEditData({ ...editData, access_code: e.target.value })} className="flex-1 px-3 py-2 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim font-mono" />
+                  <input value={editData.access_code || ""} placeholder="••••••••" onChange={e => setEditData({ ...editData, access_code: e.target.value })} className="flex-1 px-3 py-2 text-[13px] border border-line bg-surface text-fg focus:outline-none focus:border-gold-dim font-mono" />
                   <button onClick={() => setEditData({ ...editData, access_code: generateCode() })} className="font-mono text-[9px] tracking-widest uppercase px-3 py-2 border border-line text-fg/50 hover:text-fg">Regen</button>
                 </div>
               </div>
