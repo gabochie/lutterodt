@@ -15,10 +15,15 @@ test.describe("accessibility baseline", () => {
       const blocking = results.violations.filter((v) =>
         ["critical", "serious"].includes(v.impact || "")
       );
-      expect(
-        blocking.map((v) => `${v.id}: ${v.nodes.length} node(s)`),
-        `axe violations on ${path}`
-      ).toEqual([]);
+      const detail = blocking.map(
+        (v) =>
+          `${v.id}(${v.impact}): ` +
+          v.nodes
+            .slice(0, 5)
+            .map((n) => `${JSON.stringify(n.target)} :: ${(n.html || "").slice(0, 140)}`)
+            .join(" | ")
+      );
+      expect(detail, `axe violations on ${path}`).toEqual([]);
     });
   }
 });
