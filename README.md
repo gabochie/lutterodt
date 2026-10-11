@@ -35,6 +35,7 @@ A living digital archive and family directory for the Lutterodt family — docum
 | --- | --- |
 | `npm run dev` | Start the development server |
 | `npm run build` | Local production build (`next build --webpack`) |
+| `npm run build:worker` | Worker bundle build (what CI validates and deploy ships) |
 | `npm run preview` | OpenNext build + local Cloudflare preview |
 | `npm run deploy` | OpenNext build + deploy to Cloudflare Workers |
 | `npm run upload` | OpenNext build + generate upload assets |

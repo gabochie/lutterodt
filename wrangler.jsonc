@@ -35,5 +35,28 @@
 			"database_id": "97d98aca-dd7c-4730-b93d-75f474d2342c",
 			"migrations_dir": "migrations"
 		}
-	]
+	],
+	// Preview environment for PRs (workers.dev). One-time setup:
+	//   wrangler d1 create lutterodt-db-preview
+	//   wrangler kv namespace create LUTTERODT_KV_PREVIEW
+	// then replace the placeholder IDs below.
+	"env": {
+		"preview": {
+			"name": "lutterodt-preview",
+			"d1_databases": [
+				{
+					"binding": "LUTTERODT_D1",
+					"database_name": "lutterodt-db-preview",
+					"database_id": "REPLACE_WITH_PREVIEW_DB_ID",
+					"migrations_dir": "migrations"
+				}
+			],
+			"kv_namespaces": [
+				{
+					"binding": "LUTTERODT_KV",
+					"id": "REPLACE_WITH_PREVIEW_KV_ID"
+				}
+			]
+		}
+	}
 }
