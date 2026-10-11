@@ -123,6 +123,7 @@
 - [x] Public takedown/correction flow → `research_drafts(correction)` + 14-day SLA + existing review UI; privacy notice updated; provenance column (`0003`).
 - [x] Lean perf pass: removed `framer-motion` + dead shadcn system; images documented as intentional; R2 cache path in runbook.
 - [x] Vitest unit suite (22 tests: sanitize, schemas, discovery, auth crypto) in CI; axe baseline spec (5 pages green); firefox-smoke project in CI.
+- [x] AA contrast pass: new `gold-ink`/`fg-muted` tokens with dark-mode pairs; label linkage; link underlines. CI fully green (test+e2e+build+deploy).
 
 ---
 
