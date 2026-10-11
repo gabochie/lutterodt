@@ -409,7 +409,7 @@ function Field({
     <div className={`field ${full ? "col-span-full" : ""} ${className || ""}`}>
       <label
         htmlFor={id}
-        className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 mb-2 block"
+        className="font-mono text-[10.5px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-2 block"
       >
         {label}
       </label>

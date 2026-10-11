@@ -36,9 +36,12 @@ export function Crest({ className }: { className?: string }) {
 export function BrandLockup({
   className,
   nameClassName,
+  onDark,
 }: {
   className?: string;
   nameClassName?: string;
+  /** The lockup sits on an always-dark surface (footer, hero overlays). */
+  onDark?: boolean;
 }) {
   return (
     <span className={cn("flex items-center gap-3", className)}>
@@ -52,7 +55,12 @@ export function BrandLockup({
         >
           Lutterodt
         </span>
-        <span className="font-mono text-[9.5px] tracking-widest uppercase whitespace-nowrap text-gold-ink dark:text-gold-light">
+        <span
+          className={cn(
+            "font-mono text-[9.5px] tracking-widest uppercase whitespace-nowrap text-gold-ink dark:text-gold-light",
+            onDark && "text-gold-light"
+          )}
+        >
           {siteConfig.tagline}
         </span>
       </span>
