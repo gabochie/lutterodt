@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
             </ul>
             <p>
               To correct or remove a directory listing, use our{" "}
-              <Link href="/takedown" className="text-gold-light hover:underline">
+              <Link href="/takedown" className="text-gold-ink dark:text-gold-light hover:underline">
                 correction &amp; removal request form
               </Link>
               . Every request is reviewed by the archive committee within 14 days.
@@ -92,7 +92,7 @@ export default function PrivacyPolicyPage() {
             <h4>7. Contact Us</h4>
             <p>
               Questions about privacy? Contact the Renaissance Committee at{' '}
-              <Link href="mailto:gabochie@gmail.com" className="text-gold-light hover:underline">
+              <Link href="mailto:gabochie@gmail.com" className="text-gold-ink dark:text-gold-light hover:underline">
                 gabochie@gmail.com
               </Link>
             </p>
