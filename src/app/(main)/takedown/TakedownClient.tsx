@@ -70,17 +70,18 @@ export function TakedownClient() {
             <form onSubmit={handleSubmit} className="bg-surface border border-line p-6 space-y-4">
               <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
                 <div>
-                  <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Your Name *</label>
-                  <input required value={form.name} onChange={(e) => set("name", e.target.value)} className={inputCls} />
+                  <label htmlFor="takedown-name" className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Your Name *</label>
+                  <input id="takedown-name" required value={form.name} onChange={(e) => set("name", e.target.value)} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Your Email (for follow-up)</label>
-                  <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className={inputCls} />
+                  <label htmlFor="takedown-email" className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Your Email (for follow-up)</label>
+                  <input id="takedown-email" type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className={inputCls} />
                 </div>
               </div>
               <div>
-                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Profile This Concerns *</label>
+                <label htmlFor="takedown-profile" className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Profile This Concerns *</label>
                 <input
+                  id="takedown-profile"
                   required
                   value={form.profile_name}
                   onChange={(e) => set("profile_name", e.target.value)}
@@ -89,15 +90,16 @@ export function TakedownClient() {
                 />
               </div>
               <div>
-                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Request Type *</label>
-                <select value={form.kind} onChange={(e) => set("kind", e.target.value)} className={inputCls}>
+                <label htmlFor="takedown-kind" className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Request Type *</label>
+                <select id="takedown-kind" value={form.kind} onChange={(e) => set("kind", e.target.value)} className={inputCls}>
                   <option value="correction">Correct inaccurate details</option>
                   <option value="removal">Remove the listing</option>
                 </select>
               </div>
               <div>
-                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Details *</label>
+                <label htmlFor="takedown-details" className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Details *</label>
                 <textarea
+                  id="takedown-details"
                   required
                   value={form.details}
                   onChange={(e) => set("details", e.target.value)}
