@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { sendLetter } from "@/lib/outreach/email";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
@@ -17,7 +16,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
 
     const { queue_id } = await request.json();
     if (!queue_id) {

@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
@@ -8,7 +7,6 @@ export async function GET() {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
-    await ensureOutreachTables(db);
     const { results } = await db.prepare(
       "SELECT * FROM reunion_updates ORDER BY created_at DESC LIMIT 100"
     ).all();
@@ -25,7 +23,6 @@ export async function POST(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
-    await ensureOutreachTables(db);
     const body = await request.json();
     const { attendee_name, message, photo_url } = body;
     if (!attendee_name) {

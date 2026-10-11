@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import {
   approveDraft,
   createDraft,
@@ -26,7 +25,6 @@ export async function GET(request: NextRequest) {
   }
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
     const url = new URL(request.url);
     const status = url.searchParams.get("status") || "";
     const limit = Math.min(parseInt(url.searchParams.get("limit") || "100"), 200);

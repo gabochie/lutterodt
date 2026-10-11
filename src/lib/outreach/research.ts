@@ -1,5 +1,4 @@
 import {
-  ensureOutreachTables,
   type DbResearchDraft,
   type ResearchClaim,
   type ResearchDraftKind,
@@ -60,7 +59,6 @@ export async function createDraft(
     summary?: string;
   }
 ): Promise<number> {
-  await ensureOutreachTables(db);
   const now = new Date().toISOString();
   const res = await db
     .prepare(
@@ -105,7 +103,6 @@ export async function approveDraft(
   draftId: number,
   reviewer: string
 ): Promise<ApprovalResult> {
-  await ensureOutreachTables(db);
   const draft = await db
     .prepare("SELECT * FROM research_drafts WHERE id = ?")
     .bind(draftId)
@@ -188,7 +185,6 @@ export async function rejectDraft(
   reviewer: string,
   reason?: string
 ): Promise<void> {
-  await ensureOutreachTables(db);
   const now = new Date().toISOString();
   await db
     .prepare(

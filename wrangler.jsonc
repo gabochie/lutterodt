@@ -32,7 +32,8 @@
 		{
 			"binding": "LUTTERODT_D1",
 			"database_name": "lutterodt-db",
-			"database_id": "97d98aca-dd7c-4730-b93d-75f474d2342c"
+			"database_id": "97d98aca-dd7c-4730-b93d-75f474d2342c",
+			"migrations_dir": "migrations"
 		}
 	]
 }

@@ -27,22 +27,6 @@ async function getDB(): Promise<D1Database> {
  * so an opted-in subscriber is never conflated with a contact enquiry and can
  * be exported or honoured as a suppression list independently.
  */
-export async function ensureSubscribersTable(db: D1Database): Promise<void> {
-  await db.prepare(
-    "CREATE TABLE IF NOT EXISTS newsletter_subscribers (" +
-      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-      "email TEXT NOT NULL UNIQUE, " +
-      "name TEXT DEFAULT '', " +
-      "status TEXT NOT NULL DEFAULT 'pending', " +
-      "confirm_token TEXT NOT NULL, " +
-      "unsubscribe_token TEXT NOT NULL, " +
-      "confirmed_at TEXT, " +
-      "unsubscribed_at TEXT, " +
-      "source TEXT DEFAULT 'footer', " +
-      "created_at TEXT DEFAULT (datetime('now')))"
-  ).run();
-}
-
 function randomToken(): string {
   const bytes = new Uint8Array(32);
   crypto.getRandomValues(bytes);
@@ -73,7 +57,6 @@ export async function subscribe(email: string, name = "", source = "footer"): Pr
   email: string;
 }> {
   const db = await getDB();
-  await ensureSubscribersTable(db);
 
   const address = normalizeEmail(email);
   const existing = await db
@@ -130,7 +113,6 @@ export async function subscribe(email: string, name = "", source = "footer"): Pr
 export async function confirmSubscription(confirmToken: string): Promise<boolean> {
   if (!confirmToken) return false;
   const db = await getDB();
-  await ensureSubscribersTable(db);
 
   const row = await db
     .prepare(
@@ -161,7 +143,6 @@ export async function confirmSubscription(confirmToken: string): Promise<boolean
 export async function unsubscribe(unsubscribeToken: string): Promise<boolean> {
   if (!unsubscribeToken) return false;
   const db = await getDB();
-  await ensureSubscribersTable(db);
 
   const row = await db
     .prepare(
@@ -185,7 +166,6 @@ export async function unsubscribe(unsubscribeToken: string): Promise<boolean> {
 
 export async function listConfirmedSubscribers(): Promise<{ email: string; name: string }[]> {
   const db = await getDB();
-  await ensureSubscribersTable(db);
   const { results } = await db
     .prepare(
       "SELECT email, name FROM newsletter_subscribers WHERE status = 'confirmed' ORDER BY created_at"
@@ -196,7 +176,6 @@ export async function listConfirmedSubscribers(): Promise<{ email: string; name:
 
 export async function countSubscribers(): Promise<{ pending: number; confirmed: number; unsubscribed: number }> {
   const db = await getDB();
-  await ensureSubscribersTable(db);
   const row = await db
     .prepare(
       "SELECT " +

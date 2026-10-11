@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { isValidEmail, normalizeEmail } from "@/lib/newsletter/store";
 
 const MAX_NAME = 120;
@@ -12,7 +11,6 @@ export async function POST(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
-    await ensureOutreachTables(db);
 
     const { name, email, phone, service_interest, message } = await request.json();
     const cleanName = typeof name === "string" ? name.trim().slice(0, MAX_NAME) : "";

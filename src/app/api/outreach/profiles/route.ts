@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables, normalizeName, slugify } from "@/lib/outreach/d1";
+import { normalizeName, slugify } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
   }
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
 
     const url = new URL(request.url);
     const search = url.searchParams.get("search") || "";
@@ -57,7 +56,6 @@ export async function POST(request: NextRequest) {
   }
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
 
     const body = await request.json();
     const { name, dob, category, country, achievement, contact_email = "", contact_linkedin = "", notes = "", image_url = "" } = body;

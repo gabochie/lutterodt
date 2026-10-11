@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { outreachProfiles, blindSpots } from "@/data/outreach-profiles";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
@@ -17,7 +16,6 @@ export async function POST(request: NextRequest) {
   }
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
 
     // Seed profiles (skip existing — id is PK so INSERT OR IGNORE)
     const stmt = db.prepare(

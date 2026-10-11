@@ -15,8 +15,6 @@ export async function createContact(data: {
   status?: string;
 }): Promise<void> {
   const db = await getDB();
-  // Ensure whatsapp column exists (migration)
-  try { await db.prepare("ALTER TABLE contacts ADD COLUMN whatsapp TEXT DEFAULT ''").run(); } catch { /* already exists */ }
   await db
     .prepare(
       "INSERT INTO contacts (email, name, whatsapp, subject, message, category, status) VALUES (?, ?, ?, ?, ?, ?, ?)"

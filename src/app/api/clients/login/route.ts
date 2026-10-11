@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { signClientToken } from "@/lib/cf/auth";
 
 export async function POST(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
-    await ensureOutreachTables(db);
 
     const { email, access_code } = await request.json();
     if (!email || !access_code) {

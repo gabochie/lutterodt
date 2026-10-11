@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
@@ -15,7 +14,6 @@ export async function GET(request: NextRequest) {
   }
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
 
     const [total, hasLetters, statusCounts, queueCounts, blindSpotCounts] = await Promise.all([
       db.prepare("SELECT COUNT(*) as c FROM outreach_profiles").first<{ c: number }>(),

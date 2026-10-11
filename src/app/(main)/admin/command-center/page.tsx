@@ -1,5 +1,4 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { cookies } from "next/headers";
 import { CommandCenterClient } from "./CommandCenterClient";
 import { errMessage } from "@/lib/utils";
@@ -11,7 +10,6 @@ async function fetchInitialData() {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
     const kv = env.LUTTERODT_KV as KVNamespace;
-    await ensureOutreachTables(db);
 
     const today = new Date().toISOString().split("T")[0];
 

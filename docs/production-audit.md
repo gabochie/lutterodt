@@ -20,10 +20,10 @@
 - **Risk:** bot spams leads/newsletter → D1 fills with junk, Resend quota burns on confirmation emails, confirmation-email oracle via timing (minor). Cloudflare WAF rate-limiting rules are not in repo (not-as-code).
 - **Fix:** add edge rate limiting (KV-backed sliding window or Cloudflare Rate Limiting Rules as code + documented in `wrangler.jsonc` comment); add Turnstile on `register` + `subscribe` + `contact`; add `isValidEmail` check to `clients/register` (reuse `lib/newsletter/store.ts:isValidEmail`).
 
-### P0-3. DB schema managed by `ensureOutreachTables()` + inline `ALTER TABLE` try/catch — no migrations, no rollback
-- **Evidence:** `src/lib/outreach/d1.ts:76-106` (`CREATE TABLE IF NOT EXISTS` × 9 + `ALTER TABLE ... ADD COLUMN image_url` in try/catch), `src/lib/cf/d1.ts:19` (`ALTER TABLE contacts ADD COLUMN whatsapp` in try/catch on **every** `createContact()` call). Every API route calls `ensureOutreachTables(db)` per request (`profiles/route.ts:18,60`, `daily/route.ts:17,68`, `send/route.ts:19`).
-- **Risk:** concurrent deploys → DDL races; failed migration = silent swallow (`catch {}`); no down-migration, no schema versioning, no seed control; per-request DDL adds latency + Workers CPU. The `init` route seeds from stale `src/data/outreach-profiles.ts` (`init/route.ts:4`), compounding drift (§2).
-- **Fix:** introduce `migrations/` folder (numbered SQL, e.g. `0001_init.sql` …) + `migrate` script via `wrangler d1 migrations apply` (local + prod); remove per-request `ensure*` calls (run once at deploy); delete inline ALTERs.
+### P0-3. [FIXED 2026-10-11] Numbered migrations own the schema
+- `migrations/0001_init.sql` consolidates all 14 tables + 3 hot-path indexes (verified: applies cleanly to local D1, 18 commands). `ensureOutreachTables`, `ensureSubscribersTable`, and both inline `ALTER TABLE` try/catch blocks deleted; all 18 per-request call sites removed. `wrangler.jsonc` sets `migrations_dir`; `npm run db:migrate:{local,remote}` added; deploy job applies remote migrations before shipping.
+- _(Original issue kept for history: schema was managed by per-request `ensureOutreachTables()` + inline ALTER try/catch — DDL races, silent failures, no versioning.)_
+- _(Original issue kept for history: schema was managed by per-request `ensureOutreachTables()` + inline ALTER try/catch — DDL races, silent failures, no versioning. Evidence was `src/lib/outreach/d1.ts:76-106`, `src/lib/cf/d1.ts:19`, per-request calls in every API route.)_
 
 ### P0-4. [REMOVED 2026-10-11] Flutterwave integration deleted
 - **Decision:** payments via Flutterwave removed entirely per owner request. Deleted `src/app/api/flutterwave/{initialize,webhook}/`, removed `FLUTTERWAVE_SECRET_HASH` from `.dev.vars.example` + `README.md`.
@@ -101,8 +101,8 @@
 - [ ] Update `checks.ts:180-184` default-value references.
 
 ### Phase 1 — Quality gates + migrations (3–5 days)
-- [ ] `any`-cleanup sprint → flip `lint` + `e2e` to blocking in `ci-cd.yml`.
-- [ ] Numbered D1 migrations (`migrations/0001_init.sql` …) + `migrate` npm script; remove per-request `ensureOutreachTables` + inline ALTERs.
+- [x] `any`-cleanup sprint → `lint` + `e2e` blocking in `ci-cd.yml` (done 2026-10-11: 92 problems → 0, `--max-warnings 0`). _(P0-1 closed.)_
+- [x] Numbered D1 migrations (`migrations/0001_init.sql`) + migrate scripts; per-request `ensure*` + inline ALTERs deleted. _(P0-3 closed.)_
 - [ ] CI `build` = `opennextjs-cloudflare build`; add PR preview deploy.
 - [ ] Zod schemas on all public write routes (`register`, `subscribe`, `leads`, `prelaunch`, `contacts`, `profiles POST/PATCH`); cap `letter_html`.
 

@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
@@ -14,7 +13,6 @@ export async function GET(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
     const url = new URL(request.url);
     const status = url.searchParams.get("status") || "";
     let sql = "SELECT * FROM outreach_queue";
@@ -32,7 +30,6 @@ export async function POST(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
     const body = await request.json();
     const { profile_id, name, letter_html, recipient_email, scheduled_date } = body;
     if (!profile_id || !name || !letter_html) {

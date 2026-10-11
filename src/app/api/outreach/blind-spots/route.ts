@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
@@ -13,7 +12,6 @@ export async function GET(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
     const { results } = await db.prepare("SELECT * FROM outreach_blind_spots ORDER BY priority DESC, progress ASC").all();
     return NextResponse.json(results || []);
   } catch (err) {
@@ -25,7 +23,6 @@ export async function POST(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const db = await getDB();
-    await ensureOutreachTables(db);
     const body = await request.json();
     const { id, title, priority = "medium", status = "open", progress = 0 } = body;
     if (!id || !title) return NextResponse.json({ error: "id and title required" }, { status: 400 });

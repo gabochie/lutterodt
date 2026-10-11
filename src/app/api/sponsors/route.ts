@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { generateSponsorshipLetterHtml } from "@/lib/outreach/sponsor-letter";
 import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
 
@@ -72,7 +71,6 @@ export async function POST(request: NextRequest) {
     if (queue) {
       const { env } = await getCloudflareContext({ async: true });
       const db = env.LUTTERODT_D1 as D1Database;
-      await ensureOutreachTables(db);
 
       const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
       const now = new Date().toISOString();

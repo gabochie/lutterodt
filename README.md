@@ -41,6 +41,8 @@ A living digital archive and family directory for the Lutterodt family — docum
 | `npm run lint` | ESLint over `src/` |
 | `npm run typecheck` | TypeScript type checking |
 | `npm run cf-typegen` | Regenerate `cloudflare-env.d.ts` from `wrangler.json` |
+| `npm run db:migrate:local` | Apply D1 migrations to the local database |
+| `npm run db:migrate:remote` | Apply D1 migrations to production (also runs on every deploy) |
 
 ## Environment Variables
 
@@ -54,6 +56,10 @@ A living digital archive and family directory for the Lutterodt family — docum
 | `NEXT_PUBLIC_CLARITY_ID` | No | Microsoft Clarity project ID |
 
 Do not commit `.dev.vars`, `.env*`, or build output containing baked-in environment variables.
+
+## Data & Migrations
+
+Database schema lives in `migrations/` as numbered SQL files (baseline: `0001_init.sql`, 14 tables + hot-path indexes). Never create tables from request code — run `npm run db:migrate:local` in dev; production migrates automatically in the deploy job (`ci-cd.yml`).
 
 ## Project Structure
 

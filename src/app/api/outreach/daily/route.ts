@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { generateLetterHtml } from "@/lib/outreach/letter";
 import { isAutonomousMode, sendLetter } from "@/lib/outreach/email";
 import { verifyRequestAuth } from "@/lib/cf/auth";
@@ -15,7 +14,6 @@ export async function GET(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
-    await ensureOutreachTables(db);
 
     const today = new Date().toISOString().split("T")[0];
 
@@ -66,7 +64,6 @@ export async function POST(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
-    await ensureOutreachTables(db);
 
     const result: {
       mode: string;
