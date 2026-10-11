@@ -44,8 +44,22 @@ test.describe("public route availability", () => {
     expect(response!.status()).toBe(404);
   });
 
-  test.describe("PWA assets", () => {
-    test("/sw.js is served as javascript", async ({ page }) => {
+  test.describe("service health", () => {
+    test("/api/health reports D1 and KV reachability", async ({ page }) => {
+      const response = await page.request.get("/api/health");
+      expect(response.status()).toBe(200);
+      const body = (await response.json()) as {
+        healthy?: boolean;
+        d1?: { ok?: boolean };
+        kv?: { ok?: boolean };
+      };
+      expect(body.d1?.ok, "D1 unreachable").toBe(true);
+      expect(body.kv?.ok, "KV unreachable").toBe(true);
+      expect(body.healthy).toBe(true);
+    });
+  });
+
+  test.describe("PWA assets", () => {    test("/sw.js is served as javascript", async ({ page }) => {
       const response = await page.request.get("/sw.js");
       expect(response.status()).toBe(200);
       expect(response.headers()["content-type"]).toContain("javascript");

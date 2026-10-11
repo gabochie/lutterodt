@@ -11,9 +11,27 @@ jobs:
 
     steps:
       - name: Call daily outreach pipeline
+        id: pipeline
         run: |
-          curl -s -X POST "https://lutterodt.org/api/outreach/daily" \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            -o /tmp/outreach-result.json
-          echo "Pipeline result:"
+          HTTP=$(curl -s -o /tmp/outreach-result.json -w "%{http_code}" -X POST "https://lutterodt.org/api/outreach/daily" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}")
+          echo "HTTP $HTTP"
           cat /tmp/outreach-result.json
+          if [ "$HTTP" -lt 200 ] || [ "$HTTP" -ge 300 ]; then
+            echo "Pipeline returned HTTP $HTTP"
+            exit 1
+          fi
+
+      - name: Alert on failure (GitHub issue)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="[alert] Daily outreach pipeline failed"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
+          BODY="Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} (daily 08:00 UTC). Check /api/outreach/health and the worker logs."
+          if [ -z "$EXISTING" ]; then
+            gh issue create --title "$TITLE" --label "operations" --body "$BODY"
+          else
+            gh issue comment "$EXISTING" --body "Still failing. $BODY"
+          fi

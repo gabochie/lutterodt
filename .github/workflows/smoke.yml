@@ -27,3 +27,17 @@ jobs:
 
       - name: Run production smoke tests
         run: npx playwright test --project=smoke
+
+      - name: Alert on failure (GitHub issue)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="[alert] Production smoke tests failing"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number // empty')
+          BODY="Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. Check https://lutterodt.org/api/health and the worker logs."
+          if [ -z "$EXISTING" ]; then
+            gh issue create --title "$TITLE" --label "operations" --body "$BODY"
+          else
+            gh issue comment "$EXISTING" --body "Still failing. $BODY"
+          fi
