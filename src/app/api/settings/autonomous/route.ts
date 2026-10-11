@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifySession, verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 export async function GET() {
   if (!(await verifySession())) {
@@ -14,8 +15,8 @@ export async function GET() {
       enabled: mode === "true",
       raw: mode,
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
         ? "Autonomous mode activated — pipeline will now auto-send letters"
         : "Autonomous mode deactivated — pipeline is in dry-run mode",
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

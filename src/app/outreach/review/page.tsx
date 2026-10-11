@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from "react";
 
@@ -48,7 +47,7 @@ export default function ReviewPage() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [reviewer, setReviewer] = useState("");
   const [acting, setActing] = useState<number | null>(null);
-  const [result, setResult] = useState<{ id: number; applied: any[]; skipped: any[] } | null>(null);
+  const [result, setResult] = useState<{ id: number; applied: { field: string; value: string }[]; skipped: { field: string; reason: string }[] } | null>(null);
 
   async function load(status: string) {
     setLoading(true);

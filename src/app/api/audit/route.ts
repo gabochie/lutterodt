@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifySession } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 interface AuditItem {
   category: string;
@@ -144,47 +145,47 @@ export async function GET() {
     try {
       const row = await db.prepare(`SELECT COUNT(*) as c FROM ${t.name}`).first<{ c: number }>();
       items.push({ category: "database", name: t.name, status: "pass", detail: `${row?.c || 0} rows` });
-    } catch (e: any) {
-      items.push({ category: "database", name: t.name, status: "fail", detail: e.message || "Table error" });
+    } catch (e) {
+      items.push({ category: "database", name: t.name, status: "fail", detail: errMessage(e) || "Table error" });
     }
   }
 
   // === DATABASE SCHEMA CHECK ===
   try {
     const col = await db.prepare("SELECT id, name, category, country, achievement, contact_email, letter_status, created_at FROM outreach_profiles LIMIT 1").all();
-    items.push({ category: "database", name: "profiles schema", status: "pass", detail: `${(col.results?.[0] as any) ? "Columns OK" : "Empty table (ok)"}` });
-  } catch (e: any) {
-    items.push({ category: "database", name: "profiles schema", status: "fail", detail: e.message });
+    items.push({ category: "database", name: "profiles schema", status: "pass", detail: `${col.results?.[0] ? "Columns OK" : "Empty table (ok)"}` });
+  } catch (e) {
+    items.push({ category: "database", name: "profiles schema", status: "fail", detail: errMessage(e) });
   }
 
   try {
     const col = await db.prepare("SELECT id, profile_id, name, status, letter_html, scheduled_date FROM outreach_queue LIMIT 1").all();
-    items.push({ category: "database", name: "queue schema", status: "pass", detail: `${(col.results?.[0] as any) ? "Columns OK" : "Empty table (ok)"}` });
-  } catch (e: any) {
-    items.push({ category: "database", name: "queue schema", status: "fail", detail: e.message });
+    items.push({ category: "database", name: "queue schema", status: "pass", detail: `${col.results?.[0] ? "Columns OK" : "Empty table (ok)"}` });
+  } catch (e) {
+    items.push({ category: "database", name: "queue schema", status: "fail", detail: errMessage(e) });
   }
 
   // === KV STORE ===
   try {
     const comingSoon = await env.LUTTERODT_KV.get("coming_soon");
     items.push({ category: "kv", name: "coming_soon flag", status: comingSoon === "false" ? "pass" : comingSoon ? "warn" : "pass", detail: comingSoon === "false" ? "Site is live" : comingSoon ? `Flag set: ${comingSoon}` : "Flag unset" });
-  } catch (e: any) {
-    items.push({ category: "kv", name: "coming_soon flag", status: "fail", detail: e.message });
+  } catch (e) {
+    items.push({ category: "kv", name: "coming_soon flag", status: "fail", detail: errMessage(e) });
   }
 
   try {
     const autoMode = await env.LUTTERODT_KV.get("autonomous_mode");
     items.push({ category: "kv", name: "autonomous_mode", status: autoMode === "true" ? "warn" : "pass", detail: autoMode === "true" ? "ACTIVE — letters will send" : "Inactive (dry-run)" });
-  } catch (e: any) {
-    items.push({ category: "kv", name: "autonomous_mode", status: "fail", detail: e.message });
+  } catch (e) {
+    items.push({ category: "kv", name: "autonomous_mode", status: "fail", detail: errMessage(e) });
   }
 
   // === AUTH ===
   try {
     const loginRes = await fetch(`${origin}/api/login`, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "email=admin@lutterodt.org&password=test" });
     items.push({ category: "auth", name: "Login endpoint", status: loginRes.status === 307 || loginRes.status === 302 ? "pass" : "pass", detail: `${loginRes.status} (redirects to admin)` });
-  } catch (e: any) {
-    items.push({ category: "auth", name: "Login endpoint", status: "fail", detail: e.message });
+  } catch (e) {
+    items.push({ category: "auth", name: "Login endpoint", status: "fail", detail: errMessage(e) });
   }
 
   // Compute summary

@@ -16,6 +16,8 @@ export function ReunionLiveFeed() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [form, setForm] = useState({ attendee_name: "", message: "" });
   const [posting, setPosting] = useState(false);
+  // Snapshot of "now" for relative timestamps — read during render would be impure.
+  const [now, setNow] = useState(() => Date.now());
 
   const fetchUpdates = useCallback(async () => {
     try {
@@ -29,7 +31,7 @@ export function ReunionLiveFeed() {
 
   useEffect(() => {
     fetchUpdates();
-    const interval = setInterval(fetchUpdates, 30000);
+    const interval = setInterval(() => { fetchUpdates(); setNow(Date.now()); }, 30000);
     return () => clearInterval(interval);
   }, [fetchUpdates]);
 
@@ -54,7 +56,7 @@ export function ReunionLiveFeed() {
   };
 
   const timeAgo = (iso: string) => {
-    const diff = Date.now() - new Date(iso).getTime();
+    const diff = now - new Date(iso).getTime();
     const mins = Math.floor(diff / 60000);
     if (mins < 1) return "just now";
     if (mins < 60) return `${mins}m ago`;

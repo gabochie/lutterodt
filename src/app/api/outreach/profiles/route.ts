@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables, normalizeName, slugify } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(url.searchParams.get("offset") || "0");
 
     let sql = "SELECT id, name, dob, category, country, achievement, has_letter, letter_status, contact_email, contact_linkedin, notes, image_url, created_at, updated_at FROM outreach_profiles WHERE 1=1";
-    const params: any[] = [];
+    const params: unknown[] = [];
 
     if (search) {
       sql += " AND (LOWER(name) LIKE ? OR LOWER(achievement) LIKE ?)";
@@ -45,8 +45,8 @@ export async function GET(request: NextRequest) {
     const { results } = await db.prepare(sql).bind(...params).all();
 
     return NextResponse.json({ profiles: results, total: countResult?.c || 0 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
       "SELECT id, name, category, country, achievement, contact_email, contact_linkedin FROM outreach_profiles"
     ).all<{ id: string; name: string; category: string; country: string; achievement: string; contact_email: string; contact_linkedin: string }>();
 
-    const matches = (existing.results || []).filter((p: any) => {
+    const matches = (existing.results || []).filter((p) => {
       const pNorm = normalizeName(p.name);
       // Exact match after normalization
       if (pNorm === normalized) return true;
@@ -105,12 +105,12 @@ export async function POST(request: NextRequest) {
     ).bind(id, `New Lutterodt added: ${name} (${country})`, now).run();
 
     return NextResponse.json({ id, name, ok: true }, { status: 201 });
-  } catch (err: any) {
+  } catch (err) {
     // Handle unique constraint violation
-    if (err.message?.includes("UNIQUE")) {
+    if (errMessage(err)?.includes("UNIQUE")) {
       return NextResponse.json({ error: "A profile with this slug already exists. Try a more specific name." }, { status: 409 });
     }
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -127,7 +127,7 @@ export async function PATCH(request: NextRequest) {
 
     const now = new Date().toISOString();
     const updates: string[] = [];
-    const params: any[] = [];
+    const params: unknown[] = [];
     for (const [k, v] of Object.entries(fields)) {
       if (["name", "dob", "category", "country", "achievement", "letter_status", "letter_html", "contact_email", "contact_linkedin", "notes", "has_letter", "image_url"].includes(k)) {
         updates.push(`${k} = ?`);
@@ -142,8 +142,8 @@ export async function PATCH(request: NextRequest) {
 
     await db.prepare(`UPDATE outreach_profiles SET ${updates.join(", ")} WHERE id = ?`).bind(...params).run();
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -164,7 +164,7 @@ export async function DELETE(request: NextRequest) {
     await db.prepare("DELETE FROM outreach_profiles WHERE id = ?").bind(id).run();
 
     return NextResponse.json({ ok: true, deleted: id });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

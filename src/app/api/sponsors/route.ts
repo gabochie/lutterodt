@@ -4,6 +4,7 @@ import { generateSponsorshipLetterHtml } from "@/lib/outreach/sponsor-letter";
 import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 const CONTRIBUTION_TYPES = [
   {
@@ -86,7 +87,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ html, name, email, organization, queued: !!queue });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

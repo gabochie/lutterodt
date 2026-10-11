@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -26,9 +26,9 @@ export async function GET(request: NextRequest) {
     ]);
 
     const byStatus: Record<string, number> = {};
-    (statusCounts.results || []).forEach((r: any) => { byStatus[r.letter_status] = r.c; });
+    (statusCounts.results || []).forEach((r) => { byStatus[r.letter_status] = r.c; });
     const queueByStatus: Record<string, number> = {};
-    (queueCounts.results || []).forEach((r: any) => { queueByStatus[r.status] = r.c; });
+    (queueCounts.results || []).forEach((r) => { queueByStatus[r.status] = r.c; });
 
     const categories = await db.prepare("SELECT category, COUNT(*) as c FROM outreach_profiles GROUP BY category ORDER BY c DESC").all();
 
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
       blindSpots: blindSpotCounts?.c || 0,
       categories: categories.results || [],
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 export async function GET() {
   try {
@@ -12,8 +13,8 @@ export async function GET() {
       "SELECT * FROM reunion_updates ORDER BY created_at DESC LIMIT 100"
     ).all();
     return NextResponse.json(results || []);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest) {
       "INSERT INTO reunion_updates (attendee_name, message, photo_url, created_at) VALUES (?, ?, ?, ?)"
     ).bind(attendee_name, message || "", photo_url || "", now).run();
     return NextResponse.json({ id: meta?.last_row_id, ok: true }, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

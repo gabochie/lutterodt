@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { Search, RefreshCw, Plus, Check, X } from "lucide-react";
+import { Search, RefreshCw, Plus, Check } from "lucide-react";
 
 interface Client {
   id: number;

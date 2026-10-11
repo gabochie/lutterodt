@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { outreachProfiles, blindSpots } from "@/data/outreach-profiles";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ ok: true, profiles: outreachProfiles.length, blindSpots: blindSpots.length });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

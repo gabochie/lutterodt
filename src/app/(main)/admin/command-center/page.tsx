@@ -2,6 +2,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { cookies } from "next/headers";
 import { CommandCenterClient } from "./CommandCenterClient";
+import { errMessage } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -15,12 +16,12 @@ async function fetchInitialData() {
     const today = new Date().toISOString().split("T")[0];
 
     const [existingToday, pendingCount, sentCount, totalProfiles, noLetterCount, logs, autoMode] = await Promise.all([
-      db.prepare("SELECT id, profile_id, name, status FROM outreach_queue WHERE scheduled_date = ? AND status = 'pending' LIMIT 1").bind(today).first<any>(),
+      db.prepare("SELECT id, profile_id, name, status FROM outreach_queue WHERE scheduled_date = ? AND status = 'pending' LIMIT 1").bind(today).first<{ id: number; profile_id: string; name: string; status: string }>(),
       db.prepare("SELECT COUNT(*) as c FROM outreach_queue WHERE status = 'pending'").first<{ c: number }>(),
       db.prepare("SELECT COUNT(*) as c FROM outreach_queue WHERE status = 'sent'").first<{ c: number }>(),
       db.prepare("SELECT COUNT(*) as c FROM outreach_profiles").first<{ c: number }>(),
       db.prepare("SELECT COUNT(*) as c FROM outreach_profiles WHERE letter_status IN ('none','new')").first<{ c: number }>(),
-      db.prepare("SELECT id, profile_id, action, details, created_at FROM outreach_log ORDER BY created_at DESC LIMIT 10").all<any>(),
+      db.prepare("SELECT id, profile_id, action, details, created_at FROM outreach_log ORDER BY created_at DESC LIMIT 10").all<{ id: number; profile_id: string; action: string; details: string; created_at: string }>(),
       kv.get("autonomous_mode"),
     ]);
 
@@ -60,11 +61,11 @@ async function fetchInitialData() {
       health: { healthy: healthChecks.every(c => c.status === "ok"), checks: healthChecks },
       autonomous: { enabled: autoMode === "true" },
       logs: logs.results || [],
-      audit: null as any,
+      audit: null,
       sessionToken,
     };
-  } catch (err: any) {
-    return { daily: null, health: null, autonomous: null, logs: [], audit: null, error: err.message, sessionToken: "" };
+  } catch (err) {
+    return { daily: null, health: null, autonomous: null, logs: [], audit: null, error: errMessage(err), sessionToken: "" };
   }
 }
 

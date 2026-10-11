@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
+import { errMessage } from "@/lib/utils";
 
 export default function ClientLoginPage() {
   const router = useRouter();
@@ -24,9 +24,9 @@ export default function ClientLoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch (err) {
       setStatus("error");
-      setErrorMsg(err.message);
+      setErrorMsg(errMessage(err));
     }
   };
 

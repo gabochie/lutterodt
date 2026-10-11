@@ -3,6 +3,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { sendLetter } from "@/lib/outreach/email";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -91,7 +92,7 @@ export async function POST(request: NextRequest) {
       error: result.error,
       recipient: to,
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

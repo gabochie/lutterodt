@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { errMessage } from "@/lib/utils";
 
 export async function GET(
   _request: Request,
@@ -19,7 +20,7 @@ export async function GET(
     }
 
     return NextResponse.json({ profile });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

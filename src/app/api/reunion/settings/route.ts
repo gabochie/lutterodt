@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 const ID_KEY = "reunion:livestream_id";
 const LIVE_KEY = "reunion:livestream_live";
@@ -11,8 +12,8 @@ export async function GET() {
     const livestream_id = (await env.LUTTERODT_KV.get(ID_KEY)) || "";
     const livestream_live = (await env.LUTTERODT_KV.get(LIVE_KEY)) === "true";
     return NextResponse.json({ livestream_id, livestream_live });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
       ok: true,
     };
     return NextResponse.json(result);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

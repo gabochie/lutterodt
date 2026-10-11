@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
@@ -10,6 +9,7 @@ import {
   type ResearchClaim,
 } from "@/lib/outreach/research";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     let sql =
       "SELECT id, kind, profile_id, name, claims_json, summary, status, reviewed_by, reviewed_at, created_at, updated_at FROM research_drafts WHERE 1=1";
-    const params: any[] = [];
+    const params: unknown[] = [];
     if (status) {
       if (!VALID_STATUS.includes(status)) {
         return NextResponse.json({ error: "invalid status" }, { status: 400 });
@@ -53,8 +53,8 @@ export async function GET(request: NextRequest) {
       counts[s] = row?.c || 0;
     }
     return NextResponse.json({ drafts: results, counts });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -95,8 +95,8 @@ export async function POST(request: NextRequest) {
       summary: summary || "",
     });
     return NextResponse.json({ id, status: "draft" });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -126,7 +126,7 @@ export async function PATCH(request: NextRequest) {
     }
     await rejectDraft(db, Number(id), reviewer.trim(), reason || "");
     return NextResponse.json({ id, status: "rejected" });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

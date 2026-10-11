@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -16,8 +16,8 @@ export async function GET(request: NextRequest) {
     await ensureOutreachTables(db);
     const { results } = await db.prepare("SELECT * FROM outreach_blind_spots ORDER BY priority DESC, progress ASC").all();
     return NextResponse.json(results || []);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       "INSERT OR REPLACE INTO outreach_blind_spots (id, title, priority, status, progress, created_at, updated_at) VALUES (?, ?, ?, ?, ?, COALESCE((SELECT created_at FROM outreach_blind_spots WHERE id = ?), ?), ?)"
     ).bind(id, title, priority, status, progress, id, now, now).run();
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

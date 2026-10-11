@@ -1,7 +1,22 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
+
+interface DuplicateMatch {
+  id: string;
+  name: string;
+  country: string;
+  category: string;
+}
+
+interface AddedProfile {
+  id: string;
+  name: string;
+  achievement?: string;
+  category?: string;
+  country?: string;
+  dob?: string;
+}
 
 const categories = ["academia", "healthcare", "law", "business", "creative", "service", "engineering", "historical"];
 
@@ -16,8 +31,8 @@ export default function DiscoverPage() {
     achievement: "", contact_email: "", contact_linkedin: "", notes: "",
   });
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState<{ ok: boolean; message: string; matches?: any[] } | null>(null);
-  const [lastAdded, setLastAdded] = useState<any>(null);
+  const [result, setResult] = useState<{ ok: boolean; message: string; matches?: DuplicateMatch[] } | null>(null);
+  const [lastAdded, setLastAdded] = useState<AddedProfile | null>(null);
   const [preview, setPreview] = useState<{ name: string; html: string } | null>(null);
   const [generating, setGenerating] = useState(false);
 
@@ -89,7 +104,7 @@ export default function DiscoverPage() {
           {result.matches && result.matches.length > 0 && (
             <div className="mt-3">
               <p className="font-mono text-[10px] tracking-widest uppercase text-accent-text mb-2">Potential duplicates:</p>
-              {result.matches.map((m: any) => (
+              {result.matches.map((m) => (
                 <div key={m.id} className="text-[12px] text-fg/70 mb-1">
                   {m.name} &middot; {m.country} &middot; {m.category}
                 </div>

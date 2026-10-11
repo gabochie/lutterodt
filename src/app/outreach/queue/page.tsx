@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from "react";
 import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
@@ -15,9 +14,19 @@ interface QueueItem {
   created_at: string;
 }
 
+interface QueueProfile {
+  id: string;
+  name: string;
+  achievement: string;
+  category: string;
+  country: string;
+  dob: string;
+  bio?: string;
+}
+
 export default function QueuePage() {
   const [queue, setQueue] = useState<QueueItem[]>([]);
-  const [profiles, setProfiles] = useState<any[]>([]);
+  const [profiles, setProfiles] = useState<QueueProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -34,7 +43,7 @@ export default function QueuePage() {
     }).catch(() => setLoading(false));
   }, []);
 
-  async function previewLetter(profile: any) {
+  async function previewLetter(profile: QueueProfile) {
     setGenerating(profile.id);
     setError("");
     try {

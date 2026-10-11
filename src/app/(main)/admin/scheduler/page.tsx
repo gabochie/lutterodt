@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import {
   ChevronLeft, ChevronRight, Loader2, Calendar as CalIcon,
-  CheckCircle2, Clock, Send, AlertCircle, X, Plus,
+  CheckCircle2, Clock, X, Plus,
 } from "lucide-react";
 
 interface Profile {
@@ -74,7 +74,7 @@ export default function SchedulerPage() {
   );
 
   function getDays(): { date: string; day: number; item?: QueueItem; isPast: boolean }[] {
-    const days: any[] = [];
+    const days: { date: string; day: number; item?: QueueItem; isPast: boolean }[] = [];
     for (let i = 0; i < startDow; i++) {
       days.push({ date: "", day: 0, isPast: false });
     }

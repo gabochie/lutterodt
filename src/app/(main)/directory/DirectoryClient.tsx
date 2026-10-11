@@ -49,7 +49,7 @@ export function DirectoryClient() {
   }, []);
 
   const isVerified = data?.isVerified ?? false;
-  const profiles = data?.profiles ?? [];
+  const profiles = useMemo(() => data?.profiles ?? [], [data]);
   const countries = data?.countries ?? [];
   const categoryLabels = data?.categoryLabels ?? {};
   const totalProfiles = data?.totalProfiles ?? 0;

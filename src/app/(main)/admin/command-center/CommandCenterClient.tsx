@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, errMessage } from "@/lib/utils";
 import {
   Activity, Clock, Send, Shield, ToggleLeft, Play, CheckCircle2, XCircle, AlertTriangle,
   Power, PowerOff, Calendar, Loader2, FileText, Zap, Mail, Search,
@@ -10,12 +10,49 @@ import {
 
 type HealthCheck = { name: string; status: "ok" | "missing" | "error"; detail: string };
 
+interface PendingLetter {
+  id: number;
+  profile_id: string;
+  name: string;
+  status: string;
+}
+
+interface DailyStats {
+  totalProfiles?: number;
+  noLetter?: number;
+  pendingInQueue?: number;
+  totalSent?: number;
+}
+
+interface DailyData {
+  mode?: string;
+  today?: { date: string; hasPendingLetter: boolean; pendingLetter: PendingLetter | null } | null;
+  stats?: DailyStats;
+  auto_send?: { sent?: boolean; dryRun?: boolean; error?: string } | null;
+}
+
+interface LogEntry {
+  id: number;
+  profile_id: string;
+  action: string;
+  details: string;
+  created_at: string;
+}
+
+interface BatchResult {
+  error?: string;
+  search?: { totalCandidates?: number; perQuery?: { query: string; count: number; source: string }[] };
+  import?: { imported?: { name: string; id: string }[]; duplicates?: number; errors?: number };
+  enrichment?: { enriched?: number };
+  queue?: { count?: number; queued?: { id: number; profile_id: string; name: string }[] };
+}
+
 interface InitialData {
-  daily: any;
+  daily: DailyData | null;
   health: { healthy: boolean; checks: HealthCheck[] } | null;
   autonomous: { enabled: boolean } | null;
-  logs: any[];
-  audit: any;
+  logs: LogEntry[];
+  audit: null;
   error?: string;
   sessionToken?: string;
 }
@@ -26,14 +63,14 @@ function authHeaders(token: string): Record<string, string> {
 
 export function CommandCenterClient({ initial }: { initial: InitialData }) {
   const token = initial.sessionToken || "";
-  const [daily, setDaily] = useState<any>(initial.daily);
+  const [daily, setDaily] = useState<DailyData | null>(initial.daily);
   const [health] = useState<{ healthy: boolean; checks: HealthCheck[] } | null>(initial.health);
   const [autonomous, setAutonomous] = useState<{ enabled: boolean } | null>(initial.autonomous);
-  const [logs] = useState<any[]>(initial.logs);
+  const [logs] = useState<LogEntry[]>(initial.logs);
   const [toggling, setToggling] = useState(false);
   const [runningPipeline, setRunningPipeline] = useState(false);
   const [runningBatch, setRunningBatch] = useState(false);
-  const [batchResult, setBatchResult] = useState<any>(null);
+  const [batchResult, setBatchResult] = useState<BatchResult | null>(null);
   const [batchSize, setBatchSize] = useState(25);
   const [showQueryBreakdown, setShowQueryBreakdown] = useState(false);
   const [error, setError] = useState<string | null>(initial.error || null);
@@ -52,8 +89,8 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
       } else {
         setError(`Toggle failed: ${res.status}`);
       }
-    } catch (e: any) {
-      setError(`Toggle error: ${e.message}`);
+    } catch (e) {
+      setError(`Toggle error: ${errMessage(e)}`);
     } finally { setToggling(false); }
   };
 
@@ -66,8 +103,8 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
       } else {
         setError(`Pipeline run failed: ${res.status}`);
       }
-    } catch (e: any) {
-      setError(`Pipeline error: ${e.message}`);
+    } catch (e) {
+      setError(`Pipeline error: ${errMessage(e)}`);
     } finally { setRunningPipeline(false); }
   };
 
@@ -83,13 +120,15 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
         const err = await res.text().catch(() => "Unknown error");
         setBatchResult({ error: `HTTP ${res.status}: ${err.slice(0, 200)}` });
       }
-    } catch (e: any) {
-      setBatchResult({ error: e.message });
+    } catch (e) {
+      setBatchResult({ error: errMessage(e) });
     } finally { setRunningBatch(false); }
   };
 
   const todayStatus = daily?.today?.hasPendingLetter ? "pending" : "idle";
   const stats = daily?.stats || {};
+  const perQuery = batchResult?.search?.perQuery ?? [];
+  const importedProfiles = batchResult?.import?.imported ?? [];
 
   return (
     <div className="space-y-8">
@@ -309,18 +348,18 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             </div>
           )}
 
-          {batchResult?.search?.perQuery && (
+          {perQuery.length > 0 && (
             <div>
               <button
                 onClick={() => setShowQueryBreakdown(!showQueryBreakdown)}
                 className="flex items-center gap-1.5 text-xs text-fg/50 hover:text-fg/70 transition-colors mb-3"
               >
                 {showQueryBreakdown ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                Query breakdown ({batchResult.search.perQuery.length} queries)
+                Query breakdown ({perQuery.length} queries)
               </button>
               {showQueryBreakdown && (
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-                  {batchResult.search.perQuery.map((q: any, i: number) => (
+                  {perQuery.map((q, i) => (
                     <div key={i} className="flex items-center justify-between bg-charcoal/[0.02] rounded px-3 py-1.5">
                       <span className="text-xs text-fg/70 truncate max-w-[200px]">{q.query}</span>
                       <span className="text-[10px] font-mono text-fg/40 whitespace-nowrap ml-2">{q.count} · {q.source}</span>
@@ -331,11 +370,11 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             </div>
           )}
 
-          {batchResult?.import?.imported?.length > 0 && (
+          {importedProfiles.length > 0 && (
             <div className="mt-4 pt-4 border-t border-line">
               <div className="text-xs text-fg/50 mb-2">Newly imported profiles:</div>
               <div className="max-h-24 overflow-y-auto space-y-1">
-                {batchResult.import.imported.map((p: any, i: number) => (
+                {importedProfiles.map((p, i) => (
                   <div key={i} className="text-xs text-fg/70 flex items-center gap-2">
                     <Globe className="w-3 h-3 text-green-500 shrink-0" />
                     {p.name}
@@ -359,7 +398,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             <div className="text-xs text-fg/40 text-center py-6">No events yet</div>
           ) : (
             <div className="space-y-2 max-h-[280px] overflow-y-auto pr-1">
-              {logs.map((log: any) => (
+              {logs.map((log) => (
                 <div key={log.id} className="flex items-start gap-3 py-1.5 border-b border-line/50 last:border-0">
                   <span className={cn(
                     "w-2 h-2 rounded-full mt-1 shrink-0",

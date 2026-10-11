@@ -59,10 +59,6 @@ export function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
-function confirmationExpiry(): string {
-  return new Date(Date.now() + CONFIRM_TTL_DAYS * 86_400_000).toISOString();
-}
-
 /**
  * Registers (or re-registers) a subscriber in the pending state.
  *

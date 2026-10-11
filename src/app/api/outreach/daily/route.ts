@@ -5,6 +5,7 @@ import { generateLetterHtml } from "@/lib/outreach/letter";
 import { isAutonomousMode, sendLetter } from "@/lib/outreach/email";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { searchQuery, batchSearch, importCandidates, enrichAndQueue, discoverContactEmail, BATCH_QUERIES } from "@/lib/outreach/discovery";
+import { errMessage } from "@/lib/utils";
 
 export async function GET(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) {
@@ -48,8 +49,8 @@ export async function GET(request: NextRequest) {
         totalSent: sentCount?.c || 0,
       },
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -67,7 +68,15 @@ export async function POST(request: NextRequest) {
     const db = env.LUTTERODT_D1 as D1Database;
     await ensureOutreachTables(db);
 
-    const result: any = {
+    const result: {
+      mode: string;
+      search: unknown;
+      import: unknown;
+      enrichment: unknown;
+      queue: unknown;
+      auto_send: unknown;
+      stats: unknown;
+    } = {
       mode: isBatch ? "batch" : "daily",
       search: null,
       import: null,
@@ -93,7 +102,7 @@ export async function POST(request: NextRequest) {
       result.queue = { queued: queued.queued, count: queued.queued.length };
     } else {
       // Original daily mode: single search, single queue
-      let searchResult = await searchQuery("Lutterodt", env);
+      const searchResult = await searchQuery("Lutterodt", env);
       result.search = { totalCandidates: searchResult.results.length, source: searchResult.source };
 
       const imported = await importCandidates(searchResult.results, db);
@@ -199,7 +208,7 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json({ ok: true, ...result });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

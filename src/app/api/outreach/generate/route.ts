@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { generateLetterHtml } from "@/lib/outreach/letter";
+import { errMessage } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) {
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       isHistorical: category === "historical" || category === "History",
     });
     return NextResponse.json({ html });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

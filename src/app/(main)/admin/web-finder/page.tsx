@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Loader2, CheckCircle2, XCircle, AlertTriangle, Globe, ExternalLink, RefreshCw, FileText } from "lucide-react";
+import { Search, Loader2, CheckCircle2, XCircle, AlertTriangle, Globe, ExternalLink, FileText } from "lucide-react";
 
 interface Candidate {
   name: string;

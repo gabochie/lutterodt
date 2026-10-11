@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ensureOutreachTables } from "@/lib/outreach/d1";
 import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -18,13 +18,13 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const status = url.searchParams.get("status") || "";
     let sql = "SELECT * FROM outreach_queue";
-    const params: any[] = [];
+    const params: unknown[] = [];
     if (status) { sql += " WHERE status = ?"; params.push(status); }
     sql += " ORDER BY scheduled_date ASC, created_at ASC";
     const { results } = await db.prepare(sql).bind(...params).all();
     return NextResponse.json(results || []);
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
     await db.prepare("INSERT INTO outreach_log (profile_id, action, details, created_at) VALUES (?, 'queued', ?, ?)").bind(profile_id, `Letter queued for ${name}`, now).run();
 
     return NextResponse.json({ id: meta?.last_row_id, profile_id, ok: true }, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }
 
@@ -63,7 +63,7 @@ export async function PATCH(request: NextRequest) {
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
     const now = new Date().toISOString();
     const updates = ["updated_at = ?"];
-    const params: any[] = [now];
+    const params: unknown[] = [now];
     if (status) { updates.push("status = ?"); params.push(status); }
     if (error !== undefined) { updates.push("error = ?"); params.push(error); }
     if (resend_email_id) { updates.push("resend_email_id = ?"); params.push(resend_email_id); }
@@ -72,7 +72,7 @@ export async function PATCH(request: NextRequest) {
     params.push(id);
     await db.prepare(`UPDATE outreach_queue SET ${updates.join(", ")} WHERE id = ?`).bind(...params).run();
     return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

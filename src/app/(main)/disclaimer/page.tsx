@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Tag } from "@/components/shared/Tag";
 import { PageHero } from "@/components/shared/PageHero";
 
 export const metadata: Metadata = {

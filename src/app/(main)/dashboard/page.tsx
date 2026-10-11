@@ -40,7 +40,6 @@ export default function DashboardPage() {
   const router = useRouter();
   const [services, setServices] = useState<Service[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,7 +50,6 @@ export default function DashboardPage() {
       .then(([servicesData, projectsData]) => {
         setServices(servicesData);
         setProjects(projectsData);
-        setName("");
       })
       .catch(() => {
         router.push("/dashboard/login");

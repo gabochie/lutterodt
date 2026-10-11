@@ -4,7 +4,6 @@ import {
   confirmationEmailHtml,
   countSubscribers,
   isValidEmail,
-  normalizeEmail,
   subscribe,
   type SubscriberStatus,
 } from "@/lib/newsletter/store";

@@ -1,10 +1,10 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from "react";
+import type { DbBlindSpot } from "@/lib/outreach/d1";
 
 export default function BlindSpotsPage() {
-  const [spots, setSpots] = useState<any[]>([]);
+  const [spots, setSpots] = useState<DbBlindSpot[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
 

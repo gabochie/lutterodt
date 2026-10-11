@@ -10,69 +10,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/projects" },
 };
 
-const projects = [
-  {
-    id: "archive",
-    title: "Lutterodt Renaissance",
-    tag: "Live",
-    status: "Active",
-    summary: "The family legacy OS you are on right now — a searchable directory of 200+ Lutterodt profiles, a historical timeline, photographic gallery, outreach pipeline, and the living family tree.",
-    highlights: [
-      "205 documented profiles across 16 countries and 6 continents",
-      "Historical timeline spanning 1790 to present",
-      "Automated outreach system for family engagement",
-      "Event hub for reunions and gatherings",
-    ],
-    href: "/directory",
-    cta: "Browse the Directory",
-  },
-  {
-    id: "museum",
-    title: "Lutterodt Digital Museum",
-    tag: "Concept",
-    status: "In development",
-    summary: "A browser-based 3D museum where visitors walk through a reconstructed 19th-century Lutterodt compound overlooking the Atlantic at Osu. Seven exhibition halls, interactive exhibits, and an AI-guided historical narrator.",
-    highlights: [
-      "Origins Hall — migration maps, trade routes, historical documents",
-      "Photography Gallery — restored works from the Lutterodt studio archive",
-      "Merchant Hall — interactive cocoa, palm oil and maritime trade exhibits",
-      "Living Family Tree — dynamic 3D genealogy with biographies and oral histories",
-    ],
-    href: null,
-    cta: null,
-  },
-  {
-    id: "manor",
-    title: "Neo-Lutterodt Manor",
-    tag: "Concept",
-    status: "Planned",
-    summary: "An architectural vision that reimagines the historic Lutterodt family compound as a 21st-century heritage estate — blending authentic Ga-Danish proportions with contemporary Ghanaian craftsmanship and smart-home technology.",
-    highlights: [
-      "Authentic Ga-Danish colonial architecture with modern adaptation",
-      "Courtyard gardens, library, archives and family museum on site",
-      "Innovation lab and Renaissance Hall for community programmes",
-      "Solar-powered with restored 19th-century craftsmanship",
-    ],
-    href: null,
-    cta: null,
-  },
-  {
-    id: "network",
-    title: "Digital Heritage Network",
-    tag: "Vision",
-    status: "Planned",
-    summary: "A platform extending beyond one family — connecting the histories of influential Ghanaian families into a virtual Heritage District where visitors walk between reconstructed historic estates.",
-    highlights: [
-      "Partner families: Bruce, Bannerman, Richter, Brew, Vanderpuije, Hansen",
-      "Shared infrastructure for digitisation, archiving and storytelling",
-      "Connected virtual estates forming a cultural tourism corridor",
-      "Open-source tools for family historians across the diaspora",
-    ],
-    href: null,
-    cta: null,
-  },
-];
-
 export default function ProjectsPage() {
   return (
     <>
@@ -213,7 +150,7 @@ export default function ProjectsPage() {
                   <Tag>Concept</Tag>
                   <h3 className="text-[22px] mt-3 mb-2">Neo-Lutterodt Manor</h3>
                   <p className="text-[14px] text-fg/68 leading-relaxed mb-4 flex-1">
-                    A respectful evolution of the family's architectural heritage — blending authentic Ga-Danish proportions with contemporary Ghanaian craftsmanship, smart-home technology, and a solar-powered footprint. The estate would house a family museum, archive, library, and innovation lab.
+                    A respectful evolution of the family&apos;s architectural heritage — blending authentic Ga-Danish proportions with contemporary Ghanaian craftsmanship, smart-home technology, and a solar-powered footprint. The estate would house a family museum, archive, library, and innovation lab.
                   </p>
                   <ul className="space-y-1.5 mb-5">
                     <li className="text-[13px] text-fg/65 flex items-start gap-2">

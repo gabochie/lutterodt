@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Crest } from "@/components/shared/BrandLockup";
 import { OfflineActions } from "./OfflineActions";
 

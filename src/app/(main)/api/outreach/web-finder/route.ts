@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
+import type { BraveSearchResponse, GoogleSearchResponse } from "@/lib/outreach/discovery";
 
 interface Candidate {
   name: string;
@@ -135,7 +136,7 @@ async function searchBrave(query: string, apiKey: string): Promise<{ results: Ca
       headers: { "X-Subscription-Token": apiKey, "Accept": "application/json" },
     });
     if (!res.ok) return { results: [], source: `brave (${res.status})` };
-    const data = await res.json() as any;
+    const data = await res.json() as BraveSearchResponse;
     const webResults = data?.web?.results || [];
     const results: Candidate[] = [];
     for (const r of webResults) {
@@ -162,7 +163,7 @@ async function searchGoogle(query: string, apiKey: string, cx: string): Promise<
     const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}`;
     const res = await fetch(url);
     if (!res.ok) return { results: [], source: `google (${res.status})` };
-    const data = await res.json() as any;
+    const data = await res.json() as GoogleSearchResponse;
     const items = data.items || [];
     const results: Candidate[] = [];
     for (const item of items) {
@@ -197,7 +198,7 @@ export async function POST(request: NextRequest) {
 
     const { env } = await getCloudflareContext({ async: true });
 
-    let result = { results: [] as any[], source: "none" };
+    let result: { results: Candidate[]; source: string } = { results: [], source: "none" };
     const braveKey = (env.BRAVE_API_KEY as string) || "";
     if (braveKey) {
       result = await searchBrave(query, braveKey);
@@ -215,7 +216,7 @@ export async function POST(request: NextRequest) {
       total: result.results.length,
       query,
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

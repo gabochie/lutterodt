@@ -1,4 +1,5 @@
 import { getSetting } from "@/lib/cf/kv";
+import { errMessage } from "@/lib/utils";
 
 const FROM_EMAIL = "The Lutterodt Renaissance <hello@lutterodt.org>";
 
@@ -52,7 +53,7 @@ export async function sendLetter(params: {
 
     const data = await res.json() as { id?: string };
     return { sent: true, dryRun: false, resendId: data.id };
-  } catch (err: any) {
-    return { sent: false, dryRun: false, error: err.message || "Unknown error" };
+  } catch (err) {
+    return { sent: false, dryRun: false, error: errMessage(err) || "Unknown error" };
   }
 }

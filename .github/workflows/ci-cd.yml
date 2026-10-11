@@ -23,9 +23,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run linting (non-blocking; pre-existing debt)
+      - name: Run linting
         run: npm run lint
-        continue-on-error: true
 
       - name: Run type check
         run: npm run typecheck
@@ -33,7 +32,6 @@ jobs:
   e2e:
     needs: test
     runs-on: ubuntu-latest
-    continue-on-error: true
 
     steps:
       - name: Checkout code

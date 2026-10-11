@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { cookies } from "next/headers";
+import { errMessage } from "@/lib/utils";
 
 export async function GET() {
   try {
@@ -9,7 +10,7 @@ export async function GET() {
 
     const { results } = await db.prepare(
       "SELECT id, name, dob, category, country, achievement FROM outreach_profiles ORDER BY name"
-    ).all();
+    ).all<{ id: string; name: string; dob: string; category: string; country: string; achievement: string }>();
 
     let cookieStore;
     try { cookieStore = await cookies(); } catch { cookieStore = null; }
@@ -21,13 +22,13 @@ export async function GET() {
       historical: "Historical", law: "Law", service: "Service", sports: "Sports",
     };
 
-    const profiles = (results || []).map((p: any) => ({
+    const profiles = (results || []).map((p) => ({
       id: p.id, name: p.name, dob: p.dob, category: p.category,
       country: p.country, achievement: p.achievement,
     }));
 
     const historicalProfiles = profiles.filter((p) => p.category === "historical");
-    const countries = Array.from(new Set(profiles.map((p: any) => p.country))).sort() as string[];
+    const countries = Array.from(new Set(profiles.map((p) => p.country))).sort();
     const categories = Object.keys(categoryLabels);
     const continents = ["Africa", "Europe", "North America", "South America", "Asia", "Oceania"];
 
@@ -41,7 +42,7 @@ export async function GET() {
       isVerified,
       categoryLabels,
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    return NextResponse.json({ error: errMessage(err) }, { status: 500 });
   }
 }

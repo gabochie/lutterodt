@@ -2,17 +2,6 @@ export const LETTER_CSS = `*{margin:0;padding:0;box-sizing:border-box}body{font-
 
 export const SVG_LOGO = `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="#C6A15B" stroke-width="1" /><path d="M20 7L23.5 16.5L33 20L23.5 23.5L20 33L16.5 23.5L7 20L16.5 16.5L20 7Z" stroke="#E4C989" stroke-width="1.1" /><circle cx="20" cy="20" r="3" fill="#C6A15B" /></svg>`;
 
-const CATEGORY_LABELS: Record<string, string> = {
-  academia: "academia",
-  healthcare: "healthcare",
-  law: "law",
-  business: "business",
-  creative: "the creative arts",
-  service: "service",
-  engineering: "engineering and technology",
-  "civil-service": "civil service",
-};
-
 const COUNTRY_DESC: Record<string, string> = {
   Ghana: "here in Ghana",
   UK: "across the Atlantic in the United Kingdom",

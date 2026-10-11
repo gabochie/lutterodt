@@ -76,8 +76,8 @@ export default function AdminDashboard() {
   const fetchPendingLetter = useCallback(async (letterId: number) => {
     try {
       const r = await fetch("/api/outreach/queue?status=pending");
-      const items = await r.json();
-      const match = items.find((i: any) => i.id === letterId);
+      const items: { id: number; name: string; letter_html: string }[] = await r.json();
+      const match = items.find((i) => i.id === letterId);
       if (match) {
         setLetterDetail({ name: match.name, html: match.letter_html });
       }
@@ -176,7 +176,7 @@ export default function AdminDashboard() {
               {/* Left: Today's Status & Controls */}
               <div>
                 <div className="mb-4">
-                  <div className="font-mono text-[10px] tracking-widest uppercase text-fg/40 mb-2">Today's Letter</div>
+                  <div className="font-mono text-[10px] tracking-widest uppercase text-fg/40 mb-2">Today&apos;s Letter</div>
                   {daily?.today.hasPendingLetter ? (
                     <div className="flex items-center gap-2 text-success-text">
                       <CheckCircle2 className="w-4 h-4" />
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
 
               {/* Right: Letter preview */}
               <div>
-                <div className="font-mono text-[10px] tracking-widest uppercase text-fg/40 mb-2">Today's Letter</div>
+                <div className="font-mono text-[10px] tracking-widest uppercase text-fg/40 mb-2">Today&apos;s Letter</div>
                 {(daily?.today.hasPendingLetter && letterDetail) ? (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
@@ -253,7 +253,7 @@ export default function AdminDashboard() {
                     Load letter preview
                   </button>
                 ) : (
-                  <div className="text-[13px] text-fg/40 italic">Run the pipeline to generate today's letter</div>
+                  <div className="text-[13px] text-fg/40 italic">Run the pipeline to generate today&apos;s letter</div>
                 )}
               </div>
             </div>

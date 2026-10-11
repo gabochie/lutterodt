@@ -24,9 +24,30 @@ export interface EnrichmentResult {
   source: string;
 }
 
-export interface BatchQueueResult {
-  queued: { id: number; profile_id: string; name: string }[];
-  skipped: number;
+export interface DiscoveryEnv {
+  BRAVE_API_KEY?: string;
+  GOOGLE_API_KEY?: string;
+  GOOGLE_CX?: string;
+}
+
+export interface BraveWebResult {
+  title?: string;
+  description?: string;
+  url?: string;
+}
+
+export interface BraveSearchResponse {
+  web?: { results?: BraveWebResult[] };
+}
+
+export interface GoogleSearchItem {
+  title?: string;
+  snippet?: string;
+  link?: string;
+}
+
+export interface GoogleSearchResponse {
+  items?: GoogleSearchItem[];
 }
 
 export const BATCH_QUERIES = [
@@ -169,7 +190,7 @@ async function searchBrave(query: string, braveKey: string): Promise<{ results: 
       headers: { "X-Subscription-Token": braveKey, "Accept": "application/json" },
     });
     if (!res.ok) return { results: [], source: "brave (failed)" };
-    const data = await res.json() as any;
+    const data = await res.json() as BraveSearchResponse;
     const webResults = data?.web?.results || [];
     const results: Candidate[] = [];
     for (const r of webResults) {
@@ -193,7 +214,7 @@ async function searchGoogle(query: string, googleKey: string, googleCx: string):
     const url = `https://www.googleapis.com/customsearch/v1?key=${googleKey}&cx=${googleCx}&q=${encodeURIComponent(query)}`;
     const res = await fetch(url);
     if (!res.ok) return { results: [], source: "google (failed)" };
-    const data = await res.json() as any;
+    const data = await res.json() as GoogleSearchResponse;
     const items = data.items || [];
     const results: Candidate[] = [];
     for (const item of items) {
@@ -212,7 +233,7 @@ async function searchGoogle(query: string, googleKey: string, googleCx: string):
   } catch { return { results: [], source: "google (error)" }; }
 }
 
-export async function searchQuery(query: string, env: any): Promise<{ results: Candidate[]; source: string }> {
+export async function searchQuery(query: string, env: DiscoveryEnv): Promise<{ results: Candidate[]; source: string }> {
   // Brave first when configured (higher quality); DDG fallback; Google last.
   // NOTE: Brave free tier is ~2,000 queries/month — batch discovery stays small by design.
   const braveKey = env.BRAVE_API_KEY as string;
@@ -231,7 +252,7 @@ export async function searchQuery(query: string, env: any): Promise<{ results: C
   return { results: [], source: "none" };
 }
 
-async function runBatches(queries: string[], env: any, batchSize = 5): Promise<PromiseSettledResult<{ results: Candidate[]; source: string }>[]> {
+async function runBatches(queries: string[], env: DiscoveryEnv, batchSize = 5): Promise<PromiseSettledResult<{ results: Candidate[]; source: string }>[]> {
   const results: PromiseSettledResult<{ results: Candidate[]; source: string }>[] = [];
   for (let i = 0; i < queries.length; i += batchSize) {
     const batch = queries.slice(i, i + batchSize);
@@ -241,7 +262,7 @@ async function runBatches(queries: string[], env: any, batchSize = 5): Promise<P
   return results;
 }
 
-export async function batchSearch(queries: string[], env: any): Promise<{ allCandidates: Candidate[]; perQuery: { query: string; count: number; source: string }[] }> {
+export async function batchSearch(queries: string[], env: DiscoveryEnv): Promise<{ allCandidates: Candidate[]; perQuery: { query: string; count: number; source: string }[] }> {
   const allCandidates: Candidate[] = [];
   const perQuery: { query: string; count: number; source: string }[] = [];
   const seenUrls = new Set<string>();
@@ -271,7 +292,7 @@ export async function batchSearch(queries: string[], env: any): Promise<{ allCan
   return { allCandidates, perQuery };
 }
 
-export async function discoverContactEmail(name: string, country: string, env: any): Promise<EnrichmentResult> {
+export async function discoverContactEmail(name: string, country: string, env: DiscoveryEnv): Promise<EnrichmentResult> {
   const queries = [
     `"${name}" email`,
     `"${name}" contact`,
@@ -306,7 +327,7 @@ export async function discoverContactEmail(name: string, country: string, env: a
 
 export async function importCandidates(candidates: Candidate[], db: D1Database): Promise<{ imported: { name: string; id: string }[]; duplicates: number; errors: number }> {
   const existing = await db.prepare("SELECT id, name FROM outreach_profiles").all<{ id: string; name: string }>();
-  const existingNormals = new Set((existing.results || []).map((p: any) => normalizeName(p.name)));
+  const existingNormals = new Set((existing.results || []).map((p) => normalizeName(p.name)));
 
   const imported: { name: string; id: string }[] = [];
   let duplicates = 0;
@@ -345,7 +366,7 @@ export async function importCandidates(candidates: Candidate[], db: D1Database):
 export async function enrichAndQueue(
   profileIds: { id: string; name: string }[],
   db: D1Database,
-  env: any,
+  env: DiscoveryEnv,
   maxLetters: number = 20
 ): Promise<{ queued: { id: number; profile_id: string; name: string }[]; enriched: number; skipped: number }> {
   const queued: { id: number; profile_id: string; name: string }[] = [];

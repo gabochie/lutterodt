@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifyRequestAuth } from "@/lib/cf/auth";
+import { errMessage } from "@/lib/utils";
 
 interface HealthCheck {
   name: string;
@@ -55,11 +56,11 @@ export async function GET(request: NextRequest) {
       status: "ok",
       detail: `${result?.c || 0} profiles`,
     });
-  } catch (err: any) {
+  } catch (err) {
     checks.push({
       name: "D1 Database",
       status: "error",
-      detail: err.message || "Unreachable",
+      detail: errMessage(err) || "Unreachable",
     });
   }
 
@@ -72,11 +73,11 @@ export async function GET(request: NextRequest) {
       status: "ok",
       detail: test !== null ? "coming_soon: " + test : "coming_soon: (unset)",
     });
-  } catch (err: any) {
+  } catch (err) {
     checks.push({
       name: "KV Store",
       status: "error",
-      detail: err.message || "Unreachable",
+      detail: errMessage(err) || "Unreachable",
     });
   }
 
