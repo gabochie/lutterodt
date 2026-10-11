@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const token = url.searchParams.get("token") || "";
 
-  if (!token) {
+  if (!token || token.length > 256) {
     return Response.json({ error: "Missing unsubscribe token" }, { status: 400 });
   }
 

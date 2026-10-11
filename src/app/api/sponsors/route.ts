@@ -4,6 +4,7 @@ import { generateSponsorshipLetterHtml } from "@/lib/outreach/sponsor-letter";
 import { sanitizeLetterHtml } from "@/lib/outreach/sanitize";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
+import { parseBody, sponsorSchema } from "@/lib/validate";
 
 const CONTRIBUTION_TYPES = [
   {
@@ -55,11 +56,11 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { name, email, organization, contactPerson, queue } = body;
-
-    if (!name || !email) {
-      return NextResponse.json({ error: "name and email are required" }, { status: 400 });
+    const parsed = parseBody(sponsorSchema, body);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
+    const { name, email, organization, contactPerson, queue } = parsed.data;
 
     const html = generateSponsorshipLetterHtml({
       name,

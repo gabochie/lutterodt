@@ -1,35 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { isValidEmail, normalizeEmail } from "@/lib/newsletter/store";
-
-const MAX_NAME = 120;
-const MAX_PHONE = 40;
-const MAX_INTEREST = 120;
-const MAX_MESSAGE = 2000;
+import { parseBody, registerSchema } from "@/lib/validate";
 
 export async function POST(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
 
-    const { name, email, phone, service_interest, message } = await request.json();
-    const cleanName = typeof name === "string" ? name.trim().slice(0, MAX_NAME) : "";
-    const cleanEmail = typeof email === "string" ? normalizeEmail(email) : "";
-    const cleanPhone = typeof phone === "string" ? phone.trim().slice(0, MAX_PHONE) : "";
-    const cleanInterest = typeof service_interest === "string" ? service_interest.trim().slice(0, MAX_INTEREST) : "";
-    const cleanMessage = typeof message === "string" ? message.trim().slice(0, MAX_MESSAGE) : "";
-
-    if (!cleanName || !cleanEmail) {
-      return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
+    const parsed = parseBody(registerSchema, await request.json());
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
-    if (!isValidEmail(cleanEmail)) {
-      return NextResponse.json({ error: "Enter a valid email address" }, { status: 400 });
-    }
+    const { name, email, phone, service_interest, message } = parsed.data;
 
     const now = new Date().toISOString();
     await db.prepare(
       "INSERT INTO service_leads (name, email, phone, service_interest, message, status, created_at) VALUES (?, ?, ?, ?, ?, 'new', ?)"
-    ).bind(cleanName, cleanEmail, cleanPhone, cleanInterest, cleanMessage, now).run();
+    ).bind(name, email, phone, service_interest, message, now).run();
 
     return NextResponse.json({ ok: true, message: "Thank you. We'll be in touch soon." }, { status: 201 });
   } catch (err: unknown) {

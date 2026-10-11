@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { createContact } from "@/lib/cf/d1";
+import { leadSchema, parseBody } from "@/lib/validate";
 
 export async function POST(request: NextRequest) {
   let email = "", name = "", whatsapp = "", subject = "", message = "", category = "";
@@ -23,15 +24,17 @@ export async function POST(request: NextRequest) {
     category = (formData.get("category") as string) || "";
   }
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  const parsed = parseBody(leadSchema, { email, name, whatsapp, subject, message, category });
+  if (!parsed.ok) {
     if (ct.includes("application/json")) {
-      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
     return NextResponse.redirect(new URL("/?error=Invalid+email", request.url));
   }
+  const input = parsed.data;
 
   try {
-    await createContact({ email, name, whatsapp, subject: subject || "Website Enquiry", message, category: category || "lead", status: "new" });
+    await createContact({ email: input.email, name: input.name, whatsapp: input.whatsapp, subject: input.subject || "Website Enquiry", message: input.message, category: input.category || "lead", status: "new" });
 
     if (ct.includes("application/json")) {
       return NextResponse.json({ ok: true, message: "Message received. We'll be in touch." });

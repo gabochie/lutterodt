@@ -3,12 +3,12 @@ import {
   buildUnsubscribeUrl,
   confirmationEmailHtml,
   countSubscribers,
-  isValidEmail,
   subscribe,
   type SubscriberStatus,
 } from "@/lib/newsletter/store";
 import { sendEmail } from "@/lib/newsletter/email";
 import { siteConfig } from "@/config/site";
+import { parseBody, subscribeSchema } from "@/lib/validate";
 
 /**
  * Double opt-in subscribe endpoint.
@@ -40,18 +40,15 @@ export async function POST(request: Request) {
     return Response.json({ error: "Could not read the request" }, { status: 400 });
   }
 
-  if (!isValidEmail(email)) {
-    return Response.json({ error: "Enter a valid email address" }, { status: 400 });
-  }
-
   // Recording consent is required, not decorative: it is the only evidence we
-  // keep that the person agreed to be written to.
-  if (!consent) {
-    return Response.json(
-      { error: "Please agree to receive the bulletin to continue" },
-      { status: 400 }
-    );
+  // keep that the person agreed to be written to. Email + consent validated
+  // by schema (single source of truth in src/lib/validate.ts).
+  const parsed = parseBody(subscribeSchema, { email, name, consent });
+  if (!parsed.ok) {
+    return Response.json({ error: parsed.error }, { status: 400 });
   }
+  email = parsed.data.email;
+  name = parsed.data.name;
 
   try {
     const result = await subscribe(email, name);

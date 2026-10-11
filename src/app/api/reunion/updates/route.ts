@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
+import { parseBody, reunionUpdateSchema } from "@/lib/validate";
 
 export async function GET() {
   try {
@@ -24,14 +25,15 @@ export async function POST(request: NextRequest) {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
     const body = await request.json();
-    const { attendee_name, message, photo_url } = body;
-    if (!attendee_name) {
-      return NextResponse.json({ error: "attendee_name is required" }, { status: 400 });
+    const parsed = parseBody(reunionUpdateSchema, body);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
+    const { attendee_name, message, photo_url } = parsed.data;
     const now = new Date().toISOString();
     const { meta } = await db.prepare(
       "INSERT INTO reunion_updates (attendee_name, message, photo_url, created_at) VALUES (?, ?, ?, ?)"
-    ).bind(attendee_name, message || "", photo_url || "", now).run();
+    ).bind(attendee_name, message, photo_url, now).run();
     return NextResponse.json({ id: meta?.last_row_id, ok: true }, { status: 201 });
   } catch (err) {
     return NextResponse.json({ error: errMessage(err) }, { status: 500 });

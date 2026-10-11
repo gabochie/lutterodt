@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { signClientToken } from "@/lib/cf/auth";
+import { loginSchema, parseBody } from "@/lib/validate";
 
 export async function POST(request: NextRequest) {
   try {
     const { env } = await getCloudflareContext({ async: true });
     const db = env.LUTTERODT_D1 as D1Database;
 
-    const { email, access_code } = await request.json();
-    if (!email || !access_code) {
-      return NextResponse.json({ error: "Email and access code are required" }, { status: 400 });
+    const parsed = parseBody(loginSchema, await request.json());
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
+    const { email, access_code } = parsed.data;
 
     const row = await db.prepare(
       "SELECT id, name, email, status FROM clients WHERE email = ? AND access_code = ? AND status = 'active'"

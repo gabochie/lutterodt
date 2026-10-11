@@ -104,7 +104,7 @@
 - [x] `any`-cleanup sprint → `lint` + `e2e` blocking in `ci-cd.yml` (done 2026-10-11: 92 problems → 0, `--max-warnings 0`). _(P0-1 closed.)_
 - [x] Numbered D1 migrations (`migrations/0001_init.sql`) + migrate scripts; per-request `ensure*` + inline ALTERs deleted. _(P0-3 closed.)_
 - [x] CI `build` = `opennextjs-cloudflare build` (new `build:worker` script, verified locally); PR preview deploys via `--env preview` job. _(P1-7 closed, pending one-time preview DB/KV creation.)_
-- [ ] Zod schemas on all public write routes (`register`, `subscribe`, `leads`, `prelaunch`, `contacts`, `profiles POST/PATCH`); cap `letter_html`.
+- [x] Zod schemas on all public write routes (`register`, `subscribe`, `leads`, `prelaunch`, `contacts`, `profiles POST/PATCH`); cap `letter_html`. _(P1-6 closed: new `src/lib/validate.ts`, E2E 149 passed.)_
 
 ### Phase 2 — Abuse + observability (3–5 days)
 - [ ] KV sliding-window rate limiting on public writes + login; Cloudflare Rate Limiting Rules documented.

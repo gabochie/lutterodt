@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   const token = url.searchParams.get("token") || "";
   const apply = url.searchParams.get("apply") === "1";
 
-  if (!token) {
+  if (!token || token.length > 256) {
     return Response.json({ error: "Missing confirmation token" }, { status: 400 });
   }
 

@@ -3,6 +3,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { normalizeName, slugify } from "@/lib/outreach/d1";
 import { verifyRequestAuth } from "@/lib/cf/auth";
 import { errMessage } from "@/lib/utils";
+import { parseBody, profileCreateSchema, profilePatchSchema } from "@/lib/validate";
 
 async function getDB() {
   const { env } = await getCloudflareContext({ async: true });
@@ -58,11 +59,11 @@ export async function POST(request: NextRequest) {
     const db = await getDB();
 
     const body = await request.json();
-    const { name, dob, category, country, achievement, contact_email = "", contact_linkedin = "", notes = "", image_url = "" } = body;
-
-    if (!name || typeof name !== "string" || name.trim().length < 2) {
-      return NextResponse.json({ error: "Name is required (min 2 chars)" }, { status: 400 });
+    const parsed = parseBody(profileCreateSchema, body);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
     }
+    const { name, dob, category, country, achievement, contact_email = "", contact_linkedin = "", notes = "", image_url = "" } = parsed.data;
 
     // Dedup check: normalize name, search for exact or partial matches
     const normalized = normalizeName(name);
@@ -119,14 +120,18 @@ export async function PATCH(request: NextRequest) {
   }
   try {
     const db = await getDB();
-    const body = await request.json();
-    const { id, ...fields } = body;
-    if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+    const parsed = parseBody(profilePatchSchema, await request.json());
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error }, { status: 400 });
+    }
+    const { id, ...fields } = parsed.data;
 
     const now = new Date().toISOString();
     const updates: string[] = [];
     const params: unknown[] = [];
     for (const [k, v] of Object.entries(fields)) {
+      if (v === undefined) continue;
+      // Key allowlist mirrors the schema: only known columns reach SQL.
       if (["name", "dob", "category", "country", "achievement", "letter_status", "letter_html", "contact_email", "contact_linkedin", "notes", "has_letter", "image_url"].includes(k)) {
         updates.push(`${k} = ?`);
         params.push(v);
