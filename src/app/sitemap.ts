@@ -22,6 +22,7 @@ const staticRoutes: { path: string; priority: number; lastModified?: string }[] 
   { path: "/cookies", priority: 0.3 },
   { path: "/copyright", priority: 0.3 },
   { path: "/disclaimer", priority: 0.3 },
+  { path: "/takedown", priority: 0.3 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

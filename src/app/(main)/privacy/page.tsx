@@ -71,6 +71,17 @@ export default function PrivacyPolicyPage() {
               <li>Request deletion of content you submitted (subject to archival preservation)</li>
               <li>Control your visibility settings within the family network</li>
             </ul>
+            <p>
+              To correct or remove a directory listing, use our{" "}
+              <Link href="/takedown" className="text-gold-light hover:underline">
+                correction &amp; removal request form
+              </Link>
+              . Every request is reviewed by the archive committee within 14 days.
+              Directory profiles record their provenance (research, family
+              submission, or discovery import) so requests can be assessed in
+              context. Purely historical records of deceased persons are
+              preserved as heritage and are out of scope for removal.
+            </p>
 
             <h4>6. International Transfers</h4>
             <p>

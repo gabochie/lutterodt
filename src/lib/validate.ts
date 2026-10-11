@@ -139,6 +139,18 @@ export const tokenSchema = z
   .min(8, "Invalid token")
   .max(256, "Invalid token");
 
+export const takedownSchema = z.object({
+  // Who is asking (so the committee can follow up).
+  name: nameSchema,
+  email: optEmail,
+  // Which profile this concerns (id from /directory, or free text).
+  profile_id: optText(200),
+  profile_name: optText(160),
+  // correction = fix details, removal = erase my listing.
+  kind: z.enum(["correction", "removal"]),
+  details: z.string().trim().min(10, "Please describe the issue (min 10 characters)").max(2000),
+});
+
 export type LeadInput = z.infer<typeof leadSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type ProfilePatchInput = z.infer<typeof profilePatchSchema>;
