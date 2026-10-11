@@ -335,7 +335,7 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
                   {status === "sending" ? "Sending..." : "Send Message"}
                 </button>
                 <TurnstileWidget onToken={setCaptchaToken} resetSignal={captchaReset} />
-                <p className="mt-6 text-[12.5px] text-fg/50">
+                <p className="mt-6 text-[12.5px] text-fg-muted dark:text-ivory/70">
                   By submitting, you agree the Committee may contact you regarding this enquiry. We do not share family contact details externally.
                 </p>
               </form>
