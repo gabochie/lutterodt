@@ -72,7 +72,7 @@ export function DirectoryClient() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-pulse text-fg/30 font-mono text-[11px] tracking-widest uppercase">Loading directory...</div>
+        <div className="animate-pulse text-fg-muted dark:text-ivory/70 font-mono text-[11px] tracking-widest uppercase">Loading directory...</div>
       </div>
     );
   }
@@ -176,14 +176,14 @@ export function DirectoryClient() {
           </div>
 
           {filtered.length === 0 && (
-            <p className="text-fg/50 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
+            <p className="text-fg-muted dark:text-ivory/70 font-mono text-[12px] tracking-widest uppercase py-8 text-center">
               No profiles match your search.
             </p>
           )}
 
           {!isVerified && (
             <div className="mt-16 p-[40px] bg-ivory-dim border border-line text-center">
-              <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Access the full directory</span>
+              <span className="font-mono text-[10px] tracking-widest uppercase text-gold-ink dark:text-gold-light">Access the full directory</span>
               <h3 className="text-[22px] font-display font-[550] text-heading mt-[8px] mb-[12px]">
                 {modernCount} more Lutterodts documented across {countries.length} countries
               </h3>
@@ -217,17 +217,17 @@ function ProfileCard({ profile, isVerified, categoryLabels }: { profile: DirProf
         </div>
       )}
       <div className="flex items-center justify-between mb-3">
-        <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">
+        <span className="font-mono text-[10px] tracking-widest uppercase text-gold-ink dark:text-gold-light">
           {categoryLabels[profile.category] || profile.category}
         </span>
         {profile.dob && (
-          <span className="font-mono text-[9px] tracking-widest text-fg/40">
+          <span className="font-mono text-[9px] tracking-widest text-fg-muted dark:text-ivory/70">
             {profile.dob}
           </span>
         )}
       </div>
       <h3 className="text-[18px] mb-[6px] leading-snug">{profile.name}</h3>
-      <span className="text-fg/50 text-[12px] mb-[10px]">{profile.country}</span>
+      <span className="text-fg-muted dark:text-ivory/70 text-[12px] mb-[10px]">{profile.country}</span>
       <p className="text-fg/66 text-[13.5px] flex-1 leading-relaxed">
         {profile.achievement?.length > 120
           ? profile.achievement.slice(0, 120) + "..."

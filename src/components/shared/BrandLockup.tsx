@@ -52,7 +52,7 @@ export function BrandLockup({
         >
           Lutterodt
         </span>
-        <span className="font-mono text-[9.5px] tracking-widest uppercase whitespace-nowrap text-gold-dim">
+        <span className="font-mono text-[9.5px] tracking-widest uppercase whitespace-nowrap text-gold-ink dark:text-gold-light">
           {siteConfig.tagline}
         </span>
       </span>

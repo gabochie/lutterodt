@@ -70,10 +70,10 @@ export function Footer() {
       <div className="container-main border-t border-line-on-dark py-[22px] flex flex-wrap justify-between items-center text-[12.5px] text-ivory/55 gap-x-[18px] gap-y-[8px]">
         <span className="flex items-center gap-3">
           <span>© 2026 The Lutterodt Renaissance. All rights reserved.</span>
-          <span className="text-ivory/30">·</span>
+          <span aria-hidden="true" className="text-ivory/30">·</span>
           <span className="flex items-center gap-2">
             <span className="font-display text-[13px] tracking-[0.16em] uppercase text-ivory/90">Lutterodt</span>
-            <span className="text-ivory/30">|</span>
+            <span aria-hidden="true" className="text-ivory/30">|</span>
             <span>Lutterodt Operations</span>
           </span>
         </span>

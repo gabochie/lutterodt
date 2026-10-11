@@ -23,7 +23,7 @@ export function VerifyClient() {
     <div className="min-h-[70vh] flex items-center justify-center py-20">
       <div className="container-main max-w-lg">
         <div className="text-center mb-10">
-          <span className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim">Family Directory</span>
+          <span className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-ink dark:text-gold-light">Family Directory</span>
           <h1 className="text-[clamp(28px,3.5vw,40px)] font-display text-heading mt-2">Verify Your Identity</h1>
           <p className="text-fg/60 text-[15px] mt-3 max-w-[40ch] mx-auto">
             Submit your details to verify your family connection and unlock the full directory.

@@ -70,16 +70,16 @@ export function TakedownClient() {
             <form onSubmit={handleSubmit} className="bg-surface border border-line p-6 space-y-4">
               <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4">
                 <div>
-                  <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Your Name *</label>
+                  <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Your Name *</label>
                   <input required value={form.name} onChange={(e) => set("name", e.target.value)} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Your Email (for follow-up)</label>
+                  <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Your Email (for follow-up)</label>
                   <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className={inputCls} />
                 </div>
               </div>
               <div>
-                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Profile This Concerns *</label>
+                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Profile This Concerns *</label>
                 <input
                   required
                   value={form.profile_name}
@@ -89,14 +89,14 @@ export function TakedownClient() {
                 />
               </div>
               <div>
-                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Request Type *</label>
+                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Request Type *</label>
                 <select value={form.kind} onChange={(e) => set("kind", e.target.value)} className={inputCls}>
                   <option value="correction">Correct inaccurate details</option>
                   <option value="removal">Remove the listing</option>
                 </select>
               </div>
               <div>
-                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg/50 mb-1.5">Details *</label>
+                <label className="block font-mono text-[10px] tracking-widest uppercase text-fg-muted dark:text-ivory/70 mb-1.5">Details *</label>
                 <textarea
                   required
                   value={form.details}
@@ -110,7 +110,7 @@ export function TakedownClient() {
               <button type="submit" disabled={status === "sending"} className="btn-primary disabled:opacity-50">
                 {status === "sending" ? "Sending..." : "Submit Request"}
               </button>
-              <p className="text-[12.5px] text-fg/50">
+              <p className="text-[12.5px] text-fg-muted dark:text-ivory/70">
                 Historical records of deceased persons are preserved as heritage and are out of scope for removal.
               </p>
             </form>

@@ -27,7 +27,7 @@ export default async function ConfirmPage({
     <section className="py-[108px] bg-ivory-dim">
       <div className="container-main">
         <div className="max-w-[620px]">
-          <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">
+          <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-ink dark:text-gold-light mb-3">
             Archive bulletin
           </p>
           <h1 className="text-[clamp(30px,4.4vw,48px)] font-display font-[560] leading-tight mb-6">

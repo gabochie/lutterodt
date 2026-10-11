@@ -203,7 +203,7 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
                     className={`font-mono text-[11.5px] tracking-widest uppercase py-3 mr-8 border-b-2 transition-colors shrink-0 ${
                       activeTab === tab
                         ? "text-accent-text border-burgundy"
-                        : "text-fg/45 border-transparent"
+                        : "text-fg-muted dark:text-ivory/70 border-transparent"
                     }`}
                     onClick={() => setActiveTab(tab)}
                   >

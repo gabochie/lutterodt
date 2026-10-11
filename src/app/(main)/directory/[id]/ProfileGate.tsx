@@ -106,7 +106,7 @@ export function ProfileGate({
             {profile.name}
           </h1>
           {profile.dob && (
-            <p className="mt-[10px] font-mono text-[12px] tracking-widest uppercase text-gold-dim">
+            <p className="mt-[10px] font-mono text-[12px] tracking-widest uppercase text-gold-ink dark:text-gold-light">
               {profile.dob}
             </p>
           )}
@@ -117,23 +117,23 @@ export function ProfileGate({
         <div className="container-main max-w-3xl">
           <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-8 mb-10">
             <div>
-              <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Category</h3>
+              <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-ink dark:text-gold-light mb-2">Category</h3>
               <p className="text-[16px]">{categoryLabels[profile.category] || profile.category}</p>
             </div>
             <div>
-              <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Country</h3>
+              <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-ink dark:text-gold-light mb-2">Country</h3>
               <p className="text-[16px]">{profile.country}</p>
             </div>
             {profile.dob && (
               <div>
-                <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-2">Date of Birth</h3>
+                <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-ink dark:text-gold-light mb-2">Date of Birth</h3>
                 <p className="text-[16px]">{profile.dob}</p>
               </div>
             )}
           </div>
 
           <div className="border-t border-line pt-8">
-            <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-dim mb-4">Achievement</h3>
+            <h3 className="font-mono text-[10.5px] tracking-widest uppercase text-gold-ink dark:text-gold-light mb-4">Achievement</h3>
             <p className="text-[16.5px] leading-relaxed text-fg/82">{profile.achievement}</p>
           </div>
 
@@ -142,7 +142,7 @@ export function ProfileGate({
           </div>
 
           <div className="mt-16 p-[32px] bg-ivory-dim border border-line rounded-sm text-center">
-            <span className="font-mono text-[10px] tracking-widest uppercase text-gold-dim">Know a Lutterodt we are missing?</span>
+            <span className="font-mono text-[10px] tracking-widest uppercase text-gold-ink dark:text-gold-light">Know a Lutterodt we are missing?</span>
             <p className="text-[15px] text-fg/80 mt-[8px] max-w-[44ch] mx-auto">
               This directory is a living record. If you know a Lutterodt who should be here — we would love to hear from you.
             </p>

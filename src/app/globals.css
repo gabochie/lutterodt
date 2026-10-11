@@ -76,6 +76,8 @@
   --color-gold: #EEAD16;
   --color-gold-light: #FBC829;
   --color-gold-dim: #996C16;
+  --color-gold-ink: #6E520C;
+  --color-fg-muted: #57534E;
   --color-ivory: #F7F7F4;
   --color-ivory-dim: var(--tint);
   --color-charcoal: #01010A;
