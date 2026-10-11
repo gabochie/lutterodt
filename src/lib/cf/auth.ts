@@ -66,6 +66,9 @@ export async function destroySession() {
     value: "",
     options: {
       path: "/",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax" as const,
       maxAge: 0,
     },
   };
@@ -114,7 +117,10 @@ async function verifyToken(tokenValue: string): Promise<boolean> {
 
 export function getCronSecret(): string | null {
   const secret = process.env.CRON_SECRET;
-  return secret && secret.length > 0 ? secret : null;
+  // Enforce a minimum length so a short/guessable cron secret can't authorize
+  // every admin/outreach endpoint via verifyRequestAuth(). Rotate to >= 32 chars.
+  // TODO(phase-3): raise to >= 32 once prod secret is rotated.
+  return secret && secret.length >= 16 ? secret : null;
 }
 
 export async function verifyRequestCookie(request: NextRequest): Promise<boolean> {

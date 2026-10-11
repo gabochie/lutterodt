@@ -5,10 +5,6 @@ AUTH_SECRET=replace-with-at-least-32-random-characters
 # Admin password for /login (at least 8 characters)
 ADMIN_PASSWORD=replace-with-a-strong-password
 
-# Flutterwave webhook verification. Must match the verif-hash header
-# configured in the Flutterwave dashboard.
-FLUTTERWAVE_SECRET_HASH=replace-with-your-flutterwave-verif-hash
-
 # Optional analytics
 NEXT_PUBLIC_GA_ID=
 NEXT_PUBLIC_CLARITY_ID=

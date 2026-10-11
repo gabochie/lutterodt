@@ -101,8 +101,8 @@ async function d1Count(table: string): Promise<CheckResult> {
   try {
     const c = await getRecordCount(table);
     return { ok: c > 0, detail: `${c} rows` };
-  } catch (e: any) {
-    return { ok: false, detail: e.message };
+  } catch (e: unknown) {
+    return { ok: false, detail: errMessage(e, "count failed") };
   }
 }
 
@@ -177,11 +177,11 @@ export const CHECK_CATEGORIES: CheckCategoryDef[] = [
       },
       {
         text: "Rotate AUTH_SECRET for production",
-        check: async () => ({ ok: await envNotDefault("AUTH_SECRET", "dev-auth-secret-change-in-production") }),
+        check: async () => ({ ok: await envNotDefault("AUTH_SECRET", "replace-with-at-least-32-random-characters") }),
       },
       {
         text: "Rotate ADMIN_PASSWORD for production",
-        check: async () => ({ ok: await envNotDefault("ADMIN_PASSWORD", "admin") }),
+        check: async () => ({ ok: await envNotDefault("ADMIN_PASSWORD", "replace-with-a-strong-password") }),
       },
       {
         text: "Review env vars — no secrets exposed client-side",
