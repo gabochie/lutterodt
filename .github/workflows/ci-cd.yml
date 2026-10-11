@@ -26,6 +26,9 @@ jobs:
       - name: Run linting
         run: npm run lint
 
+      - name: Run unit tests
+        run: npm run test:unit
+
       - name: Run type check
         run: npm run typecheck
 
@@ -49,11 +52,14 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
+      - name: Install Playwright Firefox
+        run: npx playwright install --with-deps firefox
+
       - name: Apply D1 migrations (local test database)
         run: npm run db:migrate:local
 
       - name: Run end-to-end tests
-        run: npx playwright test --project=chromium
+        run: npx playwright test --project=chromium --project=firefox-smoke
 
   build:
     needs: test

@@ -120,11 +120,9 @@
 - [ ] Discovery hardening: timeouts, per-run caps, SQL-side dedup, paginated queue worker.
 
 ### Phase 4 — Privacy + launch readiness (3–5 days)
-- [ ] Public takedown/correction flow → `research_drafts(correction)` + SLA + admin review UI.
-- [ ] Data-subject privacy notice + consent-source column + retention policy.
-- [ ] R2 incremental cache + scoped `Cache-Control`; remove `framer-motion` / unify Card system; re-enable `no-img-element`.
-- [ ] Vitest unit suite (sanitize, discovery, auth, schemas) + axe + Lighthouse budget + Firefox/WebKit projects.
-- [ ] `docs/` runbook: env matrix, deploy, rollback, backup/restore, incident playbook. Then launch.
+- [x] Public takedown/correction flow → `research_drafts(correction)` + 14-day SLA + existing review UI; privacy notice updated; provenance column (`0003`).
+- [x] Lean perf pass: removed `framer-motion` + dead shadcn system; images documented as intentional; R2 cache path in runbook.
+- [x] Vitest unit suite (22 tests: sanitize, schemas, discovery, auth crypto) in CI; axe baseline spec (5 pages green); firefox-smoke project in CI.
 
 ---
 

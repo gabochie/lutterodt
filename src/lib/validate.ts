@@ -72,7 +72,7 @@ const LETTER_HTML_MAX = 200_000;
 export const profileCreateSchema = z.object({
   name: z.string().trim().min(2, "Name is required (min 2 chars)").max(160),
   dob: optText(40),
-  category: optText(60),
+  category: z.string().trim().max(60).optional().default("uncategorized"),
   country: optText(80),
   achievement: optMessage(2000),
   contact_email: optEmail,
@@ -81,41 +81,32 @@ export const profileCreateSchema = z.object({
   image_url: optText(2048),
 });
 
-const PROFILE_FIELDS = [
-  "name",
-  "dob",
-  "category",
-  "country",
-  "achievement",
-  "letter_status",
-  "letter_html",
-  "contact_email",
-  "contact_linkedin",
-  "notes",
-  "has_letter",
-  "image_url",
-] as const;
-
 export const profilePatchSchema = z
   .object({
     id: z.string().trim().min(1, "id required").max(200),
     name: z.string().trim().min(1).max(160).optional(),
-    dob: optText(40).optional(),
-    category: optText(60).optional(),
-    country: optText(80).optional(),
-    achievement: optMessage(2000).optional(),
+    dob: z.string().trim().max(40).optional(),
+    category: z.string().trim().max(60).optional(),
+    country: z.string().trim().max(80).optional(),
+    achievement: z.string().trim().max(2000).optional(),
     letter_status: z
       .enum(["none", "new", "draft", "queued", "sent"])
       .optional(),
     letter_html: z.string().max(LETTER_HTML_MAX, "Letter HTML is too large").optional(),
-    contact_email: optEmail.optional(),
-    contact_linkedin: optText(2048).optional(),
-    notes: optMessage(2000).optional(),
+    contact_email: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .max(254)
+      .optional()
+      .refine((v) => v === undefined || v === "" || EMAIL_RE.test(v), "Enter a valid email address"),
+    contact_linkedin: z.string().trim().max(2048).optional(),
+    notes: z.string().trim().max(2000).optional(),
     has_letter: z.number().int().min(0).max(1).optional(),
-    image_url: optText(2048).optional(),
+    image_url: z.string().trim().max(2048).optional(),
   })
   .refine(
-    (v) => Object.keys(v).some((k) => (PROFILE_FIELDS as readonly string[]).includes(k) && k !== "id"),
+    (v) => Object.keys(v).some((k) => k !== "id"),
     "No valid fields"
   );
 

@@ -87,8 +87,8 @@ const countryIndicators: [string, RegExp[]][] = [
   ["Mexico", [/\.mx\b/i, /mexico/i]],
 ];
 
-function estimateCategory(text: string): string {
-  const lower = text.toLowerCase();
+// Pure helpers exported for unit tests (no I/O, no env).
+export function estimateCategory(text: string): string {  const lower = text.toLowerCase();
   const scores: Record<string, number> = {};
   for (const [cat, keywords] of Object.entries(categoryKeywords)) {
     scores[cat] = keywords.reduce((s, kw) => s + (lower.includes(kw) ? 1 : 0), 0);
@@ -97,7 +97,7 @@ function estimateCategory(text: string): string {
   return best && best[1] > 0 ? best[0] : "uncategorized";
 }
 
-function estimateCountry(text: string, url: string): string {
+export function estimateCountry(text: string, url: string): string {
   for (const [country, patterns] of countryIndicators) {
     for (const p of patterns) {
       if (p.test(text) || p.test(url)) return country;
@@ -106,11 +106,11 @@ function estimateCountry(text: string, url: string): string {
   return "";
 }
 
-function normalizeCountry(raw: string): string {
+export function normalizeCountry(raw: string): string {
   return COUNTRY_MAP[raw] || raw;
 }
 
-function extractName(title: string, snippet: string): string {
+export function extractName(title: string, snippet: string): string {
   const full = `${title} ${snippet}`;
   const surnameMatch = full.match(/Lutterodt|Lutteroth|Lutterodt-Quarcoo|Mills-Lutterodt/i);
   if (!surnameMatch) return "";

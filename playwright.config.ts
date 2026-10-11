@@ -34,6 +34,14 @@ export default defineConfig({
               baseURL: LOCAL_URL,
             },
           },
+          {
+            name: "firefox-smoke",
+            testMatch: /routes\.smoke\.spec\.ts$/,
+            use: {
+              ...devices["Desktop Firefox"],
+              baseURL: LOCAL_URL,
+            },
+          },
         ]),
     {
       name: "smoke",
