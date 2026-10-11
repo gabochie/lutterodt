@@ -89,16 +89,7 @@ export const outreachProfiles: OutreachProfile[] = [
   { id: "jorge-lutteroth", name: "Jorge Lutteroth", dob: null, category: "business", country: "Mexico", letter: "letters/jorge-lutteroth.html", achievement: "CEO, Grupo AFAL -- major Carl's Jr. franchise operator in Mexico (100+ restaurants). Abogado (lawyer), Universidad Panamericana.", hasLetter: true },
 ];
 
-export const categoryLabels: Record<string, string> = {
-  academia: "Academia",
-  healthcare: "Healthcare",
-  law: "Law",
-  business: "Business",
-  creative: "Creative",
-  service: "Service",
-  engineering: "Engineering & Tech",
-  historical: "Historical",
-};
+export { categoryLabels } from "@/lib/category-labels";
 
 export const blindSpots = [
   { id: "married-out", title: "Women Who Married Out", priority: "high", status: "in-progress", progress: 10 },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Tag } from "@/components/shared/Tag";
-import { StatCell } from "@/components/shared/StatCell";
 import { Card } from "@/components/shared/Card";
+import { HomeStats } from "./HomeStats";
 
 export function FullSite() {
   return (
@@ -27,12 +27,7 @@ export function FullSite() {
 
       <section className="bg-charcoal text-ivory">
         <div className="container-main">
-          <div className="grid grid-cols-4 max-md:grid-cols-2">
-            <StatCell number="6" label="Generations Recorded" />
-            <StatCell number="140+" label="Historical Records" />
-            <StatCell number="1847" label="Earliest Entry" />
-            <StatCell number="4" label="Continents Reached" />
-          </div>
+          <HomeStats />
         </div>
       </section>
 

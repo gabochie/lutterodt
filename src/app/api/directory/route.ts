@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { cookies } from "next/headers";
 import { errMessage } from "@/lib/utils";
+import { categoryLabels } from "@/lib/category-labels";
 
 export async function GET() {
   try {
@@ -15,12 +16,6 @@ export async function GET() {
     let cookieStore;
     try { cookieStore = await cookies(); } catch { cookieStore = null; }
     const isVerified = cookieStore?.get("lutterodt_verified")?.value === "true";
-
-    const categoryLabels: Record<string, string> = {
-      academia: "Academia", business: "Business", creative: "Creative",
-      engineering: "Engineering & Tech", healthcare: "Healthcare",
-      historical: "Historical", law: "Law", service: "Service", sports: "Sports",
-    };
 
     const profiles = (results || []).map((p) => ({
       id: p.id, name: p.name, dob: p.dob, category: p.category,

@@ -7,20 +7,9 @@ import type {
   OutreachRecord,
   OutreachStatus,
 } from "@/lib/outreach/types";
+import { categoryLabels } from "@/lib/category-labels";
 
 export type { OutreachChannel, OutreachRecord, OutreachStatus };
-
-const categoryLabels: Record<string, string> = {
-  academia: "Academia",
-  business: "Business",
-  creative: "Creative",
-  engineering: "Engineering & Tech",
-  healthcare: "Healthcare",
-  historical: "Historical",
-  law: "Law",
-  service: "Service",
-  sports: "Sports",
-};
 
 export async function GET(request: NextRequest) {
   if (!(await verifyRequestAuth(request))) {

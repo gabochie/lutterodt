@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { ProfileGate } from "./ProfileGate";
+import { categoryLabels } from "@/lib/category-labels";
 
 export const dynamic = "force-dynamic";
 
@@ -7,12 +8,6 @@ interface DirProfile {
   id: string; name: string; dob: string | null;
   category: string; country: string; achievement: string;
 }
-
-const categoryLabels: Record<string, string> = {
-  academia: "Academia", business: "Business", creative: "Creative",
-  engineering: "Engineering & Tech", healthcare: "Healthcare",
-  historical: "Historical", law: "Law", service: "Service", sports: "Sports",
-};
 
 async function fetchProfile(id: string): Promise<DirProfile | null> {
   try {
