@@ -107,11 +107,11 @@
 - [x] Zod schemas on all public write routes (`register`, `subscribe`, `leads`, `prelaunch`, `contacts`, `profiles POST/PATCH`); cap `letter_html`. _(P1-6 closed: new `src/lib/validate.ts`, E2E 149 passed.)_
 
 ### Phase 2 — Abuse + observability (3–5 days)
-- [ ] KV sliding-window rate limiting on public writes + login; Cloudflare Rate Limiting Rules documented.
-- [ ] Turnstile on `register`/`subscribe`/`contact`.
-- [ ] Sentry (or Workers Observability) + `/api/health` (D1+KV) wired to smoke.
-- [ ] D1→R2 nightly export + restore runbook in `docs/runbook.md`.
-- [ ] Cron/smoke `if: failure()` alerts.
+- [x] KV sliding-window rate limiting on public writes + login; Cloudflare Rate Limiting Rules documented. _(P0-2 closed: `src/lib/rate-limit.ts`, proven by new E2E.)_
+- [x] Turnstile on `register`/`subscribe`/`contact` (wired end-to-end, inert until keys exist; setup in `docs/runbook.md` §4).
+- [x] Structured JSON logging (`src/lib/log.ts`) + Workers Observability; `/api/health` public probe wired to smoke.
+- [x] D1→R2 weekly export (`backup.yml`) + restore runbook (`docs/runbook.md` §6); needs one-time bucket creation.
+- [x] Cron/smoke `if: failure()` alerts (deduped GitHub issues). _(P0-5 closed.)_
 
 ### Phase 3 — Architecture consolidation (1 week)
 - [ ] Merge `(main)/api` → `api/` with 301s; standardize on `verifyRequestAuth`; publish route inventory (§7) in `docs/api.md`.
