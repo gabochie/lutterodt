@@ -51,15 +51,15 @@ export default function AdminGalleryPage() {
         <div className="mb-6 p-5 bg-ivory-dim border border-line">
           <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-4 mb-4">
             <input placeholder="Image URL" value={form.src} onChange={(e) => setForm({ ...form, src: e.target.value })}
-              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-burgundy" />
+              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-azure" />
             <input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
-              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-burgundy" />
+              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-azure" />
             <select value={form.tag} onChange={(e) => setForm({ ...form, tag: e.target.value })}
-              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-burgundy">
+              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-azure">
               {categories.filter(c => c !== "All").map(c => <option key={c}>{c}</option>)}
             </select>
             <input placeholder="Alt text" value={form.alt} onChange={(e) => setForm({ ...form, alt: e.target.value })}
-              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-burgundy" />
+              className="border border-line bg-transparent px-3 py-2 text-[14px] text-fg focus:outline-0 focus:border-azure" />
           </div>
           <div className="flex gap-2">
             <button onClick={addItem} className="btn btn-primary text-[11px]">Add to Gallery</button>
@@ -71,7 +71,7 @@ export default function AdminGalleryPage() {
       <div className="flex gap-2 flex-wrap mb-6">
         {categories.map((c) => (
           <button key={c} onClick={() => setFilter(c)}
-            className={`font-mono text-[10.5px] tracking-widest uppercase px-4 py-2 border transition-colors ${filter === c ? "border-burgundy bg-burgundy text-ivory" : "border-line text-fg/50 hover:border-charcoal/30"}`}>{c}</button>
+            className={`font-mono text-[10.5px] tracking-widest uppercase px-4 py-2 border transition-colors ${filter === c ? "border-azure bg-azure text-ivory" : "border-line text-fg/50 hover:border-charcoal/30"}`}>{c}</button>
         ))}
       </div>
 

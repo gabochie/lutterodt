@@ -10,7 +10,7 @@ interface PageHeroProps {
 
 export function PageHero({ breadcrumb, current, tag, title, description }: PageHeroProps) {
   return (
-    <section className="bg-burgundy-ink text-ivory py-[74px] pb-[64px] max-md:py-[48px] max-md:pb-[40px] relative overflow-hidden">
+    <section className="bg-azure-ink text-ivory py-[74px] pb-[64px] max-md:py-[48px] max-md:pb-[40px] relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(198,161,91,0.16),transparent_45%)] pointer-events-none" />
       <div className="container-main relative z-10">
         <span className="font-mono text-[11.5px] tracking-widest uppercase text-ivory/50">

@@ -14,7 +14,7 @@ function contactForm(page: Page) {
 async function openTab(page: Page, tab: string) {
   await page.getByRole("button", { name: tab, exact: true }).click();
   await expect(page.getByRole("button", { name: tab, exact: true })).toHaveClass(
-    /border-burgundy/
+    /border-azure/
   );
 }
 
@@ -52,7 +52,7 @@ test.describe("contact form", () => {
     ).toBeVisible();
     await expect(
       page.getByRole("button", { name: "Contribute Materials", exact: true })
-    ).toHaveClass(/border-burgundy/);
+    ).toHaveClass(/border-azure/);
     await expect(
       contactForm(page).getByLabel("What you have")
     ).toBeVisible();
@@ -291,7 +291,7 @@ test.describe("intake deep links", () => {
       };
       await expect(
         page.getByRole("button", { name: labels[intent], exact: true })
-      ).toHaveClass(/border-burgundy/);
+      ).toHaveClass(/border-azure/);
     });
   }
 
@@ -302,7 +302,7 @@ test.describe("intake deep links", () => {
     await gotoSite("/contact?intent=nonsense");
     await expect(
       page.getByRole("button", { name: "Contribute Materials", exact: true })
-    ).toHaveClass(/border-burgundy/);
+    ).toHaveClass(/border-azure/);
   });
 });
 

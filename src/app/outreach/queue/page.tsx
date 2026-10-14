@@ -106,7 +106,7 @@ export default function QueuePage() {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 border border-burgundy/20 bg-burgundy/5 text-accent-text text-[13px]">{error}</div>
+        <div className="mb-4 p-3 border border-azure/20 bg-azure/5 text-accent-text text-[13px]">{error}</div>
       )}
 
       {loading && <p className="text-fg/50 text-[13px]">Loading...</p>}
@@ -161,7 +161,7 @@ export default function QueuePage() {
                       <td className="px-4 py-3">
                         <span className={`font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 ${
                           item.status === "sent" ? "bg-forest/10 text-success-text" :
-                          item.status === "failed" ? "bg-burgundy/10 text-accent-text" :
+                          item.status === "failed" ? "bg-azure/10 text-accent-text" :
                           "bg-gold-dim/10 text-gold-dim"
                         }`}>{item.status}</span>
                       </td>

@@ -97,14 +97,14 @@ const statusColor = (s: ItemStatus) => {
 };
 
 const phaseBadgeColor = [
-  "bg-burgundy/10 text-accent-text border-burgundy/20",
+  "bg-azure/10 text-accent-text border-azure/20",
   "bg-gold-dim/10 text-gold-dim border-gold-dim/20",
   "bg-forest/10 text-success-text border-forest/20",
   "bg-charcoal/10 text-fg border-charcoal/20",
 ];
 
 const phaseSolidColor = [
-  "bg-burgundy text-ivory border-burgundy",
+  "bg-azure text-ivory border-azure",
   "bg-gold text-heading border-gold",
   "bg-forest text-ivory border-forest",
   "bg-charcoal text-ivory border-charcoal",

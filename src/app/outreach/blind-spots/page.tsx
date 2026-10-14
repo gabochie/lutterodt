@@ -39,7 +39,7 @@ export default function BlindSpotsPage() {
         {["all", "open", "in-progress", "partial", "high", "medium"].map(f => (
           <button key={f} onClick={() => setFilter(f)}
             className={`font-mono text-[10px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
-              filter === f ? "bg-burgundy text-ivory border-burgundy" : "border-line text-fg/50 hover:border-charcoal/30"
+              filter === f ? "bg-azure text-ivory border-azure" : "border-line text-fg/50 hover:border-charcoal/30"
             }`}>
             {f === "in-progress" ? "In Progress" : f}
           </button>
@@ -54,7 +54,7 @@ export default function BlindSpotsPage() {
             <div key={spot.id} className="bg-surface border border-line p-5">
               <div className="flex items-center justify-between mb-2">
                 <span className={`font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 ${
-                  spot.priority === "high" ? "bg-burgundy/10 text-accent-text" : "bg-gold-dim/10 text-gold-dim"
+                  spot.priority === "high" ? "bg-azure/10 text-accent-text" : "bg-gold-dim/10 text-gold-dim"
                 }`}>{spot.priority} priority</span>
                 <span className={`font-mono text-[9px] tracking-widest uppercase ${
                   spot.status === "open" ? "text-fg/30" :

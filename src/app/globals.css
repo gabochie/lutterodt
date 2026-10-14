@@ -37,14 +37,14 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
-  /* ---- Brand palette: Lutterodt Operations, frozen from crest ---- */
+  /* ---- Brand palette: PLM heraldic alignment (Lane A), sampled from the Lutterodt achievement ---- */
   --color-blue-50: #EEF1FF;
-  --color-blue-700: #001D95;
-  --color-blue-800: #0A2290;
-  --color-blue-900: #051860;
-  --color-blue-950: #020A3D;
+  --color-blue-700: #1B5FC1;
+  --color-blue-800: #144A9E;
+  --color-blue-900: #0E3A7E;
+  --color-blue-950: #0A2470;
   --color-gold-400: #FBC829;
-  --color-gold-500: #EEAD16;
+  --color-gold-500: #FAA110;
   --color-gold-700: #996C16;
   --color-green-600: #0A7A30;
   --color-green-700: #015F23;
@@ -69,11 +69,12 @@
   --color-success-text: var(--success-text);
   --color-surface-raised: var(--surface-raised);
 
-  /* ---- Legacy names retained; values resolve to the brand palette ---- */
-  --color-burgundy: #001D95;
-  --color-burgundy-deep: #0A2290;
-  --color-burgundy-ink: #020A3D;
-  --color-gold: #EEAD16;
+  /* ---- Heraldic tokens: azure replaces retired burgundy; gules errors-only ---- */
+  --color-azure: #1B5FC1;
+  --color-azure-deep: #144A9E;
+  --color-azure-ink: #0A2470;
+  --color-gules: #D1051C;
+  --color-gold: #FAA110;
   --color-gold-light: #FBC829;
   --color-gold-dim: #996C16;
   --color-gold-ink: #6E520C;
@@ -100,10 +101,10 @@
   --surface: #F7F7F4;
   --surface-raised: #FFFFFF;
   --fg: #0B0D12;
-  --heading: #020A3D;
+  --heading: #0A2470;
   --hairline: #E4E6EC;
   --muted-text: #5A6170;
-  --accent-text: #001D95;
+  --accent-text: #1B5FC1;
   --success-text: #015F23;
   --tint: #EEF1FF;
 
@@ -113,60 +114,60 @@
   --card-foreground: #0B0D12;
   --popover: #F7F7F4;
   --popover-foreground: #0B0D12;
-  --primary: #001D95;
+  --primary: #1B5FC1;
   --primary-foreground: #FFFFFF;
-  --secondary: #EEAD16;
-  --secondary-foreground: #020A3D;
+  --secondary: #FAA110;
+  --secondary-foreground: #0A2470;
   --muted: #EEF1FF;
   --muted-foreground: #5A6170;
-  --accent: #EEAD16;
-  --accent-foreground: #020A3D;
-  --destructive: #E30303;
+  --accent: #FAA110;
+  --accent-foreground: #0A2470;
+  --destructive: #D1051C;
   --border: #E4E6EC;
   --input: #E4E6EC;
-  --ring: #EEAD16;
-  --chart-1: #EEAD16;
-  --chart-2: #001D95;
+  --ring: #FAA110;
+  --chart-1: #FAA110;
+  --chart-2: #1B5FC1;
   --chart-3: #015F23;
   --chart-4: #996C16;
-  --chart-5: #020A3D;
+  --chart-5: #0A2470;
   --radius: 2px;
   --radius-btn: 999px;
-  --sidebar: #020A3D;
+  --sidebar: #0A2470;
   --sidebar-foreground: #F2F4FF;
-  --sidebar-primary: #EEAD16;
-  --sidebar-primary-foreground: #020A3D;
+  --sidebar-primary: #FAA110;
+  --sidebar-primary-foreground: #0A2470;
   --sidebar-accent: rgba(242, 244, 255, 0.1);
   --sidebar-accent-foreground: #F2F4FF;
   --sidebar-border: rgba(242, 244, 255, 0.18);
-  --sidebar-ring: #EEAD16;
+  --sidebar-ring: #FAA110;
 }
 
 .dark {
   color-scheme: dark;
   --surface: #01010A;
-  --surface-raised: #020A3D;
+  --surface-raised: #0A2470;
   --fg: #F2F4FF;
   --heading: #F2F4FF;
   --hairline: rgba(242, 244, 255, 0.18);
   --muted-text: #A9B1CC;
   --accent-text: #8398FF;
   --success-text: #DFF2E4;
-  --tint: #020A3D;
+  --tint: #0A2470;
 
   --background: #01010A;
   --foreground: #F2F4FF;
-  --card: #020A3D;
+  --card: #0A2470;
   --card-foreground: #F2F4FF;
-  --popover: #020A3D;
+  --popover: #0A2470;
   --popover-foreground: #F2F4FF;
   --primary: #8398FF;
   --primary-foreground: #01010A;
-  --secondary: #EEAD16;
+  --secondary: #FAA110;
   --secondary-foreground: #01010A;
-  --muted: #020A3D;
+  --muted: #0A2470;
   --muted-foreground: #A9B1CC;
-  --accent: #020A3D;
+  --accent: #0A2470;
   --accent-foreground: #F2F4FF;
   --border: rgba(242, 244, 255, 0.18);
   --input: rgba(242, 244, 255, 0.22);

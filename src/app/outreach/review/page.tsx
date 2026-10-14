@@ -111,7 +111,7 @@ export default function ReviewPage() {
               onClick={() => setFilter(s)}
               className={`font-mono text-[10px] tracking-widest uppercase px-3 py-2 border transition-colors ${
                 filter === s
-                  ? "bg-burgundy text-ivory border-burgundy"
+                  ? "bg-azure text-ivory border-azure"
                   : "bg-surface text-fg/60 border-line hover:border-gold-dim"
               }`}
             >
@@ -122,7 +122,7 @@ export default function ReviewPage() {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 border border-burgundy/20 bg-burgundy/5 text-accent-text text-[13px]">{error}</div>
+        <div className="mb-4 p-3 border border-azure/20 bg-azure/5 text-accent-text text-[13px]">{error}</div>
       )}
 
       {result && (
@@ -184,7 +184,7 @@ export default function ReviewPage() {
                           <span className={`font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 ${
                             c.confidence === "high" ? "bg-forest/10 text-success-text" :
                             c.confidence === "medium" ? "bg-gold-dim/10 text-gold-dim" :
-                            "bg-burgundy/10 text-accent-text"
+                            "bg-azure/10 text-accent-text"
                           }`}>{c.confidence}</span>
                         </div>
                         <div className="text-[14px] mt-1.5 break-words">{c.value}</div>

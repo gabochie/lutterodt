@@ -79,12 +79,12 @@ export default function EditArticlePage() {
           <div className="field">
             <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Title</label>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
-              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-fg focus:outline-0 focus:border-burgundy" placeholder="Article title" />
+              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-fg focus:outline-0 focus:border-azure" placeholder="Article title" />
           </div>
           <div className="field">
             <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Category</label>
             <select value={category} onChange={(e) => setCategory(e.target.value)}
-              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-fg focus:outline-0 focus:border-burgundy">
+              className="w-full border-0 border-b border-line bg-transparent py-3 px-1 font-body text-[15px] text-fg focus:outline-0 focus:border-azure">
               <option>Oral History</option><option>Family News</option><option>Heritage</option><option>Interview</option><option>Article</option>
             </select>
           </div>
@@ -95,7 +95,7 @@ export default function EditArticlePage() {
             Content <span className="text-fg/30 normal-case">(Markdown supported)</span>
           </label>
           <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={16}
-            className="w-full border border-line bg-transparent py-3 px-4 font-body text-[14px] text-fg focus:outline-0 focus:border-burgundy resize-vertical font-mono" placeholder="Write your article here..." />
+            className="w-full border border-line bg-transparent py-3 px-4 font-body text-[14px] text-fg focus:outline-0 focus:border-azure resize-vertical font-mono" placeholder="Write your article here..." />
         </div>
 
         <div className="flex items-center gap-4">
@@ -103,7 +103,7 @@ export default function EditArticlePage() {
           <div className="flex gap-2">
             {["draft", "published"].map((s) => (
               <button key={s} type="button" onClick={() => setStatus(s)}
-                className={`font-mono text-[10.5px] tracking-widest uppercase px-4 py-2 border transition-colors ${status === s ? "border-burgundy bg-burgundy text-ivory" : "border-line text-fg/50 hover:border-charcoal/30"}`}>{s}</button>
+                className={`font-mono text-[10.5px] tracking-widest uppercase px-4 py-2 border transition-colors ${status === s ? "border-azure bg-azure text-ivory" : "border-line text-fg/50 hover:border-charcoal/30"}`}>{s}</button>
             ))}
           </div>
         </div>

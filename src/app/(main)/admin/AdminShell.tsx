@@ -60,7 +60,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <aside
         className={cn(
-          "fixed md:sticky top-0 z-50 md:z-auto h-screen w-64 bg-burgundy-ink text-ivory flex flex-col transition-transform duration-300 md:translate-x-0",
+          "fixed md:sticky top-0 z-50 md:z-auto h-screen w-64 bg-azure-ink text-ivory flex flex-col transition-transform duration-300 md:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >

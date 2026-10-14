@@ -176,7 +176,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             <button
               onClick={runPipeline}
               disabled={runningPipeline}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-burgundy-ink text-ivory text-xs rounded-md hover:bg-burgundy-ink/90 transition-colors disabled:opacity-50"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-azure-ink text-ivory text-xs rounded-md hover:bg-azure-ink/90 transition-colors disabled:opacity-50"
             >
               {runningPipeline ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
               Run Now
@@ -219,7 +219,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             <h2 className="text-sm font-semibold text-fg/70 uppercase tracking-wider">Queue Radar</h2>
           </div>
           <div className="grid grid-cols-3 gap-3 mb-4">
-            <div className="bg-burgundy-ink/5 rounded-lg p-3 text-center">
+            <div className="bg-azure-ink/5 rounded-lg p-3 text-center">
               <div className="text-2xl font-bold text-heading">{stats.pendingInQueue || 0}</div>
               <div className="text-[10px] uppercase tracking-wider text-fg/50">Pending</div>
             </div>
@@ -233,7 +233,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             </div>
           </div>
           {daily?.today?.pendingLetter ? (
-            <div className="bg-burgundy-ink/5 rounded-lg p-3">
+            <div className="bg-azure-ink/5 rounded-lg p-3">
               <div className="text-xs text-fg/50 mb-1">Today&apos;s letter</div>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-heading truncate">{daily.today.pendingLetter.name}</span>
@@ -252,11 +252,11 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             <h2 className="text-sm font-semibold text-fg/70 uppercase tracking-wider">Discovery Feed</h2>
           </div>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div className="bg-burgundy-ink/5 rounded-lg p-3 text-center">
+            <div className="bg-azure-ink/5 rounded-lg p-3 text-center">
               <div className="text-2xl font-bold text-heading">{stats.totalProfiles || 0}</div>
               <div className="text-[10px] uppercase tracking-wider text-fg/50">Total Profiles</div>
             </div>
-            <div className="bg-burgundy-ink/5 rounded-lg p-3 text-center">
+            <div className="bg-azure-ink/5 rounded-lg p-3 text-center">
               <div className="text-2xl font-bold text-heading">
                 {stats.totalProfiles ? Math.round(((stats.totalProfiles - (stats.noLetter || 0)) / stats.totalProfiles) * 100) : 0}%
               </div>
@@ -268,7 +268,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
 
       {/* Row 2: Batch Discovery */}
       <div className="bg-card rounded-xl border border-line shadow-sm overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-line bg-gradient-to-r from-burgundy-ink/5 to-transparent">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-line bg-gradient-to-r from-azure-ink/5 to-transparent">
           <div className="flex items-center gap-3">
             <Sparkles className="w-5 h-5 text-gold-dim" />
             <h2 className="text-sm font-semibold text-fg/70 uppercase tracking-wider">Batch Discovery</h2>
@@ -305,7 +305,7 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
 
         <div className="p-6">
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-5">
-            <div className="bg-burgundy-ink/5 rounded-lg p-4 text-center">
+            <div className="bg-azure-ink/5 rounded-lg p-4 text-center">
               <Database className="w-4 h-4 text-gold-dim mx-auto mb-1.5" />
               <div className="text-xl font-bold text-heading">{batchResult?.search?.totalCandidates ?? "—"}</div>
               <div className="text-[10px] uppercase tracking-wider text-fg/50">Found</div>
@@ -483,10 +483,10 @@ export function CommandCenterClient({ initial }: { initial: InitialData }) {
             <div className="mt-4 w-full border-t border-line pt-4">
               <div className="text-[10px] uppercase tracking-widest text-fg/40 text-center mb-2">Quick Actions</div>
               <div className="grid grid-cols-2 gap-2">
-                <a href="/admin/outreach" className="flex items-center justify-center gap-1.5 px-3 py-2 bg-burgundy-ink/5 rounded-lg text-xs text-heading hover:bg-burgundy-ink/10 transition-colors">
+                <a href="/admin/outreach" className="flex items-center justify-center gap-1.5 px-3 py-2 bg-azure-ink/5 rounded-lg text-xs text-heading hover:bg-azure-ink/10 transition-colors">
                   <BarChart3 className="w-3.5 h-3.5" /> Stats
                 </a>
-                <a href="/admin/scheduler" className="flex items-center justify-center gap-1.5 px-3 py-2 bg-burgundy-ink/5 rounded-lg text-xs text-heading hover:bg-burgundy-ink/10 transition-colors">
+                <a href="/admin/scheduler" className="flex items-center justify-center gap-1.5 px-3 py-2 bg-azure-ink/5 rounded-lg text-xs text-heading hover:bg-azure-ink/10 transition-colors">
                   <Calendar className="w-3.5 h-3.5" /> Schedule
                 </a>
               </div>

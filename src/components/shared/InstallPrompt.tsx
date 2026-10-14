@@ -48,7 +48,7 @@ export function InstallPrompt() {
         className={cn(
           "fixed z-40 backdrop-blur-md border border-gold-dim/25 shadow-lg",
           "bottom-20 md:bottom-6 right-4 left-4 md:left-auto md:right-6 md:max-w-sm",
-          isIOS ? "bg-burgundy-ink text-ivory" : "bg-charcoal text-ivory"
+          isIOS ? "bg-azure-ink text-ivory" : "bg-charcoal text-ivory"
         )}
         role="region"
         aria-label="Install the Lutterodt app"

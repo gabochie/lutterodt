@@ -159,7 +159,7 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
         <div className="container-main">
           <div className="grid grid-cols-[0.9fr_1.1fr] max-md:grid-cols-1 border border-line">
             {/* Sidebar */}
-            <div className="bg-burgundy-ink text-ivory p-14 max-md:p-8">
+            <div className="bg-azure-ink text-ivory p-14 max-md:p-8">
               <h3 className="text-ivory text-[26px] mb-5">Reach the Committee</h3>
               <p className="text-ivory/68 text-[14.5px] mb-8">
                 The Renaissance Committee reviews all enquiries weekly. Family and time-sensitive matters are prioritised.
@@ -202,7 +202,7 @@ export function ContactClient({ initialIntent }: { initialIntent?: string }) {
                     key={tab}
                     className={`font-mono text-[11.5px] tracking-widest uppercase py-3 mr-8 border-b-2 transition-colors shrink-0 ${
                       activeTab === tab
-                        ? "text-accent-text border-burgundy"
+                        ? "text-accent-text border-azure"
                         : "text-fg-muted dark:text-ivory/70 border-transparent"
                     }`}
                     onClick={() => setActiveTab(tab)}
@@ -355,7 +355,7 @@ function ConsentNotice({ checked, onChange }: { checked: boolean; onChange: (v: 
           type="checkbox"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
-          className="mt-1 accent-burgundy shrink-0"
+          className="mt-1 accent-azure shrink-0"
         />
         <span className="text-[13.5px] text-fg/70 leading-relaxed">
           I confirm this material or account is mine to share, and I consent to the Lutterodt
@@ -403,7 +403,7 @@ function Field({
 }) {
   const id = label.toLowerCase().replace(/\s+/g, "-");
   const inputClass =
-    "border-0 border-b border-line bg-transparent py-[10px] px-[2px] font-body text-[15px] text-fg focus:outline-0 focus:border-burgundy";
+    "border-0 border-b border-line bg-transparent py-[10px] px-[2px] font-body text-[15px] text-fg focus:outline-0 focus:border-azure";
 
   return (
     <div className={`field ${full ? "col-span-full" : ""} ${className || ""}`}>

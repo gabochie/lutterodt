@@ -42,7 +42,7 @@ export default function OutreachLayout({ children }: { children: React.ReactNode
 
   return (
     <div className="min-h-screen bg-ivory-dim">
-      <div className="bg-burgundy-ink text-ivory px-6 py-3 flex items-center justify-between">
+      <div className="bg-azure-ink text-ivory px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/admin" className="text-ivory/50 hover:text-ivory text-[13px]">&larr; Admin</Link>
           <span className="text-ivory/20">|</span>

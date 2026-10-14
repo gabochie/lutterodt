@@ -47,12 +47,12 @@ export function ComingSoonGate({ children }: { children: React.ReactNode }) {
   }
 
   if (showOverlay === null) {
-    return <div className="min-h-screen bg-burgundy-ink" />;
+    return <div className="min-h-screen bg-azure-ink" />;
   }
 
   if (showOverlay) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-burgundy-ink overflow-hidden px-6">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-azure-ink overflow-hidden px-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.10),transparent_60%),radial-gradient(circle_at_80%_20%,rgba(47,74,60,0.20),transparent_50%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-gold-dim/8 rounded-full pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-gold-dim/6 rounded-full pointer-events-none" />

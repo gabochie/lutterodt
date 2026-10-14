@@ -70,7 +70,7 @@ export function FullSite() {
         </div>
       </section>
 
-      <section className="bg-burgundy-ink text-ivory relative overflow-hidden py-[108px]">
+      <section className="bg-azure-ink text-ivory relative overflow-hidden py-[108px]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(198,161,91,0.14),transparent_45%),radial-gradient(circle_at_85%_80%,rgba(47,74,60,0.35),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <div className="max-w-3xl">
@@ -191,7 +191,7 @@ export function FullSite() {
         </div>
       </section>
 
-      <section className="bg-burgundy-ink text-center py-[72px] relative overflow-hidden">
+      <section className="bg-azure-ink text-center py-[72px] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(198,161,91,0.14),transparent_45%),radial-gradient(circle_at_85%_80%,rgba(47,74,60,0.35),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark className="justify-center flex">Join the Renaissance</Tag>

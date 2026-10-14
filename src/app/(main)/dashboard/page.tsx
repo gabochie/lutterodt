@@ -72,7 +72,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <section className="bg-burgundy-ink py-[72px]">
+      <section className="bg-azure-ink py-[72px]">
         <div className="container-main">
           <div className="flex items-center justify-between">
             <div>
@@ -140,7 +140,7 @@ export default function DashboardPage() {
                     {p.message && <p className="text-[13px] text-fg/60 mt-1">{p.message}</p>}
                     <div className="text-[11px] text-fg/40 font-mono mt-2">{new Date(p.created_at).toLocaleDateString()}</div>
                   </div>
-                  <span className="font-mono text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-burgundy/8 text-accent-text">{p.status}</span>
+                  <span className="font-mono text-[10px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-azure/8 text-accent-text">{p.status}</span>
                 </div>
               ))}
             </div>

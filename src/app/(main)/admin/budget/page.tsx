@@ -141,7 +141,7 @@ export default function AdminBudgetPage() {
           <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Annual maintenance</div>
           <div className="font-display text-[28px] text-heading">${totalAnnual.toFixed(2)}</div>
         </div>
-        <div className="bg-burgundy-ink border border-line-on-dark p-5">
+        <div className="bg-azure-ink border border-line-on-dark p-5">
           <div className="font-mono text-[9px] tracking-widest uppercase text-gold-dim mb-1">Year 1 Grand Total</div>
           <div className="font-display text-[28px] text-gold-light">${grandTotal.toFixed(2)}</div>
         </div>
@@ -166,7 +166,7 @@ export default function AdminBudgetPage() {
                   onClick={() => setEditingSection(isEditing ? null : section)}
                   className={`font-mono text-[9.5px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
                     isEditing
-                      ? "bg-burgundy text-ivory border-burgundy"
+                      ? "bg-azure text-ivory border-azure"
                       : "border-line text-fg/50 hover:border-charcoal/30"
                   }`}
                 >
@@ -183,7 +183,7 @@ export default function AdminBudgetPage() {
                       <input
                         value={entry.item}
                         onChange={(e) => updateItem(section, i, e.target.value)}
-                        className="w-full bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-fg focus:outline-0 focus:border-burgundy"
+                        className="w-full bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-fg focus:outline-0 focus:border-azure"
                       />
                     ) : (
                       <span className="text-[13.5px] text-fg/70">{entry.item}</span>
@@ -197,7 +197,7 @@ export default function AdminBudgetPage() {
                         step="0.01"
                         value={entry.cost}
                         onChange={(e) => updateCost(section, i, parseFloat(e.target.value) || 0)}
-                        className="w-24 bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-fg text-right font-mono focus:outline-0 focus:border-burgundy"
+                        className="w-24 bg-transparent border-0 border-b border-line py-1 text-[13.5px] text-fg text-right font-mono focus:outline-0 focus:border-azure"
                       />
                     ) : (
                       <span className="font-mono text-[13.5px] text-fg w-24 text-right">{entry.cost.toFixed(2)}</span>

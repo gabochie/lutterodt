@@ -86,7 +86,7 @@ export function ReunionLiveFeed() {
             <div className="space-y-4">
               {updates.map((u) => (
                 <div key={u.id} className="flex gap-4 items-start bg-ivory-dim rounded-lg p-5">
-                  <div className="w-10 h-10 rounded-full bg-burgundy text-ivory flex items-center justify-center text-[15px] font-medium shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-azure text-ivory flex items-center justify-center text-[15px] font-medium shrink-0">
                     {u.attendee_name.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -122,7 +122,7 @@ export function ReunionLiveFeed() {
                   rows={2}
                   className="w-full bg-card border border-line px-4 py-2.5 text-[14px] outline-none focus:border-gold-dim resize-none"
                 />
-                <button type="submit" disabled={posting} className="bg-burgundy text-ivory text-[12px] tracking-widest uppercase py-2.5 px-6 rounded-sm hover:bg-burgundy-deep transition-colors disabled:opacity-50">
+                <button type="submit" disabled={posting} className="bg-azure text-ivory text-[12px] tracking-widest uppercase py-2.5 px-6 rounded-sm hover:bg-azure-deep transition-colors disabled:opacity-50">
                   {posting ? "Posting..." : "Post Update"}
                 </button>
               </div>

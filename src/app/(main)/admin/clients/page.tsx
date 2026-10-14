@@ -118,7 +118,7 @@ export default function AdminClientsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => { setNewClient(true); setForm({ name: "", email: "", phone: "", access_code: generateCode() }); }}
-            className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase px-4 py-2 bg-burgundy text-ivory hover:bg-burgundy-ink transition-colors"
+            className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase px-4 py-2 bg-azure text-ivory hover:bg-azure-ink transition-colors"
           >
             <Plus className="w-3.5 h-3.5" /> Add Client
           </button>
@@ -152,10 +152,10 @@ export default function AdminClientsPage() {
           />
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setView("active")} className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${view === "active" ? "bg-burgundy text-ivory border-burgundy" : "bg-surface text-fg/50 border-line"}`}>
+          <button onClick={() => setView("active")} className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${view === "active" ? "bg-azure text-ivory border-azure" : "bg-surface text-fg/50 border-line"}`}>
             Active ({clients.length})
           </button>
-          <button onClick={() => setView("leads")} className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${view === "leads" ? "bg-burgundy text-ivory border-burgundy" : "bg-surface text-fg/50 border-line"}`}>
+          <button onClick={() => setView("leads")} className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${view === "leads" ? "bg-azure text-ivory border-azure" : "bg-surface text-fg/50 border-line"}`}>
             Leads ({leads.length})
           </button>
         </div>
@@ -256,7 +256,7 @@ export default function AdminClientsPage() {
             </div>
             <div className="px-6 py-4 border-t border-line flex items-center justify-end gap-3">
               <button onClick={() => { setEditId(null); setEditData({}); }} className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 border border-line text-fg/50 hover:text-fg">Cancel</button>
-              <button onClick={saveEdit} className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 bg-burgundy text-ivory hover:bg-burgundy-ink">Save</button>
+              <button onClick={saveEdit} className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 bg-azure text-ivory hover:bg-azure-ink">Save</button>
             </div>
           </div>
         </div>
@@ -293,7 +293,7 @@ export default function AdminClientsPage() {
               </div>
               <div className="px-6 py-4 border-t border-line flex items-center justify-end gap-3">
                 <button type="button" onClick={() => setNewClient(false)} className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 border border-line text-fg/50 hover:text-fg">Cancel</button>
-                <button type="submit" className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 bg-burgundy text-ivory hover:bg-burgundy-ink">Add Client</button>
+                <button type="submit" className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 bg-azure text-ivory hover:bg-azure-ink">Add Client</button>
               </div>
             </form>
           </div>

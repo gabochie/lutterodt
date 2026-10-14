@@ -96,7 +96,7 @@ export default function ProjectsPage() {
                     loading="lazy"
                     className="w-full h-[220px] object-cover"
                   />
-                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Concept</span>
+                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-azure-ink text-ivory px-2.5 py-1 rounded-sm">Concept</span>
                   <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-ivory/60 text-[10px] px-3 py-1.5">
                     AI-generated concept visualisation
                   </p>
@@ -141,7 +141,7 @@ export default function ProjectsPage() {
                     loading="lazy"
                     className="w-full h-[220px] object-cover"
                   />
-                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-burgundy-ink text-ivory px-2.5 py-1 rounded-sm">Concept</span>
+                  <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest uppercase bg-azure-ink text-ivory px-2.5 py-1 rounded-sm">Concept</span>
                   <p className="absolute bottom-0 left-0 right-0 bg-black/60 text-ivory/60 text-[10px] px-3 py-1.5">
                     AI-generated concept visualisation
                   </p>
@@ -200,7 +200,7 @@ export default function ProjectsPage() {
             ))}
           </div>
 
-          <div className="border border-line rounded-lg p-8 md:p-10 bg-burgundy-ink text-ivory">
+          <div className="border border-line rounded-lg p-8 md:p-10 bg-azure-ink text-ivory">
             <div className="grid md:grid-cols-[1.3fr_1fr] gap-8 items-center">
               <div>
                 <Tag onDark>Get Involved</Tag>

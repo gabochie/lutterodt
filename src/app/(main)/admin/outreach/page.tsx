@@ -184,7 +184,7 @@ export default function AdminOutreach() {
               onClick={() => setFilterStatus(s)}
               className={`font-mono text-[9px] tracking-widest uppercase px-2.5 py-1.5 border transition-colors ${
                 filterStatus === s
-                  ? "bg-burgundy text-ivory border-burgundy"
+                  ? "bg-azure text-ivory border-azure"
                   : "bg-surface text-fg/50 border-line hover:border-charcoal/30"
               }`}
             >
@@ -305,7 +305,7 @@ export default function AdminOutreach() {
                       onClick={() => setEditRecord({ ...editRecord, status: key, dateSent: key !== "not_sent" && !editRecord.dateSent ? new Date().toISOString().slice(0, 10) : editRecord.dateSent, lastContacted: key !== "not_sent" ? new Date().toISOString().slice(0, 10) : editRecord.lastContacted })}
                       className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
                         editRecord.status === key
-                          ? "bg-burgundy text-ivory border-burgundy"
+                          ? "bg-azure text-ivory border-azure"
                           : "bg-surface text-fg/50 border-line hover:border-charcoal/30"
                       }`}
                     >
@@ -324,7 +324,7 @@ export default function AdminOutreach() {
                       onClick={() => setEditRecord({ ...editRecord, channel: key })}
                       className={`font-mono text-[9px] tracking-widest uppercase px-3 py-1.5 border transition-colors ${
                         editRecord.channel === key
-                          ? "bg-burgundy text-ivory border-burgundy"
+                          ? "bg-azure text-ivory border-azure"
                           : "bg-surface text-fg/50 border-line hover:border-charcoal/30"
                       }`}
                     >
@@ -389,7 +389,7 @@ export default function AdminOutreach() {
               </button>
               <button
                 onClick={saveEdit}
-                className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 bg-burgundy text-ivory hover:bg-burgundy-ink transition-colors"
+                className="font-mono text-[10px] tracking-widest uppercase px-5 py-2.5 bg-azure text-ivory hover:bg-azure-ink transition-colors"
               >
                 Save
               </button>

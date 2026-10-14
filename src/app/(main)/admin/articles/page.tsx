@@ -50,7 +50,7 @@ export default function AdminArticlesPage() {
       <div className="flex gap-0 border-b border-line mb-6">
         {(["all", "published", "draft"] as const).map((f) => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`font-mono text-[11px] tracking-widest uppercase py-3 px-6 border-b-2 transition-colors ${filter === f ? "text-accent-text border-burgundy" : "text-fg/40 border-transparent hover:text-fg/60"}`}>
+            className={`font-mono text-[11px] tracking-widest uppercase py-3 px-6 border-b-2 transition-colors ${filter === f ? "text-accent-text border-azure" : "text-fg/40 border-transparent hover:text-fg/60"}`}>
             {f}
           </button>
         ))}

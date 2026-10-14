@@ -47,7 +47,7 @@ export default function AdminContactsPage() {
       <div className="flex gap-0 border-b border-line mb-6">
         {filters.map((f) => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`font-mono text-[11px] tracking-widest uppercase py-3 px-6 border-b-2 transition-colors ${filter === f ? "text-accent-text border-burgundy" : "text-fg/40 border-transparent hover:text-fg/60"}`}>{f}</button>
+            className={`font-mono text-[11px] tracking-widest uppercase py-3 px-6 border-b-2 transition-colors ${filter === f ? "text-accent-text border-azure" : "text-fg/40 border-transparent hover:text-fg/60"}`}>{f}</button>
         ))}
       </div>
 
@@ -61,7 +61,7 @@ export default function AdminContactsPage() {
                 className={`w-full text-left px-5 py-4 hover:bg-ivory-dim/50 transition-colors ${selected === contact.id ? "bg-ivory-dim" : ""}`}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[14px] text-fg font-[500]">{contact.name || "Unknown"}</span>
-                  {contact.status === "new" && <span className="w-2 h-2 rounded-full bg-burgundy" />}
+                  {contact.status === "new" && <span className="w-2 h-2 rounded-full bg-azure" />}
                 </div>
                 <div className="font-mono text-[10px] tracking-widest uppercase text-fg/40">{contact.subject}</div>
                 <div className="text-[12.5px] text-fg/50 mt-1 truncate">{contact.message}</div>

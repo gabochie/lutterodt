@@ -90,7 +90,7 @@ export default function AdminStrategyPage() {
           <h1 className="text-[clamp(24px,2.5vw,32px)] font-display text-heading">Strategy</h1>
           <p className="text-fg/50 text-[14px] mt-1">The Lutterodt Renaissance — Institutional Strategy</p>
         </div>
-        <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-burgundy/10 text-accent-text border border-burgundy/20">Phase 0: Pre-Founding</span>
+        <span className="font-mono text-[10px] tracking-widest uppercase px-3 py-2 bg-azure/10 text-accent-text border border-azure/20">Phase 0: Pre-Founding</span>
       </div>
 
       {/* Table of Contents */}
@@ -121,7 +121,7 @@ export default function AdminStrategyPage() {
       </div>
 
       {/* Core thesis banner */}
-      <div id="thesis" className="bg-burgundy-ink text-ivory p-8 mb-10 border border-line-on-dark">
+      <div id="thesis" className="bg-azure-ink text-ivory p-8 mb-10 border border-line-on-dark">
         <Target className="w-6 h-6 text-gold-dim mb-4" />
         <p className="font-display text-[22px] leading-snug max-w-3xl">
           A project like The Lutterodt Renaissance is not fundamentally a software project — it is an institution-building project. The website is simply one of the tools.
@@ -292,7 +292,7 @@ export default function AdminStrategyPage() {
                 {fs.tiers.length > 0 && (
                   <div className="flex gap-2 flex-wrap">
                     {fs.tiers.map((tier, ti) => (
-                      <span key={ti} className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 bg-burgundy/5 text-accent-text border border-burgundy/10">{tier}</span>
+                      <span key={ti} className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 bg-azure/5 text-accent-text border border-azure/10">{tier}</span>
                     ))}
                   </div>
                 )}
@@ -410,7 +410,7 @@ export default function AdminStrategyPage() {
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-8 right-8 w-10 h-10 bg-burgundy text-ivory flex items-center justify-center border border-gold/30 hover:bg-burgundy-deep transition-colors z-50"
+          className="fixed bottom-8 right-8 w-10 h-10 bg-azure text-ivory flex items-center justify-center border border-gold/30 hover:bg-azure-deep transition-colors z-50"
         >
           <ChevronUp className="w-4 h-4" />
         </button>

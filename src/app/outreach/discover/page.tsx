@@ -92,7 +92,7 @@ export default function DiscoverPage() {
 
       {result && (
         <div className={`mb-6 p-4 border ${
-          result.ok ? "border-forest/20 bg-forest/5" : "border-burgundy/20 bg-burgundy/5"
+          result.ok ? "border-forest/20 bg-forest/5" : "border-azure/20 bg-azure/5"
         }`}>
           <p className="text-[13px]">{result.message}</p>
           {result.ok && lastAdded && (

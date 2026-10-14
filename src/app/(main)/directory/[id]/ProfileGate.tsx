@@ -32,7 +32,7 @@ export function ProfileGate({
   if (!checked) {
     return (
       <>
-        <section className="bg-burgundy-ink text-ivory py-[74px] pb-[64px] relative overflow-hidden">
+        <section className="bg-azure-ink text-ivory py-[74px] pb-[64px] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(198,161,91,0.16),transparent_45%)] pointer-events-none" />
           <div className="container-main relative z-10">
             <span className="font-mono text-[11.5px] tracking-widest uppercase text-ivory/50">
@@ -57,7 +57,7 @@ export function ProfileGate({
   if (!isHistorical && !isVerified) {
     return (
       <>
-        <section className="bg-burgundy-ink text-ivory py-[74px] pb-[64px] relative overflow-hidden">
+        <section className="bg-azure-ink text-ivory py-[74px] pb-[64px] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(198,161,91,0.16),transparent_45%)] pointer-events-none" />
           <div className="container-main relative z-10">
             <span className="font-mono text-[11.5px] tracking-widest uppercase text-ivory/50">
@@ -94,7 +94,7 @@ export function ProfileGate({
 
   return (
     <>
-      <section className="bg-burgundy-ink text-ivory py-[74px] pb-[64px] relative overflow-hidden">
+      <section className="bg-azure-ink text-ivory py-[74px] pb-[64px] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(198,161,91,0.16),transparent_45%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <span className="font-mono text-[11.5px] tracking-widest uppercase text-ivory/50">

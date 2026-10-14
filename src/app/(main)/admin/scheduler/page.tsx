@@ -196,7 +196,7 @@ export default function SchedulerPage() {
           </button>
           <button
             onClick={fetchData}
-            className="font-mono text-[11px] tracking-widest uppercase px-4 py-3 border border-line text-fg/50 hover:text-accent-text hover:border-burgundy transition-colors"
+            className="font-mono text-[11px] tracking-widest uppercase px-4 py-3 border border-line text-fg/50 hover:text-accent-text hover:border-azure transition-colors"
           >
             Refresh
           </button>

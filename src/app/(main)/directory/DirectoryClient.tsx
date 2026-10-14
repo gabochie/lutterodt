@@ -92,7 +92,7 @@ export function DirectoryClient() {
       />
 
       {!isVerified && (
-        <section className="bg-burgundy-ink text-ivory py-[48px] relative overflow-hidden">
+        <section className="bg-azure-ink text-ivory py-[48px] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(198,161,91,0.10),transparent_50%)] pointer-events-none" />
           <div className="container-main relative z-10 text-center">
             <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Family Directory</p>
@@ -111,7 +111,7 @@ export function DirectoryClient() {
       )}
 
       {isVerified && (
-        <section className="bg-burgundy-ink text-ivory py-[48px] relative overflow-hidden">
+        <section className="bg-azure-ink text-ivory py-[48px] relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(198,161,91,0.10),transparent_50%)] pointer-events-none" />
           <div className="container-main relative z-10 text-center">
             <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Verified Access</p>

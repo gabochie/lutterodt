@@ -128,7 +128,7 @@ export function SponsorClient() {
               <div key={p.title} className="bg-surface p-[28px] pb-[30px]">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-[17px] font-display font-[550] text-heading">{p.title}</h3>
-                  <span className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-burgundy/8 text-accent-text">{p.status}</span>
+                  <span className="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 rounded-sm bg-azure/8 text-accent-text">{p.status}</span>
                 </div>
                 <p className="text-[14px] text-fg/68 leading-relaxed">{p.desc}</p>
               </div>
@@ -202,7 +202,7 @@ export function SponsorClient() {
               <div key={way.title} className="bg-surface p-[32px] pb-[36px] flex flex-col">
                 <h3 className="text-[22px] font-display font-[550] text-heading">{way.title}</h3>
                 <p className="mt-3 text-[14.5px] text-fg/68 leading-relaxed flex-1">{way.body}</p>
-                <Link href={way.href} className="mt-[24px] text-center text-[12px] tracking-widest uppercase py-3 rounded-sm transition-all font-medium bg-burgundy text-ivory hover:bg-burgundy-deep">{way.cta}</Link>
+                <Link href={way.href} className="mt-[24px] text-center text-[12px] tracking-widest uppercase py-3 rounded-sm transition-all font-medium bg-azure text-ivory hover:bg-azure-deep">{way.cta}</Link>
               </div>
             ))}
           </div>
@@ -227,7 +227,7 @@ export function SponsorClient() {
         </div>
       </section>
 
-      <section className="bg-burgundy-ink text-ivory text-center py-[72px] relative overflow-hidden">
+      <section className="bg-azure-ink text-ivory text-center py-[72px] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.10),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark className="justify-center flex">Keep in Touch</Tag>

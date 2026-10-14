@@ -17,7 +17,7 @@ export default async function LoginPage({
   const error = params.error;
 
   return (
-    <div className="min-h-screen bg-burgundy-ink flex items-center justify-center px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-azure-ink flex items-center justify-center px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.08),transparent_60%)] pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-sm">

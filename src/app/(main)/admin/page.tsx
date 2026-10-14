@@ -226,7 +226,7 @@ export default function AdminDashboard() {
                       <span className="text-[14px] text-fg">{letterDetail.name}</span>
                       <button
                         onClick={copyLetter}
-                        className="flex items-center gap-1 font-mono text-[10px] tracking-wider px-2.5 py-1 border border-line text-fg/50 hover:text-accent-text hover:border-burgundy transition-colors"
+                        className="flex items-center gap-1 font-mono text-[10px] tracking-wider px-2.5 py-1 border border-line text-fg/50 hover:text-accent-text hover:border-azure transition-colors"
                       >
                         {copied ? (
                           <><CheckCircle2 className="w-3 h-3" /> Copied</>
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
                       </button>
                       <a
                         href={`/admin/outreach?profile=${letterDetail.name}`}
-                        className="flex items-center gap-1 font-mono text-[10px] tracking-wider px-2.5 py-1 border border-line text-fg/50 hover:text-accent-text hover:border-burgundy transition-colors"
+                        className="flex items-center gap-1 font-mono text-[10px] tracking-wider px-2.5 py-1 border border-line text-fg/50 hover:text-accent-text hover:border-azure transition-colors"
                       >
                         <ExternalLink className="w-3 h-3" /> View in Queue
                       </a>
@@ -319,7 +319,7 @@ export default function AdminDashboard() {
             <a
               key={action}
               href={`/admin/${action.toLowerCase().replace(/\s+/g, "-")}`}
-              className="font-mono text-[11px] tracking-widest uppercase px-5 py-3 border border-line text-fg/60 hover:border-burgundy hover:text-accent-text transition-colors bg-surface inline-block"
+              className="font-mono text-[11px] tracking-widest uppercase px-5 py-3 border border-line text-fg/60 hover:border-azure hover:text-accent-text transition-colors bg-surface inline-block"
             >
               {action}
             </a>

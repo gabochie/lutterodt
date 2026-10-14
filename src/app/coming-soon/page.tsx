@@ -8,7 +8,7 @@ export default function ComingSoonPage() {
   return (
     <>
       {/* Hero */}
-      <section id="top" className="relative min-h-screen flex items-center justify-center bg-burgundy-ink overflow-hidden px-6">
+      <section id="top" className="relative min-h-screen flex items-center justify-center bg-azure-ink overflow-hidden px-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(198,161,91,0.10),transparent_60%),radial-gradient(circle_at_80%_20%,rgba(47,74,60,0.20),transparent_50%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-gold-dim/8 rounded-full pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-gold-dim/6 rounded-full pointer-events-none" />
@@ -31,7 +31,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* Vision */}
-      <section id="vision" className="py-[108px] bg-burgundy-ink text-ivory relative overflow-hidden">
+      <section id="vision" className="py-[108px] bg-azure-ink text-ivory relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(198,161,91,0.06),transparent_50%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark>Our Vision</Tag>
@@ -100,7 +100,7 @@ export default function ComingSoonPage() {
       </section>
 
       {/* Progress */}
-      <section id="progress" className="bg-burgundy-ink text-ivory py-[108px] relative overflow-hidden">
+      <section id="progress" className="bg-azure-ink text-ivory py-[108px] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(198,161,91,0.10),transparent_45%)] pointer-events-none" />
         <div className="container-main relative z-10">
           <Tag onDark>Progress</Tag>
@@ -162,7 +162,7 @@ export default function ComingSoonPage() {
               <p className="text-fg/60 text-[14px] mt-2">Feature development, security updates, maintenance support and new capabilities</p>
             </div>
           </div>
-          <div className="bg-burgundy-ink text-ivory p-8 rounded-sm">
+          <div className="bg-azure-ink text-ivory p-8 rounded-sm">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div>
                 <Tag onDark>Support the Renaissance</Tag>
@@ -198,7 +198,7 @@ export default function ComingSoonPage() {
           </p>
         </div>
       </section>
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 bg-burgundy-ink/80 backdrop-blur-md border border-gold-dim/15 rounded-full px-4 py-2 shadow-lg">
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 bg-azure-ink/80 backdrop-blur-md border border-gold-dim/15 rounded-full px-4 py-2 shadow-lg">
         {(["Top","Vision","Stats","Features","Progress","Funding","Contact"] as const).map((label) => {
           const id = label.toLowerCase();
           return (

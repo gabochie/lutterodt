@@ -44,17 +44,17 @@ export function VerifyClient() {
             <div>
               <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Full Name</label>
               <input type="text" required value={name} onChange={(e) => setName(e.target.value)}
-                className="w-full border border-line bg-transparent px-4 py-3 text-[15px] text-fg focus:outline-0 focus:border-burgundy" placeholder="Your full name" />
+                className="w-full border border-line bg-transparent px-4 py-3 text-[15px] text-fg focus:outline-0 focus:border-azure" placeholder="Your full name" />
             </div>
             <div>
               <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Email Address</label>
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-line bg-transparent px-4 py-3 text-[15px] text-fg focus:outline-0 focus:border-burgundy" placeholder="your@email.com" />
+                className="w-full border border-line bg-transparent px-4 py-3 text-[15px] text-fg focus:outline-0 focus:border-azure" placeholder="your@email.com" />
             </div>
             <div>
               <label className="font-mono text-[10.5px] tracking-widest uppercase text-fg/55 block mb-2">Family Relation</label>
               <textarea required value={relation} onChange={(e) => setRelation(e.target.value)} rows={3}
-                className="w-full border border-line bg-transparent px-4 py-3 text-[15px] text-fg focus:outline-0 focus:border-burgundy resize-none" placeholder="How are you related to the Lutterodt family? Share any details that help verify your connection." />
+                className="w-full border border-line bg-transparent px-4 py-3 text-[15px] text-fg focus:outline-0 focus:border-azure resize-none" placeholder="How are you related to the Lutterodt family? Share any details that help verify your connection." />
             </div>
             <button type="submit" className="btn btn-primary w-full justify-center">Submit Verification</button>
           </form>
