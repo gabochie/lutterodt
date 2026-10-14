@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandLockup } from "./BrandLockup";
+import { InstallAppButton } from "./InstallAppButton";
 import { NewsletterForm } from "./NewsletterForm";
 
 const legalLinks = [
@@ -83,6 +84,7 @@ export function Footer() {
               {link.label}
             </Link>
           ))}
+          <InstallAppButton />
         </div>
       </div>
     </footer>

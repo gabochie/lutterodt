@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useInstallPrompt } from "@/hooks/useInstallPrompt";
+import { INSTALL_REQUEST_EVENT } from "./InstallAppButton";
 import { cn } from "@/lib/utils";
 
 const DOWNLOAD_ICON = (
@@ -34,6 +35,19 @@ export function InstallPrompt() {
       return () => clearTimeout(t);
     }
   }, [isIOS]);
+
+  // Footer "Install App" button forwards here (same flow, manual trigger).
+  useEffect(() => {
+    const onRequest = () => {
+      if (isIOS) {
+        setModalOpen(true);
+      } else {
+        void showInstallPrompt();
+      }
+    };
+    window.addEventListener(INSTALL_REQUEST_EVENT, onRequest);
+    return () => window.removeEventListener(INSTALL_REQUEST_EVENT, onRequest);
+  }, [isIOS, showInstallPrompt]);
 
   const visible = canPrompt || isIOS;
 
