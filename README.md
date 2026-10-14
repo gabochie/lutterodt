@@ -1,5 +1,7 @@
 # Lutterodt Renaissance
 
+Commissioned by **Paulina Lutterodt Missions (PLM)** · Built by **Gabochie DevLab**.
+
 A living digital archive and family directory for the Lutterodt family — documenting every notable Lutterodt, preserving the family's history, and building toward a permanent, family-governed Institute.
 
 ## Stack

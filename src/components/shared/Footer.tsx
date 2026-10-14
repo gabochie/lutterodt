@@ -74,7 +74,7 @@ export function Footer() {
           <span className="flex items-center gap-2">
             <span className="font-display text-[13px] tracking-[0.16em] uppercase text-ivory/90">Lutterodt</span>
             <span aria-hidden="true" className="text-ivory/30">|</span>
-            <span>Lutterodt Operations</span>
+            <span>Commissioned by Paulina Lutterodt Missions · Built by Gabochie DevLab</span>
           </span>
         </span>
         <div className="flex gap-[18px] flex-wrap">

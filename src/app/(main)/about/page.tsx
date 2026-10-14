@@ -110,8 +110,8 @@ export default function AboutPage() {
               <p className="mt-[18px] text-fg/70 text-[16px]">
                 The end goal is a properly constituted Institute — with a board, a charter, family representation from every branch, and a clear succession plan that ensures the work continues regardless of who founded it. Every contribution, every connection made through this site brings that future closer.
               </p>
-              <p className="mt-[22px] font-mono text-[11px] tracking-[0.14em] uppercase text-fg/45">
-                An initiative of <span style={{ fontFamily: "Georgia, serif" }}>Lutterodt</span> Operations
+              <p className="mt-[22px] font-mono text-[11px] tracking-[0.14em] uppercase text-fg-muted dark:text-ivory/70">
+                Commissioned by Paulina Lutterodt Missions · Built by Gabochie DevLab
               </p>
             </div>
           </div>
