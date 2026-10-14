@@ -28,11 +28,11 @@ const PRECACHE_ASSETS = [
   "/icon-192.png",
   "/icon-512.png",
   "/apple-touch-icon.png",
-  "/favicon-oval-32.png",
-  "/favicon-oval-64.png",
-  "/logo/lutterodt-logo-200.webp",
-  "/logo/lutterodt-logo-400.webp",
-  "/logo/lutterodt-logo-400.png",
+  "/favicon-crest-32.png",
+  "/favicon-crest-64.png",
+  "/logo/lutterodt-crest-200.webp",
+  "/logo/lutterodt-crest-400.webp",
+  "/logo/lutterodt-crest-400.png",
 ];
 
 const OFFLINE_URL = "/offline";

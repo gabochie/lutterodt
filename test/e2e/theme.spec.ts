@@ -1,6 +1,6 @@
 import { test, expect } from "./fixtures/site";
 
-const CREST = 'header img[src="/logo/lutterodt-logo-200.webp"]';
+const CREST = 'header img[src="/logo/lutterodt-crest-200.webp"]';
 
 function toggle(page: import("@playwright/test").Page) {
   return page.getByRole("button", { name: /Switch to (dark|light) theme/ }).first();
@@ -47,7 +47,7 @@ test.describe("theme and crest polarity", () => {
 
     const hidden = await page.evaluate(() => {
       const node = document.querySelector<HTMLElement>(
-        'header img[src="/logo/lutterodt-logo-200.webp"]'
+        'header img[src="/logo/lutterodt-crest-200.webp"]'
       );
       if (!node) return true;
       const style = window.getComputedStyle(node);
