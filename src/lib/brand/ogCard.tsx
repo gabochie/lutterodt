@@ -43,6 +43,9 @@ export function buildOgCard() {
           >
             <div
               style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "baseline",
                 fontSize: 66,
                 lineHeight: 1.05,
                 color: "#0B0D12",
