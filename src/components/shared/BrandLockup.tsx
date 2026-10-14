@@ -54,7 +54,7 @@ export function BrandLockup({
             nameClassName ?? "text-heading"
           )}
         >
-          Lutterodt<span className="text-gold-ink dark:text-gold-light">/h</span>
+          Lutterodt<span className={cn("text-gold-ink dark:text-gold-light", onDark && "text-gold-light")}>/h</span>
         </span>
         <span
           className={cn(
