@@ -41,12 +41,11 @@ export const metadata: Metadata = {
     google: "iNJ86WjvKu9EZpb5SPnpf-BXov-O2zBOe2wQ1Ux3lK0",
   },
   icons: {
-    // Only the oval PNGs are advertised. A favicon.ico entry is deliberately
-    // omitted: browsers fall back to /favicon.ico by convention, and a stale
-    // cached copy of the legacy star file would otherwise resurface.
+    // Only the crest PNGs are advertised. A favicon.ico entry is deliberately
+    // omitted: browsers fall back to /favicon.ico by convention.
     icon: [
-      { url: "/favicon-oval-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-oval-64.png", sizes: "64x64", type: "image/png" },
+      { url: "/favicon-crest-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-crest-64.png", sizes: "64x64", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
   },
