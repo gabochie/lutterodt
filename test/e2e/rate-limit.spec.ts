@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 // Proves the KV sliding-window limiter (src/lib/rate-limit.ts) engages:
-// 10 posts from one IP succeed, a follow-up is rejected with 429 +
+// 15 posts from one IP succeed, a follow-up is rejected with 429 +
 // Retry-After. A unique x-forwarded-for per run keeps this isolated from
 // other specs. Tolerant of one fixed-window boundary crossing mid-run.
 test("public writes throttle after the per-minute budget", async ({ request }) => {
@@ -16,7 +16,7 @@ test("public writes throttle after the per-minute budget", async ({ request }) =
         message: "limit probe",
       },
     });
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 15; i++) {
     expect((await post()).status(), `post ${i}`).toBe(200);
   }
   let throttled = false;

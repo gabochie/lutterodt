@@ -1,4 +1,7 @@
 import { test, expect, capturePost } from "./fixtures/site";
+// Rate-limit isolation: distinct egress IP per spec file so suites
+// never share a throttle bucket.
+test.use({ extraHTTPHeaders: { "x-forwarded-for": "10.21.0.14" } });
 
 const NAME = 'input[placeholder="Full name"]';
 const EMAIL = 'input[placeholder="email@example.com"]';

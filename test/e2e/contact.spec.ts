@@ -1,4 +1,7 @@
 import { test, expect, capturePost, type Page } from "./fixtures/site";
+// Rate-limit isolation: distinct egress IP per spec file so suites
+// never share a throttle bucket.
+test.use({ extraHTTPHeaders: { "x-forwarded-for": "10.21.0.13" } });
 
 const SUCCESS_TEXT =
   "Message received. We will be in touch within 5 business days.";

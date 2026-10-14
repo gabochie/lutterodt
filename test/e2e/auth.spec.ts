@@ -1,4 +1,7 @@
 import { test, expect } from "./fixtures/site";
+// Rate-limit isolation: distinct egress IP per spec file so suites
+// never share a throttle bucket.
+test.use({ extraHTTPHeaders: { "x-forwarded-for": "10.21.0.12" } });
 
 test.describe("outreach API authentication", () => {
   test("rejects a request with no credentials", async ({ request }) => {

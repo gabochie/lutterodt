@@ -21,7 +21,7 @@ export interface RateLimit {
 
 export const LIMITS = {
   /** Public form writes: register, subscribe, leads. */
-  publicWrite: { limit: 10, windowSeconds: 60 },
+  publicWrite: { limit: 15, windowSeconds: 60 },
   /** Login: brute-force sensitive, counts attempts (even 401s). */
   login: { limit: 5, windowSeconds: 60 },
   /** Token links: generous, scanners pre-fetch. */

@@ -1,4 +1,7 @@
 import { test, expect } from "@playwright/test";
+// Rate-limit isolation: distinct egress IP per spec file so suites
+// never share a throttle bucket.
+test.use({ extraHTTPHeaders: { "x-forwarded-for": "10.21.0.18" } });
 
 // Data-subject intake: identical responses regardless of outcome (no oracle),
 // validation enforced, committee draft filed.
