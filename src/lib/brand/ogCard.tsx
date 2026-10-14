@@ -49,15 +49,15 @@ export function buildOgCard() {
                 letterSpacing: 1,
               }}
             >
-              Lutterodt
+              Lutterodt<span style={{ color: "#6E520C" }}>/h</span>
             </div>
             <div
               style={{
                 marginTop: 12,
-                fontSize: 22,
-                letterSpacing: 5,
-                textTransform: "uppercase",
-                color: "#6E520C",
+                fontSize: 26,
+                fontStyle: "italic",
+                letterSpacing: 1,
+                color: "#57534E",
               }}
             >
               Let Us Have Ideals

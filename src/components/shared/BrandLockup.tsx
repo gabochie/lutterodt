@@ -13,7 +13,7 @@ const LOGO_2X = "/logo/lutterodt-crest-400.webp";
 const CREST_SIZES = "(min-width: 768px) 44px, 36px";
 
 export function Crest({ className }: { className?: string }) {
-  const alt = "Lutterodt — Let Us Have Ideals";
+  const alt = "Lutterodt/h — Let Us Have Ideals";
   const box = cn(
     "relative block h-9 w-9 shrink-0 md:h-11 md:w-11",
     className
@@ -54,12 +54,12 @@ export function BrandLockup({
             nameClassName ?? "text-heading"
           )}
         >
-          Lutterodt
+          Lutterodt<span className="text-gold-ink dark:text-gold-light">/h</span>
         </span>
         <span
           className={cn(
-            "font-mono text-[9.5px] tracking-widest uppercase whitespace-nowrap text-gold-ink dark:text-gold-light",
-            onDark && "text-gold-light"
+            "font-display italic text-[13px] tracking-wide whitespace-nowrap text-fg-muted dark:text-ivory/70",
+            onDark && "text-ivory/70"
           )}
         >
           {siteConfig.tagline}
