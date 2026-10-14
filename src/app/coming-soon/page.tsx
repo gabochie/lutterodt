@@ -14,7 +14,7 @@ export default function ComingSoonPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-gold-dim/6 rounded-full pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-xl text-center">
-          <Crest className="mx-auto mb-6 h-16 w-[91px] md:h-20 md:w-[113px]" />
+          <Crest className="mx-auto mb-6 h-16 w-16 md:h-20 md:w-20" />
           <p className="font-mono text-[10.5px] tracking-[0.25em] uppercase text-gold-dim mb-3">Coming Soon</p>
           <h1 className="text-ivory text-[clamp(36px,5.6vw,64px)] font-display font-[560] leading-tight mb-4">
             The Lutterodt<br />

@@ -66,7 +66,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       >
         <div className="p-5 border-b border-line-on-dark flex items-center justify-between">
           <Link href="/admin" className="flex items-center gap-3">
-            <Crest className="h-7 w-[40px]" />
+            <Crest className="h-7 w-7" />
             <div className="flex flex-col leading-tight">
               <span className="font-display font-[650] text-[14px] tracking-wide text-ivory">Lutterodt</span>
               <span className="font-mono text-[8px] tracking-widest uppercase text-gold-dim">Admin OS</span>

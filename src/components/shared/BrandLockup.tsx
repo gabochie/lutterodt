@@ -5,16 +5,17 @@ import { siteConfig } from "@/config/site";
  * Single source of truth for the Lutterodt brand lockup.
  * Used by both the header and the footer so the two never drift apart.
  *
- * The lockup always uses the white-background oval crest, in both themes.
+ * The lockup uses the heraldic achievement (transparent, square) — it carries
+ * its own contrast on light and dark grounds, so no dark-cut variant exists.
  */
-const LOGO_SRC = "/logo/lutterodt-logo-200.webp";
-const LOGO_2X = "/logo/lutterodt-logo-400.webp";
-const CREST_SIZES = "(min-width: 768px) 63px, 51px";
+const LOGO_SRC = "/logo/lutterodt-crest-200.webp";
+const LOGO_2X = "/logo/lutterodt-crest-400.webp";
+const CREST_SIZES = "(min-width: 768px) 44px, 36px";
 
 export function Crest({ className }: { className?: string }) {
   const alt = "Lutterodt — Let Us Have Ideals";
   const box = cn(
-    "relative block h-9 w-[51px] shrink-0 md:h-11 md:w-[63px]",
+    "relative block h-9 w-9 shrink-0 md:h-11 md:w-11",
     className
   );
 
@@ -24,8 +25,8 @@ export function Crest({ className }: { className?: string }) {
         src={LOGO_SRC}
         srcSet={`${LOGO_SRC} 1x, ${LOGO_2X} 2x`}
         sizes={CREST_SIZES}
-        width={200}
-        height={141}
+        width={400}
+        height={400}
         alt={alt}
         className="absolute inset-0 h-full w-full object-contain"
       />

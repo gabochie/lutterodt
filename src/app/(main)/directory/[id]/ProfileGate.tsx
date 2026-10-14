@@ -74,7 +74,7 @@ export function ProfileGate({
         <section className="py-[72px]">
           <div className="container-main max-w-2xl text-center">
             <div className="p-[40px] bg-ivory-dim border border-line">
-              <Crest className="mx-auto mb-4 h-10 w-[57px]" />
+              <Crest className="mx-auto mb-4 h-10 w-10" />
               <h2 className="text-[22px] font-display font-[550] text-heading mb-[10px]">
                 Verification Required
               </h2>
