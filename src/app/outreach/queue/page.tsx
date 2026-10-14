@@ -200,19 +200,19 @@ export default function QueuePage() {
       <style>{`
         .letter-preview { background: #faf8f5; }
         .letter-preview .page { max-width: 680px; margin: 0 auto; padding: 48px 56px; background: #fff; }
-        .letter-preview .brand { text-align: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid #c6a15b; }
+        .letter-preview .brand { text-align: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid #6E520C; }
         .letter-preview .brand svg { width: 40px; height: 40px; margin-bottom: 10px; }
-        .letter-preview .brand h1 { font-size: 18px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #5a2d2a; }
-        .letter-preview .brand p { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #c6a15b; }
-        .letter-preview .date { font-size: 13px; color: #6b5a4a; margin-bottom: 28px; }
+        .letter-preview .brand h1 { font-size: 18px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #0A2470; }
+        .letter-preview .brand p { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #6E520C; }
+        .letter-preview .date { font-size: 13px; color: #5F5E59; margin-bottom: 28px; }
         .letter-preview .salutation { font-size: 15px; margin-bottom: 18px; }
-        .letter-preview .body p { font-size: 14px; margin-bottom: 16px; color: #3d2b1a; line-height: 1.7; }
-        .letter-preview .highlight { border-left: 3px solid #c6a15b; padding: 14px 18px; margin: 20px 0; background: #faf6ef; font-style: italic; color: #5a2d2a; font-size: 14px; }
-        .letter-preview .cta { margin-top: 24px; padding-top: 20px; border-top: 1px solid #e8ddd0; }
+        .letter-preview .body p { font-size: 14px; margin-bottom: 16px; color: #33322E; line-height: 1.7; }
+        .letter-preview .highlight { border-left: 3px solid #6E520C; padding: 14px 18px; margin: 20px 0; background: #F7F7F4; font-style: italic; color: #0A2470; font-size: 14px; }
+        .letter-preview .cta { margin-top: 24px; padding-top: 20px; border-top: 1px solid #E4E6EC; }
         .letter-preview .signoff { margin-top: 36px; }
-        .letter-preview .signoff .name { font-size: 16px; font-weight: 600; color: #5a2d2a; margin-top: 18px; }
-        .letter-preview .signoff .role { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #c6a15b; }
-        .letter-preview .footer { margin-top: 32px; padding-top: 16px; text-align: center; font-size: 10px; color: #a09080; }
+        .letter-preview .signoff .name { font-size: 16px; font-weight: 600; color: #0A2470; margin-top: 18px; }
+        .letter-preview .signoff .role { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #6E520C; }
+        .letter-preview .footer { margin-top: 32px; padding-top: 16px; text-align: center; font-size: 10px; color: #6B6A65; }
       `}</style>
     </div>
   );

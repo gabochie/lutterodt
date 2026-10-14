@@ -225,12 +225,12 @@ export function confirmationEmailHtml(params: {
   return `<!doctype html>
 <html><body style="margin:0;background:#0B0A0F;font-family:Georgia,serif;color:#F5F1E8;">
   <div style="max-width:560px;margin:0 auto;padding:40px 24px;">
-    <p style="font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#C6A15B;margin:0 0 24px;">The Lutterodt Renaissance</p>
+    <p style="font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#FAA110;margin:0 0 24px;">The Lutterodt Renaissance</p>
     <h1 style="font-size:24px;line-height:1.3;margin:0 0 16px;color:#F5F1E8;">Confirm your subscription</h1>
     <p style="font-size:15px;line-height:1.7;color:rgba(245,241,232,.75);margin:0 0 20px;">${greeting}</p>
     <p style="font-size:15px;line-height:1.7;color:rgba(245,241,232,.75);margin:0 0 28px;">Please confirm that you would like to receive the quarterly archive bulletin. We will only write a few times a year, and you can stop at any time.</p>
     <p style="margin:0 0 28px;">
-      <a href="${params.confirmUrl}" style="display:inline-block;background:#C6A15B;color:#0B0A0F;padding:14px 26px;text-decoration:none;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;">Confirm subscription</a>
+      <a href="${params.confirmUrl}" style="display:inline-block;background:#FAA110;color:#0B0A0F;padding:14px 26px;text-decoration:none;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;">Confirm subscription</a>
     </p>
     <p style="font-size:13px;line-height:1.7;color:rgba(245,241,232,.5);margin:0 0 8px;">If the button does not work, copy this link into your browser:<br><span style="word-break:break-all;">${params.confirmUrl}</span></p>
     <hr style="border:none;border-top:1px solid rgba(245,241,232,.12);margin:28px 0;">

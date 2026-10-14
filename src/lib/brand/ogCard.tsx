@@ -57,7 +57,7 @@ export function buildOgCard() {
                 fontSize: 22,
                 letterSpacing: 5,
                 textTransform: "uppercase",
-                color: "#996C16",
+                color: "#6E520C",
               }}
             >
               Let Us Have Ideals
@@ -76,7 +76,7 @@ export function buildOgCard() {
             style={{
               width: 120,
               height: 4,
-              backgroundColor: "#EEAD16",
+              backgroundColor: "#FAA110",
               marginBottom: 30,
             }}
           />
