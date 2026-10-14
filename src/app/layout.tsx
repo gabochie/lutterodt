@@ -1,25 +1,33 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Self-hosted (no build-time Google Fonts dependency — a blocked fetch used
+// to fail production builds). Files: latin subsets only, matching the
+// previous next/font/google configuration (weights + italic).
+const fraunces = localFont({
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  display: "swap",
+  src: [
+    { path: "./fonts/fraunces-latin.woff2", weight: "300 700", style: "normal" },
+    { path: "./fonts/fraunces-latin-italic.woff2", weight: "300 700", style: "italic" },
+  ],
 });
 
-const inter = Inter({
+const inter = localFont({
   variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  display: "swap",
+  src: [{ path: "./fonts/inter-latin.woff2", weight: "400 700", style: "normal" }],
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const ibmPlexMono = localFont({
   variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  display: "swap",
+  src: [
+    { path: "./fonts/plex-mono-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/plex-mono-500.woff2", weight: "500", style: "normal" },
+  ],
 });
 
 const SITE_URL = "https://lutterodt.org";
